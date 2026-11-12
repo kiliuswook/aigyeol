@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFF8EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1F2240" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="robots" content="noindex">
+<title>아이결 기질검사</title>
+<meta name="description" content="만 2~7세 아이의 타고난 결을 네 글자로 읽는 부모용 기질검사 시제품">
+<link rel="icon" type="image/png" href="assets/a_mascot1.png">
+<link rel="apple-touch-icon" href="assets/a_mascot1.png">
+</head>
+<body>
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Art concept A "말랑 동화": navy, cream, apricot; round Jua headings; soft pill shapes; PixelLab pixel characters. Layout: one narrow phone-first column. */
+:root{
+  --hero:url(assets/a_key2.png);
+  --bg:#FFF8EC; --surface:#FFFFFF; --sunk:#FDEEDD; --line:#F3DCC5;
+  --fg:#3B3F6B; --muted:#7A7C9A; --accent:#F4A77F; --accent-ink:#C2603B; --on-accent:#3B3F6B;
+  --c1:#E57F5C; --c2:#3F9A94; --c3:#D0668C; --c4:#5B77C4; --g:#7BA046;
+  --band:#F6E2CC;
+  --display:"Jua","Noto Sans KR",sans-serif;
+  --body:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1F2240; --surface:#2A2E55; --sunk:#252949; --line:#40457A;
+  --fg:#FFF3E2; --muted:#B1B3D0; --accent:#F4A77F; --accent-ink:#FFC9A8; --on-accent:#2B2E55;
+  --c1:#F29A78; --c2:#62B8B2; --c3:#E88AAB; --c4:#8BA4E8; --g:#A6CC70;
+  --band:#3A3F70; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#1F2240; --surface:#2A2E55; --sunk:#252949; --line:#40457A;
+  --fg:#FFF3E2; --muted:#B1B3D0; --accent:#F4A77F; --accent-ink:#FFC9A8; --on-accent:#2B2E55;
+  --c1:#F29A78; --c2:#62B8B2; --c3:#E88AAB; --c4:#8BA4E8; --g:#A6CC70;
+  --band:#3A3F70; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:700;font-size:20px;color:var(--fg);text-decoration:none}
+.brand small{font-family:var(--body);font-weight:400;font-size:12px;color:var(--muted);margin-left:6px}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:999px}
+nav a.on{background:var(--fg);color:var(--bg)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:28px} h2{font-size:21px} h3{font-size:17px}
+p{margin:0}
+.muted{color:var(--muted)} .small{font-size:13px}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--accent-ink);font-weight:700}
+.stack{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:13px 18px;cursor:pointer;background:var(--accent);color:var(--on-accent);text-align:center;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:500}
+.btn.dark{background:var(--fg);color:var(--bg)}
+.btn:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--c4);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 180px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.plan{position:relative}
+.plan ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:999px;background:var(--sunk);color:var(--fg);border:1px solid var(--line)}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+input,select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);width:100%}
+/* test */
+.prog{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .2s}
+.qtext{font-family:var(--display);font-size:22px;line-height:1.5;text-wrap:balance}
+.exq{background:var(--sunk);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--muted);min-height:3.6em}
+.exq b{color:var(--accent-ink);margin-right:6px;font-size:12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{font:inherit;text-align:left;padding:13px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:flex;gap:12px;align-items:center}
+.opt b{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;flex:none}
+.passbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;background:var(--sunk);border-radius:12px;padding:10px 14px;font-size:13px}
+.passbar b{font-variant-numeric:tabular-nums}
+.price{font-family:var(--display);font-size:34px;font-weight:700;line-height:1.1}
+.price small{font-family:var(--body);font-size:14px;font-weight:400;color:var(--muted);margin-left:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-size:13px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+textarea{font:inherit;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg);width:100%;min-height:92px;resize:vertical}
+.ans{display:flex;flex-direction:column;gap:12px}
+.ans .lab{font-size:12px;font-weight:700;color:var(--accent-ink);letter-spacing:.04em}
+.bubble{align-self:flex-end;background:var(--fg);color:var(--bg);border-radius:14px 14px 4px 14px;padding:10px 14px;max-width:90%}
+.help{border:2px solid var(--c3);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.opt.unk{border-style:dashed;background:transparent;margin-top:6px}
+.opt.sel{border-color:var(--accent);background:var(--sunk)} .opt.sel b{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+/* report */
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sheet-head{background:var(--fg);color:var(--bg);padding:18px;display:flex;flex-direction:column;gap:4px}
+.sheet-head .eyebrow{color:var(--accent)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border-top:1px solid var(--line)}
+.meta div{padding:10px 18px;border-bottom:1px solid var(--line);font-size:13px}
+.meta span{display:block;color:var(--muted);font-size:12px}
+.type{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.code{font-family:var(--display);font-weight:700;font-size:54px;letter-spacing:.12em;line-height:1;display:flex}
+.code span{display:inline-block}
+.bar{display:grid;grid-template-columns:52px 1fr 52px;gap:10px;align-items:center;font-size:13px}
+.bar .l{text-align:right} .bar .on{font-weight:700}
+.track{position:relative;height:14px;background:var(--sunk);border-radius:99px}
+.track .mid{position:absolute;left:40%;width:20%;top:0;bottom:0;background:var(--band)}
+.track .fill{position:absolute;top:0;bottom:0;border-radius:99px}
+.track .dot{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);border:3px solid var(--surface)}
+.track.thin{height:8px} .track.thin .dot{width:14px;height:14px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:18px;height:8px;background:var(--band);border-radius:3px;margin-right:5px;vertical-align:middle}
+.axis-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;color:var(--surface)}
+.sub{display:flex;flex-direction:column;gap:4px}
+.sub .nm{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.sub .ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+details{border-top:1px dashed var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:700;font-size:14px}
+details>div{padding-top:10px;display:flex;flex-direction:column;gap:12px}
+.say{border-left:3px solid var(--accent);padding:2px 0 2px 12px;font-family:var(--display)}
+.avoid{border-left:3px solid var(--line);padding:2px 0 2px 12px;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.gauge{display:grid;grid-template-columns:92px 1fr 44px;gap:10px;align-items:center;font-size:13px}
+.gauge .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.lock{position:relative;border:1px dashed var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;background:var(--sunk)}
+.lock h3{font-size:15px;font-family:var(--body);font-weight:700}
+.skel{display:flex;flex-direction:column;gap:6px;filter:blur(3px);opacity:.6}
+.skel i{display:block;height:9px;border-radius:5px;background:var(--line)}
+.note{background:var(--sunk);border-radius:12px;padding:12px 14px;font-size:13px}
+.cta{background:var(--fg);color:var(--bg);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cta .muted{color:var(--bg);opacity:.75}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px}
+.tw{overflow-x:auto}
+.mk{font-size:11px;padding:1px 6px;border-radius:5px;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+@media (max-width:420px){ h1{font-size:24px} .code{font-size:44px} .qtext{font-size:19px} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+/* ---- concept A: 말랑 동화 ---- */
+h1,h2,h3,.brand,.code,.price,.qtext,.say{font-weight:400}
+.card,.sheet,.lock,.cta,.help{border-radius:22px}
+.card,.sheet{box-shadow:0 4px 0 var(--line)}
+.btn{border-radius:999px;box-shadow:0 3px 0 color-mix(in srgb,var(--accent-ink) 45%,transparent)}
+.btn.ghost,.btn.dark{box-shadow:none}
+.opt{border-radius:18px} .exq,.note,.passbar{border-radius:16px}
+input,select,textarea{border-radius:14px}
+.px{image-rendering:pixelated}
+.brand{display:inline-flex;align-items:center;gap:6px}
+.brand img{width:30px;height:30px}
+.hero{position:relative;height:250px;border-radius:22px;overflow:hidden;background:var(--sunk) var(--hero) center 56%/cover;image-rendering:pixelated;box-shadow:0 4px 0 var(--line)}
+.hero span{position:absolute;left:12px;top:12px;background:var(--surface);color:var(--fg);font-family:var(--display);font-size:14px;padding:6px 14px;border-radius:999px;image-rendering:auto}
+.type{position:relative}
+.masc{position:absolute;right:14px;top:12px;width:96px;height:96px}
+.type>p,.type>h1{max-width:100%}
+.ttl{display:flex;align-items:center;gap:10px}
+.ttl img{width:64px;height:64px;flex:none}
+.tag.tm{display:inline-flex;align-items:center;gap:6px;padding:4px 12px 4px 6px}.tag.tm img{width:40px;height:40px}
+.empty-m{width:80px;height:80px;align-self:center}
+@media (max-width:420px){ .masc{width:72px;height:72px;right:8px} .hero{height:240px} }
+/* ---- app shell ---- */
+html{background:var(--bg)}
+body{padding-block:0 calc(92px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+.wrap{max-width:480px;gap:16px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);flex-wrap:nowrap;padding-block:10px}
+.brand small{display:none}
+.hlink{font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
+#nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,480px);z-index:20;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  background:var(--surface);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;
+  padding:8px max(8px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));box-shadow:0 -6px 18px color-mix(in srgb,var(--fg) 8%,transparent)}
+#nav a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:500;color:var(--muted);padding:4px 2px;border-radius:14px;background:none;min-height:52px}
+#nav a .ic{display:grid;place-items:center;width:52px;height:30px;border-radius:999px;transition:background .15s}
+#nav a.on{background:none;color:var(--fg);font-weight:700}
+#nav a.on .ic{background:var(--accent);color:var(--on-accent)}
+body[data-view="test"] #nav,body[data-view="pass"] #nav{display:none}
+body[data-view="test"] .hlink{display:none}
+#app>*{animation:rise .28s ease both}
+@keyframes rise{from{opacity:.0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.btn{min-height:52px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;transition:transform .08s}
+.btn:active,.opt:active,.chip:active{transform:scale(.97)}
+.opt{min-height:56px;font-size:16px;transition:transform .08s}
+.chip{min-height:40px}
+.row>*{flex:1 1 140px}
+.two{grid-template-columns:1fr}
+input,select,textarea{font-size:16px;min-height:48px}
+.qhelp{border-top:0;padding-top:0}.qhelp summary{font-weight:500;font-size:13px;color:var(--muted)}
+.testbar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,480px);z-index:20;display:flex;gap:10px;background:var(--bg);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:1px solid var(--line)}
+.testbar .btn{flex:1}
+.stickycta{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom,0px));width:min(100%,480px);z-index:19;animation:none!important;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.stickycta .btn{width:100%;box-shadow:0 6px 18px color-mix(in srgb,var(--accent-ink) 35%,transparent)}
+body[data-view="quick-result"]{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}
+@media (min-width:700px){ body{background:var(--sunk)} .wrap{background:var(--bg);min-height:100vh;padding-inline:20px;box-shadow:0 0 0 1px var(--line)} header.top{margin-inline:-20px;padding-inline:20px} }
+@media (prefers-reduced-motion:reduce){ #app>*{animation:none} }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#home"><img class="px" src="assets/a_mascot1.png" alt="">아이결 <small>우리 아이 기질 유형 검사</small></a>
+
+  </header>
+  <main id="app" class="stack" style="gap:20px"></main>
+  <nav id="nav" aria-label="주요 화면"><a href="#home" data-v="home"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg></span>홈</a><a href="#quick-result" data-v="quick-result"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.5 6 .7-4.5 4 1.3 5.8-5.3-3-5.3 3 1.3-5.8-4.5-4 6-.7z"/></svg></span>무료 결과</a><a href="#report" data-v="report"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg></span>리포트</a><a href="#coach" data-v="coach"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg></span>대화</a></nav>
+</div>
+
+<script>
+/* ---------- 검사 데이터 ---------- */
+// 문항: [문장, 역채점(1), 무료검사 포함(1)]
+const AX = [
+ {id:'A',H:'E',L:'I',hi:'탐험',lo:'관찰',q:'새로운 것 앞에서',c:'--c1',subs:[
+  {n:'새로움에 다가가기',lo:'지켜보고 시작',hi:'먼저 해 보기',items:[
+   ['처음 가 본 장소에서도 금방 여기저기 돌아다니며 살펴본다.',0,1],
+   ['새로운 장난감이나 놀이를 보면 설명을 듣기 전에 먼저 만져 본다.',0,0],
+   ['처음 해 보는 활동은 한동안 지켜본 뒤에야 참여한다.',1,0],
+   ['익숙한 놀이보다 새로운 놀이를 더 찾는다.',0,0]]},
+  {n:'활동 에너지',lo:'차분한 놀이',hi:'몸으로 놀기',items:[
+   ['가만히 앉아 있기보다 몸을 움직이며 노는 것을 좋아한다.',0,1],
+   ['집 안에서도 뛰거나 기어오르는 일이 많다.',0,0],
+   ['책 보기나 퍼즐처럼 조용한 놀이를 오래 즐긴다.',1,0],
+   ['하루 종일 놀고도 에너지가 남아 보인다.',0,0]]},
+  {n:'사람에게 다가가기',lo:'천천히 친해짐',hi:'먼저 다가감',items:[
+   ['처음 만난 또래에게 먼저 다가가 말을 걸거나 같이 논다.',0,1],
+   ['낯선 어른이 말을 걸면 부모 뒤로 숨거나 대답을 망설인다.',1,0],
+   ['여러 사람이 모인 자리에서 더 신이 난다.',0,0],
+   ['새 친구와 편해지는 데 시간이 걸린다.',1,0]]}]},
+ {id:'B',H:'S',L:'N',hi:'섬세',lo:'무던',q:'자극을 느끼는 정도',c:'--c2',subs:[
+  {n:'감각 민감성',lo:'둔감한 편',hi:'예민한 편',items:[
+   ['옷의 상표나 양말 솔기 같은 작은 촉감을 불편해한다.',0,1],
+   ['큰 소리나 밝은 빛에 깜짝 놀라거나 싫어한다.',0,0],
+   ['음식의 맛이나 식감이 조금만 달라도 알아챈다.',0,0],
+   ['옷이 젖거나 손이 더러워져도 별로 신경 쓰지 않는다.',1,0]]},
+  {n:'변화 알아차림',lo:'지나치는 편',hi:'금방 알아챔',items:[
+   ['집 안 물건의 위치가 바뀌면 금방 알아챈다.',0,1],
+   ['부모의 표정이나 목소리가 달라지면 바로 눈치챈다.',0,0],
+   ['주변이 시끄럽거나 어수선해도 하던 일을 그대로 이어 간다.',1,0],
+   ['작은 소리나 냄새에도 "이게 뭐야?" 하고 반응한다.',0,0]]},
+  {n:'마음의 흔들림',lo:'금방 털어냄',hi:'오래 담아 둠',items:[
+   ['사소한 일에도 쉽게 속상해하거나 걱정한다.',0,1],
+   ['넘어지거나 실수해도 금방 털고 일어난다.',1,0],
+   ['무서운 장면이나 이야기를 오래 기억하고 다시 이야기한다.',0,0],
+   ['혼나거나 지적받으면 한참 마음에 담아 둔다.',0,0]]}]},
+ {id:'C',H:'F',L:'T',hi:'표현',lo:'잔잔',q:'감정을 드러내는 방식',c:'--c3',subs:[
+  {n:'감정 표현의 크기',lo:'작게 드러냄',hi:'크게 드러냄',items:[
+   ['기쁠 때 소리를 지르거나 펄쩍 뛰며 온몸으로 표현한다.',0,1],
+   ['화가 나거나 속상하면 주변 사람이 다 알 만큼 크게 드러낸다.',0,0],
+   ['기분이 좋든 나쁘든 겉으로는 크게 티가 나지 않는다.',1,0],
+   ['웃음소리나 울음소리가 큰 편이다.',0,0]]},
+  {n:'마음 나누기',lo:'속으로 간직',hi:'먼저 이야기',items:[
+   ['있었던 일이나 자기 기분을 먼저 이야기한다.',0,1],
+   ['속상한 일이 있어도 물어보기 전에는 말하지 않는다.',1,0],
+   ['안아 달라거나 같이 있어 달라는 표현을 자주 한다.',0,0],
+   ['자기가 만든 것이나 한 일을 보여 주며 반응을 기다린다.',0,0]]},
+  {n:'감정의 여운',lo:'금방 가라앉음',hi:'오래 이어짐',items:[
+   ['한번 울거나 화가 나면 가라앉는 데 시간이 걸린다.',0,1],
+   ['속상한 일이 있어도 다른 것에 금방 관심을 돌린다.',1,0],
+   ['신나는 일이 있으면 한참 들떠 있어 진정시키기 어렵다.',0,0],
+   ['감정이 올라와도 잠깐이면 평소 모습으로 돌아온다.',1,0]]}]},
+ {id:'D',H:'J',L:'P',hi:'리듬',lo:'자유',q:'일상을 꾸리는 방식',c:'--c4',subs:[
+  {n:'생활 리듬',lo:'날마다 다름',hi:'규칙적',items:[
+   ['졸려 하는 시간과 배고파하는 시간이 매일 비슷하다.',0,1],
+   ['잠드는 시간이 날마다 들쑥날쑥하다.',1,0],
+   ['평소 일과가 바뀌면 컨디션이 흐트러진다.',0,0],
+   ['식사량이 날마다 많이 다르다.',1,0]]},
+  {n:'전환과 예고',lo:'바로 넘어감',hi:'예고가 필요',items:[
+   ['놀이를 끝내야 할 때 미리 알려 주면 훨씬 잘 받아들인다.',0,1],
+   ['갑자기 계획이 바뀌어도 금방 따라온다.',1,0],
+   ['"다음엔 뭐 해?" 하고 순서를 미리 알고 싶어 한다.',0,0],
+   ['하던 일을 중간에 멈추고 다른 일로 넘어가는 것을 어려워한다.',0,0]]},
+  {n:'순서와 정돈',lo:'그때그때',hi:'정해진 대로',items:[
+   ['물건을 늘 두던 자리에 두거나 정해진 순서대로 하려고 한다.',0,1],
+   ['놀이 규칙이나 약속이 달라지면 "그게 아니야" 하고 바로잡으려 한다.',0,0],
+   ['그때그때 떠오르는 대로 놀이를 바꾸어 간다.',1,0],
+   ['장난감을 종류별로 나누거나 줄 세우는 것을 좋아한다.',0,0]]}]}
+];
+const GR = [
+ {id:'G1',n:'끈기',d:'어려워도 다시 해 보는 힘',items:[
+  ['잘 안 되는 일도 여러 번 다시 해 본다.',0],['시작한 놀이나 만들기를 끝까지 마치려고 한다.',0],
+  ['어려워 보이면 금방 "못 해" 하고 그만둔다.',1],['좋아하는 활동에는 오랫동안 집중한다.',0],
+  ['방해를 받아도 하던 일로 다시 돌아온다.',0],['조금만 지루해지면 다른 것으로 옮겨 간다.',1]],
+  lv:[['어려운 일 앞에서 금방 손을 놓는 편입니다.','이 시기에는 자연스러운 모습입니다. 결과보다 다시 해 본 행동을 칭찬하고, 성공할 수 있는 쉬운 단계부터 시작하세요. "한 번만 더 해 볼까?"가 "끝까지 해"보다 잘 통합니다.'],
+      ['좋아하는 일에는 끈기를 보이고, 어려운 일에서는 도움이 필요합니다.','과제를 작은 단계로 나누어 "한 칸만 더"를 경험하게 해 주세요. 중간에 쉬었다 다시 돌아오는 것도 끈기입니다.'],
+      ['어려워도 다시 해 보고 끝까지 마치려는 힘이 탄탄합니다.','몰입이 깊은 만큼 중간에 멈추기를 힘들어할 수 있습니다. 완벽하게 하려다 지치지 않도록 "여기까지 해도 충분해"를 알려 주세요.']]},
+ {id:'G2',n:'스스로 힘',d:'스스로 정하고 해내는 힘',items:[
+  ['옷 입기나 정리하기를 스스로 하려고 한다.',0],['무엇을 하고 싶은지 분명하게 말한다.',0],
+  ['작은 일도 어른이 대신 해 주기를 바란다.',1],['실수해도 "다시 하면 돼" 하는 태도를 보인다.',0],
+  ['스스로 해낸 일을 뿌듯해한다.',0],['무엇을 할지 스스로 정하지 못해 한참 망설인다.',1]],
+  lv:[['아직은 어른의 도움과 결정을 많이 필요로 합니다.','대신 해 주기 전에 10초만 기다려 주세요. 양말 한 짝처럼 아주 작은 일을 스스로 끝내는 경험이 쌓이면 달라집니다.'],
+      ['익숙한 일은 스스로 하고, 낯선 일에서는 어른을 찾습니다.','둘 중 하나 고르기처럼 작은 선택부터 맡겨 보세요. 고른 결과를 어른이 바꾸지 않는 것이 중요합니다.'],
+      ['스스로 정하고 스스로 해내려는 힘이 탄탄합니다.','선택권을 넓혀 주되 안전과 관련된 규칙은 분명히 해 주세요. "내가 할 거야"가 강해 실랑이가 생길 때는 시간을 넉넉히 잡는 것이 가장 쉽습니다.']]},
+ {id:'G3',n:'함께 힘',d:'마음을 살피고 맞춰 가는 힘',items:[
+  ['친구나 가족이 울면 다가가 위로하려 한다.',0],['장난감이나 간식을 나누어 준다.',0],
+  ['차례를 기다리는 것을 매우 힘들어한다.',1],['다른 사람이 싫어하는 행동을 알려 주면 멈추려고 한다.',0],
+  ['함께 놀 때 친구의 생각도 받아들인다.',0],['자기 뜻대로 되지 않으면 놀이를 그만둔다.',1]],
+  lv:[['아직은 자기 욕구가 먼저입니다.','어린 연령에서는 흔한 모습입니다. "친구가 속상한 얼굴이네"처럼 표정을 말로 짚어 주고, 짧은 차례 기다리기부터 놀이로 연습하세요.'],
+      ['기분이 좋을 때는 잘 나누고 기다리지만, 원하는 것이 클 때는 어렵습니다.','번갈아 쌓기나 보드게임처럼 차례가 눈에 보이는 놀이가 좋습니다. 기다린 순간을 바로 알아봐 주세요.'],
+      ['다른 사람의 마음을 살피고 함께 맞춰 가는 힘이 탄탄합니다.','양보만 하다 자기 마음을 놓치지 않도록 "싫어", "나도 하고 싶어"를 말하는 연습도 함께 해 주세요.']]}
+];
+const P = {
+ E:{tags:['먼저 해 보는','에너지 넘치는','사람을 좋아하는'],sum:'새로운 장소, 놀이, 사람 앞에서 먼저 움직입니다. 몸으로 부딪치며 배우는 아이입니다.',det:'탐험 성향이 높은 아이는 낯선 자극을 위협보다 기회로 받아들입니다. 설명을 듣기보다 직접 해 보면서 익히고, 활동량이 많아 하루에 몸을 충분히 쓸 시간이 필요합니다. 살피기 전에 움직이는 일이 있어 안전 규칙은 짧고 분명하게, 미리 정해 두는 편이 효과적입니다.',st:'새 환경에 빨리 적응하고 도전을 즐깁니다.',wa:'움직이기 전에 멈추고 살피는 연습이 필요합니다.',say:'먼저 해 보고 싶구나. 딱 하나만 약속하고 시작하자.',no:'가만히 좀 있어!',ph:'새로운 것에 먼저 뛰어들고'},
+ I:{tags:['신중한','지켜보는','깊이 익히는'],sum:'충분히 지켜보고 준비가 되면 움직입니다. 한번 익숙해지면 깊이 빠져듭니다.',det:'관찰 성향이 높은 아이는 새 상황에서 정보를 먼저 모읍니다. 소심해서가 아니라 자기만의 안전 확인 절차입니다. 재촉하면 더 움츠러들고, 기다려 주면 스스로 나섭니다. 새 장소에는 조금 일찍 도착해 둘러볼 시간을 주고, 처음 만나는 사람 앞에서 인사를 강요하지 않는 것이 도움이 됩니다.',st:'신중하고 실수가 적으며 익숙한 것에 깊이 몰입합니다.',wa:'새 환경에서는 적응할 시간을 넉넉히 주어야 합니다.',say:'먼저 보고 있어도 돼. 하고 싶어지면 말해 줘.',no:'다른 애들은 다 하는데 너는 왜 안 해?',ph:'충분히 지켜본 뒤 움직이고'},
+ S:{tags:['잘 알아차리는','감각이 예민한','마음이 여린'],sum:'소리, 촉감, 분위기의 작은 차이를 잘 느낍니다. 그만큼 쉽게 지치기도 합니다.',det:'섬세 성향이 높은 아이는 같은 자극을 더 크게, 더 자세히 받아들입니다. 옷의 촉감이나 시끄러운 장소가 힘든 것은 고집이 아니라 실제로 불편하기 때문입니다. 자극이 많은 날 뒤에는 조용히 쉬는 시간을 넣어 주세요. 이 민감함은 자라면서 관찰력, 공감, 미적 감각의 바탕이 됩니다.',st:'관찰력이 좋고 다른 사람의 기분을 잘 알아차립니다.',wa:'자극이 많은 곳에서 빨리 지치므로 쉬는 시간이 필요합니다.',say:'그게 불편했구나. 어떤 느낌인지 말해 줄래?',no:'별것도 아닌데 왜 그래?',ph:'작은 변화도 놓치지 않으며'},
+ N:{tags:['털털한','잘 흔들리지 않는','회복이 빠른'],sum:'웬만한 자극이나 변화에 크게 흔들리지 않습니다. 넘어져도 금방 털고 일어납니다.',det:'무던 성향이 높은 아이는 불편함의 문턱이 높아 어디서든 잘 지냅니다. 다만 불편하거나 아파도 표현이 적어 어른이 놓치기 쉽습니다. 다른 사람의 미묘한 표정 변화를 지나치는 일도 있으니, 감정을 말로 짚어 주면 도움이 됩니다.',st:'환경이 바뀌어도 안정적이고 스트레스에서 빨리 회복합니다.',wa:'불편함을 잘 표현하지 않으니 어른이 먼저 물어봐 주어야 합니다.',say:'괜찮아 보여도 한번 물어볼게. 지금 몸이랑 마음은 어때?',no:'넌 원래 아무렇지도 않잖아.',ph:'웬만한 자극에는 흔들리지 않으며'},
+ F:{tags:['감정이 풍부한','먼저 이야기하는','여운이 긴'],sum:'기쁨도 속상함도 크고 분명하게 드러냅니다. 마음을 나누고 싶어 합니다.',det:'표현 성향이 높은 아이는 감정의 볼륨이 큽니다. 부모는 아이 마음을 읽기 쉽지만, 감정이 올라왔을 때는 설득이 통하지 않습니다. 먼저 감정에 이름을 붙여 주고, 가라앉은 뒤에 이야기하세요. 쿵쿵 뛰기나 베개 안기처럼 큰 감정을 안전하게 쏟을 방법을 미리 정해 두면 좋습니다.',st:'감정을 숨기지 않아 마음을 읽기 쉽고 애정 표현이 풍부합니다.',wa:'감정이 큰 순간에는 가라앉을 시간과 방법이 필요합니다.',say:'정말 많이 속상했구나. 다 울고 나면 같이 이야기하자.',no:'뚝 그쳐. 울 일도 아니야.',ph:'감정을 크고 분명하게 보여 주고'},
+ T:{tags:['차분한','속으로 생각하는','금방 가라앉는'],sum:'감정을 크게 드러내지 않고 안에서 다룹니다. 금방 평소 모습으로 돌아옵니다.',det:'잔잔 성향이 높은 아이는 감정 기복이 겉으로 잘 보이지 않아 순한 아이로 보이기 쉽습니다. 느끼지 않는 것이 아니라 드러내는 양이 적은 것입니다. "괜찮아?"보다 "아까 그 일은 어땠어?"처럼 구체적으로 물어보고, 그림이나 놀이로 마음을 표현할 통로를 열어 주세요.',st:'차분하고 감정에 휩쓸리지 않아 주변에 안정감을 줍니다.',wa:'속마음을 놓치기 쉬우니 구체적으로 물어봐 주어야 합니다.',say:'말로 안 해도 괜찮아. 대신 그림으로 보여 줄래?',no:'너는 손이 안 가서 편해.',ph:'감정을 잔잔하게 안에서 다루고'},
+ J:{tags:['규칙적인','예고가 필요한','순서를 좋아하는'],sum:'정해진 일과와 순서 속에서 편안해합니다. 미리 알려 주면 잘 따라옵니다.',det:'리듬 성향이 높은 아이는 다음에 무슨 일이 일어날지 알 때 안정됩니다. 갑작스러운 변화에는 크게 흔들리지만, 5분 전 예고와 일과표만으로도 많은 갈등이 줄어듭니다. 여행이나 행사처럼 일과가 깨지는 날에는 잠과 식사 시간만큼은 지켜 주세요.',st:'생활 습관이 잘 잡히고 약속과 규칙을 잘 지킵니다.',wa:'갑작스러운 변화에 약하므로 미리 알려 주어야 합니다.',say:'긴 바늘이 6에 가면 정리할 거야. 그다음엔 목욕이야.',no:'지금 당장 그만해!',ph:'예측할 수 있는 일상에서 편안해하는 아이'},
+ P:{tags:['유연한','즉흥적인','변화에 강한'],sum:'그때그때 흐름에 맞춰 움직입니다. 계획이 바뀌어도 금방 따라옵니다.',det:'자유 성향이 높은 아이는 변화에 강하고 어디서든 잘 자고 잘 놉니다. 대신 정해진 시간에 자고 먹는 습관은 저절로 잡히지 않습니다. 모든 일과를 묶기보다 자기 전 순서처럼 꼭 필요한 한두 가지만 고정하고, 그 안에서는 선택권을 주면 잘 받아들입니다.',st:'변화에 유연하고 새로운 상황을 즐깁니다.',wa:'꼭 필요한 일과 한두 가지는 어른이 고정해 주어야 합니다.',say:'이 닦기랑 책 읽기 중에 뭐 먼저 할래?',no:'넌 왜 매번 제멋대로야?',ph:'그때그때 흐름에 맞춰 움직이는 아이'}
+};
+const NICK={ESFJ:'다정한 탐험대장',ESFP:'반짝이는 불꽃놀이',ESTJ:'꼼꼼한 꼬마 탐정',ESTP:'눈 밝은 모험가',ENFJ:'씩씩한 행진 대장',ENFP:'신나는 회오리바람',ENTJ:'든든한 꼬마 선장',ENTP:'거침없는 개척자',ISFJ:'섬세한 꼬마 정원사',ISFP:'마음 여린 예술가',ISTJ:'차분한 꼬마 학자',ISTP:'조용한 관찰 탐정',INFJ:'다정한 이야기꾼',INFP:'느긋한 몽상가',INTJ:'묵묵한 꼬마 장인',INTP:'유유한 구름 산책자'};
+const OPT=['전혀 아니다','아닌 편이다','보통이다','그런 편이다','매우 그렇다'];
+
+/* 문항별 장면 예시 (문항 아래에 표시) */
+const EXS={
+ A0:['키즈카페나 처음 간 친척 집에서 부모 곁을 떠나 혼자 둘러본다','새 장난감 상자를 열자마자 버튼부터 눌러 본다','체험 수업에서 친구들이 하는 것을 몇 분 지켜본 뒤 들어간다','늘 하던 블록 대신 처음 보는 놀잇감을 먼저 고른다'],
+ A1:['책을 읽어 줄 때도 일어나서 돌아다니거나 몸을 움직인다','소파에서 뛰어내리거나 의자, 식탁 위로 올라간다','20분 넘게 앉아서 그림 그리기나 퍼즐을 한다','놀이터에서 2시간 놀고 와서도 집에서 또 뛰어논다'],
+ A2:['놀이터에서 처음 본 아이에게 "같이 놀자" 하거나 옆에 가서 논다','엘리베이터에서 이웃이 "몇 살이야?" 물으면 대답하지 않고 숨는다','생일잔치나 가족 모임에서 평소보다 더 활발해진다','새 학기에 한두 주가 지나서야 친구 이름을 이야기한다'],
+ B0:['상표를 떼어 달라고 하거나 특정 옷만 입으려 한다','청소기, 핸드드라이어, 폭죽 소리에 귀를 막거나 운다','늘 먹던 우유나 반찬의 상표가 바뀌면 안 먹으려 한다','물놀이 뒤에 젖은 옷을 입고도 계속 논다'],
+ B1:['가구를 옮기거나 새 물건이 생기면 들어오자마자 "이거 뭐야?" 한다','부모가 피곤하거나 화났을 때 "엄마 화났어?" 하고 묻는다','TV가 켜져 있거나 동생이 울어도 하던 놀이를 계속한다','멀리서 나는 사이렌 소리나 음식 냄새를 먼저 알아챈다'],
+ B2:['그림이 마음대로 안 그려지거나 과자가 부러지면 운다','놀다가 넘어져도 툭툭 털고 다시 논다','며칠 전에 본 무서운 장면을 자기 전에 다시 꺼낸다','아침에 혼난 일을 저녁에 다시 이야기하거나 시무룩해 있다'],
+ C0:['선물을 받으면 "우와!" 소리치며 방방 뛴다','마트에서 원하는 것을 못 사면 큰 소리로 울거나 바닥에 눕는다','좋아하는 선물을 받아도 조용히 미소만 짓는다','다른 방에서도 들릴 만큼 크게 웃거나 운다'],
+ C1:['하원길에 묻지 않아도 "오늘 친구가 나 밀었어" 하고 말한다','친구와 다툰 일을 선생님에게 듣고서야 알게 된다','하루에도 여러 번 안기러 오거나 "옆에 있어" 한다','그림을 그리고 "이거 봐!" 하며 여러 번 보여 준다'],
+ C2:['울음이 10분 넘게 이어지거나 달래도 한참 걸린다','울다가도 좋아하는 장난감을 보여 주면 금방 그친다','놀이공원에 다녀온 날 밤늦게까지 들떠서 잠들기 어렵다','화를 내다가도 1~2분 뒤에는 아무 일 없던 듯 논다'],
+ D0:['시계를 안 봐도 낮잠 시간, 간식 시간을 짐작할 수 있다','어떤 날은 8시, 어떤 날은 10시 넘어 잠든다','여행이나 명절처럼 일과가 달라진 날 더 보채거나 짜증을 낸다','어제는 한 그릇을 다 먹고 오늘은 몇 숟가락만 먹는다'],
+ D1:['"5분 뒤에 집에 갈 거야" 하고 말해 두면 덜 떼쓴다','가려던 놀이터 대신 마트에 가도 별말 없이 따라온다','아침에 "오늘 어디 가? 그다음엔?" 하고 묻는다','블록을 쌓는 중에 밥 먹자고 하면 크게 싫어한다'],
+ D2:['신발을 늘 같은 자리에 두고, 자기 전 순서가 바뀌면 싫어한다','책 읽는 순서나 놀이 규칙을 바꾸면 "아니야, 이렇게 해야 돼" 한다','소꿉놀이를 하다가 갑자기 병원놀이, 자동차놀이로 바꾼다','자동차를 색깔별로 줄 세우거나 블록을 모양별로 모은다'],
+ G1:['블록 탑이 무너져도 다시 쌓는다','퍼즐이나 색칠을 다 끝내고 나서야 일어난다','단추 끼우기가 한 번 안 되면 바로 "엄마가 해 줘" 한다','좋아하는 블록이나 그림 그리기를 30분 넘게 한다','밥을 먹고 나서도 하던 만들기를 이어서 한다','한 가지 놀이를 5분도 안 하고 다른 장난감을 꺼낸다'],
+ G2:['"내가 할 거야" 하며 신발을 혼자 신으려 한다','"나는 이 옷 입을래", "이거 말고 저거" 하고 고른다','혼자 할 수 있는 숟가락질이나 양말 신기도 해 달라고 한다','물을 쏟아도 울지 않고 닦으려 하거나 다시 따른다','혼자 옷을 입고 "나 혼자 했어!" 하고 자랑한다','간식을 고르라고 하면 한참 못 고르거나 "엄마가 골라" 한다'],
+ G3:['우는 동생이나 친구에게 휴지나 장난감을 가져다준다','과자를 먹다가 "하나 줄까?" 하고 건넨다','미끄럼틀 줄에서 앞 친구를 밀거나 새치기를 한다','"동생이 아파해" 하면 하던 장난을 멈춘다','"이번엔 네가 하고 싶은 놀이 하자"는 말에 따른다','게임에서 지거나 원하는 역할을 못 맡으면 "안 해" 하고 나간다']
+};
+/* ---------- 문항 펼치기 ---------- */
+const ITEMS=[]; const groups=[];
+AX.forEach(a=>a.subs.forEach((s,si)=>groups.push(s.items.map((it,i)=>({id:a.id+si+'-'+i,ax:a.id,sub:si,t:it[0],r:it[1],free:it[2],ex:EXS[a.id+si][i]})))));
+GR.forEach(g=>groups.push(g.items.map((it,i)=>({id:g.id+'-'+i,gr:g.id,t:it[0],r:it[1],free:0,ex:EXS[g.id][i]}))));
+for(let i=0;i<6;i++) groups.forEach(g=>{ if(g[i]) ITEMS.push(g[i]); });
+const FREE=ITEMS.filter(x=>x.free);
+
+/* ---------- 상태 ---------- */
+let st={ans:{},name:'',age:'',who:'엄마',date:''};
+try{ const s=JSON.parse(localStorage.getItem('aigyeol')||'null'); if(s&&s.ans) st=s; }catch(e){}
+const save=()=>{ try{ localStorage.setItem('aigyeol',JSON.stringify(st)); }catch(e){} };
+const nm=()=> st.name? st.name : '우리 아이';
+const nmEun=()=>{ const n=nm(), c=n.charCodeAt(n.length-1); return esc(n)+((c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28)?'은':'는'); };
+
+/* ---------- 채점 ---------- */
+const v=it=> !st.ans[it.id]? null : (it.r? 6-st.ans[it.id] : st.ans[it.id]);
+const mean=a=> a.length? a.reduce((x,y)=>x+y,0)/a.length : null;
+const pct=m=> m==null? null : Math.round((m-1)*25);
+function score(){
+  const ax=AX.map(a=>{
+    const subs=a.subs.map((s,si)=>pct(mean(ITEMS.filter(x=>x.ax===a.id&&x.sub===si).map(v).filter(x=>x!=null))));
+    const m0=mean(subs.filter(x=>x!=null)); const sc=m0==null?50:Math.round(m0);
+    const d=Math.abs(sc-50);
+    return {a,subs,sc,letter:sc>=50?a.H:a.L,pole:sc>=50?a.hi:a.lo,clar:d>=20?'뚜렷함':d>=8?'약간':'균형에 가까움',d};
+  });
+  const gr=GR.map(g=>{ const sc=pct(mean(ITEMS.filter(x=>x.gr===g.id).map(v).filter(x=>x!=null))); return {g,sc,lv:sc==null?null:sc>=65?2:sc>=40?1:0}; });
+  // 응답 일관성: 같은 하위척도 안에서 정방향 문항과 역방향 문항(뒤집은 값)의 평균 차이
+  const diffs=[]; groups.forEach(g=>{ const f=g.filter(x=>!x.r).map(v).filter(x=>x!=null), r=g.filter(x=>x.r).map(v).filter(x=>x!=null); if(f.length&&r.length) diffs.push(Math.abs(mean(f)-mean(r))); });
+  const dm=mean(diffs); const raw=Object.values(st.ans).filter(x=>x>0); const flat=raw.length>20 && new Set(raw).size===1;
+  const cons= dm==null? null : flat? '낮음' : dm<0.9? '높음' : dm<1.5? '보통':'낮음';
+  return {ax,gr,code:ax.map(x=>x.letter).join(''),cons,unk:Object.values(st.ans).filter(x=>x===0).length};
+}
+const done=list=> list.every(x=>st.ans[x.id]!=null);
+const quickDone=()=> st.qd||done(FREE);
+
+/* ---------- 그리기 도우미 ---------- */
+const M1='assets/a_mascot1.png', M2='assets/a_mascot2.png';
+const TM={"INTJ": "assets/INTJ.png", "ISTP": "assets/ISTP.png", "ENTJ": "assets/ENTJ.png", "ISTJ": "assets/ISTJ.png", "ESFJ": "assets/ESFJ.png", "ESTP": "assets/ESTP.png", "INTP": "assets/INTP.png", "ISFP": "assets/ISFP.png", "ENFJ": "assets/ENFJ.png", "INFP": "assets/INFP.png", "ISFJ": "assets/ISFJ.png", "ESFP": "assets/ESFP.png", "ENFP": "assets/ENFP.png", "ENTP": "assets/ENTP.png", "ESTJ": "assets/ESTJ.png", "INFJ": "assets/INFJ.png"};
+const masc=r=>`<img class="masc px" src="${TM[r.code]}" alt="${NICK[r.code]} 말랑이 캐릭터">`;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function bar(x,thin){ const a=x.a, s=x.sc, c=`var(${a.c})`;
+  const l=Math.min(s,50), w=Math.abs(s-50);
+  return `<div class="bar"><span class="l ${s<50?'on':''}">${a.lo}</span>
+   <div class="track ${thin?'thin':''}" role="img" aria-label="${a.lo} ${100-s}, ${a.hi} ${s}"><div class="mid"></div><div class="fill" style="left:${l}%;width:${w}%;background:${c};opacity:.35"></div><div class="dot" style="left:${s}%;background:${c}"></div></div>
+   <span class="${s>=50?'on':''}">${a.hi}</span></div>`; }
+function subRow(a,s,sc){ if(sc==null) return `<div class="sub"><div class="nm"><span>${s.n}</span><span class="muted">정보 부족</span></div><p class="small muted">이 항목은 '잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다.</p></div>`; return `<div class="sub"><div class="nm"><span>${s.n}</span><span class="muted">${sc<40?s.lo:sc>60?s.hi:'중간'}</span></div>
+  <div class="track thin"><div class="mid"></div><div class="dot" style="left:${sc}%;background:var(${a.c})"></div></div>
+  <div class="ends"><span>${s.lo}</span><span>${s.hi}</span></div></div>`; }
+const codeHTML=r=> `<div class="code" aria-label="유형 코드 ${r.code}">${r.ax.map(x=>`<span style="color:var(${x.a.c})">${x.letter}</span>`).join('')}</div>`;
+const oneLine=r=> `${P[r.ax[0].letter].ph}, ${P[r.ax[1].letter].ph}, ${P[r.ax[2].letter].ph}, ${P[r.ax[3].letter].ph}입니다.`;
+
+/* ---------- 화면 ---------- */
+const V={};
+V.home=()=>`
+ <div class="hero" role="img" aria-label="저녁 거실 소파에서 커다란 말랑이에게 기대어 그림책을 읽는 아이들의 픽셀 그림"><span>오늘도 말랑하게, 우리 아이 이야기</span></div>
+ <section class="stack">
+  <span class="eyebrow">만 2~7세 · 부모가 답하는 기질검사</span>
+  <h1>우리 아이는 어떤 결을 타고났을까요</h1>
+  <p class="muted">MBTI처럼 네 글자로 읽는 아이 기질 유형. 최근 한 달간 아이의 모습을 떠올리며 답해 주세요.</p>
+ </section>
+ <div class="card">
+  <div class="row">
+   <label class="f" for="in-name">아이 이름 또는 별명 (선택)<input id="in-name" value="${esc(st.name)}" placeholder="예: 콩이" maxlength="10"></label>
+   <label class="f" for="in-age">연령<select id="in-age">${['','만 2세','만 3세','만 4세','만 5세','만 6세','만 7세'].map(o=>`<option ${st.age===o?'selected':''}>${o}</option>`).join('')}</select></label>
+   <label class="f" for="in-who">답하는 사람<select id="in-who">${['엄마','아빠','조부모','기타 양육자'].map(o=>`<option ${st.who===o?'selected':''}>${o}</option>`).join('')}</select></label>
+  </div>
+ </div>
+ <div class="two">
+  <div class="card plan">
+   <span class="tag" style="align-self:flex-start">무료</span>
+   <h2>1분 간이검사</h2>
+   <ul class="small"><li>12문항, 약 1분</li><li>네 글자 기질 유형과 별명</li><li>가장 뚜렷한 기질 1가지 풀이</li></ul>
+   <button class="btn" data-go="quick">무료로 시작하기</button>
+   <button class="btn ghost" data-sample="quick">샘플 결과 보기</button>
+  </div>
+  <div class="card plan" style="border-color:var(--accent)">
+   <span class="tag" style="align-self:flex-start;background:var(--accent);color:var(--on-accent);border-color:var(--accent)">정밀</span>
+   <h2>아이결 정밀검사</h2>
+   <div class="price">5,900원<small>2달 이용권</small></div>
+   <ul class="small"><li>66문항 정밀 리포트(기질 4축, 세부 기질 12, 자라는 힘 3)</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
+   <button class="btn dark" data-go="full">정밀검사 시작하기</button>
+   <button class="btn ghost" data-sample="full">샘플 리포트 보기</button>
+  </div>
+ </div>
+ <p class="small muted">시제품입니다. 결제는 연결되어 있지 않아 결제 버튼을 누르면 바로 이용권이 열립니다. 이 검사는 양육 참고용이며 의학적 진단이 아닙니다.</p>`;
+
+let tq={list:[],i:0,mode:''};
+function startTest(mode){ tq.mode=mode; tq.list= mode==='quick'? FREE.slice() : ITEMS.filter(x=>st.ans[x.id]==null); if(mode==='full'&&!tq.list.length) tq.list=ITEMS; tq.i=0; }
+V.test=()=>{ const it=tq.list[tq.i], n=tq.list.length;
+ return `<div class="stack" style="gap:18px;padding-top:8px">
+  <div class="stack" style="gap:6px"><div class="small muted" style="display:flex;justify-content:space-between"><span>${tq.mode==='quick'?'1분 간이검사':'아이결 정밀검사'}</span><span>${tq.i+1} / ${n}</span></div>
+  <div class="prog"><i style="width:${(tq.i)/n*100}%"></i></div></div>
+  <p class="small muted">최근 한 달간 ${esc(nm())}의 모습에 가장 가까운 것을 골라 주세요.</p>
+  <div class="stack" style="gap:8px"><p class="qtext">${esc(it.t)}</p><p class="exq"><b>예</b> ${esc(it.ex)}</p></div>
+  <div class="opts">${OPT.map((o,k)=>`<button class="opt ${st.ans[it.id]===k+1?'sel':''}" data-a="${k+1}"><b>${k+1}</b>${o}</button>`).join('')}
+   <button class="opt unk ${st.ans[it.id]===0?'sel':''}" data-a="0"><b>?</b><span>잘 모르겠다 <span class="muted small">본 적이 없거나 판단하기 애매해요</span></span></button></div>
+  <details class="qhelp"><summary>답하기 애매할 때</summary><div><p class="small muted">'보통이다'는 그럴 때도 있고 아닐 때도 있다는 뜻입니다. 예시와 꼭 같지 않아도 비슷한 모습이면 됩니다. 떠오르는 장면이 없으면 '잘 모르겠다'를 골라 주세요. 그 문항은 점수에 넣지 않고 비슷한 다른 문항으로 판단합니다.</p></div></details>
+  <div class="testbar"><button class="btn ghost" data-back ${tq.i===0?'disabled':''}>이전 문항</button><button class="btn ghost" data-go="home">나중에 하기</button></div>
+ </div>`; };
+
+V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결과가 없습니다.','quick');
+ const r=score(); const top=[...r.ax].sort((x,y)=>y.d-x.d)[0]; const near=r.ax.filter(x=>x.d<12);
+ const left=ITEMS.filter(x=>st.ans[x.id]==null).length; const p=P[top.letter];
+ return `<div class="stickycta"><button class="btn" data-go="full">정밀검사 이어서 하기 · 5,900원</button></div>
+  <div class="card type">
+   <span class="eyebrow">간이검사 결과 · 12문항 기준</span>${masc(r)}
+   ${codeHTML(r)}
+   <h1>${NICK[r.code]}</h1>
+   <p>${nmEun()} ${oneLine(r)}</p>
+   <div class="tags">${r.ax.map(x=>`<span class="tag">${x.pole}</span>`).join('')}</div>
+  </div>
+  <div class="card">
+   <div class="axis-h"><h2>가장 뚜렷한 기질: ${top.pole}</h2><span class="pill" style="background:var(${top.a.c})">${top.a.q}</span></div>
+   ${bar(top)}
+   <p>${p.sum}</p>
+   <div class="tags">${p.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
+  </div>
+  ${near.length?`<div class="note"><b>${near.map(x=>x.a.hi+'·'+x.a.lo).join(', ')}</b> 축은 두 성향의 경계에 있습니다. 간이검사는 축마다 3문항 안팎만 보기 때문에, 정밀검사에서 글자가 달라질 수 있습니다.</div>`:`<div class="note">간이검사는 축마다 3문항으로 방향만 봅니다. 세부 기질과 강도는 정밀검사에서 확인할 수 있습니다.</div>`}
+  <h2>정밀검사에서 열리는 내용</h2>
+  <div class="stack">
+   ${r.ax.filter(x=>x!==top).map(x=>lock(`${x.a.hi}·${x.a.lo} 축 풀이`,`${esc(nm())}의 '${x.pole}' 성향이 얼마나 뚜렷한지, 어떤 장면에서 드러나는지`)).join('')}
+   ${lock('세부 기질 12가지','같은 '+r.code+' 유형이어도 아이마다 다른 세부 프로필')}
+   ${lock('자라는 힘 3가지','끈기, 스스로 힘, 함께 힘이 지금 어디까지 자랐는지')}
+   ${lock(`${esc(nm())}에게 잘 통하는 말, 피할 말`,'기질에 맞춘 말 걸기 예시와 양육 가이드')}
+   ${lock('상황별 AI 대화 2달','떼쓸 때, 안 자려 할 때처럼 지금 겪는 상황을 적으면 '+esc(nm())+'의 기질에 맞는 대응을 알려 줍니다')}
+  </div>
+  <div class="cta">
+   <h2>${esc(nm())}의 결을 끝까지 읽어 보세요</h2>
+   <p class="muted">방금 답한 12문항은 그대로 이어집니다. 남은 ${left}문항, 약 ${Math.max(1,Math.round(left/6))}분이면 정밀 리포트가 완성됩니다.</p>
+   <div class="price">5,900원<small style="color:var(--bg);opacity:.75">정밀 리포트 + 상황별 AI 대화 2달</small></div>
+   <button class="btn" data-go="full">정밀검사 이어서 하기</button>
+   <p class="small muted">자동 결제 없이 2달 뒤에 끝납니다.</p>
+  </div>`; };
+const lock=(t,d)=>`<div class="lock"><h3>🔒 ${t}</h3><p class="small muted">${d}</p><div class="skel" aria-hidden="true"><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></div></div>`;
+const empty=(t,go)=>`<div class="card"><img class="empty-m px" src="${M2}" alt=""><h2>${t}</h2><p class="muted">검사를 마치면 이 화면에 결과가 나타납니다.</p><div class="row"><button class="btn" data-go="${go}">검사 시작하기</button><button class="btn ghost" data-sample="${go}">샘플로 보기</button></div></div>`;
+
+V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없습니다.','full');
+ if(!st.pass) return V.pass();
+ const r=score();
+ const axes=r.ax.map(x=>{ const p=P[x.letter], bal=x.d<8;
+  return `<section class="card">
+   <div class="axis-h"><div><span class="small muted">${x.a.q}</span><h2>${x.a.hi} · ${x.a.lo}</h2></div><span class="pill" style="background:var(${x.a.c})">${x.pole} ${x.clar}</span></div>
+   ${bar(x)}
+   <p><b>요약.</b> ${bal?`두 성향의 가운데에 가깝습니다. 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다. `:''}${p.sum}</p>
+   <div class="tags">${p.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
+   <details><summary>상세 설명과 세부 기질 보기</summary><div>
+    <p>${p.det}</p>
+    ${x.a.subs.map((s,i)=>subRow(x.a,s,x.subs[i])).join('')}
+    <div class="stack" style="gap:6px"><span class="small muted">이렇게 말해 보세요</span><p class="say">“${p.say}”</p><p class="avoid small">“${p.no}”</p></div>
+   </div></details>
+  </section>`; }).join('');
+ const grow=r.gr.map(x=> x.sc==null? `<div class="stack" style="gap:6px"><b>${x.g.n}</b><p class="small muted">'잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다.</p></div>` : `<div class="stack" style="gap:6px">
+   <div class="gauge"><b>${x.g.n}</b><div class="track thin"><div class="fill" style="left:0;width:${x.sc}%;background:var(--g)"></div></div><span class="num">${x.sc}</span></div>
+   <p class="small"><b>${['지금 자라는 중','고르게 자라는 중','탄탄함'][x.lv]}.</b> ${x.g.lv[x.lv][0]}</p>
+   <details><summary>상세 설명</summary><div><p class="small">${x.g.lv[x.lv][1]}</p></div></details></div>`).join('');
+ return `<div class="sheet">
+   <div class="sheet-head"><span class="eyebrow">AIGYEOL TEMPERAMENT PROFILE</span><h2>아이결 정밀 기질검사 결과 보고서</h2></div>
+   <div class="meta">
+    <div><span>이름</span>${esc(nm())}</div><div><span>연령</span>${esc(st.age||'미입력')}</div><div><span>평가자</span>${esc(st.who)}</div>
+    <div><span>검사일</span>${esc(st.date)}${st.prev?` · 이전 ${st.prev.code}`:''}</div><div><span>문항</span>66문항 · 5점 척도</div><div><span>응답 일관성</span>${r.cons||'판단 불가'}${r.unk?` · 모르겠다 ${r.unk}문항`:''}</div>
+   </div>
+  </div>
+  <section class="card type">
+   <span class="eyebrow">기질 유형</span>${masc(r)}
+   ${codeHTML(r)}
+   <h1>${NICK[r.code]}</h1>
+   <p>${nmEun()} ${oneLine(r)}</p>
+  </section>
+  <section class="card">
+   <h2>한눈에 보는 기질 프로필</h2>
+   ${r.ax.map(x=>bar(x)).join('')}
+   <div class="legend"><span><i></i>균형 구간(40~60)</span><span>점이 끝에 가까울수록 성향이 뚜렷합니다</span></div>
+  </section>
+  ${axes}
+  <section class="card">
+   <div><h2>자라는 힘</h2><p class="small muted">기질은 타고나지만 이 세 가지는 경험으로 자랍니다. 나이가 어릴수록 낮게 나오는 것이 자연스럽습니다.</p></div>
+   ${grow}
+  </section>
+  <section class="card">
+   <h2>강점과 살펴볼 점</h2>
+   <div class="two">
+    <div class="stack" style="gap:6px"><h3>타고난 강점</h3>${r.ax.map(x=>`<p class="small">· ${P[x.letter].st}</p>`).join('')}</div>
+    <div class="stack" style="gap:6px"><h3>살펴볼 점</h3>${r.ax.map(x=>`<p class="small">· ${P[x.letter].wa}</p>`).join('')}</div>
+   </div>
+  </section>
+  <section class="card">
+   <h2>${esc(nm())}에게 잘 통하는 말</h2>
+   ${r.ax.map(x=>`<div class="stack" style="gap:4px"><span class="small muted">${x.pole} 기질에게</span><p class="say">“${P[x.letter].say}”</p></div>`).join('')}
+  </section>
+  <div class="note">
+   <b>결과를 읽을 때.</b> 이 보고서는 ${esc(st.who)}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있습니다.
+   ${r.cons==='낮음'?' 이번 응답은 비슷한 문항 사이에 답이 엇갈린 경우가 많아, 시간을 두고 다시 검사해 보기를 권합니다.':''}
+   점수는 또래와 비교한 순위가 아니라 문항 응답으로 본 아이 안의 경향입니다. 기질에는 좋고 나쁨이 없으며, 이 검사는 의학적 진단이나 발달 평가를 대신하지 않습니다.
+  </div>
+  <section class="cta">
+   <h2>지금 겪는 상황을 물어보세요</h2>
+   <p class="muted">${esc(nm())}의 기질 결과를 바탕으로 상황에 맞는 행동과 말을 알려 드립니다.</p>
+   <a class="btn" href="#coach">상황별 대화 열기</a>
+  </section>
+  ${passBar()}
+  <div class="row">${passOn()&&st.pass.retest<1?'<button class="btn ghost" data-retest>다시 검사하기 (이용권에 1회 포함)</button>':''}<a class="btn ghost" href="#blueprint">문항과 정책 보기</a></div>
+  ${demoTools()}`; };
+
+V.blueprint=()=>`
+ <section class="stack"><span class="eyebrow">내부 검토용</span><h1>문항과 채점 설계</h1>
+  <p class="muted">전문가 감수와 베타 검증 전의 초안입니다. 문항은 모두 자체 작성했으며 기존 검사의 문항을 옮기지 않았습니다.</p></section>
+ <div class="card"><h2>두 검사의 관계</h2>
+  <div class="tw"><table><tr><th></th><th>무료 간이검사</th><th>유료 정밀검사</th></tr>
+   <tr><td>문항</td><td>12문항(축당 3, 세부 기질당 1)</td><td>66문항(기질 48 + 자라는 힘 18)</td></tr>
+   <tr><td>시간</td><td>약 1분</td><td>약 10분. 무료 응답은 이어받아 54문항만 추가</td></tr>
+   <tr><td>보여 주는 것</td><td>네 글자 유형, 별명, 가장 뚜렷한 축 1개 풀이</td><td>4축 강도, 세부 기질 12, 자라는 힘 3, 강점·살펴볼 점, 말 가이드, 응답 일관성</td></tr>
+   <tr><td>전환 장치</td><td colspan="2">경계에 있는 축 알림, 잠긴 항목에 아이 이름과 유형 반영, 답한 문항 이어가기</td></tr></table></div></div>
+ <div class="card"><h2>상품과 사용량 정책</h2>
+  <div class="tw"><table><tr><th>항목</th><th>내용</th></tr>
+   <tr><td>가격</td><td>5,900원, 1회 결제. 자동 결제 없음</td></tr>
+   <tr><td>포함</td><td>정밀 리포트, 상황별 AI 대화 2달(60일), 기간 중 다시 검사하기 1회</td></tr>
+   <tr><td>기간이 끝나면</td><td>리포트는 계속 볼 수 있음. AI 대화와 다시 검사하기는 잠기고, 다시 결제하면 2달이 새로 열림</td></tr>
+   <tr><td>AI 대화 한도</td><td>30일마다 30회, 하루 5회, 한 상황당 이어 묻기 3회, 입력 500자</td></tr>
+   <tr><td>횟수에서 빼는 것</td><td>자주 묻는 상황 6가지(미리 써 둔 답)</td></tr>
+   <tr><td>시제품의 AI</td><td>목업입니다. 실제 AI를 부르지 않고 기질 결과로 조합한 예시 답을 보여 주며, 횟수 차감은 실제처럼 동작합니다</td></tr>
+   <tr><td>안전</td><td>자해, 학대가 의심되는 문장은 AI에 보내지 않고 상담 전화를 안내</td></tr>
+   <tr><td>광고</td><td>전면광고 없음</td></tr></table></div></div>
+ <div class="card"><h2>채점 규칙</h2>
+  <ul class="small" style="margin:0;padding-left:18px">
+   <li>응답 1~5점. 역채점 문항은 6에서 뺍니다.</li>
+   <li>'잘 모르겠다'는 점수에 넣지 않습니다(가운데 점수로 채우지 않음). 같은 세부 기질의 나머지 문항으로 계산하고, 간이검사에서는 같은 세부 기질의 다른 문항을 대신 묻습니다. 한 세부 기질의 문항을 모두 모르겠다고 하면 그 항목은 '정보 부족'으로 표시합니다.</li>
+   <li>세부 기질 점수 = 문항 평균을 0~100으로 환산. 축 점수 = 세부 기질 3개의 평균.</li>
+   <li>50 이상이면 앞 글자(E, S, F, J), 미만이면 뒤 글자(I, N, T, P).</li>
+   <li>50에서 20 이상 떨어지면 뚜렷함, 8 이상이면 약간, 그 안이면 균형에 가까움.</li>
+   <li>자라는 힘: 65 이상 탄탄함, 40~64 고르게 자라는 중, 40 미만 지금 자라는 중.</li>
+   <li>응답 일관성: 같은 세부 기질 안에서 정방향 문항 평균과 역방향 문항(뒤집은 값) 평균의 차이. 평균 차이 0.9 미만 높음, 1.5 미만 보통, 그 이상 낮음.</li>
+   <li>또래 비교(백분위)는 규준 자료가 모인 뒤에 추가합니다. 지금 점수는 아이 안의 경향입니다.</li>
+  </ul></div>
+ ${AX.map(a=>`<div class="card"><h2 style="color:var(${a.c})">${a.hi}(${a.H}) · ${a.lo}(${a.L})</h2><p class="small muted">${a.q}</p>
+  <div class="tw"><table><tr><th>세부 기질</th><th>문항</th><th>표시</th></tr>
+  ${a.subs.map(s=>s.items.map((it,i)=>`<tr>${i===0?`<td rowspan="4"><b>${s.n}</b><br><span class="muted">${s.lo} ↔ ${s.hi}</span></td>`:''}<td>${esc(it[0])}<br><span class="muted">예: ${esc(EXS[a.id+a.subs.indexOf(s)][i])}</span></td><td>${it[1]?'<span class="mk">역채점</span> ':''}${it[2]?'<span class="mk">무료</span>':''}</td></tr>`).join('')).join('')}
+  </table></div></div>`).join('')}
+ <div class="card"><h2 style="color:var(--g)">자라는 힘</h2>
+  <div class="tw"><table><tr><th>척도</th><th>문항</th><th>표시</th></tr>
+  ${GR.map(g=>g.items.map((it,i)=>`<tr>${i===0?`<td rowspan="6"><b>${g.n}</b><br><span class="muted">${g.d}</span></td>`:''}<td>${esc(it[0])}<br><span class="muted">예: ${esc(EXS[g.id][i])}</span></td><td>${it[1]?'<span class="mk">역채점</span>':''}</td></tr>`).join('')).join('')}
+  </table></div></div>
+ <div class="card"><h2>16가지 유형 별명</h2><div class="tags">${Object.entries(NICK).map(([k,n])=>`<span class="tag tm"><img class="px" src="${TM[k]}" alt=""><b>${k}</b> ${n}</span>`).join('')}</div></div>`;
+
+/* ---------- 이용권 · 상황별 대화 ---------- */
+const DAY=864e5, LIM={mon:30,day:5,follow:3,len:500};
+const passOn=()=> !!st.pass && Date.now()<st.pass.end;
+const fmtD=ms=>{ const d=new Date(ms); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
+function usage(){ const u=st.use||(st.use={}); const mk=st.pass? st.pass.start+':'+Math.floor((Date.now()-st.pass.start)/(30*DAY)) : '-'; const dk=today();
+  if(u.mk!==mk){ u.mk=mk; u.mn=0; } if(u.dk!==dk){ u.dk=dk; u.dn=0; } return u; }
+function buyPass(){ const n=(st.pass&&st.pass.n||0)+1; st.pass={start:Date.now(),end:Date.now()+60*DAY,retest:0,n}; st.use={}; save(); }
+function passBar(){ if(!st.pass) return '';
+  if(!passOn()) return `<div class="passbar"><span>이용권이 <b>${fmtD(st.pass.end)}</b>에 끝났습니다. 리포트는 계속 볼 수 있습니다.</span><button class="btn" data-buy>다시 결제하기 5,900원</button></div>`;
+  const u=usage(), left=Math.ceil((st.pass.end-Date.now())/DAY);
+  return `<div class="passbar"><span>이용권 <b>${fmtD(st.pass.end)}</b>까지 · ${left}일 남음</span><span>AI 대화 이번 달 <b>${u.mn}/${LIM.mon}</b> · 오늘 <b>${u.dn}/${LIM.day}</b></span></div>`; }
+const demoTools=()=>`<details><summary class="small muted">시제품 확인용 도구</summary><div><div class="row"><button class="btn ghost" data-demo="expire">이용권 만료시키기</button><button class="btn ghost" data-demo="usemax">오늘 한도 채우기</button><button class="btn ghost" data-reset>전부 지우고 처음부터</button></div></div></details>`;
+
+V.pass=()=>{ const again=st.pass&&!passOn(); const left=ITEMS.filter(x=>st.ans[x.id]==null).length;
+ return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${again?'이용권 다시 결제':'아이결 정밀검사'}</span>
+  <h1>${again?'2달 이용권을 다시 여세요':esc(nm())+'의 결을 끝까지 읽어 보세요'}</h1></section>
+  <div class="card" style="border-color:var(--accent)">
+   <div class="price">5,900원<small>2달 이용권 · 1회 결제</small></div>
+   <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
+    <li><b>정밀 리포트.</b> 기질 4축, 세부 기질 12가지, 자라는 힘 3가지, 강점과 살펴볼 점</li>
+    <li><b>상황별 AI 대화 2달.</b> 지금 겪는 상황을 적으면 아이 기질에 맞는 행동과 말을 알려 줍니다. 월 30회</li>
+    <li><b>다시 검사하기 1회.</b> 아빠가 답해 보거나, 두 달 사이의 변화를 확인할 때</li>
+   </ul>
+   <button class="btn" data-buy>5,900원 결제하기</button>
+   <p class="small muted">자동 결제는 없습니다. 2달 뒤에 끝나며, 리포트는 그 뒤에도 볼 수 있습니다.${left&&left<ITEMS.length?` 무료 검사에서 답한 문항은 이어지고 ${left}문항이 남았습니다.`:''}</p>
+   <p class="small muted">시제품이라 실제 결제는 일어나지 않습니다.</p>
+  </div>
+  <div class="row"><button class="btn ghost" data-go="home">나중에 하기</button></div>`; };
+
+const PRE=[
+ {t:'마트에서 사 달라고 떼쓸 때',ax:2,H:['사람이 적은 곳으로 옮겨 감정이 가라앉을 때까지 곁에 있어 주세요. 표현이 큰 아이는 울음이 지나가야 말이 들립니다.','갖고 싶었는데 못 사서 정말 속상하구나. 다 울고 나면 안아 줄게.'],L:['조용히 굳어 있거나 시무룩해도 그냥 넘기지 말고 마음을 물어봐 주세요. 잔잔한 아이는 속상함을 겉으로 덜 드러냅니다.','갖고 싶었지. 오늘은 안 사는 날이야. 대신 사진 찍어 두고 생일 목록에 넣을까?']},
+ {t:'어린이집에 안 가겠다고 할 때',ax:0,H:['가서 할 재미있는 일을 구체적으로 하나 정해 주세요. 탐험형 아이는 기대할 거리가 있으면 움직입니다.','오늘은 가서 뭐부터 해 볼까? 블록? 미끄럼틀? 끝나고 알려 줘.'],L:['10분 일찍 도착해 교실을 천천히 둘러볼 시간을 주세요. 관찰형 아이는 준비할 시간이 있으면 훨씬 수월합니다.','들어가기 전에 조금 보고 있어도 돼. 준비되면 선생님한테 인사하자.']},
+ {t:'놀이를 끝내고 집에 가야 할 때',ax:3,H:['끝나기 5분 전과 1분 전에 미리 알려 주고, 다음 순서를 말해 주세요.','미끄럼틀 두 번만 더 타면 집에 갈 거야. 집에 가면 목욕하고 책 읽자.'],L:['끝내는 방법을 둘 중에 고르게 해 주세요. 자유형 아이는 선택권이 있으면 덜 버팁니다.','이제 갈 시간이야. 걸어서 갈래, 깡충깡충 뛰어서 갈래?']},
+ {t:'옷이 불편하다며 안 입으려 할 때',ax:1,H:['상표를 떼고, 촉감이 괜찮은 옷 두 벌 중에 고르게 해 주세요. 섬세한 아이에게는 실제로 불편한 감각입니다.','이 옷이 따끔거렸구나. 이 두 개 중에 어떤 게 편해?'],L:['불편한 이유가 따로 있는지(덥다, 입기 싫다) 물어보고 고를 기회를 주세요.','이 옷이 싫은 이유가 있어? 그럼 이 둘 중에 골라 볼래?']},
+ {t:'친구 장난감을 빼앗았을 때',ax:0,H:['바로 다가가 손을 잡고 멈추게 한 뒤, 말로 부탁하는 법을 짧게 보여 주세요.','갖고 놀고 싶었구나. 그럴 땐 "나도 해 봐도 돼?" 하고 물어보는 거야. 같이 말해 보자.'],L:['여러 사람 앞에서 꾸짖지 말고 옆으로 데려가 조용히 이야기해 주세요.','그 장난감이 좋았구나. 친구한테 돌려주고, 다음에 해도 되는지 같이 물어보자.']},
+ {t:'잠자리에 안 들려고 할 때',ax:3,H:['자기 전 순서(씻기, 책 한 권, 불 끄기)를 매일 똑같이 지켜 주세요.','책 한 권 읽고 불 끄는 거야. 어떤 책으로 할까?'],L:['순서 전체를 묶기보다 마지막 두 가지만 고정하고, 나머지는 고르게 해 주세요.','이 닦기랑 잠옷 입기 중에 뭐 먼저 할래? 그다음엔 책 읽고 자는 거야.']}
+];
+const CRISIS=/(죽고\s*싶|죽이고\s*싶|죽여|자살|자해|사라지고\s*싶|때렸|때리고\s*싶|학대|던졌|목을)/;
+let conv=null, busy=false, cerr='';
+const KEYS=[/마트|사 달|장난감 사|떼/,/어린이집|유치원|등원|안 가/,/집에 가|끝내|그만|놀이터/,/옷|양말|신발|입/,/빼앗|뺏|때리|밀|친구/,/잠|자려|안 자|밤/];
+function mockAns(r,q){ const i=KEYS.findIndex(k=>k.test(q));
+  if(i>=0){ const pz=PRE[i], x=r.ax[pz.ax], v=x.sc>=50?pz.H:pz.L, p=P[x.letter];
+    return {me:'먼저 숨을 한 번 고르고 아이 눈높이로 내려가 주세요.',act:v[0],say:v[1],avoid:p.no,why:`${nm()}의 ${x.pole} 기질 때문입니다. ${p.sum}`,mock:1}; }
+  const x=[...r.ax].sort((a,b)=>b.d-a.d)[0], p=P[x.letter];
+  return {me:'먼저 숨을 한 번 고르고 아이 눈높이로 내려가 주세요.',act:p.wa+' '+p.st,say:p.say,avoid:p.no,why:`${nm()}에게 가장 뚜렷한 ${x.pole} 기질에 맞춘 대응입니다. ${p.sum}`,mock:1}; }
+async function ask(q,preIdx){ const r=score(); cerr='';
+  if(preIdx!=null){ const pz=PRE[preIdx], x=r.ax[pz.ax], v=x.sc>=50?pz.H:pz.L, p=P[x.letter];
+    conv={q:pz.t,turns:[{q:pz.t,a:{me:'먼저 숨을 한 번 고르고 아이 눈높이로 내려가 주세요.',act:v[0],say:v[1],avoid:p.no,why:`${nm()}의 ${x.pole} 기질 때문입니다. ${p.sum}`,canned:1}}]}; return render(); }
+  q=q.trim().slice(0,LIM.len); if(!q) return;
+  if(CRISIS.test(q)){ conv={q,turns:[{q,a:{crisis:1}}]}; return render(); }
+  const u=usage(), follow=conv&&conv.cont;
+  if(!passOn()){ cerr='이용권이 끝났습니다. 다시 결제하면 이어서 쓸 수 있습니다.'; return render(); }
+  if(u.mn>=LIM.mon){ cerr='이번 달 AI 대화 30회를 모두 썼습니다. 자주 묻는 상황은 횟수와 상관없이 볼 수 있습니다.'; return render(); }
+  if(u.dn>=LIM.day){ cerr='오늘 AI 대화 5회를 모두 썼습니다. 내일 다시 물어볼 수 있습니다.'; return render(); }
+  if(follow && conv.turns.length>LIM.follow){ cerr='한 상황에서는 3번까지 이어 물을 수 있습니다. 새 상황으로 시작해 주세요.'; return render(); }
+  if(!follow) conv={q,turns:[]}; conv.cont=false;
+  conv.turns.push({q,a:null}); busy=true; render();
+  const turn=conv.turns[conv.turns.length-1];
+  // 목업: 실제 AI를 부르지 않고, 기질 결과로 조합한 예시 답을 잠시 뒤에 보여 준다. 횟수는 실제처럼 차감한다.
+  await new Promise(ok=>setTimeout(ok,700));
+  turn.a=mockAns(r,q); u.mn++; u.dn++; save();
+  busy=false; render(); }
+function ansHTML(a){ if(!a) return `<div class="card"><p class="muted">${esc(nm())}의 기질에 맞춰 답을 쓰고 있습니다…</p></div>`;
+  if(a.crisis) return `<div class="help"><h3>혼자 감당하기 어려운 상황으로 보입니다</h3><p>지금 바로 도움을 받을 수 있는 곳입니다. 이 내용은 AI에 보내지 않았습니다.</p><p><b>109</b> 자살예방 상담전화 (24시간)</p><p><b>112</b> 아동학대 신고, 긴급 상황</p></div>`;
+  if(a.off) return `<div class="card"><p>아이와의 상황에 대해서만 답할 수 있습니다. 횟수는 차감되지 않았습니다.</p></div>`;
+  const row=(l,t,c)=> t? `<div class="stack" style="gap:2px"><span class="lab">${l}</span><p class="${c||''}">${c==='say'||c==='avoid small'?'“'+esc(t)+'”':esc(t)}</p></div>`:'';
+  return `<div class="card ans">${a.canned?'<span class="tag" style="align-self:flex-start">미리 써 둔 답 · 횟수 차감 없음</span>':''}${a.mock?'<span class="tag" style="align-self:flex-start">목업 답변 · 실제 서비스에서는 AI가 상황에 맞춰 답합니다</span>':''}
+   ${row('나부터',a.me)}${row('이렇게 해 보세요',a.act)}${row('이렇게 말해 보세요',a.say,'say')}${row('피할 말',a.avoid,'avoid small')}${row('왜 통할까요',a.why)}</div>`; }
+V.coach=()=>{ if(!done(ITEMS)) return empty('상황별 대화는 정밀검사 결과가 있어야 열립니다.','full');
+ if(!st.pass) return V.pass();
+ const r=score(), on=passOn(), u=usage(), canFollow=conv&&conv.turns.length&&conv.turns.length<=LIM.follow&&!conv.turns[0].a?.canned&&!conv.turns[conv.turns.length-1].a?.crisis;
+ return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${r.code} · ${NICK[r.code]}</span><div class="ttl"><img class="px" src="${TM[r.code]}" alt=""><h1>어떻게 말해야 할지 도와줘</h1></div>
+   <p class="muted">${esc(nm())}의 기질 결과에 맞춰 답합니다. 양육 참고용이며 전문 상담을 대신하지 않습니다.</p></section>
+  ${passBar()}
+  <div class="stack" style="gap:8px"><span class="small muted">자주 묻는 상황 · 횟수 차감 없음</span>
+   <div class="chips">${PRE.map((p,i)=>`<button class="chip" data-pre="${i}">${p.t}</button>`).join('')}</div></div>
+  ${conv? conv.turns.map(t=>`<div class="bubble">${esc(t.q)}</div>${ansHTML(t.a)}`).join('') : ''}
+  ${cerr?`<div class="note">${cerr}</div>`:''}
+  ${on? `<form class="card" id="askf">
+    <label class="f" for="in-q">${canFollow?'이어서 묻거나 새 상황을 적어 주세요':'지금 겪는 상황을 적어 주세요'}
+     <textarea id="in-q" maxlength="${LIM.len}" placeholder="예: 동생이 태어난 뒤로 자꾸 아기처럼 굴고 안아 달라고만 해요" ${busy?'disabled':''}></textarea></label>
+    <div class="row">${canFollow?`<button class="btn ghost" type="submit" data-follow="1" ${busy?'disabled':''}>이 상황 이어 묻기 (${conv.turns.length}/${LIM.follow})</button>`:''}<button class="btn" type="submit" ${busy?'disabled':''}>${busy?'답변 쓰는 중':'새 상황 물어보기'}</button></div>
+    <p class="small muted">최대 500자. 답변 1회마다 횟수가 1 줄어듭니다.</p></form>`
+   : `<div class="cta"><h2>AI 대화는 이용권 기간에만 쓸 수 있습니다</h2><p class="muted">다시 결제하면 2달이 새로 열리고, 다시 검사하기도 1회 포함됩니다.</p><button class="btn" data-buy>다시 결제하기 5,900원</button></div>`}
+  ${demoTools()}`; };
+
+/* ---------- 라우팅과 이벤트 ---------- */
+let view='home';
+function render(){
+  const app=$('#app'); app.innerHTML=(V[view]||V.home)(); document.body.dataset.view=view;
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===view));
+  window.scrollTo(0,0);
+}
+function go(v){ if(v==='quick'||v==='full'){ grab();
+    if(v==='full'&&!passOn()){ view='pass'; return render(); }
+    if(v==='full'&&done(ITEMS)) return go('report');
+    startTest(v); view='test'; render(); return; }
+  if(location.hash==='#'+v){ view=v; render(); } else location.hash=v; }
+function grab(){ const n=$('#in-name'); if(n){ st.name=n.value.trim(); st.age=$('#in-age').value; st.who=$('#in-who').value; save(); } }
+function sample(mode){ grab(); const seed=[4,5,2,4,3,5,2,4,1,5,4,2,5,3]; let k=0;
+  (mode==='quick'?FREE:ITEMS).forEach(it=>{ const base={A:2,B:4,C:2,D:4}[it.ax]||4; let a=base+(seed[k++%seed.length]>3?0:(k%2?1:-1)); a=Math.max(1,Math.min(5,a)); st.ans[it.id]= it.r? 6-a : a; });
+  if(!st.name) st.name='콩이'; if(!st.age) st.age='만 5세'; st.qd=1; st.date=today(); if(mode==='full'&&!passOn()) buyPass(); save(); go(mode==='quick'?'quick-result':'report'); }
+const today=()=>{ const d=new Date(); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.go) return go(b.dataset.go);
+  if(b.dataset.sample) return sample(b.dataset.sample);
+  if(b.dataset.buy!=null){ buyPass(); cerr=''; return done(ITEMS)? (view==='coach'? render() : go('report')) : go('full'); }
+  if(b.dataset.retest!=null){ if(passOn()&&st.pass.retest<1){ st.prev={code:score().code,date:st.date}; st.pass.retest++; st.ans={}; st.qd=0; save(); go('full'); } return; }
+  if(b.dataset.demo==='expire'){ if(st.pass){ st.pass.end=Date.now()-DAY; save(); } return render(); }
+  if(b.dataset.demo==='usemax'){ const u=usage(); u.dn=LIM.day; save(); return render(); }
+  if(b.dataset.pre!=null){ return ask('',+b.dataset.pre); }
+  if(b.type==='submit'){ const f=b.closest('form'); if(f&&f.id==='askf'){ e.preventDefault(); const q=$('#in-q').value; if(conv) conv.cont=!!b.dataset.follow; return ask(q); } }
+  if(b.dataset.reset!=null){ st.ans={}; st.qd=0; st.pass=null; st.use={}; st.prev=null; conv=null; save(); return go('home'); }
+  if(b.dataset.back!=null){ if(tq.i>0){ tq.i--; render(); } return; }
+  if(b.dataset.a){ const cur=tq.list[tq.i]; st.ans[cur.id]=+b.dataset.a; st.date=today();
+    if(tq.mode==='quick' && +b.dataset.a===0 && cur.ax){ // 간이검사: 같은 세부 기질의 다른 문항으로 대신 묻기
+      const alt=ITEMS.find(x=>x.ax===cur.ax&&x.sub===cur.sub&&st.ans[x.id]==null&&!tq.list.includes(x));
+      if(alt) tq.list.splice(tq.i+1,0,alt); }
+    if(tq.i===tq.list.length-1){ if(tq.mode==='quick') st.qd=1; }
+    save();
+    if(tq.i<tq.list.length-1){ tq.i++; render(); } else go(tq.mode==='quick'?'quick-result':'report'); }
+});
+function route(){ const h=location.hash.slice(1); view= V[h]&&h!=='test'&&h!=='pass'? h : 'home'; render(); }
+document.addEventListener('submit',e=>e.preventDefault());
+window.addEventListener('hashchange',route);
+route();
+</script>
+
+</body>
+</html>
