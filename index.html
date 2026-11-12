@@ -3,18 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#FFF8EC" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1F2240" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FBF5EA">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="robots" content="noindex">
-<title>아이결 기질검사</title>
-<meta name="description" content="만 2~7세 아이의 타고난 결을 네 글자로 읽는 부모용 기질검사 시제품">
+<title>내 아이의 MBTI · 영유아 기질검사</title>
+<meta name="description" content="내 아이의 MBTI: 만 2~7세 아이의 타고난 기질을 MBTI처럼 네 글자로 읽는 부모용 영유아 기질검사 시제품">
 <link rel="icon" type="image/png" href="assets/icon_180.png">
 <link rel="apple-touch-icon" href="assets/icon_180.png">
 </head>
 <body>
 
+<meta property="og:title" content="내 아이의 MBTI">
+<meta property="og:description" content="만 2~7세 아이의 타고난 기질을 MBTI처럼 네 글자로 읽는 부모용 영유아 기질검사">
+<meta property="og:image" content="https://kiliuswook.github.io/aigyeol/assets/banner_result.webp">
+<meta property="og:type" content="website">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
@@ -285,12 +288,12 @@ details[open]>summary::before{transform:rotate(90deg)}
 .banner::before{content:"";position:absolute;inset:0;pointer-events:none;border:0 solid transparent;border-image:url(assets/ui/card.webp) 22 / 14px / 0 stretch}
 .clip{position:absolute;top:-16px;left:22px;width:26px;height:58px;background:url(assets/ui/d_clip.webp) center/contain no-repeat;transform:rotate(-8deg);z-index:2}
 .masc{transform:rotate(4deg)}
-.hero+section h1{background:url(assets/ui/d_underline.webp) left bottom/62% 10px no-repeat;padding-bottom:10px}
+.mbti{color:var(--accent-ink);white-space:nowrap;padding:0 2px 6px;background:url(assets/ui/d_underline.webp) left bottom/100% 9px no-repeat}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#home"><img src="assets/mascot_child.webp" alt="" width="34" height="34">아이결 <small>우리 아이 기질 유형 검사</small></a>
+    <a class="brand" href="#home"><img src="assets/mascot_child.webp" alt="" width="34" height="34">내 아이의 MBTI <small>영유아 기질검사</small></a>
 
   </header>
   <main id="app" class="stack" style="gap:20px"></main>
@@ -478,7 +481,7 @@ V.home=()=>`
  <div class="hero" role="img" aria-label="풀밭에서 엄마 말랑이가 무릎을 굽혀 아이 말랑이와 눈을 맞추고 이야기하는 색연필 그림"><span>오늘도 말랑하게, 우리 아이 이야기</span></div>
  <section class="stack">
   <span class="eyebrow">만 2~7세 · 부모가 답하는 기질검사</span>
-  <h1>우리 아이는 어떤 결을 타고났을까요</h1>
+  <h1>우리 아이의 <span class="mbti">MBTI</span>는 무엇일까요?</h1>
   <p class="muted">MBTI처럼 네 글자로 읽는 아이 기질 유형. 최근 한 달간 아이의 모습을 떠올리며 답해 주세요.</p>
  </section>
  <div class="card">
@@ -498,7 +501,7 @@ V.home=()=>`
   </div>
   <div class="card plan" style="border-color:var(--accent)">
    <span class="tag" style="align-self:flex-start;background:var(--accent);color:var(--on-accent);border-color:var(--accent)">정밀</span>
-   <h2>아이결 정밀검사</h2>
+   <h2>내 아이의 MBTI 정밀검사</h2>
    <div class="price">5,900원<small>2달 이용권</small></div>
    <ul class="small"><li>66문항 정밀 리포트(기질 4축, 세부 기질 12, 자라는 힘 3)</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
    <button class="btn dark" data-go="full">정밀검사 시작하기</button>
@@ -511,7 +514,7 @@ let tq={list:[],i:0,mode:''};
 function startTest(mode){ tq.mode=mode; tq.list= mode==='quick'? FREE.slice() : ITEMS.filter(x=>st.ans[x.id]==null); if(mode==='full'&&!tq.list.length) tq.list=ITEMS; tq.i=0; }
 V.test=()=>{ const it=tq.list[tq.i], n=tq.list.length;
  return `<div class="stack" style="gap:18px;padding-top:8px">
-  <div class="stack" style="gap:6px"><div class="small muted" style="display:flex;justify-content:space-between"><span>${tq.mode==='quick'?'1분 간이검사':'아이결 정밀검사'}</span><span>${tq.i+1} / ${n}</span></div>
+  <div class="stack" style="gap:6px"><div class="small muted" style="display:flex;justify-content:space-between"><span>${tq.mode==='quick'?'1분 간이검사':'내 아이의 MBTI 정밀검사'}</span><span>${tq.i+1} / ${n}</span></div>
   <div class="prog"><i style="width:${(tq.i)/n*100}%"></i></div></div>
   <p class="small muted">최근 한 달간 ${esc(nm())}의 모습에 가장 가까운 것을 골라 주세요.</p>
   <div class="stack" style="gap:8px"><p class="qtext">${esc(it.t)}</p><p class="exq"><b>예</b> ${esc(it.ex)}</p></div>
@@ -549,7 +552,7 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
    ${lock('상황별 AI 대화 2달','떼쓸 때, 안 자려 할 때처럼 지금 겪는 상황을 적으면 '+esc(nm())+'의 기질에 맞는 대응을 알려 줍니다')}
   </div>
   <div class="cta">
-   <h2>${esc(nm())}의 결을 끝까지 읽어 보세요</h2>
+   <h2>${esc(nm())}의 MBTI를 끝까지 읽어 보세요</h2>
    <p class="muted">방금 답한 12문항은 그대로 이어집니다. 남은 ${left}문항, 약 ${Math.max(1,Math.round(left/6))}분이면 정밀 리포트가 완성됩니다.</p>
    <div class="price">5,900원<small style="color:var(--bg);opacity:.75">정밀 리포트 + 상황별 AI 대화 2달</small></div>
    <button class="btn" data-go="full">정밀검사 이어서 하기</button>
@@ -579,7 +582,7 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
    <details><summary>상세 설명</summary><div><p class="small">${x.g.lv[x.lv][1]}</p></div></details></div>`).join('');
  return `<div class="sheet"><i class="clip" aria-hidden="true"></i>
    <figure class="banner"><img src="assets/banner_result.webp" alt="" width="1000" height="560"></figure>
-   <div class="sheet-head"><span class="eyebrow">AIGYEOL TEMPERAMENT PROFILE</span><h2>아이결 정밀 기질검사 결과 보고서</h2></div>
+   <div class="sheet-head"><span class="eyebrow">내 아이의 MBTI · 영유아 기질검사</span><h2>정밀 기질검사 결과 보고서</h2></div>
    <div class="meta">
     <div><span>이름</span>${esc(nm())}</div><div><span>연령</span>${esc(st.age||'미입력')}</div><div><span>평가자</span>${esc(st.who)}</div>
     <div><span>검사일</span>${esc(st.date)}${st.prev?` · 이전 ${st.prev.code}`:''}</div><div><span>문항</span>66문항 · 5점 척도</div><div><span>응답 일관성</span>${r.cons||'판단 불가'}${r.unk?` · 모르겠다 ${r.unk}문항`:''}</div>
@@ -680,8 +683,8 @@ function passBar(){ if(!st.pass) return '';
 const demoTools=()=>`<details><summary class="small muted">시제품 확인용 도구</summary><div><div class="row"><button class="btn ghost" data-demo="expire">이용권 만료시키기</button><button class="btn ghost" data-demo="usemax">오늘 한도 채우기</button><button class="btn ghost" data-reset>전부 지우고 처음부터</button></div></div></details>`;
 
 V.pass=()=>{ const again=st.pass&&!passOn(); const left=ITEMS.filter(x=>st.ans[x.id]==null).length;
- return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${again?'이용권 다시 결제':'아이결 정밀검사'}</span>
-  <h1>${again?'2달 이용권을 다시 여세요':esc(nm())+'의 결을 끝까지 읽어 보세요'}</h1></section>
+ return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${again?'이용권 다시 결제':'내 아이의 MBTI 정밀검사'}</span>
+  <h1>${again?'2달 이용권을 다시 여세요':esc(nm())+'의 MBTI를 끝까지 읽어 보세요'}</h1></section>
   <div class="card" style="border-color:var(--accent)">
    <div class="price">5,900원<small>2달 이용권 · 1회 결제</small></div>
    <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
