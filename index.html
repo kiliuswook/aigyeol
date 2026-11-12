@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex">
 <title>아이결 기질검사</title>
 <meta name="description" content="만 2~7세 아이의 타고난 결을 네 글자로 읽는 부모용 기질검사 시제품">
-<link rel="icon" type="image/png" href="assets/mascot_child.png">
-<link rel="apple-touch-icon" href="assets/mascot_child.png">
+<link rel="icon" type="image/png" href="assets/icon_180.png">
+<link rel="apple-touch-icon" href="assets/icon_180.png">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
 <style>
 /* Art concept C4 "색연필·크레용": warm cream paper, sky blue, pink, leaf green; Gaegu handwritten headings; soft hand-drawn edges; Higgsfield crayon characters. Layout: one narrow phone-first column. */
 :root{
-  --hero:url(assets/key_home.jpg); --paper:url(assets/paper_tile.jpg); --head-eb:#8CC4EA;
+  --hero:url(assets/key_home.webp); --paper:url(assets/paper_tile.webp); --head-eb:#8CC4EA;
   --bg:#FBF5EA; --surface:#FFFDF8; --sunk:#F5EDE0; --line:#E2D4BF;
   --fg:#36405A; --muted:#656C80; --accent:#8CC4EA; --accent-ink:#2D6C98; --on-accent:#1F2E45;
   --c1:#DD7356; --c2:#3A9586; --c3:#CF6189; --c4:#4C7CC0; --g:#6A9F45;
@@ -28,18 +28,6 @@
   --display:"Gaegu","Noto Sans KR",sans-serif;
   --body:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --paper:none; --head-eb:#2D6C98;
-  --bg:#252A36; --surface:#2F3545; --sunk:#2A2F3D; --line:#485067;
-  --fg:#F8F2E7; --muted:#BAC0D0; --accent:#8CC4EA; --accent-ink:#A8D5F4; --on-accent:#1C2A3D;
-  --c1:#F09A80; --c2:#6CC0B2; --c3:#EC8DB0; --c4:#93AEEA; --g:#A3CC7A;
-  --band:#3B4258; color-scheme:dark } }
-:root[data-theme="dark"]{
-  --paper:none; --head-eb:#2D6C98;
-  --bg:#252A36; --surface:#2F3545; --sunk:#2A2F3D; --line:#485067;
-  --fg:#F8F2E7; --muted:#BAC0D0; --accent:#8CC4EA; --accent-ink:#A8D5F4; --on-accent:#1C2A3D;
-  --c1:#F09A80; --c2:#6CC0B2; --c3:#EC8DB0; --c4:#93AEEA; --g:#A3CC7A;
-  --band:#3B4258; color-scheme:dark }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
@@ -205,15 +193,108 @@ body[data-view="quick-result"]{padding-bottom:calc(160px + env(safe-area-inset-b
 .mic.on{background:var(--accent);color:var(--on-accent);animation:micp 1.4s ease-in-out infinite}
 @keyframes micp{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 60%,transparent)}50%{box-shadow:0 0 0 10px transparent}}
 @media (prefers-reduced-motion:reduce){ .mic.on{animation:none} }
+
+/* ---- 손그림 UI (c4_ui, 힉스필드 GPT Image 2.5): 9-slice 테두리 그림, 크레용 막대·점, 손그림 아이콘 ---- */
+html,body{background:var(--bg) var(--paper) repeat;background-size:512px}
+header.top{border-bottom:0;background:url(assets/ui/d_wave.webp) left bottom/100% 7px no-repeat,var(--bg) var(--paper) repeat;background-size:100% 7px,512px}
+/* 카드: 손그림 틀(::before) + 아래에 살짝 비껴 깔린 종이(::after) */
+.card,.sheet{position:relative;isolation:isolate;border:0;background:none;box-shadow:none;border-radius:0}
+.card::before,.sheet::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border:0 solid transparent;border-image:url(assets/ui/card.webp) 22 fill / 15px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+.card::after,.sheet::after{content:"";position:absolute;inset:6px -4px -6px 5px;z-index:-2;pointer-events:none;border:0 solid transparent;border-image:url(assets/ui/box_soft.webp) 27 fill / 14px / 0 stretch;border-radius:0;box-shadow:none;background:none;opacity:.9}
+.card:nth-of-type(even)::after{inset:7px 5px -5px -4px}
+.card:nth-of-type(3n)::after{inset:5px -3px -7px 2px}
+.card.plan[style*="accent"]::before{border-image-source:url(assets/ui/card_blue.webp);border-image-slice:23 fill}
+.sheet{padding:12px;overflow:visible}
+.sheet .banner{margin:0}
+.sheet-head{border:0 solid transparent;border-image:url(assets/ui/box_dark.webp) 30 fill / 14px / 0 stretch;border-radius:0;box-shadow:none;background:none;margin-top:10px;padding:18px 20px;color:var(--bg)}
+.meta{border-top:0} .meta div{border-bottom:1px dashed var(--line)}
+.cta{border:0 solid transparent;border-image:url(assets/ui/box_dark.webp) 30 fill / 15px / 0 stretch;border-radius:0;box-shadow:none;background:none;padding:24px 22px}
+.lock{border:0 solid transparent;border-image:url(assets/ui/box_lock.webp) 23 fill / 13px / 0 stretch;border-radius:0;box-shadow:none;background:none} .lock h3{display:flex;align-items:center;gap:8px} .ico{width:22px;height:22px;flex:none}
+.note,.exq,.passbar{border:0 solid transparent;border-image:url(assets/ui/box_soft.webp) 27 fill / 12px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+.help{border:0 solid transparent;border-image:url(assets/ui/box_pink.webp) 25 fill / 14px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+.bubble{border:0 solid transparent;border-image:url(assets/ui/bubble.webp) 81 fill / 26px / 0 stretch;border-radius:0;box-shadow:none;background:none;color:var(--bg);padding:12px 22px 22px 16px}
+/* 버튼 */
+.btn{border:0 solid transparent;border-image:url(assets/ui/btn_blue.webp) 60 fill / 26px / 0 stretch;border-radius:0;box-shadow:none;background:none;color:var(--on-accent)}
+.btn.ghost{border:0 solid transparent;border-image:url(assets/ui/btn_ghost.webp) 61 fill / 26px / 0 stretch;border-radius:0;box-shadow:none;background:none;color:var(--fg);font-weight:500}
+.btn.dark{border:0 solid transparent;border-image:url(assets/ui/btn_dark.webp) 60 fill / 26px / 0 stretch;border-radius:0;box-shadow:none;background:none;color:var(--bg)}
+.btn:active,.opt:active,.chip:active{transform:translateY(1px) rotate(-.4deg);filter:brightness(.95)}
+.stickycta .btn{box-shadow:none}
+.stickycta .btn::after{content:"";width:22px;height:22px;margin-left:8px;background:url(assets/ui/i_arrow_r.webp) center/contain no-repeat}
+[data-back]::before{content:"";width:20px;height:20px;margin-right:6px;background:url(assets/ui/i_arrow_l.webp) center/contain no-repeat}
+[data-retest]::before{content:"";width:20px;height:20px;margin-right:6px;flex:none;background:url(assets/ui/i_retry.webp) center/contain no-repeat}
+#askf .btn:not(.ghost)::after{content:"";width:20px;height:20px;margin-left:8px;background:url(assets/ui/i_send.webp) center/contain no-repeat}
+.mic{border:0 solid transparent;border-image:url(assets/ui/btn_ghost.webp) 61 fill / 24px / 0 stretch;border-radius:0;box-shadow:none;background:none;animation:none}
+.mic.on{border:0 solid transparent;border-image:url(assets/ui/btn_blue.webp) 60 fill / 24px / 0 stretch;border-radius:0;box-shadow:none;background:none;color:var(--on-accent);animation:wig 1.2s ease-in-out infinite}
+.mic img{width:24px;height:24px}
+@keyframes wig{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+/* 검사 선택지 */
+.opt{border:0 solid transparent;border-image:url(assets/ui/opt.webp) 30 fill / 13px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+.opt.sel{border:0 solid transparent;border-image:url(assets/ui/opt_sel.webp) 32 fill / 13px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+.opt.unk{border:0 solid transparent;border-image:url(assets/ui/opt_unk.webp) 31 fill / 13px / 0 stretch;border-radius:0;box-shadow:none;background:none;margin-top:6px}
+.opt b{border:0;background:url(assets/ui/dot_ring.webp) center/100% 100% no-repeat;font-family:var(--display);font-size:16px}
+.opt.sel b{background-image:url(assets/ui/dot_sky.webp);color:var(--fg)}
+.opt.sel::after{content:"";margin-left:auto;width:24px;height:24px;flex:none;background:url(assets/ui/i_check.webp) center/contain no-repeat}
+.prog{height:14px;border:0 solid transparent;border-image:url(assets/ui/track.webp) 25 fill / 7px / 0 stretch;border-radius:0;box-shadow:none;background:none;overflow:visible}
+.prog i{background:url(assets/ui/bar_sky.webp) center/100% 100% no-repeat;border-radius:0}
+/* 배지·칩 */
+.tag,.mk{border:0 solid transparent;border-image:url(assets/ui/tag.webp) 33 fill / 13px / 0 stretch;border-radius:0;box-shadow:none;background:none} .tag{padding:4px 13px} .mk{border-image-width:9px;padding:1px 8px}
+.tag.tm{padding:4px 14px 4px 8px}
+.tag[style]{background:none!important;border-color:transparent!important;color:var(--accent-ink)!important;font-weight:700}
+.chip{border:0 solid transparent;border-image:url(assets/ui/tag.webp) 33 fill / 20px / 0 stretch;border-radius:0;box-shadow:none;background:none;padding:8px 16px}
+.pill{border:0 solid transparent;border-image:url(assets/ui/tag.webp) 33 fill / 13px / 0 stretch;border-radius:0;box-shadow:none;background:none;color:var(--fg);padding:4px 13px 4px 28px;position:relative}
+.pill::before{content:"";position:absolute;left:10px;top:50%;width:13px;height:13px;transform:translateY(-50%)}
+.pill.c1::before{background:url(assets/ui/dot_c1.webp) center/contain} .pill.c2::before{background:url(assets/ui/dot_c2.webp) center/contain}
+.pill.c3::before{background:url(assets/ui/dot_c3.webp) center/contain} .pill.c4::before{background:url(assets/ui/dot_c4.webp) center/contain}
+/* 축 막대 */
+.track{border:0 solid transparent;border-image:url(assets/ui/track.webp) 25 fill / 7px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+.track.thin{border-image-width:4px}
+.track .mid{background:color-mix(in srgb,#B9A88F 20%,transparent);border-radius:3px}
+.track .fill{opacity:.55;border-radius:0;background:center/100% 100% no-repeat}
+.fill.c1{background-image:url(assets/ui/bar_c1.webp)} .fill.c2{background-image:url(assets/ui/bar_c2.webp)} .fill.c3{background-image:url(assets/ui/bar_c3.webp)} .fill.c4{background-image:url(assets/ui/bar_c4.webp)}
+.fill.g{background-image:url(assets/ui/bar_g.webp);opacity:1}
+.track .dot{border:0;width:22px;height:22px;background:center/100% 100% no-repeat}
+.track.thin .dot{width:16px;height:16px}
+.dot.c1{background-image:url(assets/ui/dot_c1.webp)} .dot.c2{background-image:url(assets/ui/dot_c2.webp)} .dot.c3{background-image:url(assets/ui/dot_c3.webp)} .dot.c4{background-image:url(assets/ui/dot_c4.webp)}
+.legend i{background:url(assets/ui/bar_sand.webp) center/100% 100% no-repeat;border-radius:0}
+/* 입력칸 */
+input,select,textarea{border:0 solid transparent;border-image:url(assets/ui/input.webp) 23 fill / 11px / 0 stretch;border-radius:0;box-shadow:none;background:none}
+select{appearance:none;-webkit-appearance:none;padding-right:38px}
+label.f:has(select){position:relative}
+label.f:has(select)::after{content:"";position:absolute;right:14px;bottom:17px;width:14px;height:14px;background:url(assets/ui/i_tri_down.webp) center/contain no-repeat;pointer-events:none}
+/* 펼치기·구분선·인용 */
+details{border-top:0;background:url(assets/ui/d_wave.webp) left top/100% 6px no-repeat;padding-top:14px}
+summary{list-style:none;display:flex;align-items:center;gap:6px} summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:14px;height:14px;flex:none;background:url(assets/ui/i_tri.webp) center/contain no-repeat;transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+.say{border-left:0;background:url(assets/ui/bar_sky_v.webp) left center/7px 100% no-repeat;padding-left:16px}
+.avoid{border-left:0;background:url(assets/ui/bar_sand_v.webp) left center/6px 100% no-repeat;padding-left:16px}
+/* 하단 탭바·검사 바 */
+#nav{border:0 solid transparent;border-image:url(assets/ui/card.webp) 22 fill / 15px 15px 0 15px / 0 stretch;border-radius:0;box-shadow:none;background:none;padding-top:10px}
+#nav a .ic{width:56px;height:34px;background:none;border-radius:0}
+#nav a .ic img{width:28px;height:28px}
+#nav a .on-i,#nav a.on .off-i{display:none} #nav a.on .on-i{display:block}
+#nav a.on .ic{background:url(assets/ui/d_blob.webp) center/100% 100% no-repeat;color:inherit}
+.testbar{border-top:0;background:url(assets/ui/d_wave.webp) left top/100% 7px no-repeat,var(--bg) var(--paper) repeat;background-size:100% 7px,512px}
+/* 그림 틀·테이프·클립 */
+.hero{border:0;box-shadow:none;border-radius:22px;overflow:visible}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;border:0 solid transparent;border-image:url(assets/ui/card.webp) 22 / 15px / 0 stretch}
+.hero::after{content:"";position:absolute;top:-14px;left:50%;width:118px;height:36px;transform:translateX(-50%) rotate(-3deg);background:url(assets/ui/d_tape.webp) center/contain no-repeat;pointer-events:none}
+.hero span{z-index:1;border:0;background:none;border:0 solid transparent;border-image:url(assets/ui/tag.webp) 33 fill / 16px / 0 stretch;border-radius:0;box-shadow:none;background:none;padding:6px 16px}
+.banner{position:relative;margin:0;border:0;aspect-ratio:auto}
+.banner img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:20px}
+.banner::before{content:"";position:absolute;inset:0;pointer-events:none;border:0 solid transparent;border-image:url(assets/ui/card.webp) 22 / 14px / 0 stretch}
+.clip{position:absolute;top:-16px;left:22px;width:26px;height:58px;background:url(assets/ui/d_clip.webp) center/contain no-repeat;transform:rotate(-8deg);z-index:2}
+.masc{transform:rotate(4deg)}
+.hero+section h1{background:url(assets/ui/d_underline.webp) left bottom/62% 10px no-repeat;padding-bottom:10px}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#home"><img src="assets/mascot_child.png" alt="">아이결 <small>우리 아이 기질 유형 검사</small></a>
+    <a class="brand" href="#home"><img src="assets/mascot_child.webp" alt="" width="34" height="34">아이결 <small>우리 아이 기질 유형 검사</small></a>
 
   </header>
   <main id="app" class="stack" style="gap:20px"></main>
-  <nav id="nav" aria-label="주요 화면"><a href="#home" data-v="home"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg></span>홈</a><a href="#quick-result" data-v="quick-result"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.5 6 .7-4.5 4 1.3 5.8-5.3-3-5.3 3 1.3-5.8-4.5-4 6-.7z"/></svg></span>무료 결과</a><a href="#report" data-v="report"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg></span>리포트</a><a href="#coach" data-v="coach"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg></span>대화</a></nav>
+  <nav id="nav" aria-label="주요 화면"><a href="#home" data-v="home"><span class="ic"><img class="off-i" src="assets/ui/i_home_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_home.webp" alt="" width="28" height="28"></span>홈</a><a href="#quick-result" data-v="quick-result"><span class="ic"><img class="off-i" src="assets/ui/i_star_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_star.webp" alt="" width="28" height="28"></span>무료 결과</a><a href="#report" data-v="report"><span class="ic"><img class="off-i" src="assets/ui/i_doc_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_doc.webp" alt="" width="28" height="28"></span>리포트</a><a href="#coach" data-v="coach"><span class="ic"><img class="off-i" src="assets/ui/i_chat_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_chat.webp" alt="" width="28" height="28"></span>대화</a></nav>
 </div>
 
 <script>
@@ -375,18 +456,18 @@ const done=list=> list.every(x=>st.ans[x.id]!=null);
 const quickDone=()=> st.qd||done(FREE);
 
 /* ---------- 그리기 도우미 ---------- */
-const M1='assets/mascot_parent.png', M2='assets/mascot_child.png';
-const TM=Object.fromEntries(Object.keys(NICK).map(k=>[k,`assets/t_${k}.png`]));
+const M1='assets/mascot_parent.webp', M2='assets/mascot_child.webp';
+const TM=Object.fromEntries(Object.keys(NICK).map(k=>[k,`assets/t_${k}.webp`]));
 const masc=r=>`<img class="masc" src="${TM[r.code]}" alt="${NICK[r.code]} 말랑이 캐릭터">`;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function bar(x,thin){ const a=x.a, s=x.sc, c=`var(${a.c})`;
   const l=Math.min(s,50), w=Math.abs(s-50);
   return `<div class="bar"><span class="l ${s<50?'on':''}">${a.lo}</span>
-   <div class="track ${thin?'thin':''}" role="img" aria-label="${a.lo} ${100-s}, ${a.hi} ${s}"><div class="mid"></div><div class="fill" style="left:${l}%;width:${w}%;background:${c};opacity:.35"></div><div class="dot" style="left:${s}%;background:${c}"></div></div>
+   <div class="track ${thin?'thin':''}" role="img" aria-label="${a.lo} ${100-s}, ${a.hi} ${s}"><div class="mid"></div><div class="fill ${a.c.slice(2)}" style="left:${l}%;width:${w}%"></div><div class="dot ${a.c.slice(2)}" style="left:${s}%"></div></div>
    <span class="${s>=50?'on':''}">${a.hi}</span></div>`; }
 function subRow(a,s,sc){ if(sc==null) return `<div class="sub"><div class="nm"><span>${s.n}</span><span class="muted">정보 부족</span></div><p class="small muted">이 항목은 '잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다.</p></div>`; return `<div class="sub"><div class="nm"><span>${s.n}</span><span class="muted">${sc<40?s.lo:sc>60?s.hi:'중간'}</span></div>
-  <div class="track thin"><div class="mid"></div><div class="dot" style="left:${sc}%;background:var(${a.c})"></div></div>
+  <div class="track thin"><div class="mid"></div><div class="dot ${a.c.slice(2)}" style="left:${sc}%"></div></div>
   <div class="ends"><span>${s.lo}</span><span>${s.hi}</span></div></div>`; }
 const codeHTML=r=> `<div class="code" aria-label="유형 코드 ${r.code}">${r.ax.map(x=>`<span style="color:var(${x.a.c})">${x.letter}</span>`).join('')}</div>`;
 const oneLine=r=> `${P[r.ax[0].letter].ph}, ${P[r.ax[1].letter].ph}, ${P[r.ax[2].letter].ph}, ${P[r.ax[3].letter].ph}입니다.`;
@@ -444,7 +525,7 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
  const r=score(); const top=[...r.ax].sort((x,y)=>y.d-x.d)[0]; const near=r.ax.filter(x=>x.d<12);
  const left=ITEMS.filter(x=>st.ans[x.id]==null).length; const p=P[top.letter];
  return `<div class="stickycta"><button class="btn" data-go="full">정밀검사 이어서 하기 · 5,900원</button></div>
-  <img class="banner" src="assets/banner_result.jpg" alt="" width="1000" height="563">
+  <figure class="banner"><img src="assets/banner_result.webp" alt="" width="1000" height="560"></figure>
   <div class="card type">
    <span class="eyebrow">간이검사 결과 · 12문항 기준</span>${masc(r)}
    ${codeHTML(r)}
@@ -453,7 +534,7 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
    <div class="tags">${r.ax.map(x=>`<span class="tag">${x.pole}</span>`).join('')}</div>
   </div>
   <div class="card">
-   <div class="axis-h"><h2>가장 뚜렷한 기질: ${top.pole}</h2><span class="pill" style="background:var(${top.a.c})">${top.a.q}</span></div>
+   <div class="axis-h"><h2>가장 뚜렷한 기질: ${top.pole}</h2><span class="pill ${top.a.c.slice(2)}">${top.a.q}</span></div>
    ${bar(top)}
    <p>${p.sum}</p>
    <div class="tags">${p.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
@@ -474,7 +555,7 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
    <button class="btn" data-go="full">정밀검사 이어서 하기</button>
    <p class="small muted">자동 결제 없이 2달 뒤에 끝납니다.</p>
   </div>`; };
-const lock=(t,d)=>`<div class="lock"><h3>🔒 ${t}</h3><p class="small muted">${d}</p><div class="skel" aria-hidden="true"><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></div></div>`;
+const lock=(t,d)=>`<div class="lock"><h3><img class="ico" src="assets/ui/i_lock.webp" alt="" width="22" height="22">${t}</h3><p class="small muted">${d}</p><div class="skel" aria-hidden="true"><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></div></div>`;
 const empty=(t,go)=>`<div class="card"><img class="empty-m" src="${M2}" alt=""><h2>${t}</h2><p class="muted">검사를 마치면 이 화면에 결과가 나타납니다.</p><div class="row"><button class="btn" data-go="${go}">검사 시작하기</button><button class="btn ghost" data-sample="${go}">샘플로 보기</button></div></div>`;
 
 V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없습니다.','full');
@@ -482,7 +563,7 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
  const r=score();
  const axes=r.ax.map(x=>{ const p=P[x.letter], bal=x.d<8;
   return `<section class="card">
-   <div class="axis-h"><div><span class="small muted">${x.a.q}</span><h2>${x.a.hi} · ${x.a.lo}</h2></div><span class="pill" style="background:var(${x.a.c})">${x.pole} ${x.clar}</span></div>
+   <div class="axis-h"><div><span class="small muted">${x.a.q}</span><h2>${x.a.hi} · ${x.a.lo}</h2></div><span class="pill ${x.a.c.slice(2)}">${x.pole} ${x.clar}</span></div>
    ${bar(x)}
    <p><b>요약.</b> ${bal?`두 성향의 가운데에 가깝습니다. 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다. `:''}${p.sum}</p>
    <div class="tags">${p.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
@@ -493,11 +574,11 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
    </div></details>
   </section>`; }).join('');
  const grow=r.gr.map(x=> x.sc==null? `<div class="stack" style="gap:6px"><b>${x.g.n}</b><p class="small muted">'잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다.</p></div>` : `<div class="stack" style="gap:6px">
-   <div class="gauge"><b>${x.g.n}</b><div class="track thin"><div class="fill" style="left:0;width:${x.sc}%;background:var(--g)"></div></div><span class="num">${x.sc}</span></div>
+   <div class="gauge"><b>${x.g.n}</b><div class="track thin"><div class="fill g" style="left:0;width:${x.sc}%"></div></div><span class="num">${x.sc}</span></div>
    <p class="small"><b>${['지금 자라는 중','고르게 자라는 중','탄탄함'][x.lv]}.</b> ${x.g.lv[x.lv][0]}</p>
    <details><summary>상세 설명</summary><div><p class="small">${x.g.lv[x.lv][1]}</p></div></details></div>`).join('');
- return `<div class="sheet">
-   <img class="banner" src="assets/banner_result.jpg" alt="" width="1000" height="563">
+ return `<div class="sheet"><i class="clip" aria-hidden="true"></i>
+   <figure class="banner"><img src="assets/banner_result.webp" alt="" width="1000" height="560"></figure>
    <div class="sheet-head"><span class="eyebrow">AIGYEOL TEMPERAMENT PROFILE</span><h2>아이결 정밀 기질검사 결과 보고서</h2></div>
    <div class="meta">
     <div><span>이름</span>${esc(nm())}</div><div><span>연령</span>${esc(st.age||'미입력')}</div><div><span>평가자</span>${esc(st.who)}</div>
@@ -658,7 +739,7 @@ V.coach=()=>{ if(!done(ITEMS)) return empty('상황별 대화는 정밀검사 �
  const r=score(), on=passOn(), u=usage(), canFollow=conv&&conv.turns.length&&conv.turns.length<=LIM.follow&&!conv.turns[0].a?.canned&&!conv.turns[conv.turns.length-1].a?.crisis;
  return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${r.code} · ${NICK[r.code]}</span><div class="ttl"><img src="${TM[r.code]}" alt=""><h1>어떻게 말해야 할지 도와줘</h1></div>
    <p class="muted">${esc(nm())}의 기질 결과에 맞춰 답합니다. 양육 참고용이며 전문 상담을 대신하지 않습니다.</p></section>
-  <img class="coach-art" src="assets/coach_talk.png" alt="" width="512" height="512">
+  <img class="coach-art" src="assets/coach_talk.webp" alt="" width="400" height="400">
   ${passBar()}
   <div class="stack" style="gap:8px"><span class="small muted">자주 묻는 상황 · 횟수 차감 없음</span>
    <div class="chips">${PRE.map((p,i)=>`<button class="chip" data-pre="${i}">${p.t}</button>`).join('')}</div></div>
@@ -667,7 +748,7 @@ V.coach=()=>{ if(!done(ITEMS)) return empty('상황별 대화는 정밀검사 �
   ${on? `<form class="card" id="askf">
     <label class="f" for="in-q">${canFollow?'이어서 묻거나 새 상황을 적어 주세요':'지금 겪는 상황을 적어 주세요'}
      <textarea id="in-q" maxlength="${LIM.len}" placeholder="예: 동생이 태어난 뒤로 자꾸 아기처럼 굴고 안아 달라고만 해요" ${busy?'disabled':''}></textarea></label>
-    <div class="microw"><button class="mic" type="button" data-mic aria-pressed="false" ${busy?'disabled':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="mic-l">말로 하기</span></button><span class="small muted" id="mic-s" role="status" aria-live="polite">버튼을 누르고 상황을 말하면 글로 받아 적습니다.</span></div>
+    <div class="microw"><button class="mic" type="button" data-mic aria-pressed="false" ${busy?'disabled':''}><img src="assets/ui/i_mic.webp" alt="" width="24" height="24"><span id="mic-l">말로 하기</span></button><span class="small muted" id="mic-s" role="status" aria-live="polite">버튼을 누르고 상황을 말하면 글로 받아 적습니다.</span></div>
     <div class="row">${canFollow?`<button class="btn ghost" type="submit" data-follow="1" ${busy?'disabled':''}>이 상황 이어 묻기 (${conv.turns.length}/${LIM.follow})</button>`:''}<button class="btn" type="submit" ${busy?'disabled':''}>${busy?'답변 쓰는 중':'새 상황 물어보기'}</button></div>
     <p class="small muted">최대 500자. 답변 1회마다 횟수가 1 줄어듭니다.</p></form>`
    : `<div class="cta"><h2>AI 대화는 이용권 기간에만 쓸 수 있습니다</h2><p class="muted">다시 결제하면 2달이 새로 열리고, 다시 검사하기도 1회 포함됩니다.</p><button class="btn" data-buy>다시 결제하기 5,900원</button></div>`}
