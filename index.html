@@ -193,6 +193,12 @@ input,select,textarea{font-size:16px;min-height:48px}
 body[data-view="quick-result"]{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}
 @media (min-width:700px){ body{background:var(--sunk)} .wrap{background:var(--bg);min-height:100vh;padding-inline:20px;box-shadow:0 0 0 1px var(--line)} header.top{margin-inline:-20px;padding-inline:20px} }
 @media (prefers-reduced-motion:reduce){ #app>*{animation:none} }
+.microw{display:flex;flex-direction:column;align-items:stretch;gap:8px} .mic{justify-content:center}
+.mic{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--fg);font:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:transform .08s}
+.mic:active{transform:scale(.97)} .mic:disabled{opacity:.5}
+.mic.on{background:var(--accent);color:var(--on-accent);animation:micp 1.4s ease-in-out infinite}
+@keyframes micp{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 60%,transparent)}50%{box-shadow:0 0 0 10px transparent}}
+@media (prefers-reduced-motion:reduce){ .mic.on{animation:none} }
 </style>
 
 <div class="wrap">
@@ -652,15 +658,39 @@ V.coach=()=>{ if(!done(ITEMS)) return empty('상황별 대화는 정밀검사 �
   ${on? `<form class="card" id="askf">
     <label class="f" for="in-q">${canFollow?'이어서 묻거나 새 상황을 적어 주세요':'지금 겪는 상황을 적어 주세요'}
      <textarea id="in-q" maxlength="${LIM.len}" placeholder="예: 동생이 태어난 뒤로 자꾸 아기처럼 굴고 안아 달라고만 해요" ${busy?'disabled':''}></textarea></label>
+    <div class="microw"><button class="mic" type="button" data-mic aria-pressed="false" ${busy?'disabled':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="mic-l">말로 하기</span></button><span class="small muted" id="mic-s" role="status" aria-live="polite">버튼을 누르고 상황을 말하면 글로 받아 적습니다.</span></div>
     <div class="row">${canFollow?`<button class="btn ghost" type="submit" data-follow="1" ${busy?'disabled':''}>이 상황 이어 묻기 (${conv.turns.length}/${LIM.follow})</button>`:''}<button class="btn" type="submit" ${busy?'disabled':''}>${busy?'답변 쓰는 중':'새 상황 물어보기'}</button></div>
     <p class="small muted">최대 500자. 답변 1회마다 횟수가 1 줄어듭니다.</p></form>`
    : `<div class="cta"><h2>AI 대화는 이용권 기간에만 쓸 수 있습니다</h2><p class="muted">다시 결제하면 2달이 새로 열리고, 다시 검사하기도 1회 포함됩니다.</p><button class="btn" data-buy>다시 결제하기 5,900원</button></div>`}
   ${demoTools()}`; };
 
+/* ---------- 마이크 음성 입력 ---------- */
+let rec=null;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function micUI(on,msg){ const b=$('[data-mic]'), s=$('#mic-s'), l=$('#mic-l'); if(!b) return;
+  b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); if(l) l.textContent=on?'듣는 중 · 눌러서 끝내기':'말로 하기'; if(s&&msg!=null) s.textContent=msg; }
+function micStop(){ if(rec){ const r=rec; rec=null; try{ r.abort(); }catch(e){} } }
+function micToggle(){
+  if(rec){ const r=rec; try{ r.stop(); }catch(e){} return; }
+  const ta=$('#in-q'); if(!ta) return;
+  if(!SR) return micUI(false,'이 브라우저는 음성 입력을 지원하지 않습니다. 키보드의 마이크 버튼을 쓰거나 글로 적어 주세요.');
+  const base=ta.value? ta.value.replace(/\s+$/,'')+' ' : ''; let fin='', failed=false;
+  const r=new SR(); r.lang='ko-KR'; r.interimResults=true; r.continuous=true; r.maxAlternatives=1;
+  r.onstart=()=>micUI(true,'듣고 있어요. 지금 겪는 상황을 편하게 말해 주세요.');
+  r.onresult=e=>{ let tmp=''; for(let i=e.resultIndex;i<e.results.length;i++){ const x=e.results[i]; if(x.isFinal) fin+=x[0].transcript.trim()+' '; else tmp+=x[0].transcript; }
+    ta.value=(base+fin+tmp).slice(0,LIM.len); ta.scrollTop=ta.scrollHeight;
+    if((base+fin+tmp).length>=LIM.len){ try{ r.stop(); }catch(e){} } };
+  r.onerror=e=>{ failed=true; const m={'not-allowed':'마이크 사용이 막혀 있습니다. 브라우저 주소창의 사이트 설정에서 마이크를 허용해 주세요.','service-not-allowed':'마이크 사용이 막혀 있습니다. 브라우저 설정에서 마이크를 허용해 주세요.','no-speech':'소리가 들리지 않았어요. 다시 눌러 말해 주세요.','audio-capture':'마이크를 찾지 못했습니다. 기기의 마이크를 확인해 주세요.','network':'음성 인식 서버에 연결하지 못했습니다. 잠시 뒤 다시 해 보세요.'};
+    if(e.error!=='aborted') micUI(false,m[e.error]||'음성 입력을 시작하지 못했습니다. 글로 적어 주세요.'); };
+  r.onend=()=>{ const mine=rec===r; if(mine) rec=null; if(!mine&&!$('[data-mic]')) return;
+    if(!failed){ ta.value=(base+fin).trim().slice(0,LIM.len); micUI(false, fin? '받아 적었어요. 고칠 곳이 있으면 고친 뒤 물어보세요.' : '버튼을 누르고 상황을 말하면 글로 받아 적습니다.'); } else micUI(false); };
+  rec=r; try{ r.start(); }catch(e){ rec=null; micUI(false,'음성 입력을 시작하지 못했습니다. 글로 적어 주세요.'); }
+}
+
 /* ---------- 라우팅과 이벤트 ---------- */
 let view='home';
 function render(){
-  const app=$('#app'); app.innerHTML=(V[view]||V.home)(); document.body.dataset.view=view;
+  micStop(); const app=$('#app'); app.innerHTML=(V[view]||V.home)(); document.body.dataset.view=view;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===view));
   window.scrollTo(0,0);
 }
@@ -676,6 +706,7 @@ function sample(mode){ grab(); const seed=[4,5,2,4,3,5,2,4,1,5,4,2,5,3]; let k=0
 const today=()=>{ const d=new Date(); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
 document.addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.mic!=null) return micToggle();
   if(b.dataset.go) return go(b.dataset.go);
   if(b.dataset.sample) return sample(b.dataset.sample);
   if(b.dataset.buy!=null){ buyPass(); cerr=''; return done(ITEMS)? (view==='coach'? render() : go('report')) : go('full'); }
