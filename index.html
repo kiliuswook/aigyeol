@@ -10,34 +10,36 @@
 <meta name="robots" content="noindex">
 <title>아이결 기질검사</title>
 <meta name="description" content="만 2~7세 아이의 타고난 결을 네 글자로 읽는 부모용 기질검사 시제품">
-<link rel="icon" type="image/png" href="assets/a_mascot1.png">
-<link rel="apple-touch-icon" href="assets/a_mascot1.png">
+<link rel="icon" type="image/png" href="assets/mascot_child.png">
+<link rel="apple-touch-icon" href="assets/mascot_child.png">
 </head>
 <body>
 
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* Art concept A "말랑 동화": navy, cream, apricot; round Jua headings; soft pill shapes; PixelLab pixel characters. Layout: one narrow phone-first column. */
+/* Art concept C4 "색연필·크레용": warm cream paper, sky blue, pink, leaf green; Gaegu handwritten headings; soft hand-drawn edges; Higgsfield crayon characters. Layout: one narrow phone-first column. */
 :root{
-  --hero:url(assets/a_key2.png);
-  --bg:#FFF8EC; --surface:#FFFFFF; --sunk:#FDEEDD; --line:#F3DCC5;
-  --fg:#3B3F6B; --muted:#7A7C9A; --accent:#F4A77F; --accent-ink:#C2603B; --on-accent:#3B3F6B;
-  --c1:#E57F5C; --c2:#3F9A94; --c3:#D0668C; --c4:#5B77C4; --g:#7BA046;
-  --band:#F6E2CC;
-  --display:"Jua","Noto Sans KR",sans-serif;
+  --hero:url(assets/key_home.jpg); --paper:url(assets/paper_tile.jpg); --head-eb:#8CC4EA;
+  --bg:#FBF5EA; --surface:#FFFDF8; --sunk:#F5EDE0; --line:#E2D4BF;
+  --fg:#36405A; --muted:#656C80; --accent:#8CC4EA; --accent-ink:#2D6C98; --on-accent:#1F2E45;
+  --c1:#DD7356; --c2:#3A9586; --c3:#CF6189; --c4:#4C7CC0; --g:#6A9F45;
+  --band:#EFE4D2;
+  --display:"Gaegu","Noto Sans KR",sans-serif;
   --body:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#1F2240; --surface:#2A2E55; --sunk:#252949; --line:#40457A;
-  --fg:#FFF3E2; --muted:#B1B3D0; --accent:#F4A77F; --accent-ink:#FFC9A8; --on-accent:#2B2E55;
-  --c1:#F29A78; --c2:#62B8B2; --c3:#E88AAB; --c4:#8BA4E8; --g:#A6CC70;
-  --band:#3A3F70; color-scheme:dark } }
+  --paper:none; --head-eb:#2D6C98;
+  --bg:#252A36; --surface:#2F3545; --sunk:#2A2F3D; --line:#485067;
+  --fg:#F8F2E7; --muted:#BAC0D0; --accent:#8CC4EA; --accent-ink:#A8D5F4; --on-accent:#1C2A3D;
+  --c1:#F09A80; --c2:#6CC0B2; --c3:#EC8DB0; --c4:#93AEEA; --g:#A3CC7A;
+  --band:#3B4258; color-scheme:dark } }
 :root[data-theme="dark"]{
-  --bg:#1F2240; --surface:#2A2E55; --sunk:#252949; --line:#40457A;
-  --fg:#FFF3E2; --muted:#B1B3D0; --accent:#F4A77F; --accent-ink:#FFC9A8; --on-accent:#2B2E55;
-  --c1:#F29A78; --c2:#62B8B2; --c3:#E88AAB; --c4:#8BA4E8; --g:#A6CC70;
-  --band:#3A3F70; color-scheme:dark }
+  --paper:none; --head-eb:#2D6C98;
+  --bg:#252A36; --surface:#2F3545; --sunk:#2A2F3D; --line:#485067;
+  --fg:#F8F2E7; --muted:#BAC0D0; --accent:#8CC4EA; --accent-ink:#A8D5F4; --on-accent:#1C2A3D;
+  --c1:#F09A80; --c2:#6CC0B2; --c3:#EC8DB0; --c4:#93AEEA; --g:#A3CC7A;
+  --band:#3B4258; color-scheme:dark }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
@@ -94,7 +96,7 @@ textarea{font:inherit;padding:12px;border:1px solid var(--line);border-radius:12
 /* report */
 .sheet{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .sheet-head{background:var(--fg);color:var(--bg);padding:18px;display:flex;flex-direction:column;gap:4px}
-.sheet-head .eyebrow{color:var(--accent)}
+.sheet-head .eyebrow{color:var(--head-eb)}
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border-top:1px solid var(--line)}
 .meta div{padding:10px 18px;border-bottom:1px solid var(--line);font-size:13px}
 .meta span{display:block;color:var(--muted);font-size:12px}
@@ -136,33 +138,37 @@ th{color:var(--muted);font-weight:500;font-size:12px}
 .mk{font-size:11px;padding:1px 6px;border-radius:5px;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
 @media (max-width:420px){ h1{font-size:24px} .code{font-size:44px} .qtext{font-size:19px} }
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
-/* ---- concept A: 말랑 동화 ---- */
-h1,h2,h3,.brand,.code,.price,.qtext,.say{font-weight:400}
-.card,.sheet,.lock,.cta,.help{border-radius:22px}
-.card,.sheet{box-shadow:0 4px 0 var(--line)}
-.btn{border-radius:999px;box-shadow:0 3px 0 color-mix(in srgb,var(--accent-ink) 45%,transparent)}
+/* ---- concept C4: 색연필·크레용 ---- */
+h1,h2,h3,.brand,.code,.price,.qtext,.say{font-weight:700}
+h1,h2,h3,.qtext,.say{word-break:keep-all} h1{font-size:31px;line-height:1.25} h2{font-size:24px} h3{font-size:19px} .qtext{font-size:25px;line-height:1.4} .say{font-size:19px;line-height:1.45}
+html,body{background:var(--bg) var(--paper) repeat;background-size:512px}
+.card,.sheet,.lock,.cta,.help{border-radius:24px 20px 26px 19px/20px 25px 19px 24px}
+.card,.sheet{border:1.5px solid var(--line);box-shadow:2px 3px 0 color-mix(in srgb,var(--line) 85%,transparent)}
+.btn{border-radius:999px 940px 999px 960px/999px 980px 940px 999px;border:1.5px solid color-mix(in srgb,var(--accent-ink) 55%,transparent);box-shadow:1px 3px 0 color-mix(in srgb,var(--accent-ink) 40%,transparent)}
 .btn.ghost,.btn.dark{box-shadow:none}
-.opt{border-radius:18px} .exq,.note,.passbar{border-radius:16px}
-input,select,textarea{border-radius:14px}
-.px{image-rendering:pixelated}
-.brand{display:inline-flex;align-items:center;gap:6px}
-.brand img{width:30px;height:30px}
-.hero{position:relative;height:250px;border-radius:22px;overflow:hidden;background:var(--sunk) var(--hero) center 56%/cover;image-rendering:pixelated;box-shadow:0 4px 0 var(--line)}
-.hero span{position:absolute;left:12px;top:12px;background:var(--surface);color:var(--fg);font-family:var(--display);font-size:14px;padding:6px 14px;border-radius:999px;image-rendering:auto}
+.btn.ghost{border:1.5px solid var(--line)}
+.opt{border-radius:20px 17px 21px 18px/18px 21px 17px 20px;border-width:1.5px} .exq,.note,.passbar{border-radius:18px 15px 19px 16px}
+input,select,textarea{border-radius:14px;border-width:1.5px}
+.brand{display:inline-flex;align-items:center;gap:6px;font-size:24px}
+.brand img{width:34px;height:34px;object-fit:contain}
+.hero{position:relative;aspect-ratio:4/5;border-radius:26px 22px 28px 21px/22px 27px 21px 26px;overflow:hidden;background:var(--sunk) var(--hero) center 58%/cover;box-shadow:2px 3px 0 var(--line);border:1.5px solid var(--line)}
+.hero span{position:absolute;left:14px;top:14px;background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--fg);font-family:var(--display);font-weight:700;font-size:18px;padding:5px 14px;border-radius:999px;border:1.5px solid var(--line)}
+.banner{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:24px 20px 26px 19px/20px 25px 19px 24px;border:1.5px solid var(--line)}
+.sheet .banner{border:0;border-radius:0}
+.coach-art{display:block;width:180px;height:180px;object-fit:contain;align-self:center;margin-block:-6px}
 .type{position:relative}
-.masc{position:absolute;right:14px;top:12px;width:96px;height:96px}
+.masc{position:absolute;right:8px;top:4px;width:112px;height:112px;object-fit:contain}
 .type>p,.type>h1{max-width:100%}
 .ttl{display:flex;align-items:center;gap:10px}
-.ttl img{width:64px;height:64px;flex:none}
-.tag.tm{display:inline-flex;align-items:center;gap:6px;padding:4px 12px 4px 6px}.tag.tm img{width:40px;height:40px}
-.empty-m{width:80px;height:80px;align-self:center}
-@media (max-width:420px){ .masc{width:72px;height:72px;right:8px} .hero{height:240px} }
+.ttl img{width:72px;height:72px;flex:none;object-fit:contain}
+.tag.tm{display:inline-flex;align-items:center;gap:6px;padding:4px 12px 4px 6px}.tag.tm img{width:44px;height:44px;object-fit:contain}
+.empty-m{width:120px;height:120px;align-self:center;object-fit:contain}
+@media (max-width:420px){ .masc{width:92px;height:92px;right:4px} h1{font-size:28px} .code{font-size:46px} .qtext{font-size:22px} }
 /* ---- app shell ---- */
-html{background:var(--bg)}
 body{padding-block:0 calc(92px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
 .wrap{max-width:480px;gap:16px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);flex-wrap:nowrap;padding-block:10px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg) var(--paper) repeat;background-size:512px;flex-wrap:nowrap;padding-block:10px}
 .brand small{display:none}
 .hlink{font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
 #nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,480px);z-index:20;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
@@ -191,7 +197,7 @@ input,select,textarea{font-size:16px;min-height:48px}
   padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
 .stickycta .btn{width:100%;box-shadow:0 6px 18px color-mix(in srgb,var(--accent-ink) 35%,transparent)}
 body[data-view="quick-result"]{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}
-@media (min-width:700px){ body{background:var(--sunk)} .wrap{background:var(--bg);min-height:100vh;padding-inline:20px;box-shadow:0 0 0 1px var(--line)} header.top{margin-inline:-20px;padding-inline:20px} }
+@media (min-width:700px){ body{background:var(--sunk)} .wrap{background:var(--bg) var(--paper) repeat;background-size:512px;min-height:100vh;padding-inline:20px;box-shadow:0 0 0 1px var(--line)} header.top{margin-inline:-20px;padding-inline:20px} }
 @media (prefers-reduced-motion:reduce){ #app>*{animation:none} }
 .microw{display:flex;flex-direction:column;align-items:stretch;gap:8px} .mic{justify-content:center}
 .mic{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--fg);font:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:transform .08s}
@@ -203,7 +209,7 @@ body[data-view="quick-result"]{padding-bottom:calc(160px + env(safe-area-inset-b
 
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#home"><img class="px" src="assets/a_mascot1.png" alt="">아이결 <small>우리 아이 기질 유형 검사</small></a>
+    <a class="brand" href="#home"><img src="assets/mascot_child.png" alt="">아이결 <small>우리 아이 기질 유형 검사</small></a>
 
   </header>
   <main id="app" class="stack" style="gap:20px"></main>
@@ -369,9 +375,9 @@ const done=list=> list.every(x=>st.ans[x.id]!=null);
 const quickDone=()=> st.qd||done(FREE);
 
 /* ---------- 그리기 도우미 ---------- */
-const M1='assets/a_mascot1.png', M2='assets/a_mascot2.png';
-const TM={"INTJ": "assets/INTJ.png", "ISTP": "assets/ISTP.png", "ENTJ": "assets/ENTJ.png", "ISTJ": "assets/ISTJ.png", "ESFJ": "assets/ESFJ.png", "ESTP": "assets/ESTP.png", "INTP": "assets/INTP.png", "ISFP": "assets/ISFP.png", "ENFJ": "assets/ENFJ.png", "INFP": "assets/INFP.png", "ISFJ": "assets/ISFJ.png", "ESFP": "assets/ESFP.png", "ENFP": "assets/ENFP.png", "ENTP": "assets/ENTP.png", "ESTJ": "assets/ESTJ.png", "INFJ": "assets/INFJ.png"};
-const masc=r=>`<img class="masc px" src="${TM[r.code]}" alt="${NICK[r.code]} 말랑이 캐릭터">`;
+const M1='assets/mascot_parent.png', M2='assets/mascot_child.png';
+const TM=Object.fromEntries(Object.keys(NICK).map(k=>[k,`assets/t_${k}.png`]));
+const masc=r=>`<img class="masc" src="${TM[r.code]}" alt="${NICK[r.code]} 말랑이 캐릭터">`;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function bar(x,thin){ const a=x.a, s=x.sc, c=`var(${a.c})`;
@@ -388,7 +394,7 @@ const oneLine=r=> `${P[r.ax[0].letter].ph}, ${P[r.ax[1].letter].ph}, ${P[r.ax[2]
 /* ---------- 화면 ---------- */
 const V={};
 V.home=()=>`
- <div class="hero" role="img" aria-label="저녁 거실 소파에서 커다란 말랑이에게 기대어 그림책을 읽는 아이들의 픽셀 그림"><span>오늘도 말랑하게, 우리 아이 이야기</span></div>
+ <div class="hero" role="img" aria-label="풀밭에서 엄마 말랑이가 무릎을 굽혀 아이 말랑이와 눈을 맞추고 이야기하는 색연필 그림"><span>오늘도 말랑하게, 우리 아이 이야기</span></div>
  <section class="stack">
   <span class="eyebrow">만 2~7세 · 부모가 답하는 기질검사</span>
   <h1>우리 아이는 어떤 결을 타고났을까요</h1>
@@ -438,6 +444,7 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
  const r=score(); const top=[...r.ax].sort((x,y)=>y.d-x.d)[0]; const near=r.ax.filter(x=>x.d<12);
  const left=ITEMS.filter(x=>st.ans[x.id]==null).length; const p=P[top.letter];
  return `<div class="stickycta"><button class="btn" data-go="full">정밀검사 이어서 하기 · 5,900원</button></div>
+  <img class="banner" src="assets/banner_result.jpg" alt="" width="1000" height="563">
   <div class="card type">
    <span class="eyebrow">간이검사 결과 · 12문항 기준</span>${masc(r)}
    ${codeHTML(r)}
@@ -468,7 +475,7 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
    <p class="small muted">자동 결제 없이 2달 뒤에 끝납니다.</p>
   </div>`; };
 const lock=(t,d)=>`<div class="lock"><h3>🔒 ${t}</h3><p class="small muted">${d}</p><div class="skel" aria-hidden="true"><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></div></div>`;
-const empty=(t,go)=>`<div class="card"><img class="empty-m px" src="${M2}" alt=""><h2>${t}</h2><p class="muted">검사를 마치면 이 화면에 결과가 나타납니다.</p><div class="row"><button class="btn" data-go="${go}">검사 시작하기</button><button class="btn ghost" data-sample="${go}">샘플로 보기</button></div></div>`;
+const empty=(t,go)=>`<div class="card"><img class="empty-m" src="${M2}" alt=""><h2>${t}</h2><p class="muted">검사를 마치면 이 화면에 결과가 나타납니다.</p><div class="row"><button class="btn" data-go="${go}">검사 시작하기</button><button class="btn ghost" data-sample="${go}">샘플로 보기</button></div></div>`;
 
 V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없습니다.','full');
  if(!st.pass) return V.pass();
@@ -490,6 +497,7 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
    <p class="small"><b>${['지금 자라는 중','고르게 자라는 중','탄탄함'][x.lv]}.</b> ${x.g.lv[x.lv][0]}</p>
    <details><summary>상세 설명</summary><div><p class="small">${x.g.lv[x.lv][1]}</p></div></details></div>`).join('');
  return `<div class="sheet">
+   <img class="banner" src="assets/banner_result.jpg" alt="" width="1000" height="563">
    <div class="sheet-head"><span class="eyebrow">AIGYEOL TEMPERAMENT PROFILE</span><h2>아이결 정밀 기질검사 결과 보고서</h2></div>
    <div class="meta">
     <div><span>이름</span>${esc(nm())}</div><div><span>연령</span>${esc(st.age||'미입력')}</div><div><span>평가자</span>${esc(st.who)}</div>
@@ -575,7 +583,7 @@ V.blueprint=()=>`
   <div class="tw"><table><tr><th>척도</th><th>문항</th><th>표시</th></tr>
   ${GR.map(g=>g.items.map((it,i)=>`<tr>${i===0?`<td rowspan="6"><b>${g.n}</b><br><span class="muted">${g.d}</span></td>`:''}<td>${esc(it[0])}<br><span class="muted">예: ${esc(EXS[g.id][i])}</span></td><td>${it[1]?'<span class="mk">역채점</span>':''}</td></tr>`).join('')).join('')}
   </table></div></div>
- <div class="card"><h2>16가지 유형 별명</h2><div class="tags">${Object.entries(NICK).map(([k,n])=>`<span class="tag tm"><img class="px" src="${TM[k]}" alt=""><b>${k}</b> ${n}</span>`).join('')}</div></div>`;
+ <div class="card"><h2>16가지 유형 별명</h2><div class="tags">${Object.entries(NICK).map(([k,n])=>`<span class="tag tm"><img src="${TM[k]}" alt=""><b>${k}</b> ${n}</span>`).join('')}</div></div>`;
 
 /* ---------- 이용권 · 상황별 대화 ---------- */
 const DAY=864e5, LIM={mon:30,day:5,follow:3,len:500};
@@ -648,8 +656,9 @@ function ansHTML(a){ if(!a) return `<div class="card"><p class="muted">${esc(nm(
 V.coach=()=>{ if(!done(ITEMS)) return empty('상황별 대화는 정밀검사 결과가 있어야 열립니다.','full');
  if(!st.pass) return V.pass();
  const r=score(), on=passOn(), u=usage(), canFollow=conv&&conv.turns.length&&conv.turns.length<=LIM.follow&&!conv.turns[0].a?.canned&&!conv.turns[conv.turns.length-1].a?.crisis;
- return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${r.code} · ${NICK[r.code]}</span><div class="ttl"><img class="px" src="${TM[r.code]}" alt=""><h1>어떻게 말해야 할지 도와줘</h1></div>
+ return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${r.code} · ${NICK[r.code]}</span><div class="ttl"><img src="${TM[r.code]}" alt=""><h1>어떻게 말해야 할지 도와줘</h1></div>
    <p class="muted">${esc(nm())}의 기질 결과에 맞춰 답합니다. 양육 참고용이며 전문 상담을 대신하지 않습니다.</p></section>
+  <img class="coach-art" src="assets/coach_talk.png" alt="" width="512" height="512">
   ${passBar()}
   <div class="stack" style="gap:8px"><span class="small muted">자주 묻는 상황 · 횟수 차감 없음</span>
    <div class="chips">${PRE.map((p,i)=>`<button class="chip" data-pre="${i}">${p.t}</button>`).join('')}</div></div>
