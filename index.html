@@ -289,6 +289,15 @@ details[open]>summary::before{transform:rotate(90deg)}
 .clip{position:absolute;top:-16px;left:22px;width:26px;height:58px;background:url(assets/ui/d_clip.webp) center/contain no-repeat;transform:rotate(-8deg);z-index:2}
 .masc{transform:rotate(4deg)}
 .mbti{color:var(--accent-ink);white-space:nowrap;padding:0 2px 6px;background:url(assets/ui/d_underline.webp) left bottom/100% 9px no-repeat}
+/* 리포트 탭(기질 / 성격): 손그림 꼬리표 틀, 고른 탭은 하늘색 크레용 버튼. 폭 360에서도 한 줄 */
+.rtabs{display:flex;gap:8px}
+.rtab{flex:1 1 0;min-width:max-content;min-height:50px;padding:6px 10px;font:inherit;font-family:var(--display);font-weight:700;font-size:19px;line-height:1.2;white-space:nowrap;color:var(--muted);cursor:pointer;
+  border:0 solid transparent;border-image:url(assets/ui/tag.webp) 33 fill / 20px / 0 stretch;border-radius:0;box-shadow:none;background:none;transition:transform .08s}
+.rtab[aria-selected="true"]{color:var(--on-accent);border-image-source:url(assets/ui/btn_blue.webp);border-image-slice:60 fill;border-image-width:24px}
+.rtab:active{transform:translateY(1px) rotate(-.4deg)}
+.rtab:focus-visible{outline:3px solid var(--c4);outline-offset:2px}
+.rpanel[hidden]{display:none}
+@media (max-width:420px){ .rtab{font-size:17px;padding:6px 8px} }
 </style>
 
 <div class="wrap">
@@ -503,7 +512,7 @@ V.home=()=>`
    <span class="tag" style="align-self:flex-start;background:var(--accent);color:var(--on-accent);border-color:var(--accent)">정밀</span>
    <h2>내 아이의 MBTI 정밀검사</h2>
    <div class="price">5,900원<small>2달 이용권</small></div>
-   <ul class="small"><li>66문항 정밀 리포트(기질 4축, 세부 기질 12, 자라는 힘 3)</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
+   <ul class="small"><li>66문항 정밀 리포트: 기질 결과(4축, 세부 기질 12)와 성격 결과(자라는 힘 3)</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
    <button class="btn dark" data-go="full">정밀검사 시작하기</button>
    <button class="btn ghost" data-sample="full">샘플 리포트 보기</button>
   </div>
@@ -546,8 +555,8 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
   <h2>정밀검사에서 열리는 내용</h2>
   <div class="stack">
    ${r.ax.filter(x=>x!==top).map(x=>lock(`${x.a.hi}·${x.a.lo} 축 풀이`,`${esc(nm())}의 '${x.pole}' 성향이 얼마나 뚜렷한지, 어떤 장면에서 드러나는지`)).join('')}
-   ${lock('세부 기질 12가지','같은 '+r.code+' 유형이어도 아이마다 다른 세부 프로필')}
-   ${lock('자라는 힘 3가지','끈기, 스스로 힘, 함께 힘이 지금 어디까지 자랐는지')}
+   ${lock('기질 결과: 세부 기질 12가지','같은 '+r.code+' 유형이어도 아이마다 다른 세부 프로필')}
+   ${lock('성격 결과: 자라는 힘 3가지','타고난 기질과 따로, 경험으로 자라는 끈기, 스스로 힘, 함께 힘이 지금 어디까지 자랐는지')}
    ${lock(`${esc(nm())}에게 잘 통하는 말, 피할 말`,'기질에 맞춘 말 걸기 예시와 양육 가이드')}
    ${lock('상황별 AI 대화 2달','떼쓸 때, 안 자려 할 때처럼 지금 겪는 상황을 적으면 '+esc(nm())+'의 기질에 맞는 대응을 알려 줍니다')}
   </div>
@@ -561,6 +570,11 @@ V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결�
 const lock=(t,d)=>`<div class="lock"><h3><img class="ico" src="assets/ui/i_lock.webp" alt="" width="22" height="22">${t}</h3><p class="small muted">${d}</p><div class="skel" aria-hidden="true"><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></div></div>`;
 const empty=(t,go)=>`<div class="card"><img class="empty-m" src="${M2}" alt=""><h2>${t}</h2><p class="muted">검사를 마치면 이 화면에 결과가 나타납니다.</p><div class="row"><button class="btn" data-go="${go}">검사 시작하기</button><button class="btn ghost" data-sample="${go}">샘플로 보기</button></div></div>`;
 
+// 리포트 탭: 'temp' 기질, 'grow' 성격(자라는 힘). 화면 안의 상태라 주소와 아래 메뉴는 바뀌지 않는다.
+let rtab='temp';
+function setRtab(id){ rtab=id;
+  document.querySelectorAll('[data-rtab]').forEach(t=>{ const on=t.dataset.rtab===id; t.setAttribute('aria-selected',on); t.tabIndex=on?0:-1; });
+  document.querySelectorAll('.rpanel').forEach(p=>{ p.hidden= p.id!=='rpanel-'+id; }); }
 V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없습니다.','full');
  if(!st.pass) return V.pass();
  const r=score();
@@ -580,14 +594,17 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
    <div class="gauge"><b>${x.g.n}</b><div class="track thin"><div class="fill g" style="left:0;width:${x.sc}%"></div></div><span class="num">${x.sc}</span></div>
    <p class="small"><b>${['지금 자라는 중','고르게 자라는 중','탄탄함'][x.lv]}.</b> ${x.g.lv[x.lv][0]}</p>
    <details><summary>상세 설명</summary><div><p class="small">${x.g.lv[x.lv][1]}</p></div></details></div>`).join('');
+ const tab=(id,t)=>`<button class="rtab" type="button" role="tab" id="rtab-${id}" data-rtab="${id}" aria-controls="rpanel-${id}" aria-selected="${rtab===id}" tabindex="${rtab===id?0:-1}">${t}</button>`;
  return `<div class="sheet"><i class="clip" aria-hidden="true"></i>
    <figure class="banner"><img src="assets/banner_result.webp" alt="" width="1000" height="560"></figure>
-   <div class="sheet-head"><span class="eyebrow">내 아이의 MBTI · 영유아 기질검사</span><h2>정밀 기질검사 결과 보고서</h2></div>
+   <div class="sheet-head"><span class="eyebrow">내 아이의 MBTI · 정밀검사</span><h2>정밀검사 결과 보고서</h2><p class="small" style="opacity:.8">기질 결과와 성격(자라는 힘) 결과</p></div>
    <div class="meta">
     <div><span>이름</span>${esc(nm())}</div><div><span>연령</span>${esc(st.age||'미입력')}</div><div><span>평가자</span>${esc(st.who)}</div>
-    <div><span>검사일</span>${esc(st.date)}${st.prev?` · 이전 ${st.prev.code}`:''}</div><div><span>문항</span>66문항 · 5점 척도</div><div><span>응답 일관성</span>${r.cons||'판단 불가'}${r.unk?` · 모르겠다 ${r.unk}문항`:''}</div>
+    <div><span>검사일</span>${esc(st.date)}${st.prev?` · 이전 ${st.prev.code}`:''}</div><div><span>문항</span>66문항 · 5점 척도</div><div><span>응답 일관성</span>${r.cons||'판단 불가'} · 잘 모르겠다 ${r.unk}문항</div>
    </div>
   </div>
+  <div class="rtabs" role="tablist" aria-label="결과 나누어 보기">${tab('temp','기질')}${tab('grow','성격(자라는 힘)')}</div>
+  <div class="stack rpanel" role="tabpanel" id="rpanel-temp" aria-labelledby="rtab-temp" ${rtab==='temp'?'':'hidden'}>
   <section class="card type">
    <span class="eyebrow">기질 유형</span>${masc(r)}
    ${codeHTML(r)}
@@ -601,10 +618,6 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
   </section>
   ${axes}
   <section class="card">
-   <div><h2>자라는 힘</h2><p class="small muted">기질은 타고나지만 이 세 가지는 경험으로 자랍니다. 나이가 어릴수록 낮게 나오는 것이 자연스럽습니다.</p></div>
-   ${grow}
-  </section>
-  <section class="card">
    <h2>강점과 살펴볼 점</h2>
    <div class="two">
     <div class="stack" style="gap:6px"><h3>타고난 강점</h3>${r.ax.map(x=>`<p class="small">· ${P[x.letter].st}</p>`).join('')}</div>
@@ -615,6 +628,13 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
    <h2>${esc(nm())}에게 잘 통하는 말</h2>
    ${r.ax.map(x=>`<div class="stack" style="gap:4px"><span class="small muted">${x.pole} 기질에게</span><p class="say">“${P[x.letter].say}”</p></div>`).join('')}
   </section>
+  </div>
+  <div class="stack rpanel" role="tabpanel" id="rpanel-grow" aria-labelledby="rtab-grow" ${rtab==='grow'?'':'hidden'}>
+  <section class="card">
+   <div><span class="eyebrow">성격 결과</span><h2>자라는 힘</h2><p class="small muted">기질은 타고나지만 끈기, 스스로 힘, 함께 힘은 경험으로 자랍니다. 나이가 어릴수록 낮게 나오는 것이 자연스럽습니다.</p></div>
+   ${grow}
+  </section>
+  </div>
   <div class="note">
    <b>결과를 읽을 때.</b> 이 보고서는 ${esc(st.who)}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있습니다.
    ${r.cons==='낮음'?' 이번 응답은 비슷한 문항 사이에 답이 엇갈린 경우가 많아, 시간을 두고 다시 검사해 보기를 권합니다.':''}
@@ -634,9 +654,9 @@ V.blueprint=()=>`
   <p class="muted">전문가 감수와 베타 검증 전의 초안입니다. 문항은 모두 자체 작성했으며 기존 검사의 문항을 옮기지 않았습니다.</p></section>
  <div class="card"><h2>두 검사의 관계</h2>
   <div class="tw"><table><tr><th></th><th>무료 간이검사</th><th>유료 정밀검사</th></tr>
-   <tr><td>문항</td><td>12문항(축당 3, 세부 기질당 1)</td><td>66문항(기질 48 + 자라는 힘 18)</td></tr>
+   <tr><td>문항</td><td>12문항(축당 3, 세부 기질당 1)</td><td>66문항(기질 48 + 성격 결과인 자라는 힘 18)</td></tr>
    <tr><td>시간</td><td>약 1분</td><td>약 10분. 무료 응답은 이어받아 54문항만 추가</td></tr>
-   <tr><td>보여 주는 것</td><td>네 글자 유형, 별명, 가장 뚜렷한 축 1개 풀이</td><td>4축 강도, 세부 기질 12, 자라는 힘 3, 강점·살펴볼 점, 말 가이드, 응답 일관성</td></tr>
+   <tr><td>보여 주는 것</td><td>네 글자 유형, 별명, 가장 뚜렷한 축 1개 풀이</td><td>기질 결과: 4축 강도, 세부 기질 12, 강점·살펴볼 점, 말 가이드<br>성격 결과: 자라는 힘 3<br>공통: 응답 일관성</td></tr>
    <tr><td>전환 장치</td><td colspan="2">경계에 있는 축 알림, 잠긴 항목에 아이 이름과 유형 반영, 답한 문항 이어가기</td></tr></table></div></div>
  <div class="card"><h2>상품과 사용량 정책</h2>
   <div class="tw"><table><tr><th>항목</th><th>내용</th></tr>
@@ -655,7 +675,7 @@ V.blueprint=()=>`
    <li>세부 기질 점수 = 문항 평균을 0~100으로 환산. 축 점수 = 세부 기질 3개의 평균.</li>
    <li>50 이상이면 앞 글자(E, S, F, J), 미만이면 뒤 글자(I, N, T, P).</li>
    <li>50에서 20 이상 떨어지면 뚜렷함, 8 이상이면 약간, 그 안이면 균형에 가까움.</li>
-   <li>자라는 힘: 65 이상 탄탄함, 40~64 고르게 자라는 중, 40 미만 지금 자라는 중.</li>
+   <li>자라는 힘(성격 결과): 65 이상 탄탄함, 40~64 고르게 자라는 중, 40 미만 지금 자라는 중.</li>
    <li>응답 일관성: 같은 세부 기질 안에서 정방향 문항 평균과 역방향 문항(뒤집은 값) 평균의 차이. 평균 차이 0.9 미만 높음, 1.5 미만 보통, 그 이상 낮음.</li>
    <li>또래 비교(백분위)는 규준 자료가 모인 뒤에 추가합니다. 지금 점수는 아이 안의 경향입니다.</li>
   </ul></div>
@@ -663,7 +683,7 @@ V.blueprint=()=>`
   <div class="tw"><table><tr><th>세부 기질</th><th>문항</th><th>표시</th></tr>
   ${a.subs.map(s=>s.items.map((it,i)=>`<tr>${i===0?`<td rowspan="4"><b>${s.n}</b><br><span class="muted">${s.lo} ↔ ${s.hi}</span></td>`:''}<td>${esc(it[0])}<br><span class="muted">예: ${esc(EXS[a.id+a.subs.indexOf(s)][i])}</span></td><td>${it[1]?'<span class="mk">역채점</span> ':''}${it[2]?'<span class="mk">무료</span>':''}</td></tr>`).join('')).join('')}
   </table></div></div>`).join('')}
- <div class="card"><h2 style="color:var(--g)">자라는 힘</h2>
+ <div class="card"><h2 style="color:var(--g)">성격(자라는 힘)</h2><p class="small muted">타고난 기질과 달리 경험으로 자라는 힘입니다. 리포트의 성격 탭에 보입니다.</p>
   <div class="tw"><table><tr><th>척도</th><th>문항</th><th>표시</th></tr>
   ${GR.map(g=>g.items.map((it,i)=>`<tr>${i===0?`<td rowspan="6"><b>${g.n}</b><br><span class="muted">${g.d}</span></td>`:''}<td>${esc(it[0])}<br><span class="muted">예: ${esc(EXS[g.id][i])}</span></td><td>${it[1]?'<span class="mk">역채점</span>':''}</td></tr>`).join('')).join('')}
   </table></div></div>
@@ -688,7 +708,7 @@ V.pass=()=>{ const again=st.pass&&!passOn(); const left=ITEMS.filter(x=>st.ans[x
   <div class="card" style="border-color:var(--accent)">
    <div class="price">5,900원<small>2달 이용권 · 1회 결제</small></div>
    <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
-    <li><b>정밀 리포트.</b> 기질 4축, 세부 기질 12가지, 자라는 힘 3가지, 강점과 살펴볼 점</li>
+    <li><b>정밀 리포트.</b> 기질 결과(4축, 세부 기질 12가지, 강점과 살펴볼 점, 잘 통하는 말)와 성격 결과(자라는 힘 3가지)를 나누어 보여 줍니다</li>
     <li><b>상황별 AI 대화 2달.</b> 지금 겪는 상황을 적으면 아이 기질에 맞는 행동과 말을 알려 줍니다. 월 30회</li>
     <li><b>다시 검사하기 1회.</b> 아빠가 답해 보거나, 두 달 사이의 변화를 확인할 때</li>
    </ul>
@@ -791,6 +811,7 @@ function go(v){ if(v==='quick'||v==='full'){ grab();
     if(v==='full'&&!passOn()){ view='pass'; return render(); }
     if(v==='full'&&done(ITEMS)) return go('report');
     startTest(v); view='test'; render(); return; }
+  if(v==='report') rtab='temp';
   if(location.hash==='#'+v){ view=v; render(); } else location.hash=v; }
 function grab(){ const n=$('#in-name'); if(n){ st.name=n.value.trim(); st.age=$('#in-age').value; st.who=$('#in-who').value; save(); } }
 function sample(mode){ grab(); const seed=[4,5,2,4,3,5,2,4,1,5,4,2,5,3]; let k=0;
@@ -800,6 +821,7 @@ const today=()=>{ const d=new Date(); return d.getFullYear()+'.'+String(d.getMon
 document.addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
   if(b.dataset.mic!=null) return micToggle();
+  if(b.dataset.rtab) return setRtab(b.dataset.rtab);
   if(b.dataset.go) return go(b.dataset.go);
   if(b.dataset.sample) return sample(b.dataset.sample);
   if(b.dataset.buy!=null){ buyPass(); cerr=''; return done(ITEMS)? (view==='coach'? render() : go('report')) : go('full'); }
@@ -818,7 +840,7 @@ document.addEventListener('click',e=>{
     save();
     if(tq.i<tq.list.length-1){ tq.i++; render(); } else go(tq.mode==='quick'?'quick-result':'report'); }
 });
-function route(){ const h=location.hash.slice(1); view= V[h]&&h!=='test'&&h!=='pass'? h : 'home'; render(); }
+function route(){ const h=location.hash.slice(1); view= V[h]&&h!=='test'&&h!=='pass'? h : 'home'; if(view==='report') rtab='temp'; render(); }
 document.addEventListener('submit',e=>e.preventDefault());
 window.addEventListener('hashchange',route);
 route();
