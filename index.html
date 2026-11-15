@@ -300,6 +300,29 @@ details[open]>summary::before{transform:rotate(90deg)}
 .rtab:focus-visible{outline:3px solid var(--c4);outline-offset:2px}
 .rpanel[hidden]{display:none}
 @media (max-width:420px){ .rtab{font-size:17px;padding:6px 8px} }
+/* 리포트 탭 4칸(기질 / 성격 / 양육자 비교 / 달라진 점): 2칸씩 두 줄 */
+.rtabs{display:grid;grid-template-columns:1fr 1fr}
+.rtab{min-width:0}
+/* 양육자 고르기 칩: 고른 사람은 하늘색 크레용 버튼 */
+.chip[aria-pressed="true"]{border-image-source:url(assets/ui/btn_blue.webp);border-image-slice:60 fill;color:var(--on-accent);font-weight:700}
+.chip.add{color:var(--accent-ink)}
+/* 다시 검사할 때 선택지 옆 표시: 지난번 내 답, 다른 양육자의 답 */
+.omk{margin-left:auto;display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;max-width:52%}
+.omk .mk{font-size:12px;line-height:1.5}
+.omk .mk.me{color:var(--accent-ink);font-weight:700}
+.opt:has(.omk)::after{margin-left:6px}
+/* 이전 점(빈 동그라미)과 지금 점을 한 막대에 */
+.track .dot.was{background-image:url(assets/ui/dot_ring.webp);z-index:1}
+.track .dot{z-index:2}
+.cgrow{display:grid;grid-template-columns:76px 1fr 34px;gap:10px;align-items:center;font-size:13px}
+.cgrow .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.dq{display:flex;flex-direction:column;gap:4px;padding-block:8px;background:url(assets/ui/d_wave.webp) left top/100% 5px no-repeat}
+.dq:first-child{background:none}
+.dq .who{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px}
+.dq .who b{color:var(--accent-ink)}
+.cgst{display:flex;align-items:center;gap:10px;font-size:14px}
+.cgst img{width:40px;height:40px;object-fit:contain;flex:none}
+.cgst .muted{margin-left:auto;text-align:right}
 </style>
 
 <div class="wrap">
@@ -448,33 +471,51 @@ const save=()=>{ try{ localStorage.setItem('aigyeol',JSON.stringify(st)); }catch
 const nm=()=> st.name? st.name : '우리 아이';
 const nmEun=()=>{ const n=nm(), c=n.charCodeAt(n.length-1); return esc(n)+((c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28)?'은':'는'); };
 
+/* ---------- 양육자별 기록 ---------- */
+// 한 아이를 여러 양육자가 따로 검사한다. 지금 고른 양육자(st.who)의 기록은 st 바로 아래(ans, date, qd, prev)에,
+// 나머지 양육자의 기록은 st.cgs[이름] = {ans, date, qd, prev} 에 둔다. 아이 정보(name, age)와 이용권(pass, use)은 아이 하나에 하나.
+const CGL=['엄마','아빠','할머니','할아버지','기타 양육자'];
+const cgNames=()=>{ const s=new Set(CGL); if(st.who) s.add(st.who); Object.keys(st.cgs||{}).forEach(k=>s.add(k)); return [...s]; };
+const hasAns=d=> !!d && (Object.keys(d.ans||{}).length>0 || !!d.prev);
+function cgs(){ return cgNames().map(n=> n===st.who? {who:n,ans:st.ans,date:st.date,qd:st.qd,prev:st.prev,active:true}
+  : (st.cgs&&hasAns(st.cgs[n])? {who:n,...st.cgs[n],ans:st.cgs[n].ans||{}} : null)).filter(Boolean); }
+function setWho(n){ if(!n||n===st.who) return; st.cgs=st.cgs||{};
+  const mine={ans:st.ans,date:st.date,qd:st.qd,prev:st.prev}; if(hasAns(mine)) st.cgs[st.who]=mine; else delete st.cgs[st.who];
+  const d=st.cgs[n]||{}; delete st.cgs[n];
+  st.who=n; st.ans=d.ans||{}; st.date=d.date||''; st.qd=d.qd||0; st.prev=d.prev||null; conv=null; save(); }
+const answered=ans=> ITEMS.filter(x=>(ans||{})[x.id]!=null).length;
+const fullDone=ans=> answered(ans)===ITEMS.length;
+
 /* ---------- 채점 ---------- */
-const v=it=> !st.ans[it.id]? null : (it.r? 6-st.ans[it.id] : st.ans[it.id]);
+const v=(it,ans=st.ans)=> !ans[it.id]? null : (it.r? 6-ans[it.id] : ans[it.id]);
 const mean=a=> a.length? a.reduce((x,y)=>x+y,0)/a.length : null;
 const pct=m=> m==null? null : Math.round((m-1)*25);
-function score(){
+function score(ans=st.ans){ const vv=x=>v(x,ans);
   const ax=AX.map(a=>{
-    const subs=a.subs.map((s,si)=>pct(mean(ITEMS.filter(x=>x.ax===a.id&&x.sub===si).map(v).filter(x=>x!=null))));
+    const subs=a.subs.map((s,si)=>pct(mean(ITEMS.filter(x=>x.ax===a.id&&x.sub===si).map(vv).filter(x=>x!=null))));
     const m0=mean(subs.filter(x=>x!=null)); const sc=m0==null?50:Math.round(m0);
     const d=Math.abs(sc-50);
     return {a,subs,sc,letter:sc>=50?a.H:a.L,pole:sc>=50?a.hi:a.lo,clar:d>=20?'뚜렷함':d>=8?'약간':'균형에 가까움',d};
   });
-  const gr=GR.map(g=>{ const sc=pct(mean(ITEMS.filter(x=>x.gr===g.id).map(v).filter(x=>x!=null))); return {g,sc,lv:sc==null?null:sc>=65?2:sc>=40?1:0}; });
+  const gr=GR.map(g=>{ const sc=pct(mean(ITEMS.filter(x=>x.gr===g.id).map(vv).filter(x=>x!=null))); return {g,sc,lv:sc==null?null:sc>=65?2:sc>=40?1:0}; });
   // 응답 일관성: 같은 하위척도 안에서 정방향 문항과 역방향 문항(뒤집은 값)의 평균 차이
-  const diffs=[]; groups.forEach(g=>{ const f=g.filter(x=>!x.r).map(v).filter(x=>x!=null), r=g.filter(x=>x.r).map(v).filter(x=>x!=null); if(f.length&&r.length) diffs.push(Math.abs(mean(f)-mean(r))); });
-  const dm=mean(diffs); const raw=Object.values(st.ans).filter(x=>x>0); const flat=raw.length>20 && new Set(raw).size===1;
+  const diffs=[]; groups.forEach(g=>{ const f=g.filter(x=>!x.r).map(vv).filter(x=>x!=null), r=g.filter(x=>x.r).map(vv).filter(x=>x!=null); if(f.length&&r.length) diffs.push(Math.abs(mean(f)-mean(r))); });
+  const dm=mean(diffs); const raw=Object.values(ans).filter(x=>x>0); const flat=raw.length>20 && new Set(raw).size===1;
   const cons= dm==null? null : flat? '낮음' : dm<0.9? '높음' : dm<1.5? '보통':'낮음';
-  return {ax,gr,code:ax.map(x=>x.letter).join(''),cons,unk:Object.values(st.ans).filter(x=>x===0).length};
+  return {ax,gr,code:ax.map(x=>x.letter).join(''),cons,unk:Object.values(ans).filter(x=>x===0).length};
 }
 /* ---------- 이전 검사와 비교 (성격 탭) ---------- */
 // 판정 기준. 확정 전 임시 기준, 감수 필요. 바꾸면 docs/content/report.md 와 docs/systems/save.md 도 고친다.
 // same: 점수 차이가 이 값보다 작으면 '비슷함'(6문항 척도에서 답 한 칸 = 약 4.2점, 세 칸 = 12.5점)
 // unkHalf: 한 척도 문항 중 '잘 모르겠다' 비율이 이 값 이상이면 그 척도는 비교하지 않음
-const CMP={same:12.5, unkHalf:0.5};
-const grUnk=()=>Object.fromEntries(GR.map(g=>[g.id,ITEMS.filter(x=>x.gr===g.id&&st.ans[x.id]===0).length]));
-// 다시 검사하기 직전에 남기는 이전 기록
-function snapshot(){ const r=score();
-  return {code:r.code,date:st.date,who:st.who,ax:Object.fromEntries(r.ax.map(x=>[x.a.id,x.sc])),gr:Object.fromEntries(r.gr.map(x=>[x.g.id,x.sc])),unk:grUnk()}; }
+// sub: 세부 기질(4문항) 점수 차이가 이 값 이상이면 '달라진 세부 기질'로 보여 줌(답 네 칸 = 25점)
+// gap: 같은 문항에서 답이 이 칸 수 이상 벌어지면 '크게 바뀐 문항', '양육자 답이 갈린 문항'으로 보여 줌
+const CMP={same:12.5, unkHalf:0.5, sub:25, gap:2};
+const grUnk=(ans=st.ans)=>Object.fromEntries(GR.map(g=>[g.id,ITEMS.filter(x=>x.gr===g.id&&ans[x.id]===0).length]));
+// 다시 검사하기 직전에 남기는 이전 기록. 문항별 답(ans)도 함께 남겨 재검사 화면과 '달라진 점' 탭에 쓴다.
+function snapshot(ans=st.ans,date=st.date,who=st.who){ const r=score(ans);
+  return {code:r.code,date,who,ax:Object.fromEntries(r.ax.map(x=>[x.a.id,x.sc])),sub:Object.fromEntries(r.ax.map(x=>[x.a.id,x.subs])),
+    gr:Object.fromEntries(r.gr.map(x=>[x.g.id,x.sc])),unk:grUnk(ans),ans:{...ans}}; }
 function compareGrow(r){ const p=st.prev;
   if(!p||!p.gr||!p.unk) return {none:true}; // 기록 없음, 또는 이 기능 전의 {code,date} 기록
   if(p.who!==st.who) return {p,who:true};
@@ -483,7 +524,7 @@ function compareGrow(r){ const p=st.prev;
     const pb=(p.unk[id]||0)>=half||ps==null, cb=cu[id]>=half||x.sc==null;
     if(pb||cb) return {x,skip:pb&&cb?'이전과 이번 검사 모두':pb?'이전 검사':'이번 검사'};
     const d=x.sc-ps; return {x,ps,v:Math.abs(d)<CMP.same?0:d>0?1:2}; })}; }
-const done=list=> list.every(x=>st.ans[x.id]!=null);
+const done=(list,ans=st.ans)=> list.every(x=>ans[x.id]!=null);
 const quickDone=()=> st.qd||done(FREE);
 
 /* ---------- 그리기 도우미 ---------- */
@@ -516,8 +557,10 @@ V.home=()=>`
   <div class="row">
    <label class="f" for="in-name">아이 이름 또는 별명 (선택)<input id="in-name" value="${esc(st.name)}" placeholder="예: 콩이" maxlength="10"></label>
    <label class="f" for="in-age">연령<select id="in-age">${['','만 2세','만 3세','만 4세','만 5세','만 6세','만 7세'].map(o=>`<option ${st.age===o?'selected':''}>${o}</option>`).join('')}</select></label>
-   <label class="f" for="in-who">답하는 사람<select id="in-who">${['엄마','아빠','조부모','기타 양육자'].map(o=>`<option ${st.who===o?'selected':''}>${o}</option>`).join('')}</select></label>
+   <label class="f" for="in-who">답하는 사람<select id="in-who">${cgNames().map(o=>`<option ${st.who===o?'selected':''}>${esc(o)}</option>`).join('')}</select></label>
   </div>
+  <p class="small muted">엄마, 아빠, 할머니처럼 양육자마다 따로 답할 수 있습니다. 답은 사람별로 따로 저장되고, 정밀 리포트의 '양육자 비교'에서 서로 다르게 본 점을 정리해 드립니다.</p>
+  ${cgStatus()}
  </div>
  <div class="two">
   <div class="card plan">
@@ -531,7 +574,7 @@ V.home=()=>`
    <span class="tag" style="align-self:flex-start;background:var(--accent);color:var(--on-accent);border-color:var(--accent)">정밀</span>
    <h2>내 아이의 MBTI 정밀검사</h2>
    <div class="price">5,900원<small>2달 이용권</small></div>
-   <ul class="small"><li>66문항 정밀 리포트: 기질 결과(4축, 세부 기질 12)와 성격 결과(자라는 힘 3)</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
+   <ul class="small"><li>66문항 정밀 리포트: 기질 결과(4축, 세부 기질 12)와 성격 결과(자라는 힘 3)</li><li>양육자별 검사와 양육자 비교 리포트</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회: 지난번 답을 보며 다시 답하고, 달라진 점 리포트</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
    <button class="btn dark" data-go="full">정밀검사 시작하기</button>
    <button class="btn ghost" data-sample="full">샘플 리포트 보기</button>
   </div>
@@ -540,14 +583,21 @@ V.home=()=>`
 
 let tq={list:[],i:0,mode:''};
 function startTest(mode){ tq.mode=mode; tq.list= mode==='quick'? FREE.slice() : ITEMS.filter(x=>st.ans[x.id]==null); if(mode==='full'&&!tq.list.length) tq.list=ITEMS; tq.i=0; }
-V.test=()=>{ const it=tq.list[tq.i], n=tq.list.length;
+// 다시 검사하기 중인지: 정밀검사이고, 이 양육자의 이전 기록에 문항별 답이 남아 있을 때
+const retesting=()=> tq.mode==='full' && !!(st.prev&&st.prev.ans);
+V.test=()=>{ const it=tq.list[tq.i], n=tq.list.length, re=retesting();
+ // 다시 검사할 때만 선택지 옆에 지난번 내 답과 다른 양육자의 답을 표시한다(처음 검사할 때는 서로의 답에 끌리지 않도록 숨김)
+ const others= re? cgs().filter(c=>!c.active&&c.ans[it.id]!=null) : [];
+ const marks=k=>{ const m=[]; if(re&&st.prev.ans[it.id]===k) m.push('<span class="mk me">지난번 나</span>');
+   others.forEach(o=>{ if(o.ans[it.id]===k) m.push(`<span class="mk">${esc(o.who)}</span>`); }); return m.length?`<span class="omk">${m.join('')}</span>`:''; };
  return `<div class="stack" style="gap:18px;padding-top:8px">
-  <div class="stack" style="gap:6px"><div class="small muted" style="display:flex;justify-content:space-between"><span>${tq.mode==='quick'?'1분 간이검사':'내 아이의 MBTI 정밀검사'}</span><span>${tq.i+1} / ${n}</span></div>
+  <div class="stack" style="gap:6px"><div class="small muted" style="display:flex;justify-content:space-between"><span>${tq.mode==='quick'?'1분 간이검사':re?'다시 검사하기 · '+esc(st.who):'내 아이의 MBTI 정밀검사 · '+esc(st.who)}</span><span>${tq.i+1} / ${n}</span></div>
   <div class="prog"><i style="width:${(tq.i)/n*100}%"></i></div></div>
+  ${re?`<p class="note small" data-retest-note><b>다시 검사 중입니다.</b> 선택지 옆에 <b>지난번 나</b>(${esc(st.prev.date||'이전 검사')})${others.length||cgs().some(c=>!c.active)?'와 다른 양육자':''}가 고른 답이 보입니다. 지난 답에 맞추지 말고 요즘 모습대로 골라 주세요.</p>`:''}
   <p class="small muted">최근 한 달간 ${esc(nm())}의 모습에 가장 가까운 것을 골라 주세요.</p>
   <div class="stack" style="gap:8px"><p class="qtext">${esc(it.t)}</p><p class="exq"><b>예</b> ${esc(it.ex)}</p></div>
-  <div class="opts">${OPT.map((o,k)=>`<button class="opt ${st.ans[it.id]===k+1?'sel':''}" data-a="${k+1}"><b>${k+1}</b>${o}</button>`).join('')}
-   <button class="opt unk ${st.ans[it.id]===0?'sel':''}" data-a="0"><b>?</b><span>잘 모르겠다 <span class="muted small">본 적이 없거나 판단하기 애매해요</span></span></button></div>
+  <div class="opts">${OPT.map((o,k)=>`<button class="opt ${st.ans[it.id]===k+1?'sel':''}" data-a="${k+1}"><b>${k+1}</b>${o}${marks(k+1)}</button>`).join('')}
+   <button class="opt unk ${st.ans[it.id]===0?'sel':''}" data-a="0"><b>?</b><span>잘 모르겠다 <span class="muted small">본 적이 없거나 판단하기 애매해요</span></span>${marks(0)}</button></div>
   <details class="qhelp"><summary>답하기 애매할 때</summary><div><p class="small muted">'보통이다'는 그럴 때도 있고 아닐 때도 있다는 뜻입니다. 예시와 꼭 같지 않아도 비슷한 모습이면 됩니다. 떠오르는 장면이 없으면 '잘 모르겠다'를 골라 주세요. 그 문항은 점수에 넣지 않고 비슷한 다른 문항으로 판단합니다.</p></div></details>
   <div class="testbar"><button class="btn ghost" data-back ${tq.i===0?'disabled':''}>이전 문항</button><button class="btn ghost" data-go="home">나중에 하기</button></div>
  </div>`; };
@@ -605,7 +655,91 @@ function cmpHTML(r){ const c=compareGrow(r);
    : `<div class="cmp" data-cmp="${CMPV[o.v][0]}"><b>${o.x.g.n}</b><span class="nums">이전 ${o.ps} → 지금 ${o.x.sc}</span><span class="pill ${CMPV[o.v][1]}">${CMPV[o.v][0]}</span></div>`).join('')
    +`<p class="small muted">작은 점수 차이는 답하는 날의 기분이나 상황으로도 생기므로 '비슷함'으로 봅니다. 순위나 진단이 아니라 같은 평가자가 본 변화의 방향입니다.</p>`;
  return `<section class="card">${head}${body}</section>`; }
-V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없습니다.','full');
+/* ---------- 양육자별 결과 · 양육자 비교 · 달라진 점 ---------- */
+const OPTN=a=> a===0? '잘 모르겠다' : OPT[a-1];
+const cgCode=c=> fullDone(c.ans)? score(c.ans).code : null;
+// 홈: 양육자별 검사 현황(누군가 답을 시작했을 때만)
+function cgStatus(){ const all=cgs().filter(c=>Object.keys(c.ans).length||c.prev); if(!all.length) return '';
+ return `<div class="stack" style="gap:8px" data-cgstatus><span class="small muted">양육자별 검사 현황</span>${all.map(c=>{ const code=cgCode(c), n=answered(c.ans);
+  return `<div class="cgst">${code?`<img src="${TM[code]}" alt="">`:`<img src="${M2}" alt="" style="opacity:.5">`}<b>${esc(c.who)}${c.active?' <span class="mk">지금 답하는 사람</span>':''}</b><span class="small muted">${code?`${code} ${NICK[code]}`:c.qd&&n<ITEMS.length?`간이검사 완료 · 정밀 ${n}/${ITEMS.length}`:`정밀 ${n}/${ITEMS.length}`}${c.prev?' · 다시 검사함':''}</span></div>`; }).join('')}</div>`; }
+// 리포트·대화 위: 양육자 고르기. 누르면 그 양육자의 결과로 바뀐다. 아직 안 한 양육자는 '+ 이름'으로 바로 검사 시작
+function cgSwitch(){ const all=cgs(), has=new Set(all.map(c=>c.who));
+ const add=CGL.filter(n=>!has.has(n)).slice(0,3);
+ return `<section class="card" style="gap:10px"><div class="axis-h"><h3>양육자별 결과</h3><span class="small muted">눌러서 바꿔 보기</span></div>
+  <div class="chips" role="group" aria-label="결과를 볼 양육자">${all.map(c=>{ const code=cgCode(c); return `<button class="chip" data-cg="${esc(c.who)}" aria-pressed="${!!c.active}">${esc(c.who)} · ${code||answered(c.ans)+'/'+ITEMS.length}</button>`; }).join('')}
+  ${add.map(n=>`<button class="chip add" data-addcg="${esc(n)}" aria-label="${esc(n)}도 검사하기">+ ${esc(n)}</button>`).join('')}</div></section>`; }
+
+// '양육자 비교' 탭: 정밀검사를 마친 양육자 둘 이상의 결과를 나란히 놓고 다르게 본 점을 정리
+function cgHTML(){ const all=cgs(), fin=all.filter(c=>fullDone(c.ans));
+ const head=`<div><span class="eyebrow">양육자 비교</span><h2>양육자마다 다르게 본 점</h2><p class="small muted">같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다. 어느 쪽이 맞다는 뜻이 아니라, ${esc(nm())}가 사람과 상황에 따라 다른 모습을 보인다는 단서입니다.</p></div>`;
+ if(fin.length<2){ const has=new Set(all.map(c=>c.who));
+  return `<section class="card" data-cgcmp="wait">${head}<p><b>비교할 양육자가 아직 없습니다.</b> <span class="small muted">정밀검사를 마친 양육자가 두 명 이상이면 이곳에 결과가 나란히 정리됩니다. 지금 마친 사람: ${fin.map(c=>esc(c.who)).join(', ')||'없음'}.</span></p>
+   <div class="chips">${CGL.filter(n=>!has.has(n)).slice(0,3).map(n=>`<button class="chip add" data-addcg="${esc(n)}" aria-label="${esc(n)}도 검사하기">+ ${esc(n)}</button>`).join('')}</div></section>`; }
+ const rs=fin.map(c=>({c,r:score(c.ans)}));
+ const codes=[...new Set(rs.map(x=>x.r.code))];
+ const axv=AX.map((a,i)=>{ const sc=rs.map(x=>x.r.ax[i].sc), letters=new Set(rs.map(x=>x.r.ax[i].letter)), range=Math.max(...sc)-Math.min(...sc);
+   return {a,i,range,split:letters.size>1,v:letters.size>1?['시선이 갈림','c1']:range>=CMP.same?['정도가 다름','c3']:['비슷하게 봄','c2']}; });
+ const splitAx=axv.filter(x=>x.split);
+ const summary= codes.length===1? `${rs.map(x=>esc(x.c.who)).join(', ')} 모두 <b>${codes[0]} ${NICK[codes[0]]}</b>로 같은 유형이 나왔습니다.`
+   : `${rs.map(x=>`${esc(x.c.who)}는 <b>${x.r.code}</b>`).join(', ')}로 유형이 다르게 나왔습니다.`;
+ const summary2= splitAx.length? ` <b>${splitAx.map(x=>x.a.hi+'·'+x.a.lo).join(', ')}</b> 축에서 방향이 갈렸고, 나머지 ${4-splitAx.length}축은 같은 방향입니다.` : ' 네 축 모두 같은 방향으로 보았습니다.';
+ const axes=axv.map(x=>`<div class="stack" style="gap:6px" data-cgax="${x.a.id}">
+   <div class="axis-h"><h3>${x.a.hi} · ${x.a.lo}</h3><span class="pill ${x.v[1]}">${x.v[0]}</span></div>
+   ${rs.map(o=>{ const s=o.r.ax[x.i]; return `<div class="cgrow"><b>${esc(o.c.who)}</b><div class="track thin" role="img" aria-label="${esc(o.c.who)} ${x.a.hi} ${s.sc}"><div class="mid"></div><div class="dot ${x.a.c.slice(2)}" style="left:${s.sc}%"></div></div><span class="num">${s.letter}</span></div>`; }).join('')}
+   <div class="sub"><div class="ends"><span>← ${x.a.lo}</span><span>${x.a.hi} →</span></div></div>
+   ${x.split?`<p class="small">${rs.map(o=>`${esc(o.c.who)}는 ${o.r.ax[x.i].pole}`).join(', ')} 쪽으로 보았습니다. ${x.a.q}의 모습이 함께 있는 사람이나 장소에 따라 달라질 수 있습니다.</p>`:''}
+  </div>`).join('');
+ const grow=GR.map((g,gi)=>{ const sc=rs.map(o=>o.r.gr[gi].sc), ok=sc.filter(s=>s!=null), range=ok.length>1?Math.max(...ok)-Math.min(...ok):null;
+   return `<div class="cmp"><b>${g.n}</b><span class="nums">${rs.map((o,k)=>`${esc(o.c.who)} ${sc[k]==null?'판단 안 함':sc[k]}`).join(' · ')}</span>${range==null?'':`<span class="pill ${range<CMP.same?'c2':'c3'}">${range<CMP.same?'비슷하게 봄':'정도가 다름'}</span>`}</div>`; }).join('');
+ // 답이 크게 갈린 문항: 양육자들이 고른 답(1~5, '잘 모르겠다' 제외)의 차이가 CMP.gap칸 이상
+ const split=ITEMS.map(it=>{ const a=rs.map(o=>o.c.ans[it.id]).filter(x=>x>0); return {it,spread:a.length>1?Math.max(...a)-Math.min(...a):0}; })
+   .filter(x=>x.spread>=CMP.gap).sort((x,y)=>y.spread-x.spread);
+ const qrow=x=>`<div class="dq"><p class="small"><b>${esc(x.it.t)}</b></p><div class="who">${rs.map(o=>`<span><b>${esc(o.c.who)}</b> ${OPTN(o.c.ans[x.it.id])}</span>`).join('')}</div></div>`;
+ return `<section class="card" data-cgcmp="ok">${head}<p>${summary}${summary2}</p>
+   <div class="row">${rs.map(o=>`<div class="ttl" style="gap:6px"><img src="${TM[o.r.code]}" alt="" style="width:52px;height:52px"><div><b>${esc(o.c.who)}</b><p class="small muted">${o.r.code} · ${esc(o.c.date||'')}</p></div></div>`).join('')}</div></section>
+  <section class="card"><h2>기질 4축, 사람마다</h2>${axes}<p class="small muted">점 위치는 0~100 점수입니다. 가운데 옅은 띠(40~60)는 균형 구간입니다. 같은 방향이어도 ${CMP.same}점 넘게 벌어지면 '정도가 다름'으로 표시합니다.</p></section>
+  <section class="card"><h2>자라는 힘, 사람마다</h2>${grow}</section>
+  <section class="card" data-cgsplit="${split.length}"><h2>답이 크게 갈린 문항</h2>
+   ${split.length? `<p class="small muted">같은 문항에 ${CMP.gap}칸 이상 다른 답을 고른 문항 ${split.length}개입니다. 이 장면을 언제, 어디서 봤는지 서로 이야기해 보면 아이를 더 넓게 이해할 수 있습니다.</p>
+    <div>${split.slice(0,6).map(qrow).join('')}</div>${split.length>6?`<details><summary>나머지 ${split.length-6}문항 더 보기</summary><div>${split.slice(6).map(qrow).join('')}</div></details>`:''}`
+    : `<p class="small muted">${CMP.gap}칸 이상 벌어진 문항이 없습니다. 양육자들이 ${esc(nm())}를 꽤 비슷하게 보고 있습니다.</p>`}
+  </section>
+  <div class="note"><b>함께 맞춰 보기.</b> 시선이 갈린 축은 ${esc(nm())}가 ${splitAx.length?'그 사람 앞에서':'상황에 따라'} 다른 모습을 보이는 부분일 수 있습니다. 양육자끼리 '잘 통하는 말'을 하나 정해 같은 말로 대해 주면 아이가 덜 헷갈립니다.</div>`; }
+
+// '달라진 점' 탭: 이 양육자의 이전 검사(다시 검사하기 전)와 지금 결과를 비교
+function changeHTML(r){ const p=st.prev;
+ const head=`<div><span class="eyebrow">이전 검사와 비교 · ${esc(st.who)}</span><h2>다시 검사로 달라진 점</h2>${p?`<p class="small muted">이전 검사 ${esc(p.date||'날짜 없음')} → 이번 검사 ${esc(st.date)} · 평가자 ${esc(p.who||st.who)}${p.sample?' · 샘플 예시 기록':''}</p>`:''}</div>`;
+ if(!p) return `<section class="card" data-chg="none">${head}<p><b>비교 기록 없음.</b> <span class="small muted">${esc(st.who)}의 이전 검사 기록이 없습니다. 이용권의 다시 검사하기를 하면 지금 결과가 이전 기록으로 남고, 다시 답한 결과와 나란히 정리됩니다.</span></p></section>`;
+ if(p.who&&p.who!==st.who) return `<section class="card" data-chg="who">${head}<p><b>평가자가 달라 직접 비교하기 어렵습니다.</b> <span class="small muted">이전 검사는 ${esc(p.who)}, 이번 검사는 ${esc(st.who)}가 답했습니다. 양육자 사이의 차이는 '양육자 비교' 탭에서 볼 수 있습니다.</span></p></section>`;
+ const axr=p.ax? r.ax.map(x=>{ const ps=p.ax[x.a.id], d=x.sc-ps, flip=(ps>=50)!==(x.sc>=50);
+   return {x,ps,d,flip,v:flip?[`${ps>=50?x.a.hi:x.a.lo} → ${x.pole}`,'c1']:Math.abs(d)<CMP.same?['비슷함','c2']:[`${d>0?x.a.hi:x.a.lo} 쪽으로 이동`,'c4']}; }) : [];
+ const moved=axr.filter(o=>o.flip||Math.abs(o.d)>=CMP.same);
+ const subs=p.sub? r.ax.flatMap(x=>x.a.subs.map((s,i)=>({x,s,ps:p.sub[x.a.id]?.[i],cs:x.subs[i]}))).filter(o=>o.ps!=null&&o.cs!=null&&Math.abs(o.cs-o.ps)>=CMP.sub) : [];
+ const ch=p.ans? ITEMS.filter(it=>p.ans[it.id]!=null&&st.ans[it.id]!=null&&p.ans[it.id]!==st.ans[it.id]) : [];
+ const big=ch.filter(it=>p.ans[it.id]>0&&st.ans[it.id]>0&&Math.abs(p.ans[it.id]-st.ans[it.id])>=CMP.gap).sort((a,b)=>Math.abs(p.ans[b.id]-st.ans[b.id])-Math.abs(p.ans[a.id]-st.ans[a.id]));
+ const unkCh=ch.filter(it=>p.ans[it.id]===0||st.ans[it.id]===0);
+ const sum=`${p.code===r.code?`유형은 <b>${r.code}</b> 그대로입니다.`:`유형이 <b>${esc(p.code)}</b>에서 <b>${r.code}</b>로 바뀌었습니다.`}`
+   +(axr.length? moved.length? ` 4축 중 <b>${moved.map(o=>o.x.a.hi+'·'+o.x.a.lo).join(', ')}</b> 축이 움직였고, 나머지는 비슷합니다.` : ' 4축 모두 비슷합니다.' : '')
+   +(p.ans? ` ${ITEMS.length}문항 중 <b>${ch.length}문항</b>의 답이 바뀌었습니다.` : '');
+ const qrow=it=>`<div class="dq"><p class="small"><b>${esc(it.t)}</b></p><div class="who"><span><b>이전</b> ${OPTN(p.ans[it.id])}</span><span><b>지금</b> ${OPTN(st.ans[it.id])}</span></div></div>`;
+ const g=compareGrow(r);
+ return `<section class="card" data-chg="ok">${head}<p>${sum}</p>
+   ${p.code!==r.code?`<div class="row" style="align-items:center">${TM[p.code]?`<div class="ttl" style="gap:6px"><img src="${TM[p.code]}" alt="" style="width:52px;height:52px;opacity:.6"><div><span class="small muted">이전</span><p><b>${esc(p.code)}</b> ${NICK[p.code]||''}</p></div></div>`:''}<div class="ttl" style="gap:6px"><img src="${TM[r.code]}" alt="" style="width:52px;height:52px"><div><span class="small muted">지금</span><p><b>${r.code}</b> ${NICK[r.code]}</p></div></div></div>`:''}</section>
+  ${axr.length?`<section class="card"><h2>기질 4축 변화</h2>${axr.map(o=>`<div class="stack" style="gap:6px" data-chgax="${o.x.a.id}">
+    <div class="axis-h"><b>${o.x.a.hi} · ${o.x.a.lo}</b><span class="pill ${o.v[1]}">${o.v[0]}</span></div>
+    <div class="bar"><span class="l">${o.x.a.lo}</span><div class="track thin" role="img" aria-label="이전 ${o.ps}, 지금 ${o.x.sc}"><div class="mid"></div><div class="dot was" style="left:${o.ps}%"></div><div class="dot ${o.x.a.c.slice(2)}" style="left:${o.x.sc}%"></div></div><span>${o.x.a.hi}</span></div>
+    <p class="small muted">이전 ${o.ps} → 지금 ${o.x.sc}</p></div>`).join('')}
+    <div class="legend"><span><img src="assets/ui/dot_ring.webp" alt="" width="14" height="14" style="vertical-align:middle;margin-right:4px">이전</span><span>색 점: 지금</span><span>${CMP.same}점보다 작은 차이는 '비슷함'</span></div></section>`:''}
+  ${subs.length?`<section class="card"><h2>달라진 세부 기질</h2>${subs.map(o=>`<div class="cmp"><b style="flex-basis:auto">${o.s.n}</b><span class="nums">이전 ${o.ps} → 지금 ${o.cs}</span><p class="small muted">${o.cs>o.ps?o.s.hi:o.s.lo} 쪽으로 ${Math.abs(o.cs-o.ps)}점 움직였습니다.</p></div>`).join('')}</section>`:''}
+  ${g.rows?`<section class="card"><h2>자라는 힘 변화</h2>${g.rows.map(o=> o.skip? `<div class="cmp"><b>${o.x.g.n}</b><p class="small muted">${o.skip}에서 '잘 모르겠다'가 절반 이상이라 비교하지 않았습니다.</p></div>`
+     : `<div class="cmp"><b>${o.x.g.n}</b><span class="nums">이전 ${o.ps} → 지금 ${o.x.sc}</span><span class="pill ${CMPV[o.v][1]}">${CMPV[o.v][0]}</span></div>`).join('')}</section>`:''}
+  ${p.ans?`<section class="card" data-chgq="${big.length}"><h2>답이 크게 바뀐 문항</h2>
+   ${big.length? `<p class="small muted">${CMP.gap}칸 이상 다른 답을 고른 문항 ${big.length}개입니다. 이 장면에서 요즘 무엇이 달라졌는지 떠올려 보세요.</p><div>${big.slice(0,6).map(qrow).join('')}</div>${big.length>6?`<details><summary>나머지 ${big.length-6}문항 더 보기</summary><div>${big.slice(6).map(qrow).join('')}</div></details>`:''}`
+    : `<p class="small muted">${CMP.gap}칸 이상 바뀐 문항은 없습니다.</p>`}
+   ${unkCh.length?`<p class="small muted">'잘 모르겠다'로 바뀌었거나 '잘 모르겠다'에서 답이 생긴 문항이 ${unkCh.length}개 있습니다.</p>`:''}</section>`:''}
+  <div class="note">두 검사 사이의 차이는 아이가 자란 모습일 수도, 답한 날의 기분이나 최근 일의 영향일 수도 있습니다. 작은 차이는 '비슷함'으로 보고, 크게 바뀐 문항 위주로 살펴보세요.</div>`; }
+
+V.report=()=>{ if(!done(ITEMS)) return cgSwitch()+empty('아직 정밀검사 결과가 없습니다.','full');
  if(!st.pass) return V.pass();
  const r=score();
  const axes=r.ax.map(x=>{ const p=P[x.letter], bal=x.d<8;
@@ -625,7 +759,7 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
    <p class="small"><b>${['지금 자라는 중','고르게 자라는 중','탄탄함'][x.lv]}.</b> ${x.g.lv[x.lv][0]}</p>
    <details><summary>상세 설명</summary><div><p class="small">${x.g.lv[x.lv][1]}</p></div></details></div>`).join('');
  const tab=(id,t)=>`<button class="rtab" type="button" role="tab" id="rtab-${id}" data-rtab="${id}" aria-controls="rpanel-${id}" aria-selected="${rtab===id}" tabindex="${rtab===id?0:-1}">${t}</button>`;
- return `<div class="sheet"><i class="clip" aria-hidden="true"></i>
+ return `${cgSwitch()}<div class="sheet"><i class="clip" aria-hidden="true"></i>
    <figure class="banner"><img src="assets/banner_result.webp" alt="" width="1000" height="560"></figure>
    <div class="sheet-head"><span class="eyebrow">내 아이의 MBTI · 정밀검사</span><h2>정밀검사 결과 보고서</h2><p class="small" style="opacity:.8">기질 결과와 성격(자라는 힘) 결과</p></div>
    <div class="meta">
@@ -633,7 +767,7 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
     <div><span>검사일</span>${esc(st.date)}${st.prev?` · 이전 ${st.prev.code}`:''}</div><div><span>문항</span>66문항 · 5점 척도</div><div><span>응답 일관성</span>${r.cons||'판단 불가'} · 잘 모르겠다 ${r.unk}문항</div>
    </div>
   </div>
-  <div class="rtabs" role="tablist" aria-label="결과 나누어 보기">${tab('temp','기질')}${tab('grow','성격(자라는 힘)')}</div>
+  <div class="rtabs" role="tablist" aria-label="결과 나누어 보기">${tab('temp','기질')}${tab('grow','성격(자라는 힘)')}${tab('cg','양육자 비교')}${tab('chg','달라진 점')}</div>
   <div class="stack rpanel" role="tabpanel" id="rpanel-temp" aria-labelledby="rtab-temp" ${rtab==='temp'?'':'hidden'}>
   <section class="card type">
    <span class="eyebrow">기질 유형</span>${masc(r)}
@@ -666,8 +800,10 @@ V.report=()=>{ if(!done(ITEMS)) return empty('아직 정밀검사 결과가 없�
   </section>
   ${cmpHTML(r)}
   </div>
+  <div class="stack rpanel" role="tabpanel" id="rpanel-cg" aria-labelledby="rtab-cg" ${rtab==='cg'?'':'hidden'}>${cgHTML()}</div>
+  <div class="stack rpanel" role="tabpanel" id="rpanel-chg" aria-labelledby="rtab-chg" ${rtab==='chg'?'':'hidden'}>${changeHTML(r)}</div>
   <div class="note">
-   <b>결과를 읽을 때.</b> 이 보고서는 ${esc(st.who)}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있습니다.
+   <b>결과를 읽을 때.</b> 이 보고서는 ${esc(st.who)}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있으며, '양육자 비교' 탭에서 나란히 볼 수 있습니다.
    ${r.cons==='낮음'?' 이번 응답은 비슷한 문항 사이에 답이 엇갈린 경우가 많아, 시간을 두고 다시 검사해 보기를 권합니다.':''}
    점수는 또래와 비교한 순위가 아니라 문항 응답으로 본 아이 안의 경향입니다. 기질에는 좋고 나쁨이 없으며, 이 검사는 의학적 진단이나 발달 평가를 대신하지 않습니다.
   </div>
@@ -693,6 +829,8 @@ V.blueprint=()=>`
   <div class="tw"><table><tr><th>항목</th><th>내용</th></tr>
    <tr><td>가격</td><td>5,900원, 1회 결제. 자동 결제 없음</td></tr>
    <tr><td>포함</td><td>정밀 리포트, 상황별 AI 대화 2달(60일), 기간 중 다시 검사하기 1회</td></tr>
+   <tr><td>양육자별 검사</td><td>이용권은 아이 하나에 하나. 기간 중이면 다른 양육자의 정밀검사는 횟수 제한 없이 포함(다시 검사하기 횟수를 쓰지 않음). 결과는 양육자별로 따로 저장하고 리포트의 '양육자 비교' 탭에서 비교</td></tr>
+   <tr><td>다시 검사하기</td><td>이용권당 1회, 양육자 모두 합쳐 1회. 다시 검사할 때 선택지 옆에 지난번 내 답과 다른 양육자의 답을 표시. 리포트의 '달라진 점' 탭에서 이전 검사와 비교</td></tr>
    <tr><td>기간이 끝나면</td><td>리포트는 계속 볼 수 있음. AI 대화와 다시 검사하기는 잠기고, 다시 결제하면 2달이 새로 열림</td></tr>
    <tr><td>AI 대화 한도</td><td>30일마다 30회, 하루 5회, 한 상황당 이어 묻기 3회, 입력 500자</td></tr>
    <tr><td>횟수에서 빼는 것</td><td>자주 묻는 상황 6가지(미리 써 둔 답)</td></tr>
@@ -741,7 +879,8 @@ V.pass=()=>{ const again=st.pass&&!passOn(); const left=ITEMS.filter(x=>st.ans[x
    <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
     <li><b>정밀 리포트.</b> 기질 결과(4축, 세부 기질 12가지, 강점과 살펴볼 점, 잘 통하는 말)와 성격 결과(자라는 힘 3가지)를 나누어 보여 줍니다</li>
     <li><b>상황별 AI 대화 2달.</b> 지금 겪는 상황을 적으면 아이 기질에 맞는 행동과 말을 알려 줍니다. 월 30회</li>
-    <li><b>다시 검사하기 1회.</b> 아빠가 답해 보거나, 두 달 사이의 변화를 확인할 때</li>
+    <li><b>양육자별 검사.</b> 엄마, 아빠, 할머니처럼 양육자마다 따로 검사하고 서로 다르게 본 점을 비교 리포트로 정리합니다</li>
+    <li><b>다시 검사하기 1회.</b> 지난번 내 답과 다른 양육자의 답을 보며 다시 답하고, 달라진 점을 리포트로 정리합니다</li>
    </ul>
    <button class="btn" data-buy>5,900원 결제하기</button>
    <p class="small muted">자동 결제는 없습니다. 2달 뒤에 끝나며, 리포트는 그 뒤에도 볼 수 있습니다.${left&&left<ITEMS.length?` 무료 검사에서 답한 문항은 이어지고 ${left}문항이 남았습니다.`:''}</p>
@@ -788,7 +927,7 @@ function ansHTML(a){ if(!a) return `<div class="card"><p class="muted">${esc(nm(
   const row=(l,t,c)=> t? `<div class="stack" style="gap:2px"><span class="lab">${l}</span><p class="${c||''}">${c==='say'||c==='avoid small'?'“'+esc(t)+'”':esc(t)}</p></div>`:'';
   return `<div class="card ans">${a.canned?'<span class="tag" style="align-self:flex-start">미리 써 둔 답 · 횟수 차감 없음</span>':''}${a.mock?'<span class="tag" style="align-self:flex-start">목업 답변 · 실제 서비스에서는 AI가 상황에 맞춰 답합니다</span>':''}
    ${row('나부터',a.me)}${row('이렇게 해 보세요',a.act)}${row('이렇게 말해 보세요',a.say,'say')}${row('피할 말',a.avoid,'avoid small')}${row('왜 통할까요',a.why)}</div>`; }
-V.coach=()=>{ if(!done(ITEMS)) return empty('상황별 대화는 정밀검사 결과가 있어야 열립니다.','full');
+V.coach=()=>{ if(!done(ITEMS)) return cgSwitch()+empty('상황별 대화는 정밀검사 결과가 있어야 열립니다.','full');
  if(!st.pass) return V.pass();
  const r=score(), on=passOn(), u=usage(), canFollow=conv&&conv.turns.length&&conv.turns.length<=LIM.follow&&!conv.turns[0].a?.canned&&!conv.turns[conv.turns.length-1].a?.crisis;
  return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${r.code} · ${NICK[r.code]}</span><div class="ttl"><img src="${TM[r.code]}" alt=""><h1>어떻게 말해야 할지 도와줘</h1></div>
@@ -844,18 +983,29 @@ function go(v){ if(v==='quick'||v==='full'){ grab();
     startTest(v); view='test'; render(); return; }
   if(v==='report') rtab='temp';
   if(location.hash==='#'+v){ view=v; render(); } else location.hash=v; }
-function grab(){ const n=$('#in-name'); if(n){ st.name=n.value.trim(); st.age=$('#in-age').value; st.who=$('#in-who').value; save(); } }
-function sample(mode){ grab(); const seed=[4,5,2,4,3,5,2,4,1,5,4,2,5,3]; let k=0;
-  (mode==='quick'?FREE:ITEMS).forEach(it=>{ const base={A:2,B:4,C:2,D:4}[it.ax]||4; let a=base+(seed[k++%seed.length]>3?0:(k%2?1:-1)); a=Math.max(1,Math.min(5,a)); st.ans[it.id]= it.r? 6-a : a; });
+function grab(){ const n=$('#in-name'); if(n){ st.name=n.value.trim(); st.age=$('#in-age').value; setWho($('#in-who').value); save(); } }
+// 샘플 답 만들기. base: 축마다 중심 답(1~5), 자라는 힘은 g
+function genAns(list,base,g,into){ const seed=[4,5,2,4,3,5,2,4,1,5,4,2,5,3]; let k=0; const o=into||{};
+  list.forEach(it=>{ const b=it.ax?base[it.ax]:g; let a=b+(seed[k++%seed.length]>3?0:(k%2?1:-1)); a=Math.max(1,Math.min(5,a)); o[it.id]= it.r? 6-a : a; }); return o; }
+function sample(mode){ grab();
+  genAns(mode==='quick'?FREE:ITEMS,{A:2,B:4,C:2,D:4},4,st.ans);
   if(!st.name) st.name='콩이'; if(!st.age) st.age='만 5세'; st.qd=1; st.date=today(); if(mode==='full'&&!passOn()) buyPass();
-  if(mode==='full'&&!st.prev){ // 비교 화면 확인용 샘플 이전 기록: 끈기는 자랐음, 스스로 힘은 비슷함, 함께 힘은 '잘 모르겠다'가 많아 비교 제외
-    const s=snapshot(); s.gr.G1=Math.max(0,s.gr.G1-20); s.unk.G3=4; s.sample=1; st.prev=s; }
+  if(mode==='full'&&!st.prev){ // 비교 화면 확인용 샘플 이전 기록(두 달 전): 리듬·자유 축이 자유 쪽이었고(유형 코드 다름), 끈기는 한 칸씩 낮게(→ 자랐음), 함께 힘은 '잘 모르겠다' 4개(→ 비교 제외)
+    const pa=genAns(ITEMS.filter(x=>x.ax==='D'),{D:2},0,{...st.ans});
+    ITEMS.filter(x=>x.gr==='G1').forEach(x=>{ pa[x.id]= x.r? Math.min(5,pa[x.id]+1) : Math.max(1,pa[x.id]-1); });
+    ITEMS.filter(x=>x.gr==='G3').slice(0,4).forEach(x=>{ pa[x.id]=0; });
+    const s=snapshot(pa,today(-60),st.who); s.sample=1; st.prev=s; }
+  if(mode==='full'&&!cgs().some(c=>!c.active&&fullDone(c.ans))){ // 양육자 비교 확인용 샘플 다른 양육자: 탐험 쪽으로, 리듬·자유는 가운데쯤으로 본 사람
+    st.cgs=st.cgs||{}; const other=CGL.find(n=>n!==st.who&&!hasAns(st.cgs[n]));
+    if(other) st.cgs[other]={ans:genAns(ITEMS,{A:4,B:4,C:2,D:3},3),date:today(),qd:1,prev:null,sample:1}; }
   save(); go(mode==='quick'?'quick-result':'report'); }
-const today=()=>{ const d=new Date(); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
+const today=(dd=0)=>{ const d=new Date(Date.now()+dd*864e5); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
 document.addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
   if(b.dataset.mic!=null) return micToggle();
   if(b.dataset.rtab) return setRtab(b.dataset.rtab);
+  if(b.dataset.cg){ setWho(b.dataset.cg); return render(); }
+  if(b.dataset.addcg){ setWho(b.dataset.addcg); return go('full'); }
   if(b.dataset.go) return go(b.dataset.go);
   if(b.dataset.sample) return sample(b.dataset.sample);
   if(b.dataset.buy!=null){ buyPass(); cerr=''; return done(ITEMS)? (view==='coach'? render() : go('report')) : go('full'); }
@@ -864,7 +1014,7 @@ document.addEventListener('click',e=>{
   if(b.dataset.demo==='usemax'){ const u=usage(); u.dn=LIM.day; save(); return render(); }
   if(b.dataset.pre!=null){ return ask('',+b.dataset.pre); }
   if(b.type==='submit'){ const f=b.closest('form'); if(f&&f.id==='askf'){ e.preventDefault(); const q=$('#in-q').value; if(conv) conv.cont=!!b.dataset.follow; return ask(q); } }
-  if(b.dataset.reset!=null){ st.ans={}; st.qd=0; st.pass=null; st.use={}; st.prev=null; conv=null; save(); return go('home'); }
+  if(b.dataset.reset!=null){ st.ans={}; st.qd=0; st.pass=null; st.use={}; st.prev=null; st.cgs={}; conv=null; save(); return go('home'); }
   if(b.dataset.back!=null){ if(tq.i>0){ tq.i--; render(); } return; }
   if(b.dataset.a){ const cur=tq.list[tq.i]; st.ans[cur.id]=+b.dataset.a; st.date=today();
     if(tq.mode==='quick' && +b.dataset.a===0 && cur.ax){ // 간이검사: 같은 세부 기질의 다른 문항으로 대신 묻기
@@ -876,6 +1026,8 @@ document.addEventListener('click',e=>{
 });
 function route(){ const h=location.hash.slice(1); view= V[h]&&h!=='test'&&h!=='pass'? h : 'home'; if(view==='report') rtab='temp'; render(); }
 document.addEventListener('submit',e=>e.preventDefault());
+// 홈의 '답하는 사람'을 바꾸면 그 양육자의 기록으로 바꿔 끼운다
+document.addEventListener('change',e=>{ if(e.target.id==='in-who'){ grab(); render(); } });
 window.addEventListener('hashchange',route);
 route();
 </script>
