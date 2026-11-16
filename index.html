@@ -13,8 +13,8 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="내 아이의 MBTI · 영유아 기질검사">
 <meta property="og:description" content="부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?">
-<meta property="og:image" content="https://kiliuswook.github.io/aigyeol/assets/og.png">
-<meta property="og:url" content="https://kiliuswook.github.io/aigyeol/">
+<meta property="og:image" content="https://childmbti.wonderwheel.co.kr/assets/og.png">
+<meta property="og:url" content="https://childmbti.wonderwheel.co.kr/">
 <link rel="apple-touch-icon" href="assets/icon_180.png">
 </head>
 <body>
@@ -908,7 +908,7 @@ const demoTools=()=>`<details><summary class="small muted">시제품 확인용 �
 // kakaoKey: 카카오 개발자 콘솔의 JavaScript 키. 비어 있으면 휴대폰 공유 창(navigator.share), 그것도 없으면 링크 복사로 대신한다.
 // store: 구글 플레이 주소(출시 뒤 채움). 비어 있으면 '앱 받기' 대신 웹 검사로 보낸다.
 // SITE: 공유·초대·결과 링크에 쓰는 앱 주소. 자체 도메인으로 바꿀 때는 직접 고치지 말고 tools/set_domain.py 를 쓴다(og 태그, CNAME 까지 함께 바꿈).
-const SITE='https://kiliuswook.github.io/aigyeol/';
+const SITE='https://childmbti.wonderwheel.co.kr/';
 const SHARE={kakaoKey:'', web:SITE, store:'', img:SITE+'assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
 const b64e=o=> btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const b64d=s=>{ try{ s=s.replace(/-/g,'+').replace(/_/g,'/'); return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))); }catch(e){ return null; } };

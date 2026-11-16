@@ -97,7 +97,7 @@
 ## 6. 배포
 
 - 이 저장소가 곧 GitHub Pages 배포다. `main` 에 들어가면 바로 공개된다.
-- 주소: https://kiliuswook.github.io/aigyeol/ (자체 도메인으로 옮길 예정, [자체 도메인](systems/domain.md). 주소는 `tools/set_domain.py` 로 한 번에 바꾼다)
+- 주소: https://childmbti.wonderwheel.co.kr/ (2026-11-16 자체 도메인으로 옮김, 예전 https://kiliuswook.github.io/aigyeol/ 는 넘겨 줌. [자체 도메인](systems/domain.md). 주소는 `tools/set_domain.py` 로 한 번에 바꾼다)
 - 빌드 도구 없음. `index.html` 과 `assets/` 를 그대로 올린다.
 
 ## 7. 그림
