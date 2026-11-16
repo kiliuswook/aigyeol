@@ -19,10 +19,6 @@
 </head>
 <body>
 
-<meta property="og:title" content="내 아이의 MBTI">
-<meta property="og:description" content="만 2~7세 아이의 타고난 기질을 MBTI처럼 네 글자로 읽는 부모용 영유아 기질검사">
-<meta property="og:image" content="https://kiliuswook.github.io/aigyeol/assets/banner_result.webp">
-<meta property="og:type" content="website">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
@@ -908,7 +904,9 @@ const demoTools=()=>`<details><summary class="small muted">시제품 확인용 �
 /* ---------- 공유 ---------- */
 // kakaoKey: 카카오 개발자 콘솔의 JavaScript 키. 비어 있으면 휴대폰 공유 창(navigator.share), 그것도 없으면 링크 복사로 대신한다.
 // store: 구글 플레이 주소(출시 뒤 채움). 비어 있으면 '앱 받기' 대신 웹 검사로 보낸다.
-const SHARE={kakaoKey:'', web:'https://kiliuswook.github.io/aigyeol/', store:'', img:'https://kiliuswook.github.io/aigyeol/assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
+// SITE: 공유·초대·결과 링크에 쓰는 앱 주소. 자체 도메인으로 바꿀 때는 직접 고치지 말고 tools/set_domain.py 를 쓴다(og 태그, CNAME 까지 함께 바꿈).
+const SITE='https://kiliuswook.github.io/aigyeol/';
+const SHARE={kakaoKey:'', web:SITE, store:'', img:SITE+'assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
 const b64e=o=> btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const b64d=s=>{ try{ s=s.replace(/-/g,'+').replace(/_/g,'/'); return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))); }catch(e){ return null; } };
 // 문항 답을 66글자로: 문항 순서대로 0~5, 답 없음은 '-'

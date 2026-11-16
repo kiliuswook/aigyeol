@@ -97,7 +97,7 @@
 ## 6. 배포
 
 - 이 저장소가 곧 GitHub Pages 배포다. `main` 에 들어가면 바로 공개된다.
-- 주소: https://kiliuswook.github.io/aigyeol/
+- 주소: https://kiliuswook.github.io/aigyeol/ (자체 도메인으로 옮길 예정, [자체 도메인](systems/domain.md). 주소는 `tools/set_domain.py` 로 한 번에 바꾼다)
 - 빌드 도구 없음. `index.html` 과 `assets/` 를 그대로 올린다.
 
 ## 7. 그림
@@ -117,3 +117,4 @@
 - [저장](systems/save.md): 저장 항목, 이전 기록, 다시 검사하기, 전부 지우기, 비교 판정 기준 값
 - [양육자별 검사 · 다시 검사하기](systems/caregivers.md): 양육자 프로필, 양육자 비교 탭, 달라진 점 탭, 재검사 화면의 이전 답 표시, 검사별 결제
 - [결제·공유](systems/pay-share.md): 검사 1회 결제, 자녀 등록, 카카오톡 공유, 공동 양육자 초대와 결과 합치기, 기록 파일
+- [자체 도메인](systems/domain.md): 도메인 바꾸는 도구, DNS, 카카오 도메인 등록
