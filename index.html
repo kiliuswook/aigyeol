@@ -10,6 +10,11 @@
 <title>내 아이의 MBTI · 영유아 기질검사</title>
 <meta name="description" content="내 아이의 MBTI: 만 2~7세 아이의 타고난 기질을 MBTI처럼 네 글자로 읽는 부모용 영유아 기질검사 시제품">
 <link rel="icon" type="image/png" href="assets/icon_180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="내 아이의 MBTI · 영유아 기질검사">
+<meta property="og:description" content="부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?">
+<meta property="og:image" content="https://kiliuswook.github.io/aigyeol/assets/og.png">
+<meta property="og:url" content="https://kiliuswook.github.io/aigyeol/">
 <link rel="apple-touch-icon" href="assets/icon_180.png">
 </head>
 <body>
@@ -164,14 +169,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg) var(--paper) repeat;background-size:512px;flex-wrap:nowrap;padding-block:10px}
 .brand small{display:none}
 .hlink{font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
-#nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,480px);z-index:20;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+#nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,480px);z-index:20;display:grid;grid-template-columns:repeat(3,1fr);gap:0;
   background:var(--surface);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;
   padding:8px max(8px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));box-shadow:0 -6px 18px color-mix(in srgb,var(--fg) 8%,transparent)}
 #nav a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:500;color:var(--muted);padding:4px 2px;border-radius:14px;background:none;min-height:52px}
 #nav a .ic{display:grid;place-items:center;width:52px;height:30px;border-radius:999px;transition:background .15s}
 #nav a.on{background:none;color:var(--fg);font-weight:700}
 #nav a.on .ic{background:var(--accent);color:var(--on-accent)}
-body[data-view="test"] #nav,body[data-view="pass"] #nav{display:none}
+body[data-view="test"] #nav,body[data-view="pay"] #nav{display:none}
 body[data-view="test"] .hlink{display:none}
 #app>*{animation:rise .28s ease both}
 @keyframes rise{from{opacity:.0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -189,7 +194,6 @@ input,select,textarea{font-size:16px;min-height:48px}
 .stickycta{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom,0px));width:min(100%,480px);z-index:19;animation:none!important;
   padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
 .stickycta .btn{width:100%;box-shadow:0 6px 18px color-mix(in srgb,var(--accent-ink) 35%,transparent)}
-body[data-view="quick-result"]{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}
 @media (min-width:700px){ body{background:var(--sunk)} .wrap{background:var(--bg) var(--paper) repeat;background-size:512px;min-height:100vh;padding-inline:20px;box-shadow:0 0 0 1px var(--line)} header.top{margin-inline:-20px;padding-inline:20px} }
 @media (prefers-reduced-motion:reduce){ #app>*{animation:none} }
 .microw{display:flex;flex-direction:column;align-items:stretch;gap:8px} .mic{justify-content:center}
@@ -323,6 +327,18 @@ details[open]>summary::before{transform:rotate(90deg)}
 .cgst{display:flex;align-items:center;gap:10px;font-size:14px}
 .cgst img{width:40px;height:40px;object-fit:contain;flex:none}
 .cgst .muted{margin-left:auto;text-align:right}
+#nav a[data-v="share"] .off-i{opacity:.55;filter:grayscale(1)}
+.btn.kakao{background:#FEE500;color:#191600;border-color:#FEE500}
+.btn.kakao{border:0 solid transparent;border-image:none;border-radius:16px 13px 17px 14px;box-shadow:inset 0 0 0 2px #191600}
+.sharecard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:8px 0}
+.sharecard .masc{position:static;transform:none;margin:0 auto;width:120px;height:120px}
+.btn.kakao{width:100%}
+.ttl{display:flex;align-items:center;gap:10px}
+.ttl img{width:40px;height:40px;object-fit:contain}
+#toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:min(440px,calc(100% - 32px));background:var(--fg);color:var(--bg);padding:12px 16px;border-radius:14px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:40}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
 </style>
 
 <div class="wrap">
@@ -331,7 +347,7 @@ details[open]>summary::before{transform:rotate(90deg)}
 
   </header>
   <main id="app" class="stack" style="gap:20px"></main>
-  <nav id="nav" aria-label="주요 화면"><a href="#home" data-v="home"><span class="ic"><img class="off-i" src="assets/ui/i_home_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_home.webp" alt="" width="28" height="28"></span>홈</a><a href="#quick-result" data-v="quick-result"><span class="ic"><img class="off-i" src="assets/ui/i_star_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_star.webp" alt="" width="28" height="28"></span>무료 결과</a><a href="#report" data-v="report"><span class="ic"><img class="off-i" src="assets/ui/i_doc_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_doc.webp" alt="" width="28" height="28"></span>리포트</a><a href="#coach" data-v="coach"><span class="ic"><img class="off-i" src="assets/ui/i_chat_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_chat.webp" alt="" width="28" height="28"></span>대화</a></nav>
+  <nav id="nav" aria-label="주요 화면"><a href="#home" data-v="home"><span class="ic"><img class="off-i" src="assets/ui/i_home_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_home.webp" alt="" width="28" height="28"></span>홈</a><a href="#report" data-v="report"><span class="ic"><img class="off-i" src="assets/ui/i_doc_off.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_doc.webp" alt="" width="28" height="28"></span>리포트</a><a href="#share" data-v="share"><span class="ic"><img class="off-i" src="assets/ui/i_share.webp" alt="" width="28" height="28"><img class="on-i" src="assets/ui/i_share.webp" alt="" width="28" height="28"></span>공유</a></nav>
 </div>
 
 <script>
@@ -465,26 +481,53 @@ for(let i=0;i<6;i++) groups.forEach(g=>{ if(g[i]) ITEMS.push(g[i]); });
 const FREE=ITEMS.filter(x=>x.free);
 
 /* ---------- 상태 ---------- */
+// 지금 고른 아이의 기록은 st 바로 아래(KF 필드)에, 다른 아이들의 같은 기록은 st.kids[id] 에 둔다(setKid 로 바꿔 끼움). 아이 순서는 st.korder.
 let st={ans:{},name:'',age:'',who:'엄마',date:''};
 try{ const s=JSON.parse(localStorage.getItem('aigyeol')||'null'); if(s&&s.ans) st=s; }catch(e){}
 const save=()=>{ try{ localStorage.setItem('aigyeol',JSON.stringify(st)); }catch(e){} };
 const nm=()=> st.name? st.name : '우리 아이';
 const nmEun=()=>{ const n=nm(), c=n.charCodeAt(n.length-1); return esc(n)+((c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28)?'은':'는'); };
+const rid=()=> Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 
 /* ---------- 양육자별 기록 ---------- */
-// 한 아이를 여러 양육자가 따로 검사한다. 지금 고른 양육자(st.who)의 기록은 st 바로 아래(ans, date, qd, prev)에,
-// 나머지 양육자의 기록은 st.cgs[이름] = {ans, date, qd, prev} 에 둔다. 아이 정보(name, age)와 이용권(pass, use)은 아이 하나에 하나.
+// 한 아이를 여러 양육자가 따로 검사한다. 지금 고른 양육자(st.who)의 기록은 st 바로 아래(ans, date, qd, prev, paid)에,
+// 나머지 양육자의 기록은 st.cgs[이름] = {ans, date, qd, prev, paid, recv} 에 둔다. recv: 다른 휴대폰에서 결과 링크로 받은 기록.
 const CGL=['엄마','아빠','할머니','할아버지','기타 양육자'];
 const cgNames=()=>{ const s=new Set(CGL); if(st.who) s.add(st.who); Object.keys(st.cgs||{}).forEach(k=>s.add(k)); return [...s]; };
-const hasAns=d=> !!d && (Object.keys(d.ans||{}).length>0 || !!d.prev);
-function cgs(){ return cgNames().map(n=> n===st.who? {who:n,ans:st.ans,date:st.date,qd:st.qd,prev:st.prev,active:true}
+const hasAns=d=> !!d && (Object.keys(d.ans||{}).length>0 || !!d.prev || !!d.paid);
+function cgs(){ return cgNames().map(n=> n===st.who? {who:n,ans:st.ans,date:st.date,qd:st.qd,prev:st.prev,paid:st.paid,active:true}
   : (st.cgs&&hasAns(st.cgs[n])? {who:n,...st.cgs[n],ans:st.cgs[n].ans||{}} : null)).filter(Boolean); }
 function setWho(n){ if(!n||n===st.who) return; st.cgs=st.cgs||{};
-  const mine={ans:st.ans,date:st.date,qd:st.qd,prev:st.prev}; if(hasAns(mine)) st.cgs[st.who]=mine; else delete st.cgs[st.who];
+  const mine={ans:st.ans,date:st.date,qd:st.qd,prev:st.prev,paid:st.paid}; if(hasAns(mine)) st.cgs[st.who]=mine; else delete st.cgs[st.who];
   const d=st.cgs[n]||{}; delete st.cgs[n];
-  st.who=n; st.ans=d.ans||{}; st.date=d.date||''; st.qd=d.qd||0; st.prev=d.prev||null; conv=null; save(); }
+  st.who=n; st.ans=d.ans||{}; st.date=d.date||''; st.qd=d.qd||0; st.prev=d.prev||null; st.paid=d.paid||0; save(); }
 const answered=ans=> ITEMS.filter(x=>(ans||{})[x.id]!=null).length;
 const fullDone=ans=> answered(ans)===ITEMS.length;
+
+/* ---------- 자녀 ---------- */
+// 아이마다 따로 저장하는 필드. key: 기기 사이에서 같은 아이를 알아보는 무작위 값(초대·결과 링크에 실림),
+// buys: 이 아이의 검사 결제 기록, ext: 다른 휴대폰에서 이미 첫 검사를 결제한 아이(초대로 받은 아이), inv: 받은 초대
+const KF=['key','name','age','who','ans','date','qd','prev','paid','cgs','buys','ext','inv'];
+const pickKid=()=>Object.fromEntries(KF.map(k=>[k,st[k]]));
+const blankKid=()=>({key:rid(),name:'',age:'',who:st.who||'엄마',ans:{},date:'',qd:0,prev:null,paid:0,cgs:{},buys:[],ext:0,inv:null});
+function kids(){ return (st.korder||[]).map(id=> id===st.kid? {id,...pickKid(),active:true} : st.kids[id]? {id,...st.kids[id]} : null).filter(Boolean); }
+function setKid(id){ if(!id||id===st.kid||!st.kids[id]) return; st.kids[st.kid]=pickKid(); Object.assign(st,blankKid(),st.kids[id]); delete st.kids[id]; st.kid=id; save(); }
+function addKid(d){ const id='k'+rid(); st.kids[st.kid]=pickKid(); Object.assign(st,blankKid(),d||{}); st.kid=id; st.korder.push(id); save(); return id; }
+const kidName=(k,i)=> k.name || '아이 '+(i+1);
+const kidByKey=key=> kids().find(k=>k.key===key);
+// 예전 기록 옮기기: 자녀 목록이 없던 기록은 아이 1명으로, 5,900원 이용권을 산 적이 있으면 이미 결제한 검사로 본다
+(function migrate(){ if(!st.kid){ st.kid='k1'; st.korder=['k1']; } st.kids=st.kids||{}; if(!st.key) st.key=rid(); st.buys=st.buys||[];
+  if(st.pass){ st.paid=1; if(!st.buys.length) st.buys.push({t:st.pass.start,kind:'first',who:st.who,price:0,legacy:1});
+    Object.values(st.cgs||{}).forEach(c=>{ if(fullDone(c.ans||{})) c.paid=1; }); }
+  delete st.pass; delete st.use; })();
+
+/* ---------- 가격 (바꿀 때는 이곳만 고친다) ---------- */
+// first: 아이마다 첫 정밀검사. more: 그 아이의 다른 양육자 검사, 다시 검사하기.
+// 실제 앱에서는 구글 플레이 인앱 상품(소모성) 두 개(sku)로 연결하고, 화면 가격은 플레이가 알려 주는 현지 가격으로 바꾼다.
+const PRICE={first:1, more:0.5, cur:'USD', sku:{first:'test_first', more:'test_more'}};
+const fmtP=p=> '$'+(Number.isInteger(p)? p : p.toFixed(2));
+const firstDone=()=> (st.buys||[]).length>0 || !!st.ext;
+const nextPrice=()=> firstDone()? PRICE.more : PRICE.first;
 
 /* ---------- 채점 ---------- */
 const v=(it,ans=st.ans)=> !ans[it.id]? null : (it.r? 6-ans[it.id] : ans[it.id]);
@@ -546,7 +589,13 @@ const oneLine=r=> `${P[r.ax[0].letter].ph}, ${P[r.ax[1].letter].ph}, ${P[r.ax[2]
 
 /* ---------- 화면 ---------- */
 const V={};
-V.home=()=>`
+V.home=()=>{ const ks=kids(), full=done(ITEMS), n=answered(st.ans), p=nextPrice();
+ const kidChips= ks.length>1||st.name||n? `<div class="chips" role="group" aria-label="검사할 아이">${ks.map((k,i)=>{ const c=fullDone(k.ans)? score(k.ans).code : null;
+   return `<button class="chip" data-kid="${k.id}" aria-pressed="${!!k.active}">${esc(kidName(k,i))}${c?' · '+c:''}</button>`; }).join('')}<button class="chip add" data-addkid aria-label="아이 추가하기">+ 아이 추가</button></div>` : '';
+ const main= full&&st.paid? `<button class="btn dark" data-go="report">${esc(st.who)}의 리포트 보기</button>`
+   : st.paid? `<button class="btn dark" data-go="full">정밀검사 이어서 하기 (${n}/${ITEMS.length})</button>`
+   : `<button class="btn dark" data-go="full">${fmtP(p)} 결제하고 검사 시작</button>`;
+ return `
  <div class="hero" role="img" aria-label="풀밭에서 엄마 말랑이가 무릎을 굽혀 아이 말랑이와 눈을 맞추고 이야기하는 색연필 그림"><span>오늘도 말랑하게, 우리 아이 이야기</span></div>
  <section class="stack">
   <span class="eyebrow">만 2~7세 · 부모가 답하는 기질검사</span>
@@ -554,32 +603,35 @@ V.home=()=>`
   <p class="muted">MBTI처럼 네 글자로 읽는 아이 기질 유형. 최근 한 달간 아이의 모습을 떠올리며 답해 주세요.</p>
  </section>
  <div class="card">
+  <div class="axis-h"><h2>우리 아이</h2>${ks.length>1?`<span class="small muted">아이 ${ks.length}명</span>`:''}</div>
+  ${kidChips}
   <div class="row">
    <label class="f" for="in-name">아이 이름 또는 별명 (선택)<input id="in-name" value="${esc(st.name)}" placeholder="예: 콩이" maxlength="10"></label>
    <label class="f" for="in-age">연령<select id="in-age">${['','만 2세','만 3세','만 4세','만 5세','만 6세','만 7세'].map(o=>`<option ${st.age===o?'selected':''}>${o}</option>`).join('')}</select></label>
    <label class="f" for="in-who">답하는 사람<select id="in-who">${cgNames().map(o=>`<option ${st.who===o?'selected':''}>${esc(o)}</option>`).join('')}</select></label>
   </div>
-  <p class="small muted">엄마, 아빠, 할머니처럼 양육자마다 따로 답할 수 있습니다. 답은 사람별로 따로 저장되고, 정밀 리포트의 '양육자 비교'에서 서로 다르게 본 점을 정리해 드립니다.</p>
+  <p class="small muted">${ks.length>1?'아이마다 따로 검사하고 따로 저장됩니다. 위에서 아이를 눌러 바꿔 보세요. ':'동생이나 형제가 있으면 \'+ 아이 추가\'로 따로 검사할 수 있습니다. '}엄마, 아빠, 할머니처럼 양육자마다 따로 답하면 리포트의 '양육자 비교'에서 서로 다르게 본 점을 정리해 드립니다.</p>
+  ${!ks.length||ks.length===1&&!st.name&&!n?`<button class="chip add" data-addkid style="align-self:flex-start">+ 아이 추가</button>`:''}
   ${cgStatus()}
  </div>
- <div class="two">
-  <div class="card plan">
-   <span class="tag" style="align-self:flex-start">무료</span>
-   <h2>1분 간이검사</h2>
-   <ul class="small"><li>12문항, 약 1분</li><li>네 글자 기질 유형과 별명</li><li>가장 뚜렷한 기질 1가지 풀이</li></ul>
-   <button class="btn" data-go="quick">무료로 시작하기</button>
-   <button class="btn ghost" data-sample="quick">샘플 결과 보기</button>
-  </div>
-  <div class="card plan" style="border-color:var(--accent)">
-   <span class="tag" style="align-self:flex-start;background:var(--accent);color:var(--on-accent);border-color:var(--accent)">정밀</span>
-   <h2>내 아이의 MBTI 정밀검사</h2>
-   <div class="price">5,900원<small>2달 이용권</small></div>
-   <ul class="small"><li>66문항 정밀 리포트: 기질 결과(4축, 세부 기질 12)와 성격 결과(자라는 힘 3)</li><li>양육자별 검사와 양육자 비교 리포트</li><li>상황별 AI 대화 2달(월 30회)</li><li>기간 중 다시 검사하기 1회: 지난번 답을 보며 다시 답하고, 달라진 점 리포트</li><li>자동 결제 없음. 끝나면 원할 때 다시 결제</li></ul>
-   <button class="btn dark" data-go="full">정밀검사 시작하기</button>
-   <button class="btn ghost" data-sample="full">샘플 리포트 보기</button>
-  </div>
+ <div class="card plan" style="border-color:var(--accent)">
+  <span class="tag" style="align-self:flex-start;background:var(--accent);color:var(--on-accent);border-color:var(--accent)">${firstDone()?'추가 검사':'첫 검사'}</span>
+  <h2>${esc(nm())}의 MBTI 정밀검사</h2>
+  <div class="price">${fmtP(p)}<small>검사 1회 · ${esc(st.who)}</small></div>
+  <ul class="small"><li>66문항, 약 10분</li><li>기질 결과: 네 글자 유형과 별명, 4축, 세부 기질 12가지, 잘 통하는 말</li><li>성격 결과: 끈기, 스스로 힘, 함께 힘</li><li>양육자 비교, 다시 검사하면 달라진 점 리포트</li></ul>
+  ${main}
+  <button class="btn ghost" data-sample="full">샘플 리포트 보기</button>
+  ${priceNote()}
  </div>
- <p class="small muted">시제품입니다. 결제는 연결되어 있지 않아 결제 버튼을 누르면 바로 이용권이 열립니다. 이 검사는 양육 참고용이며 의학적 진단이 아닙니다.</p>`;
+ <div class="card">
+  <div class="ttl"><img src="assets/ui/i_share.webp" alt="" width="40" height="40"><h2>함께 보면 더 잘 보여요</h2></div>
+  <p class="small muted">다른 휴대폰의 아빠, 할머니도 따로 검사하게 초대하거나 친구·가족에게 알려 주세요.</p>
+  <a class="btn ghost" href="#share">공유하기</a>
+ </div>
+ <details class="card"><summary><b>휴대폰을 바꾸거나 앱을 지울 때</b></summary><div class="stack" style="gap:8px">
+  <p class="small muted">검사 기록과 결제한 검사는 이 휴대폰 안에만 저장됩니다. 지우기 전에 기록 파일을 저장해 두고, 새 휴대폰에서 불러오면 그대로 이어집니다.</p>
+  <div class="row"><button class="btn ghost" data-backup>기록 파일 저장</button><label class="btn ghost filebtn">기록 불러오기<input type="file" id="in-restore" accept=".json,application/json"></label></div></div></details>
+ <p class="small muted">시제품입니다. 결제는 연결되어 있지 않아 결제 버튼을 누르면 바로 검사가 열립니다. 이 검사는 양육 참고용이며 의학적 진단이 아닙니다.</p>`; };
 
 let tq={list:[],i:0,mode:''};
 function startTest(mode){ tq.mode=mode; tq.list= mode==='quick'? FREE.slice() : ITEMS.filter(x=>st.ans[x.id]==null); if(mode==='full'&&!tq.list.length) tq.list=ITEMS; tq.i=0; }
@@ -602,40 +654,6 @@ V.test=()=>{ const it=tq.list[tq.i], n=tq.list.length, re=retesting();
   <div class="testbar"><button class="btn ghost" data-back ${tq.i===0?'disabled':''}>이전 문항</button><button class="btn ghost" data-go="home">나중에 하기</button></div>
  </div>`; };
 
-V['quick-result']=()=>{ if(!quickDone()) return empty('아직 무료 검사 결과가 없습니다.','quick');
- const r=score(); const top=[...r.ax].sort((x,y)=>y.d-x.d)[0]; const near=r.ax.filter(x=>x.d<12);
- const left=ITEMS.filter(x=>st.ans[x.id]==null).length; const p=P[top.letter];
- return `<div class="stickycta"><button class="btn" data-go="full">정밀검사 이어서 하기 · 5,900원</button></div>
-  <figure class="banner"><img src="assets/banner_result.webp" alt="" width="1000" height="560"></figure>
-  <div class="card type">
-   <span class="eyebrow">간이검사 결과 · 12문항 기준</span>${masc(r)}
-   ${codeHTML(r)}
-   <h1>${NICK[r.code]}</h1>
-   <p>${nmEun()} ${oneLine(r)}</p>
-   <div class="tags">${r.ax.map(x=>`<span class="tag">${x.pole}</span>`).join('')}</div>
-  </div>
-  <div class="card">
-   <div class="axis-h"><h2>가장 뚜렷한 기질: ${top.pole}</h2><span class="pill ${top.a.c.slice(2)}">${top.a.q}</span></div>
-   ${bar(top)}
-   <p>${p.sum}</p>
-   <div class="tags">${p.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
-  </div>
-  ${near.length?`<div class="note"><b>${near.map(x=>x.a.hi+'·'+x.a.lo).join(', ')}</b> 축은 두 성향의 경계에 있습니다. 간이검사는 축마다 3문항 안팎만 보기 때문에, 정밀검사에서 글자가 달라질 수 있습니다.</div>`:`<div class="note">간이검사는 축마다 3문항으로 방향만 봅니다. 세부 기질과 강도는 정밀검사에서 확인할 수 있습니다.</div>`}
-  <h2>정밀검사에서 열리는 내용</h2>
-  <div class="stack">
-   ${r.ax.filter(x=>x!==top).map(x=>lock(`${x.a.hi}·${x.a.lo} 축 풀이`,`${esc(nm())}의 '${x.pole}' 성향이 얼마나 뚜렷한지, 어떤 장면에서 드러나는지`)).join('')}
-   ${lock('기질 결과: 세부 기질 12가지','같은 '+r.code+' 유형이어도 아이마다 다른 세부 프로필')}
-   ${lock('성격 결과: 자라는 힘 3가지','타고난 기질과 따로, 경험으로 자라는 끈기, 스스로 힘, 함께 힘이 지금 어디까지 자랐는지')}
-   ${lock(`${esc(nm())}에게 잘 통하는 말, 피할 말`,'기질에 맞춘 말 걸기 예시와 양육 가이드')}
-   ${lock('상황별 AI 대화 2달','떼쓸 때, 안 자려 할 때처럼 지금 겪는 상황을 적으면 '+esc(nm())+'의 기질에 맞는 대응을 알려 줍니다')}
-  </div>
-  <div class="cta">
-   <h2>${esc(nm())}의 MBTI를 끝까지 읽어 보세요</h2>
-   <p class="muted">방금 답한 12문항은 그대로 이어집니다. 남은 ${left}문항, 약 ${Math.max(1,Math.round(left/6))}분이면 정밀 리포트가 완성됩니다.</p>
-   <div class="price">5,900원<small style="color:var(--bg);opacity:.75">정밀 리포트 + 상황별 AI 대화 2달</small></div>
-   <button class="btn" data-go="full">정밀검사 이어서 하기</button>
-   <p class="small muted">자동 결제 없이 2달 뒤에 끝납니다.</p>
-  </div>`; };
 const lock=(t,d)=>`<div class="lock"><h3><img class="ico" src="assets/ui/i_lock.webp" alt="" width="22" height="22">${t}</h3><p class="small muted">${d}</p><div class="skel" aria-hidden="true"><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></div></div>`;
 const empty=(t,go)=>`<div class="card"><img class="empty-m" src="${M2}" alt=""><h2>${t}</h2><p class="muted">검사를 마치면 이 화면에 결과가 나타납니다.</p><div class="row"><button class="btn" data-go="${go}">검사 시작하기</button><button class="btn ghost" data-sample="${go}">샘플로 보기</button></div></div>`;
 
@@ -649,7 +667,7 @@ const CMPV=[['비슷함','c2'],['자랐음','c4'],['낮아졌음','c1']];
 function cmpHTML(r){ const c=compareGrow(r);
  const head=`<div><span class="eyebrow">이전 검사와 비교</span><h2>지난번과 달라진 점</h2>${c.p?`<p class="small muted">이전 검사 ${esc(c.p.date||'날짜 없음')} · 평가자 ${esc(c.p.who)}${c.p.sample?' · 샘플 예시 기록':''}</p>`:''}</div>`;
  let body;
- if(c.none) body=`<p data-cmp="none"><b>비교 기록 없음.</b> <span class="small muted">비교할 이전 점수가 남아 있지 않습니다. 이용권의 다시 검사하기를 하면 그 전 점수가 남아 이곳에 나란히 보입니다.</span></p>`;
+ if(c.none) body=`<p data-cmp="none"><b>비교 기록 없음.</b> <span class="small muted">비교할 이전 점수가 남아 있지 않습니다. 리포트 아래 '다시 검사하기'를 하면 그 전 점수가 남아 이곳에 나란히 보입니다.</span></p>`;
  else if(c.who) body=`<p data-cmp="who"><b>평가자가 달라 직접 비교하기 어렵습니다.</b> <span class="small muted">이전 검사는 ${esc(c.p.who)}, 이번 검사는 ${esc(st.who)}가 답했습니다. 같은 아이라도 답하는 사람의 시선에 따라 점수가 달라질 수 있어 숫자를 나란히 놓지 않았습니다.</span></p>`;
  else body=c.rows.map(o=> o.skip? `<div class="cmp" data-cmp="skip"><b>${o.x.g.n}</b><p class="small muted">${o.skip}에서 '잘 모르겠다'가 절반 이상이라 비교하지 않았습니다.</p></div>`
    : `<div class="cmp" data-cmp="${CMPV[o.v][0]}"><b>${o.x.g.n}</b><span class="nums">이전 ${o.ps} → 지금 ${o.x.sc}</span><span class="pill ${CMPV[o.v][1]}">${CMPV[o.v][0]}</span></div>`).join('')
@@ -663,9 +681,9 @@ function cgStatus(){ const all=cgs().filter(c=>Object.keys(c.ans).length||c.prev
  return `<div class="stack" style="gap:8px" data-cgstatus><span class="small muted">양육자별 검사 현황</span>${all.map(c=>{ const code=cgCode(c), n=answered(c.ans);
   return `<div class="cgst">${code?`<img src="${TM[code]}" alt="">`:`<img src="${M2}" alt="" style="opacity:.5">`}<b>${esc(c.who)}${c.active?' <span class="mk">지금 답하는 사람</span>':''}</b><span class="small muted">${code?`${code} ${NICK[code]}`:c.qd&&n<ITEMS.length?`간이검사 완료 · 정밀 ${n}/${ITEMS.length}`:`정밀 ${n}/${ITEMS.length}`}${c.prev?' · 다시 검사함':''}</span></div>`; }).join('')}</div>`; }
 // 리포트·대화 위: 양육자 고르기. 누르면 그 양육자의 결과로 바뀐다. 아직 안 한 양육자는 '+ 이름'으로 바로 검사 시작
-function cgSwitch(){ const all=cgs(), has=new Set(all.map(c=>c.who));
+function cgSwitch(){ const all=cgs(), has=new Set(all.map(c=>c.who)), ks=kids();
  const add=CGL.filter(n=>!has.has(n)).slice(0,3);
- return `<section class="card" style="gap:10px"><div class="axis-h"><h3>양육자별 결과</h3><span class="small muted">눌러서 바꿔 보기</span></div>
+ return `<section class="card" style="gap:10px">${ks.length>1?`<div class="axis-h"><h3>아이</h3></div><div class="chips" role="group" aria-label="결과를 볼 아이">${ks.map((k,i)=>`<button class="chip" data-kid="${k.id}" aria-pressed="${!!k.active}">${esc(kidName(k,i))}</button>`).join('')}</div>`:''}<div class="axis-h"><h3>양육자별 결과</h3><a class="small" href="#share">다른 휴대폰으로 초대</a></div>
   <div class="chips" role="group" aria-label="결과를 볼 양육자">${all.map(c=>{ const code=cgCode(c); return `<button class="chip" data-cg="${esc(c.who)}" aria-pressed="${!!c.active}">${esc(c.who)} · ${code||answered(c.ans)+'/'+ITEMS.length}</button>`; }).join('')}
   ${add.map(n=>`<button class="chip add" data-addcg="${esc(n)}" aria-label="${esc(n)}도 검사하기">+ ${esc(n)}</button>`).join('')}</div></section>`; }
 
@@ -673,7 +691,7 @@ function cgSwitch(){ const all=cgs(), has=new Set(all.map(c=>c.who));
 function cgHTML(){ const all=cgs(), fin=all.filter(c=>fullDone(c.ans));
  const head=`<div><span class="eyebrow">양육자 비교</span><h2>양육자마다 다르게 본 점</h2><p class="small muted">같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다. 어느 쪽이 맞다는 뜻이 아니라, ${esc(nm())}가 사람과 상황에 따라 다른 모습을 보인다는 단서입니다.</p></div>`;
  if(fin.length<2){ const has=new Set(all.map(c=>c.who));
-  return `<section class="card" data-cgcmp="wait">${head}<p><b>비교할 양육자가 아직 없습니다.</b> <span class="small muted">정밀검사를 마친 양육자가 두 명 이상이면 이곳에 결과가 나란히 정리됩니다. 지금 마친 사람: ${fin.map(c=>esc(c.who)).join(', ')||'없음'}.</span></p>
+  return `<section class="card" data-cgcmp="wait">${head}<p><b>비교할 양육자가 아직 없습니다.</b> <span class="small muted">정밀검사를 마친 양육자가 두 명 이상이면 이곳에 결과가 나란히 정리됩니다. 지금 마친 사람: ${fin.map(c=>esc(c.who)).join(', ')||'없음'}.</span></p><p class="small muted">다른 휴대폰을 쓰는 양육자는 초대 링크로 검사하고 결과를 보내 주면 이곳에 합쳐집니다. <a href="#share">초대 보내기</a></p>
    <div class="chips">${CGL.filter(n=>!has.has(n)).slice(0,3).map(n=>`<button class="chip add" data-addcg="${esc(n)}" aria-label="${esc(n)}도 검사하기">+ ${esc(n)}</button>`).join('')}</div></section>`; }
  const rs=fin.map(c=>({c,r:score(c.ans)}));
  const codes=[...new Set(rs.map(x=>x.r.code))];
@@ -709,7 +727,7 @@ function cgHTML(){ const all=cgs(), fin=all.filter(c=>fullDone(c.ans));
 // '달라진 점' 탭: 이 양육자의 이전 검사(다시 검사하기 전)와 지금 결과를 비교
 function changeHTML(r){ const p=st.prev;
  const head=`<div><span class="eyebrow">이전 검사와 비교 · ${esc(st.who)}</span><h2>다시 검사로 달라진 점</h2>${p?`<p class="small muted">이전 검사 ${esc(p.date||'날짜 없음')} → 이번 검사 ${esc(st.date)} · 평가자 ${esc(p.who||st.who)}${p.sample?' · 샘플 예시 기록':''}</p>`:''}</div>`;
- if(!p) return `<section class="card" data-chg="none">${head}<p><b>비교 기록 없음.</b> <span class="small muted">${esc(st.who)}의 이전 검사 기록이 없습니다. 이용권의 다시 검사하기를 하면 지금 결과가 이전 기록으로 남고, 다시 답한 결과와 나란히 정리됩니다.</span></p></section>`;
+ if(!p) return `<section class="card" data-chg="none">${head}<p><b>비교 기록 없음.</b> <span class="small muted">${esc(st.who)}의 이전 검사 기록이 없습니다. 리포트 아래 '다시 검사하기'를 하면 지금 결과가 이전 기록으로 남고, 다시 답한 결과와 나란히 정리됩니다.</span></p></section>`;
  if(p.who&&p.who!==st.who) return `<section class="card" data-chg="who">${head}<p><b>평가자가 달라 직접 비교하기 어렵습니다.</b> <span class="small muted">이전 검사는 ${esc(p.who)}, 이번 검사는 ${esc(st.who)}가 답했습니다. 양육자 사이의 차이는 '양육자 비교' 탭에서 볼 수 있습니다.</span></p></section>`;
  const axr=p.ax? r.ax.map(x=>{ const ps=p.ax[x.a.id], d=x.sc-ps, flip=(ps>=50)!==(x.sc>=50);
    return {x,ps,d,flip,v:flip?[`${ps>=50?x.a.hi:x.a.lo} → ${x.pole}`,'c1']:Math.abs(d)<CMP.same?['비슷함','c2']:[`${d>0?x.a.hi:x.a.lo} 쪽으로 이동`,'c4']}; }) : [];
@@ -740,7 +758,7 @@ function changeHTML(r){ const p=st.prev;
   <div class="note">두 검사 사이의 차이는 아이가 자란 모습일 수도, 답한 날의 기분이나 최근 일의 영향일 수도 있습니다. 작은 차이는 '비슷함'으로 보고, 크게 바뀐 문항 위주로 살펴보세요.</div>`; }
 
 V.report=()=>{ if(!done(ITEMS)) return cgSwitch()+empty('아직 정밀검사 결과가 없습니다.','full');
- if(!st.pass) return V.pass();
+ if(!st.paid) return V.pay();
  const r=score();
  const axes=r.ax.map(x=>{ const p=P[x.letter], bal=x.d<8;
   return `<section class="card">
@@ -808,34 +826,29 @@ V.report=()=>{ if(!done(ITEMS)) return cgSwitch()+empty('아직 정밀검사 결
    점수는 또래와 비교한 순위가 아니라 문항 응답으로 본 아이 안의 경향입니다. 기질에는 좋고 나쁨이 없으며, 이 검사는 의학적 진단이나 발달 평가를 대신하지 않습니다.
   </div>
   <section class="cta">
-   <h2>지금 겪는 상황을 물어보세요</h2>
-   <p class="muted">${esc(nm())}의 기질 결과를 바탕으로 상황에 맞는 행동과 말을 알려 드립니다.</p>
-   <a class="btn" href="#coach">상황별 대화 열기</a>
+   <h2>${esc(nm())}의 결과를 함께 보세요</h2>
+   <p class="muted">친구·가족에게 결과 카드를 보내거나, 다른 휴대폰의 공동 양육자가 따로 검사하게 초대할 수 있습니다.</p>
+   <a class="btn" href="#share">${st.inv?esc(st.inv.from||'가족')+'에게 결과 보내기':'공유하기'}</a>
   </section>
-  ${passBar()}
-  <div class="row">${passOn()&&st.pass.retest<1?'<button class="btn ghost" data-retest>다시 검사하기 (이용권에 1회 포함)</button>':''}<a class="btn ghost" href="#blueprint">문항과 정책 보기</a></div>
+  <div class="row"><button class="btn ghost" data-retest>다시 검사하기 · ${fmtP(PRICE.more)}</button><a class="btn ghost" href="#blueprint">문항과 정책 보기</a></div>
   ${demoTools()}`; };
 
 V.blueprint=()=>`
  <section class="stack"><span class="eyebrow">내부 검토용</span><h1>문항과 채점 설계</h1>
   <p class="muted">전문가 감수와 베타 검증 전의 초안입니다. 문항은 모두 자체 작성했으며 기존 검사의 문항을 옮기지 않았습니다.</p></section>
- <div class="card"><h2>두 검사의 관계</h2>
-  <div class="tw"><table><tr><th></th><th>무료 간이검사</th><th>유료 정밀검사</th></tr>
-   <tr><td>문항</td><td>12문항(축당 3, 세부 기질당 1)</td><td>66문항(기질 48 + 성격 결과인 자라는 힘 18)</td></tr>
-   <tr><td>시간</td><td>약 1분</td><td>약 10분. 무료 응답은 이어받아 54문항만 추가</td></tr>
-   <tr><td>보여 주는 것</td><td>네 글자 유형, 별명, 가장 뚜렷한 축 1개 풀이</td><td>기질 결과: 4축 강도, 세부 기질 12, 강점·살펴볼 점, 말 가이드<br>성격 결과: 자라는 힘 3<br>공통: 응답 일관성</td></tr>
-   <tr><td>전환 장치</td><td colspan="2">경계에 있는 축 알림, 잠긴 항목에 아이 이름과 유형 반영, 답한 문항 이어가기</td></tr></table></div></div>
- <div class="card"><h2>상품과 사용량 정책</h2>
+ <div class="card"><h2>검사 구성</h2>
   <div class="tw"><table><tr><th>항목</th><th>내용</th></tr>
-   <tr><td>가격</td><td>5,900원, 1회 결제. 자동 결제 없음</td></tr>
-   <tr><td>포함</td><td>정밀 리포트, 상황별 AI 대화 2달(60일), 기간 중 다시 검사하기 1회</td></tr>
-   <tr><td>양육자별 검사</td><td>이용권은 아이 하나에 하나. 기간 중이면 다른 양육자의 정밀검사는 횟수 제한 없이 포함(다시 검사하기 횟수를 쓰지 않음). 결과는 양육자별로 따로 저장하고 리포트의 '양육자 비교' 탭에서 비교</td></tr>
-   <tr><td>다시 검사하기</td><td>이용권당 1회, 양육자 모두 합쳐 1회. 다시 검사할 때 선택지 옆에 지난번 내 답과 다른 양육자의 답을 표시. 리포트의 '달라진 점' 탭에서 이전 검사와 비교</td></tr>
-   <tr><td>기간이 끝나면</td><td>리포트는 계속 볼 수 있음. AI 대화와 다시 검사하기는 잠기고, 다시 결제하면 2달이 새로 열림</td></tr>
-   <tr><td>AI 대화 한도</td><td>30일마다 30회, 하루 5회, 한 상황당 이어 묻기 3회, 입력 500자</td></tr>
-   <tr><td>횟수에서 빼는 것</td><td>자주 묻는 상황 6가지(미리 써 둔 답)</td></tr>
-   <tr><td>시제품의 AI</td><td>목업입니다. 실제 AI를 부르지 않고 기질 결과로 조합한 예시 답을 보여 주며, 횟수 차감은 실제처럼 동작합니다</td></tr>
-   <tr><td>안전</td><td>자해, 학대가 의심되는 문장은 AI에 보내지 않고 상담 전화를 안내</td></tr>
+   <tr><td>문항</td><td>66문항(기질 48 + 성격 결과인 자라는 힘 18), 약 10분</td></tr>
+   <tr><td>보여 주는 것</td><td>기질 결과: 네 글자 유형, 4축 강도, 세부 기질 12, 강점·살펴볼 점, 말 가이드<br>성격 결과: 자라는 힘 3<br>공통: 응답 일관성, 양육자 비교, 달라진 점</td></tr>
+   <tr><td>무료 검사</td><td>없음(2026-11-16 결정). 결제 전에는 샘플 리포트로 결과 모양을 보여 줌</td></tr></table></div></div>
+ <div class="card"><h2>가격 정책</h2>
+  <div class="tw"><table><tr><th>항목</th><th>내용</th></tr>
+   <tr><td>방식</td><td>검사 1회마다 결제(구글 플레이 인앱, 소모성). 자동 결제·구독 없음</td></tr>
+   <tr><td>아이마다 첫 검사</td><td>${fmtP(PRICE.first)}</td></tr>
+   <tr><td>그 밖의 검사</td><td>${fmtP(PRICE.more)}: 같은 아이의 다른 양육자 검사, 다시 검사하기(횟수 제한 없음)</td></tr>
+   <tr><td>형제·동생</td><td>새 아이로 등록하면 그 아이의 첫 검사 ${fmtP(PRICE.first)}</td></tr>
+   <tr><td>결과 보기</td><td>기간 제한 없이 계속 볼 수 있음</td></tr>
+   <tr><td>가격 바꾸기</td><td>index.html 의 PRICE 한곳</td></tr>
    <tr><td>광고</td><td>전면광고 없음</td></tr></table></div></div>
  <div class="card"><h2>채점 규칙</h2>
   <ul class="small" style="margin:0;padding-left:18px">
@@ -858,128 +871,156 @@ V.blueprint=()=>`
   </table></div></div>
  <div class="card"><h2>16가지 유형 별명</h2><div class="tags">${Object.entries(NICK).map(([k,n])=>`<span class="tag tm"><img src="${TM[k]}" alt=""><b>${k}</b> ${n}</span>`).join('')}</div></div>`;
 
-/* ---------- 이용권 · 상황별 대화 ---------- */
-const DAY=864e5, LIM={mon:30,day:5,follow:3,len:500};
-const passOn=()=> !!st.pass && Date.now()<st.pass.end;
-const fmtD=ms=>{ const d=new Date(ms); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
-function usage(){ const u=st.use||(st.use={}); const mk=st.pass? st.pass.start+':'+Math.floor((Date.now()-st.pass.start)/(30*DAY)) : '-'; const dk=today();
-  if(u.mk!==mk){ u.mk=mk; u.mn=0; } if(u.dk!==dk){ u.dk=dk; u.dn=0; } return u; }
-function buyPass(){ const n=(st.pass&&st.pass.n||0)+1; st.pass={start:Date.now(),end:Date.now()+60*DAY,retest:0,n}; st.use={}; save(); }
-function passBar(){ if(!st.pass) return '';
-  if(!passOn()) return `<div class="passbar"><span>이용권이 <b>${fmtD(st.pass.end)}</b>에 끝났습니다. 리포트는 계속 볼 수 있습니다.</span><button class="btn" data-buy>다시 결제하기 5,900원</button></div>`;
-  const u=usage(), left=Math.ceil((st.pass.end-Date.now())/DAY);
-  return `<div class="passbar"><span>이용권 <b>${fmtD(st.pass.end)}</b>까지 · ${left}일 남음</span><span>AI 대화 이번 달 <b>${u.mn}/${LIM.mon}</b> · 오늘 <b>${u.dn}/${LIM.day}</b></span></div>`; }
-const demoTools=()=>`<details><summary class="small muted">시제품 확인용 도구</summary><div><div class="row"><button class="btn ghost" data-demo="expire">이용권 만료시키기</button><button class="btn ghost" data-demo="usemax">오늘 한도 채우기</button><button class="btn ghost" data-reset>전부 지우고 처음부터</button></div></div></details>`;
-
-V.pass=()=>{ const again=st.pass&&!passOn(); const left=ITEMS.filter(x=>st.ans[x.id]==null).length;
- return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${again?'이용권 다시 결제':'내 아이의 MBTI 정밀검사'}</span>
-  <h1>${again?'2달 이용권을 다시 여세요':esc(nm())+'의 MBTI를 끝까지 읽어 보세요'}</h1></section>
+/* ---------- 결제 ---------- */
+// 검사 1회마다 결제한다. payFor: 'test' 지금 양육자의 정밀검사, 'retest' 다시 검사하기
+let payFor='test';
+const KIND={first:'첫 정밀검사', cg:'양육자 추가 검사', retest:'다시 검사하기'};
+const payKind=()=> payFor==='retest'? 'retest' : firstDone()? 'cg' : 'first';
+const priceNote=()=>`<p class="small muted">아이마다 첫 검사 <b>${fmtP(PRICE.first)}</b>, 그 아이의 다른 양육자 검사와 다시 검사하기는 <b>${fmtP(PRICE.more)}</b>입니다. 동생·형제는 새 아이로 등록하면 첫 검사 ${fmtP(PRICE.first)}입니다. 자동 결제는 없습니다.</p>`;
+function buy(){ const k=payKind(), p=nextPrice(); st.buys=st.buys||[]; st.buys.push({t:Date.now(),kind:k,who:st.who,price:p});
+  if(k==='retest'){ st.prev=snapshot(); st.ans={}; st.qd=0; }
+  st.paid=1; payFor='test'; save(); }
+V.pay=()=>{ const k=payKind(), p=nextPrice();
+ const head={first:`${esc(nm())}의 MBTI를 알아보세요`, cg:`${esc(st.who)}의 눈으로 본 ${esc(nm())}`, retest:`${esc(nm())}, 요즘은 어떨까요?`}[k];
+ const desc={first:'66문항 정밀검사와 정밀 리포트(기질 결과 + 성격 결과)가 열립니다.',
+  cg:`${esc(nm())}의 첫 검사는 이미 결제되어 추가 검사 가격입니다. 결과는 리포트의 '양육자 비교' 탭에서 다른 양육자와 나란히 볼 수 있습니다.`,
+  retest:`지금 결과를 이전 기록으로 남기고 66문항을 다시 답합니다. 선택지 옆에 지난번 내 답과 다른 양육자의 답이 보이고, 끝나면 '달라진 점' 탭에서 비교합니다.`}[k];
+ return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${KIND[k]} · ${esc(nm())} · ${esc(st.who)}</span><h1>${head}</h1></section>
   <div class="card" style="border-color:var(--accent)">
-   <div class="price">5,900원<small>2달 이용권 · 1회 결제</small></div>
-   <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
-    <li><b>정밀 리포트.</b> 기질 결과(4축, 세부 기질 12가지, 강점과 살펴볼 점, 잘 통하는 말)와 성격 결과(자라는 힘 3가지)를 나누어 보여 줍니다</li>
-    <li><b>상황별 AI 대화 2달.</b> 지금 겪는 상황을 적으면 아이 기질에 맞는 행동과 말을 알려 줍니다. 월 30회</li>
-    <li><b>양육자별 검사.</b> 엄마, 아빠, 할머니처럼 양육자마다 따로 검사하고 서로 다르게 본 점을 비교 리포트로 정리합니다</li>
-    <li><b>다시 검사하기 1회.</b> 지난번 내 답과 다른 양육자의 답을 보며 다시 답하고, 달라진 점을 리포트로 정리합니다</li>
+   <div class="price">${fmtP(p)}<small>검사 1회 · 한 번 결제</small></div>
+   <p>${desc}</p>
+   <ul class="small" style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
+    <li><b>기질 결과.</b> 네 글자 유형과 별명, 4축, 세부 기질 12가지, 강점과 살펴볼 점, 잘 통하는 말</li>
+    <li><b>성격 결과.</b> 경험으로 자라는 끈기, 스스로 힘, 함께 힘</li>
+    <li><b>계속 보기.</b> 결과는 기간 없이 계속 볼 수 있고, 결과 카드를 친구·가족에게 공유할 수 있습니다</li>
    </ul>
-   <button class="btn" data-buy>5,900원 결제하기</button>
-   <p class="small muted">자동 결제는 없습니다. 2달 뒤에 끝나며, 리포트는 그 뒤에도 볼 수 있습니다.${left&&left<ITEMS.length?` 무료 검사에서 답한 문항은 이어지고 ${left}문항이 남았습니다.`:''}</p>
-   <p class="small muted">시제품이라 실제 결제는 일어나지 않습니다.</p>
+   <button class="btn" data-buy>${fmtP(p)} 결제하고 검사 시작</button>
+   ${priceNote()}
+   <p class="small muted">시제품이라 실제 결제는 일어나지 않습니다. 앱에서는 구글 플레이 결제로 연결됩니다.</p>
   </div>
-  <div class="row"><button class="btn ghost" data-go="home">나중에 하기</button></div>`; };
+  <div class="row"><button class="btn ghost" data-go="${k==='retest'?'report':'home'}">나중에 하기</button></div>`; };
+const demoTools=()=>`<details><summary class="small muted">시제품 확인용 도구</summary><div><div class="row"><button class="btn ghost" data-reset>이 아이 기록 전부 지우기</button></div></div></details>`;
 
-const PRE=[
- {t:'마트에서 사 달라고 떼쓸 때',ax:2,H:['사람이 적은 곳으로 옮겨 감정이 가라앉을 때까지 곁에 있어 주세요. 표현이 큰 아이는 울음이 지나가야 말이 들립니다.','갖고 싶었는데 못 사서 정말 속상하구나. 다 울고 나면 안아 줄게.'],L:['조용히 굳어 있거나 시무룩해도 그냥 넘기지 말고 마음을 물어봐 주세요. 잔잔한 아이는 속상함을 겉으로 덜 드러냅니다.','갖고 싶었지. 오늘은 안 사는 날이야. 대신 사진 찍어 두고 생일 목록에 넣을까?']},
- {t:'어린이집에 안 가겠다고 할 때',ax:0,H:['가서 할 재미있는 일을 구체적으로 하나 정해 주세요. 탐험형 아이는 기대할 거리가 있으면 움직입니다.','오늘은 가서 뭐부터 해 볼까? 블록? 미끄럼틀? 끝나고 알려 줘.'],L:['10분 일찍 도착해 교실을 천천히 둘러볼 시간을 주세요. 관찰형 아이는 준비할 시간이 있으면 훨씬 수월합니다.','들어가기 전에 조금 보고 있어도 돼. 준비되면 선생님한테 인사하자.']},
- {t:'놀이를 끝내고 집에 가야 할 때',ax:3,H:['끝나기 5분 전과 1분 전에 미리 알려 주고, 다음 순서를 말해 주세요.','미끄럼틀 두 번만 더 타면 집에 갈 거야. 집에 가면 목욕하고 책 읽자.'],L:['끝내는 방법을 둘 중에 고르게 해 주세요. 자유형 아이는 선택권이 있으면 덜 버팁니다.','이제 갈 시간이야. 걸어서 갈래, 깡충깡충 뛰어서 갈래?']},
- {t:'옷이 불편하다며 안 입으려 할 때',ax:1,H:['상표를 떼고, 촉감이 괜찮은 옷 두 벌 중에 고르게 해 주세요. 섬세한 아이에게는 실제로 불편한 감각입니다.','이 옷이 따끔거렸구나. 이 두 개 중에 어떤 게 편해?'],L:['불편한 이유가 따로 있는지(덥다, 입기 싫다) 물어보고 고를 기회를 주세요.','이 옷이 싫은 이유가 있어? 그럼 이 둘 중에 골라 볼래?']},
- {t:'친구 장난감을 빼앗았을 때',ax:0,H:['바로 다가가 손을 잡고 멈추게 한 뒤, 말로 부탁하는 법을 짧게 보여 주세요.','갖고 놀고 싶었구나. 그럴 땐 "나도 해 봐도 돼?" 하고 물어보는 거야. 같이 말해 보자.'],L:['여러 사람 앞에서 꾸짖지 말고 옆으로 데려가 조용히 이야기해 주세요.','그 장난감이 좋았구나. 친구한테 돌려주고, 다음에 해도 되는지 같이 물어보자.']},
- {t:'잠자리에 안 들려고 할 때',ax:3,H:['자기 전 순서(씻기, 책 한 권, 불 끄기)를 매일 똑같이 지켜 주세요.','책 한 권 읽고 불 끄는 거야. 어떤 책으로 할까?'],L:['순서 전체를 묶기보다 마지막 두 가지만 고정하고, 나머지는 고르게 해 주세요.','이 닦기랑 잠옷 입기 중에 뭐 먼저 할래? 그다음엔 책 읽고 자는 거야.']}
-];
-const CRISIS=/(죽고\s*싶|죽이고\s*싶|죽여|자살|자해|사라지고\s*싶|때렸|때리고\s*싶|학대|던졌|목을)/;
-let conv=null, busy=false, cerr='';
-const KEYS=[/마트|사 달|장난감 사|떼/,/어린이집|유치원|등원|안 가/,/집에 가|끝내|그만|놀이터/,/옷|양말|신발|입/,/빼앗|뺏|때리|밀|친구/,/잠|자려|안 자|밤/];
-function mockAns(r,q){ const i=KEYS.findIndex(k=>k.test(q));
-  if(i>=0){ const pz=PRE[i], x=r.ax[pz.ax], v=x.sc>=50?pz.H:pz.L, p=P[x.letter];
-    return {me:'먼저 숨을 한 번 고르고 아이 눈높이로 내려가 주세요.',act:v[0],say:v[1],avoid:p.no,why:`${nm()}의 ${x.pole} 기질 때문입니다. ${p.sum}`,mock:1}; }
-  const x=[...r.ax].sort((a,b)=>b.d-a.d)[0], p=P[x.letter];
-  return {me:'먼저 숨을 한 번 고르고 아이 눈높이로 내려가 주세요.',act:p.wa+' '+p.st,say:p.say,avoid:p.no,why:`${nm()}에게 가장 뚜렷한 ${x.pole} 기질에 맞춘 대응입니다. ${p.sum}`,mock:1}; }
-async function ask(q,preIdx){ const r=score(); cerr='';
-  if(preIdx!=null){ const pz=PRE[preIdx], x=r.ax[pz.ax], v=x.sc>=50?pz.H:pz.L, p=P[x.letter];
-    conv={q:pz.t,turns:[{q:pz.t,a:{me:'먼저 숨을 한 번 고르고 아이 눈높이로 내려가 주세요.',act:v[0],say:v[1],avoid:p.no,why:`${nm()}의 ${x.pole} 기질 때문입니다. ${p.sum}`,canned:1}}]}; return render(); }
-  q=q.trim().slice(0,LIM.len); if(!q) return;
-  if(CRISIS.test(q)){ conv={q,turns:[{q,a:{crisis:1}}]}; return render(); }
-  const u=usage(), follow=conv&&conv.cont;
-  if(!passOn()){ cerr='이용권이 끝났습니다. 다시 결제하면 이어서 쓸 수 있습니다.'; return render(); }
-  if(u.mn>=LIM.mon){ cerr='이번 달 AI 대화 30회를 모두 썼습니다. 자주 묻는 상황은 횟수와 상관없이 볼 수 있습니다.'; return render(); }
-  if(u.dn>=LIM.day){ cerr='오늘 AI 대화 5회를 모두 썼습니다. 내일 다시 물어볼 수 있습니다.'; return render(); }
-  if(follow && conv.turns.length>LIM.follow){ cerr='한 상황에서는 3번까지 이어 물을 수 있습니다. 새 상황으로 시작해 주세요.'; return render(); }
-  if(!follow) conv={q,turns:[]}; conv.cont=false;
-  conv.turns.push({q,a:null}); busy=true; render();
-  const turn=conv.turns[conv.turns.length-1];
-  // 목업: 실제 AI를 부르지 않고, 기질 결과로 조합한 예시 답을 잠시 뒤에 보여 준다. 횟수는 실제처럼 차감한다.
-  await new Promise(ok=>setTimeout(ok,700));
-  turn.a=mockAns(r,q); u.mn++; u.dn++; save();
-  busy=false; render(); }
-function ansHTML(a){ if(!a) return `<div class="card"><p class="muted">${esc(nm())}의 기질에 맞춰 답을 쓰고 있습니다…</p></div>`;
-  if(a.crisis) return `<div class="help"><h3>혼자 감당하기 어려운 상황으로 보입니다</h3><p>지금 바로 도움을 받을 수 있는 곳입니다. 이 내용은 AI에 보내지 않았습니다.</p><p><b>109</b> 자살예방 상담전화 (24시간)</p><p><b>112</b> 아동학대 신고, 긴급 상황</p></div>`;
-  if(a.off) return `<div class="card"><p>아이와의 상황에 대해서만 답할 수 있습니다. 횟수는 차감되지 않았습니다.</p></div>`;
-  const row=(l,t,c)=> t? `<div class="stack" style="gap:2px"><span class="lab">${l}</span><p class="${c||''}">${c==='say'||c==='avoid small'?'“'+esc(t)+'”':esc(t)}</p></div>`:'';
-  return `<div class="card ans">${a.canned?'<span class="tag" style="align-self:flex-start">미리 써 둔 답 · 횟수 차감 없음</span>':''}${a.mock?'<span class="tag" style="align-self:flex-start">목업 답변 · 실제 서비스에서는 AI가 상황에 맞춰 답합니다</span>':''}
-   ${row('나부터',a.me)}${row('이렇게 해 보세요',a.act)}${row('이렇게 말해 보세요',a.say,'say')}${row('피할 말',a.avoid,'avoid small')}${row('왜 통할까요',a.why)}</div>`; }
-V.coach=()=>{ if(!done(ITEMS)) return cgSwitch()+empty('상황별 대화는 정밀검사 결과가 있어야 열립니다.','full');
- if(!st.pass) return V.pass();
- const r=score(), on=passOn(), u=usage(), canFollow=conv&&conv.turns.length&&conv.turns.length<=LIM.follow&&!conv.turns[0].a?.canned&&!conv.turns[conv.turns.length-1].a?.crisis;
- return `<section class="stack" style="padding-top:8px"><span class="eyebrow">${r.code} · ${NICK[r.code]}</span><div class="ttl"><img src="${TM[r.code]}" alt=""><h1>어떻게 말해야 할지 도와줘</h1></div>
-   <p class="muted">${esc(nm())}의 기질 결과에 맞춰 답합니다. 양육 참고용이며 전문 상담을 대신하지 않습니다.</p></section>
-  <img class="coach-art" src="assets/coach_talk.webp" alt="" width="400" height="400">
-  ${passBar()}
-  <div class="stack" style="gap:8px"><span class="small muted">자주 묻는 상황 · 횟수 차감 없음</span>
-   <div class="chips">${PRE.map((p,i)=>`<button class="chip" data-pre="${i}">${p.t}</button>`).join('')}</div></div>
-  ${conv? conv.turns.map(t=>`<div class="bubble">${esc(t.q)}</div>${ansHTML(t.a)}`).join('') : ''}
-  ${cerr?`<div class="note">${cerr}</div>`:''}
-  ${on? `<form class="card" id="askf">
-    <label class="f" for="in-q">${canFollow?'이어서 묻거나 새 상황을 적어 주세요':'지금 겪는 상황을 적어 주세요'}
-     <textarea id="in-q" maxlength="${LIM.len}" placeholder="예: 동생이 태어난 뒤로 자꾸 아기처럼 굴고 안아 달라고만 해요" ${busy?'disabled':''}></textarea></label>
-    <div class="microw"><button class="mic" type="button" data-mic aria-pressed="false" ${busy?'disabled':''}><img src="assets/ui/i_mic.webp" alt="" width="24" height="24"><span id="mic-l">말로 하기</span></button><span class="small muted" id="mic-s" role="status" aria-live="polite">버튼을 누르고 상황을 말하면 글로 받아 적습니다.</span></div>
-    <div class="row">${canFollow?`<button class="btn ghost" type="submit" data-follow="1" ${busy?'disabled':''}>이 상황 이어 묻기 (${conv.turns.length}/${LIM.follow})</button>`:''}<button class="btn" type="submit" ${busy?'disabled':''}>${busy?'답변 쓰는 중':'새 상황 물어보기'}</button></div>
-    <p class="small muted">최대 500자. 답변 1회마다 횟수가 1 줄어듭니다.</p></form>`
-   : `<div class="cta"><h2>AI 대화는 이용권 기간에만 쓸 수 있습니다</h2><p class="muted">다시 결제하면 2달이 새로 열리고, 다시 검사하기도 1회 포함됩니다.</p><button class="btn" data-buy>다시 결제하기 5,900원</button></div>`}
-  ${demoTools()}`; };
+/* ---------- 공유 ---------- */
+// kakaoKey: 카카오 개발자 콘솔의 JavaScript 키. 비어 있으면 휴대폰 공유 창(navigator.share), 그것도 없으면 링크 복사로 대신한다.
+// store: 구글 플레이 주소(출시 뒤 채움). 비어 있으면 '앱 받기' 대신 웹 검사로 보낸다.
+const SHARE={kakaoKey:'', web:'https://kiliuswook.github.io/aigyeol/', store:'', img:'https://kiliuswook.github.io/aigyeol/assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
+const b64e=o=> btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>{ try{ s=s.replace(/-/g,'+').replace(/_/g,'/'); return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))); }catch(e){ return null; } };
+// 문항 답을 66글자로: 문항 순서대로 0~5, 답 없음은 '-'
+const encA=ans=> ITEMS.map(x=> ans[x.id]==null?'-':String(ans[x.id])).join('');
+const decA=s=>{ const o={}; ITEMS.forEach((x,i)=>{ const c=(s||'')[i]; if(c>='0'&&c<='5') o[x.id]=+c; }); return o; };
+const ga=w=>{ const c=w.charCodeAt(w.length-1); return w+((c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28)?'이':'가'); };
+let kakao=null;
+function kakaoReady(){ if(!SHARE.kakaoKey) return Promise.resolve(false); if(kakao) return kakao;
+  return kakao=new Promise(ok=>{ if(window.Kakao){ try{ if(!Kakao.isInitialized()) Kakao.init(SHARE.kakaoKey); return ok(true); }catch(e){ return ok(false); } }
+    const s=document.createElement('script'); s.src=SHARE.sdk; s.crossOrigin='anonymous';
+    s.onload=()=>{ try{ Kakao.init(SHARE.kakaoKey); ok(true); }catch(e){ ok(false); } }; s.onerror=()=>ok(false); document.head.appendChild(s); }); }
+let invRole='';
+function msg(kind){ const r= done(ITEMS)? score() : null;
+  if(kind==='result'&&r) return {title:`우리 아이는 ${r.code} '${NICK[r.code]}'`, text:'만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', url:SHARE.web+'?t='+r.code, btn:'우리 아이도 검사하기', img:SHARE.web+'assets/share/'+r.code+'.png'};
+  if(kind==='invite'){ const w=invRole||CGL.find(n=>n!==st.who);
+    return {title:`${ga(st.who)} ${nm()} 기질검사에 초대했어요`, text:`${w}의 눈으로 본 ${nm()}는 어떤 아이일까요? 따로 답하고 결과를 나란히 비교해요.`, btn:'검사하러 가기',
+     url:SHARE.web+'?i='+b64e({k:st.key,n:st.name,a:st.age,f:st.who,w,p:firstDone()?1:0})}; }
+  if(kind==='back'){ const to=st.inv&&st.inv.from||'가족';
+    return {title:`${ga(st.who)} ${nm()} 검사 결과를 보냈어요`, text:`${to}의 휴대폰에서 열면 '양육자 비교'에 합쳐집니다.`, btn:'결과 합쳐 보기',
+     url:SHARE.web+'?c='+b64e({k:st.key,n:st.name,a:st.age,w:st.who,d:st.date,x:encA(st.ans)})}; }
+  return {title:'내 아이의 MBTI · 영유아 기질검사', text:'부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?', url:SHARE.web+'?r=app', btn:SHARE.store?'앱 받기':'검사해 보기'}; }
+let toastT=0;
+function toast(t){ let el=$('#toast'); if(!el){ el=document.createElement('div'); el.id='toast'; el.setAttribute('role','status'); document.body.appendChild(el); }
+  el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),2600); }
+async function copyLink(u){ try{ await navigator.clipboard.writeText(u); }catch(e){ const t=document.createElement('textarea'); t.value=u; document.body.appendChild(t); t.select(); try{ document.execCommand('copy'); }catch(_){} t.remove(); }
+  toast('링크를 복사했습니다. 카카오톡이나 문자에 붙여 넣어 보내 주세요.'); }
+// via: 'kakao' 카카오톡 공유 카드, 'any' 휴대폰 공유 창, 'copy' 링크 복사
+async function doShare(kind,via){ const o=msg(kind);
+  if(via==='kakao'){ if(await kakaoReady()){ try{ Kakao.Share.sendDefault({objectType:'feed',content:{title:o.title,description:o.text,imageUrl:o.img||SHARE.img,link:{mobileWebUrl:o.url,webUrl:o.url}},buttons:[{title:o.btn,link:{mobileWebUrl:o.url,webUrl:o.url}}]}); return; }catch(e){} }
+    toast('카카오 앱 키를 연결하기 전이라 휴대폰 공유 창으로 보냅니다.'); }
+  if(via!=='copy'&&navigator.share){ try{ await navigator.share({title:o.title,text:o.title+'\n'+o.text,url:o.url}); return; }catch(e){ if(e.name==='AbortError') return; } }
+  copyLink(o.url); }
+const shareBtns=kind=>`<button class="btn kakao" data-share="${kind}" data-via="kakao">카카오톡으로 보내기</button><div class="row"><button class="btn ghost" data-share="${kind}" data-via="any">다른 앱으로</button><button class="btn ghost" data-share="${kind}" data-via="copy">링크 복사</button></div>`;
+V.share=()=>{ const r= done(ITEMS)&&st.paid? score() : null; const roles=CGL.filter(n=>n!==st.who); if(!roles.includes(invRole)) invRole=roles[0];
+ return `<section class="stack" style="padding-top:8px"><span class="eyebrow">공유하기</span><h1>함께 보면 더 잘 보여요</h1></section>
+  ${st.inv&&r?`<section class="card" style="border-color:var(--accent)"><h2>${esc(st.inv.from||'가족')}에게 결과 보내기</h2><p class="small muted">초대받아 한 검사입니다. 결과를 보내면 ${esc(st.inv.from||'가족')}의 휴대폰에서 '양육자 비교'에 합쳐집니다.</p>${shareBtns('back')}</section>`:''}
+  <section class="card">
+   <span class="eyebrow">친구·가족에게</span><h2>${r?esc(nm())+'의 결과 카드 공유':'우리 아이 MBTI 알려 주기'}</h2>
+   ${r?`<div class="type sharecard">${masc(r)}${codeHTML(r)}<h3>${NICK[r.code]}</h3><p class="small muted">${oneLine(r)}</p></div>
+   <p class="small muted">아이 이름과 답은 보내지 않고 유형과 별명만 보냅니다. 받은 사람은 링크에서 바로 자기 아이 검사로 이어집니다.</p>${shareBtns('result')}`
+   :`<p class="small muted">정밀검사를 마치면 유형 카드를 공유할 수 있습니다. 지금은 앱을 알려 줄 수 있어요.</p>`}
+  </section>
+  <section class="card">
+   <span class="eyebrow">공동 양육자에게</span><h2>다른 휴대폰에서 ${esc(nm())} 검사하게 초대</h2>
+   <p class="small muted">초대받은 사람은 링크를 열면 ${esc(nm())}의 검사로 바로 들어갑니다. ${firstDone()?`첫 검사가 이미 결제되어 ${fmtP(PRICE.more)}로 시작합니다.`:`아직 ${esc(nm())}의 첫 검사 전이라 받은 사람이 먼저 하면 첫 검사 ${fmtP(PRICE.first)}입니다.`} 다 마치면 결과를 다시 보내 이 휴대폰의 '양육자 비교'에 합칩니다.</p>
+   <div class="stack" style="gap:6px"><span class="small muted">누구를 초대할까요?</span><div class="chips" role="group" aria-label="초대할 양육자">${roles.map(n=>`<button class="chip" data-invrole="${esc(n)}" aria-pressed="${invRole===n}">${esc(n)}</button>`).join('')}</div></div>
+   ${shareBtns('invite')}
+  </section>
+  <section class="card">
+   <span class="eyebrow">앱 알리기</span><h2>친구에게 앱 추천하기</h2>
+   <p class="small muted">받은 사람은 ${SHARE.store?'구글 플레이의 앱 설치 화면':'검사 첫 화면'}으로 연결됩니다.</p>
+   ${shareBtns('app')}
+  </section>
+  ${SHARE.kakaoKey?'':'<p class="small muted">시제품: 카카오 앱 키를 아직 넣지 않아 \'카카오톡으로 보내기\'는 휴대폰 공유 창(카카오톡 선택 가능)이나 링크 복사로 대신합니다.</p>'}`; };
 
-/* ---------- 마이크 음성 입력 ---------- */
-let rec=null;
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-function micUI(on,msg){ const b=$('[data-mic]'), s=$('#mic-s'), l=$('#mic-l'); if(!b) return;
-  b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); if(l) l.textContent=on?'듣는 중 · 눌러서 끝내기':'말로 하기'; if(s&&msg!=null) s.textContent=msg; }
-function micStop(){ if(rec){ const r=rec; rec=null; try{ r.abort(); }catch(e){} } }
-function micToggle(){
-  if(rec){ const r=rec; try{ r.stop(); }catch(e){} return; }
-  const ta=$('#in-q'); if(!ta) return;
-  if(!SR) return micUI(false,'이 브라우저는 음성 입력을 지원하지 않습니다. 키보드의 마이크 버튼을 쓰거나 글로 적어 주세요.');
-  const base=ta.value? ta.value.replace(/\s+$/,'')+' ' : ''; let fin='', failed=false;
-  const r=new SR(); r.lang='ko-KR'; r.interimResults=true; r.continuous=true; r.maxAlternatives=1;
-  r.onstart=()=>micUI(true,'듣고 있어요. 지금 겪는 상황을 편하게 말해 주세요.');
-  r.onresult=e=>{ let tmp=''; for(let i=e.resultIndex;i<e.results.length;i++){ const x=e.results[i]; if(x.isFinal) fin+=x[0].transcript.trim()+' '; else tmp+=x[0].transcript; }
-    ta.value=(base+fin+tmp).slice(0,LIM.len); ta.scrollTop=ta.scrollHeight;
-    if((base+fin+tmp).length>=LIM.len){ try{ r.stop(); }catch(e){} } };
-  r.onerror=e=>{ failed=true; const m={'not-allowed':'마이크 사용이 막혀 있습니다. 브라우저 주소창의 사이트 설정에서 마이크를 허용해 주세요.','service-not-allowed':'마이크 사용이 막혀 있습니다. 브라우저 설정에서 마이크를 허용해 주세요.','no-speech':'소리가 들리지 않았어요. 다시 눌러 말해 주세요.','audio-capture':'마이크를 찾지 못했습니다. 기기의 마이크를 확인해 주세요.','network':'음성 인식 서버에 연결하지 못했습니다. 잠시 뒤 다시 해 보세요.'};
-    if(e.error!=='aborted') micUI(false,m[e.error]||'음성 입력을 시작하지 못했습니다. 글로 적어 주세요.'); };
-  r.onend=()=>{ const mine=rec===r; if(mine) rec=null; if(!mine&&!$('[data-mic]')) return;
-    if(!failed){ ta.value=(base+fin).trim().slice(0,LIM.len); micUI(false, fin? '받아 적었어요. 고칠 곳이 있으면 고친 뒤 물어보세요.' : '버튼을 누르고 상황을 말하면 글로 받아 적습니다.'); } else micUI(false); };
-  rec=r; try{ r.start(); }catch(e){ rec=null; micUI(false,'음성 입력을 시작하지 못했습니다. 글로 적어 주세요.'); }
-}
+/* ---------- 공유 링크로 들어왔을 때 ---------- */
+let land=null;
+function readLanding(){ const q=new URLSearchParams(location.search); let L=null;
+  if(q.get('i')){ const d=b64d(q.get('i')); if(d&&d.k) L={kind:'inv',d}; }
+  else if(q.get('c')){ const d=b64d(q.get('c')); if(d&&d.k&&d.x) L={kind:'res',d,ans:decA(d.x)}; }
+  else if(NICK[q.get('t')]) L={kind:'type',code:q.get('t')};
+  else if(q.get('r')) L={kind:'app'};
+  if(L){ land=L; history.replaceState(null,'',location.pathname+'#land'); } }
+const appCTA=()=> SHARE.store? `<a class="btn" href="${SHARE.store}">구글 플레이에서 앱 받기</a><button class="btn ghost" data-go="home">웹에서 먼저 해 보기</button>`
+  : `<button class="btn" data-go="home">우리 아이 검사하기</button><p class="small muted">앱은 곧 구글 플레이에 나옵니다. 지금은 웹에서 바로 검사할 수 있습니다.</p>`;
+V.land=()=>{ const L=land; if(!L) return V.home();
+ if(L.kind==='inv'){ const d=L.d, n=d.n||'우리 아이', roles=[...new Set([d.w,...CGL])].filter(x=>x&&x!==d.f); const w=roles.includes(invRole)?invRole:roles[0]; invRole=w;
+  return `<div class="hero" role="img" aria-label="엄마 말랑이와 아이 말랑이가 마주 보는 색연필 그림"><span>함께 보는 우리 아이</span></div>
+   <section class="card" style="border-color:var(--accent)"><span class="eyebrow">초대장</span><h1>${esc(ga(d.f||'가족'))} ${esc(n)} 기질검사에 초대했어요</h1>
+   <p>${esc(n)}${d.a?'('+esc(d.a)+')':''}를 떠올리며 66문항에 답하면, ${esc(d.f||'가족')}가 본 결과와 나란히 비교할 수 있습니다. 서로의 답은 보이지 않으니 내 눈에 보이는 모습대로 답해 주세요.</p>
+   <div class="stack" style="gap:6px"><span class="small muted">나는</span><div class="chips" role="group" aria-label="나는 누구인가요">${roles.map(x=>`<button class="chip" data-invrole="${esc(x)}" aria-pressed="${w===x}">${esc(x)}</button>`).join('')}</div></div>
+   <div class="price">${d.p?fmtP(PRICE.more):fmtP(PRICE.first)}<small>${d.p?'추가 검사 가격':'첫 검사 가격'}</small></div>
+   <button class="btn" data-join>검사 시작하기</button>
+   <p class="small muted">다 마치면 결과를 ${esc(d.f||'가족')}에게 보내는 버튼이 나옵니다.</p></section>`; }
+ if(L.kind==='res'){ const d=L.d, r=fullDone(L.ans)? score(L.ans) : null, k=kidByKey(d.k);
+  return `<section class="card" style="border-color:var(--accent)"><span class="eyebrow">도착한 검사 결과</span><h1>${esc(ga(d.w||'가족'))} 본 ${esc(d.n||'우리 아이')}</h1>
+   ${r?`<div class="type sharecard">${masc(r)}${codeHTML(r)}<h3>${NICK[r.code]}</h3></div>`:`<p class="small muted">아직 다 답하지 않은 결과입니다(${answered(L.ans)}/${ITEMS.length}).</p>`}
+   <p class="small muted">${k?`이 휴대폰의 ${esc(kidName(k,0))} 기록에 ${esc(d.w)}의 결과로 합칩니다. 리포트의 '양육자 비교'에서 나란히 볼 수 있습니다.`:`이 휴대폰에 같은 아이가 없어 새 아이로 추가합니다.`}</p>
+   <button class="btn" data-merge>${k?'합쳐서 비교 보기':'새 아이로 추가하기'}</button><button class="btn ghost" data-go="home">홈으로</button></section>`; }
+ if(L.kind==='type'){ const c=L.code, x=P;
+  return `<section class="card type"><span class="eyebrow">친구네 아이의 MBTI</span><img class="masc" src="${TM[c]}" alt="${NICK[c]} 말랑이 캐릭터"><div class="code">${c}</div><h1>${NICK[c]}</h1>
+   <p class="muted">${[...c].map(l=>x[l].ph).join(', ')}입니다.</p></section>
+   <section class="cta"><h2>우리 아이는 어떤 네 글자일까요?</h2><p class="muted">만 2~7세, 부모가 답하는 66문항 기질검사. 첫 검사 ${fmtP(PRICE.first)}.</p>${appCTA()}</section>`; }
+ return `<div class="hero" role="img" aria-label="엄마 말랑이와 아이 말랑이가 마주 보는 색연필 그림"><span>오늘도 말랑하게, 우리 아이 이야기</span></div>
+  <section class="cta"><h2>우리 아이의 MBTI는 무엇일까요?</h2><p class="muted">친구가 추천한 영유아 기질검사입니다. 부모가 답하는 66문항, 첫 검사 ${fmtP(PRICE.first)}.</p>${appCTA()}</section>`; };
+function joinInvite(){ const d=land&&land.d; if(!d) return; const w=invRole||d.w||'아빠';
+  const k=kidByKey(d.k);
+  if(k){ setKid(k.id); }
+  else if(kids().length===1&&!st.name&&!answered(st.ans)&&!(st.buys||[]).length){ Object.assign(st,blankKid(),{key:d.k}); }
+  else addKid({key:d.k});
+  if(d.n&&!st.name) st.name=d.n; if(d.a&&!st.age) st.age=d.a; if(d.p) st.ext=1; st.inv={from:d.f||'',at:Date.now()};
+  setWho(w); save(); land=null; go('full'); }
+function mergeResult(){ const d=land&&land.d; if(!d) return; const k=kidByKey(d.k);
+  if(k) setKid(k.id); else addKid({key:d.k,name:d.n||'',age:d.a||'',who:st.who});
+  st.cgs=st.cgs||{}; let w=d.w||'가족'; const rec={ans:land.ans,date:d.d||today(),qd:1,prev:null,paid:1,recv:1};
+  if(w===st.who){ if(!answered(st.ans)&&!st.prev) Object.assign(st,{ans:rec.ans,date:rec.date,qd:1,paid:1}); else st.cgs[w+'(받은 결과)']=rec; }
+  else { st.cgs[w]=rec; if(!answered(st.ans)&&!st.prev) setWho(w); } // 이 휴대폰에서 아직 답하지 않았으면 받은 결과를 바로 보여 준다
+  save(); land=null; rtab='cg'; view='report'; history.replaceState(null,'','#report'); render(); }
+
+/* ---------- 기록 옮기기(백업 파일) ---------- */
+// 서버가 없어 기록은 이 휴대폰에만 있다. 앱을 지우거나 휴대폰을 바꾸기 전에 파일로 저장해 두고, 새 휴대폰에서 불러온다.
+function backup(){ const blob=new Blob([JSON.stringify({app:'aigyeol',v:1,at:Date.now(),st})],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='내아이의MBTI_기록_'+today().replace(/\./g,'')+'.json'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000); toast('기록 파일을 저장했습니다. 새 휴대폰에서 불러오면 그대로 이어집니다.'); }
+function restore(f){ const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.app!=='aigyeol'||!d.st||!d.st.ans) throw 0; st=d.st; save(); location.hash='home'; location.reload(); }catch(e){ toast('이 파일은 불러올 수 없습니다.'); } }; r.readAsText(f); }
 
 /* ---------- 라우팅과 이벤트 ---------- */
 let view='home';
 function render(){
-  micStop(); const app=$('#app'); app.innerHTML=(V[view]||V.home)(); document.body.dataset.view=view;
+  const app=$('#app'); app.innerHTML=(V[view]||V.home)(); document.body.dataset.view=view;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===view));
   window.scrollTo(0,0);
 }
-function go(v){ if(v==='quick'||v==='full'){ grab();
-    if(v==='full'&&!passOn()){ view='pass'; return render(); }
-    if(v==='full'&&done(ITEMS)) return go('report');
+function go(v){ if(v==='full'){ grab();
+    if(!st.paid){ payFor='test'; view='pay'; return render(); }
+    if(done(ITEMS)) return go('report');
     startTest(v); view='test'; render(); return; }
   if(v==='report') rtab='temp';
   if(location.hash==='#'+v){ view=v; render(); } else location.hash=v; }
@@ -987,50 +1028,52 @@ function grab(){ const n=$('#in-name'); if(n){ st.name=n.value.trim(); st.age=$(
 // 샘플 답 만들기. base: 축마다 중심 답(1~5), 자라는 힘은 g
 function genAns(list,base,g,into){ const seed=[4,5,2,4,3,5,2,4,1,5,4,2,5,3]; let k=0; const o=into||{};
   list.forEach(it=>{ const b=it.ax?base[it.ax]:g; let a=b+(seed[k++%seed.length]>3?0:(k%2?1:-1)); a=Math.max(1,Math.min(5,a)); o[it.id]= it.r? 6-a : a; }); return o; }
-function sample(mode){ grab();
-  genAns(mode==='quick'?FREE:ITEMS,{A:2,B:4,C:2,D:4},4,st.ans);
-  if(!st.name) st.name='콩이'; if(!st.age) st.age='만 5세'; st.qd=1; st.date=today(); if(mode==='full'&&!passOn()) buyPass();
-  if(mode==='full'&&!st.prev){ // 비교 화면 확인용 샘플 이전 기록(두 달 전): 리듬·자유 축이 자유 쪽이었고(유형 코드 다름), 끈기는 한 칸씩 낮게(→ 자랐음), 함께 힘은 '잘 모르겠다' 4개(→ 비교 제외)
+// 샘플 리포트: 결제 없이 지금 고른 아이·양육자의 답을 샘플 답으로 덮어쓴다(결제 기록은 남기지 않음)
+function sample(){ grab();
+  genAns(ITEMS,{A:2,B:4,C:2,D:4},4,st.ans);
+  if(!st.name) st.name='콩이'; if(!st.age) st.age='만 5세'; st.qd=1; st.date=today(); st.paid=1;
+  if(!st.prev){ // 비교 화면 확인용 샘플 이전 기록(두 달 전): 리듬·자유 축이 자유 쪽이었고(유형 코드 다름), 끈기는 한 칸씩 낮게(→ 자랐음), 함께 힘은 '잘 모르겠다' 4개(→ 비교 제외)
     const pa=genAns(ITEMS.filter(x=>x.ax==='D'),{D:2},0,{...st.ans});
     ITEMS.filter(x=>x.gr==='G1').forEach(x=>{ pa[x.id]= x.r? Math.min(5,pa[x.id]+1) : Math.max(1,pa[x.id]-1); });
     ITEMS.filter(x=>x.gr==='G3').slice(0,4).forEach(x=>{ pa[x.id]=0; });
     const s=snapshot(pa,today(-60),st.who); s.sample=1; st.prev=s; }
-  if(mode==='full'&&!cgs().some(c=>!c.active&&fullDone(c.ans))){ // 양육자 비교 확인용 샘플 다른 양육자: 탐험 쪽으로, 리듬·자유는 가운데쯤으로 본 사람
+  if(!cgs().some(c=>!c.active&&fullDone(c.ans))){ // 양육자 비교 확인용 샘플 다른 양육자: 탐험 쪽으로, 리듬·자유는 가운데쯤으로 본 사람
     st.cgs=st.cgs||{}; const other=CGL.find(n=>n!==st.who&&!hasAns(st.cgs[n]));
-    if(other) st.cgs[other]={ans:genAns(ITEMS,{A:4,B:4,C:2,D:3},3),date:today(),qd:1,prev:null,sample:1}; }
-  save(); go(mode==='quick'?'quick-result':'report'); }
+    if(other) st.cgs[other]={ans:genAns(ITEMS,{A:4,B:4,C:2,D:3},3),date:today(),qd:1,prev:null,paid:1,sample:1}; }
+  save(); go('report'); }
 const today=(dd=0)=>{ const d=new Date(Date.now()+dd*864e5); return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); };
 document.addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
-  if(b.dataset.mic!=null) return micToggle();
   if(b.dataset.rtab) return setRtab(b.dataset.rtab);
   if(b.dataset.cg){ setWho(b.dataset.cg); return render(); }
   if(b.dataset.addcg){ setWho(b.dataset.addcg); return go('full'); }
+  if(b.dataset.kid){ grab(); setKid(b.dataset.kid); return render(); }
+  if(b.dataset.addkid!=null){ grab(); addKid(); view='home'; render(); const n=$('#in-name'); if(n) n.focus(); return; }
+  if(b.dataset.backup!=null) return backup();
+  if(b.dataset.share) return doShare(b.dataset.share,b.dataset.via);
+  if(b.dataset.invrole){ invRole=b.dataset.invrole; return render(); }
+  if(b.dataset.join!=null) return joinInvite();
+  if(b.dataset.merge!=null) return mergeResult();
   if(b.dataset.go) return go(b.dataset.go);
-  if(b.dataset.sample) return sample(b.dataset.sample);
-  if(b.dataset.buy!=null){ buyPass(); cerr=''; return done(ITEMS)? (view==='coach'? render() : go('report')) : go('full'); }
-  if(b.dataset.retest!=null){ if(passOn()&&st.pass.retest<1){ st.prev=snapshot(); st.pass.retest++; st.ans={}; st.qd=0; save(); go('full'); } return; }
-  if(b.dataset.demo==='expire'){ if(st.pass){ st.pass.end=Date.now()-DAY; save(); } return render(); }
-  if(b.dataset.demo==='usemax'){ const u=usage(); u.dn=LIM.day; save(); return render(); }
-  if(b.dataset.pre!=null){ return ask('',+b.dataset.pre); }
-  if(b.type==='submit'){ const f=b.closest('form'); if(f&&f.id==='askf'){ e.preventDefault(); const q=$('#in-q').value; if(conv) conv.cont=!!b.dataset.follow; return ask(q); } }
-  if(b.dataset.reset!=null){ st.ans={}; st.qd=0; st.pass=null; st.use={}; st.prev=null; st.cgs={}; conv=null; save(); return go('home'); }
+  if(b.dataset.sample) return sample();
+  if(b.dataset.buy!=null){ buy(); startTest('full'); view='test'; return render(); }
+  if(b.dataset.retest!=null){ if(done(ITEMS)&&st.paid){ payFor='retest'; view='pay'; render(); } return; }
+  if(b.dataset.reset!=null){ st.ans={}; st.qd=0; st.paid=0; st.buys=[]; st.ext=0; st.inv=null; st.prev=null; st.cgs={}; save(); return go('home'); }
   if(b.dataset.back!=null){ if(tq.i>0){ tq.i--; render(); } return; }
   if(b.dataset.a){ const cur=tq.list[tq.i]; st.ans[cur.id]=+b.dataset.a; st.date=today();
-    if(tq.mode==='quick' && +b.dataset.a===0 && cur.ax){ // 간이검사: 같은 세부 기질의 다른 문항으로 대신 묻기
-      const alt=ITEMS.find(x=>x.ax===cur.ax&&x.sub===cur.sub&&st.ans[x.id]==null&&!tq.list.includes(x));
-      if(alt) tq.list.splice(tq.i+1,0,alt); }
-    if(tq.i===tq.list.length-1){ if(tq.mode==='quick') st.qd=1; }
     save();
-    if(tq.i<tq.list.length-1){ tq.i++; render(); } else go(tq.mode==='quick'?'quick-result':'report'); }
+    if(tq.i<tq.list.length-1){ tq.i++; render(); } else go('report'); }
 });
-function route(){ const h=location.hash.slice(1); view= V[h]&&h!=='test'&&h!=='pass'? h : 'home'; if(view==='report') rtab='temp'; render(); }
+function route(){ const h=location.hash.slice(1); view= V[h]&&!['test','pay','land'].includes(h)? h : h==='land'&&land? 'land' : 'home'; if(view==='report') rtab='temp'; render(); }
 document.addEventListener('submit',e=>e.preventDefault());
 // 홈의 '답하는 사람'을 바꾸면 그 양육자의 기록으로 바꿔 끼운다
-document.addEventListener('change',e=>{ if(e.target.id==='in-who'){ grab(); render(); } });
+document.addEventListener('change',e=>{ if(e.target.id==='in-who'){ grab(); render(); } if(e.target.id==='in-restore'&&e.target.files[0]) restore(e.target.files[0]); });
 window.addEventListener('hashchange',route);
+readLanding();
+if(SHARE.kakaoKey) kakaoReady(); // 버튼을 누른 순간 바로 열리도록 미리 불러 둔다
 route();
 </script>
 
 </body>
 </html>
+
