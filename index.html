@@ -528,6 +528,9 @@ const PRICE={first:1, more:0.5, cur:'USD', sku:{first:'test_first', more:'test_m
 const fmtP=p=> '$'+(Number.isInteger(p)? p : p.toFixed(2));
 const firstDone=()=> (st.buys||[]).length>0 || !!st.ext;
 const nextPrice=()=> firstDone()? PRICE.more : PRICE.first;
+// 초대 링크의 '첫 검사 결제됨'(p)은 받는 쪽에서 고칠 수 있다. 시제품은 그대로 믿지만, 실제 앱은 함께 실린 첫 결제 번호(o)를
+// 서버가 구글 플레이 구매 기록과 아이 key 로 확인한 뒤에만 $0.50 상품을 연다(docs/systems/pay-share.md).
+const firstBuy=()=>{ const b=(st.buys||[])[0]; return b? (b.id||'') : (st.ext&&st.ext.o||''); };
 
 /* ---------- 채점 ---------- */
 const v=(it,ans=st.ans)=> !ans[it.id]? null : (it.r? 6-ans[it.id] : ans[it.id]);
@@ -878,7 +881,7 @@ let payFor='test';
 const KIND={first:'첫 정밀검사', cg:'양육자 추가 검사', retest:'다시 검사하기'};
 const payKind=()=> payFor==='retest'? 'retest' : firstDone()? 'cg' : 'first';
 const priceNote=()=>`<p class="small muted">아이마다 첫 검사 <b>${fmtP(PRICE.first)}</b>, 그 아이의 다른 양육자 검사와 다시 검사하기는 <b>${fmtP(PRICE.more)}</b>입니다. 동생·형제는 새 아이로 등록하면 첫 검사 ${fmtP(PRICE.first)}입니다. 자동 결제는 없습니다.</p>`;
-function buy(){ const k=payKind(), p=nextPrice(); st.buys=st.buys||[]; st.buys.push({t:Date.now(),kind:k,who:st.who,price:p});
+function buy(){ const k=payKind(), p=nextPrice(); st.buys=st.buys||[]; st.buys.push({id:rid(),t:Date.now(),kind:k,who:st.who,price:p});
   if(k==='retest'){ st.prev=snapshot(); st.ans={}; st.qd=0; }
   st.paid=1; payFor='test'; save(); }
 V.pay=()=>{ const k=payKind(), p=nextPrice();
@@ -922,7 +925,7 @@ function msg(kind){ const r= done(ITEMS)? score() : null;
   if(kind==='result'&&r) return {title:`우리 아이는 ${r.code} '${NICK[r.code]}'`, text:'만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', url:SHARE.web+'#t='+r.code, btn:'우리 아이도 검사하기', img:SHARE.web+'assets/share/'+r.code+'.png'};
   if(kind==='invite'){ const w=invRole||CGL.find(n=>n!==st.who);
     return {title:`${ga(st.who)} ${nm()} 기질검사에 초대했어요`, text:`${w}의 눈으로 본 ${nm()}는 어떤 아이일까요? 따로 답하고 결과를 나란히 비교해요.`, btn:'검사하러 가기',
-     url:SHARE.web+'#i='+b64e({k:st.key,n:st.name,a:st.age,f:st.who,w,p:firstDone()?1:0})}; }
+     url:SHARE.web+'#i='+b64e({k:st.key,n:st.name,a:st.age,f:st.who,w,p:firstDone()?1:0,o:firstBuy()})}; }
   if(kind==='back'){ const to=st.inv&&st.inv.from||'가족';
     return {title:`${ga(st.who)} ${nm()} 검사 결과를 보냈어요`, text:`${to}의 휴대폰에서 열면 '양육자 비교'에 합쳐집니다.`, btn:'결과 합쳐 보기',
      url:SHARE.web+'#c='+b64e({k:st.key,n:st.name,a:st.age,w:st.who,d:st.date,x:encA(st.ans)})}; }
@@ -998,7 +1001,7 @@ function joinInvite(){ const d=land&&land.d; if(!d) return; const w=invRole||d.w
   if(k){ setKid(k.id); }
   else if(kids().length===1&&!st.name&&!answered(st.ans)&&!(st.buys||[]).length){ Object.assign(st,blankKid(),{key:d.k}); }
   else addKid({key:d.k});
-  if(d.n&&!st.name) st.name=d.n; if(d.a&&!st.age) st.age=d.a; if(d.p) st.ext=1; st.inv={from:d.f||'',at:Date.now()};
+  if(d.n&&!st.name) st.name=d.n; if(d.a&&!st.age) st.age=d.a; if(d.p) st.ext={o:d.o||'',from:d.f||''}; st.inv={from:d.f||'',at:Date.now()};
   setWho(w); save(); land=null; go('full'); }
 function mergeResult(){ const d=land&&land.d; if(!d) return; const k=kidByKey(d.k);
   if(k) setKid(k.id); else addKid({key:d.k,name:d.n||'',age:d.a||'',who:st.who});
