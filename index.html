@@ -174,8 +174,11 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background
 #nav a.on .ic{background:var(--accent);color:var(--on-accent)}
 body[data-view="test"] #nav,body[data-view="pay"] #nav{display:none}
 body[data-view="test"] .hlink{display:none}
-#app>*{animation:rise .28s ease both}
+/* 움직임이 끝난 뒤 transform이 남으면 안의 position:fixed(검사 하단 버튼)가 화면이 아닌 이 상자 아래에 붙어 마지막 선택지를 가린다 → backwards로 끝나면 풀고, 고정 바가 있는 화면은 투명도만 움직인다 */
+#app>*{animation:rise .28s ease backwards}
+#app>*:has(.testbar){animation-name:fadein}
 @keyframes rise{from{opacity:.0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
 .btn{min-height:52px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;transition:transform .08s}
 .btn:active,.opt:active,.chip:active{transform:scale(.97)}
 .opt{min-height:56px;font-size:16px;transition:transform .08s}
