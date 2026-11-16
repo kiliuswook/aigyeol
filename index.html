@@ -631,7 +631,8 @@ V.home=()=>{ const ks=kids(), full=done(ITEMS), n=answered(st.ans), p=nextPrice(
  <details class="card"><summary><b>휴대폰을 바꾸거나 앱을 지울 때</b></summary><div class="stack" style="gap:8px">
   <p class="small muted">검사 기록과 결제한 검사는 이 휴대폰 안에만 저장됩니다. 지우기 전에 기록 파일을 저장해 두고, 새 휴대폰에서 불러오면 그대로 이어집니다.</p>
   <div class="row"><button class="btn ghost" data-backup>기록 파일 저장</button><label class="btn ghost filebtn">기록 불러오기<input type="file" id="in-restore" accept=".json,application/json"></label></div></div></details>
- <p class="small muted">시제품입니다. 결제는 연결되어 있지 않아 결제 버튼을 누르면 바로 검사가 열립니다. 이 검사는 양육 참고용이며 의학적 진단이 아닙니다.</p>`; };
+ <p class="small muted">시제품입니다. 결제는 연결되어 있지 않아 결제 버튼을 누르면 바로 검사가 열립니다. 이 검사는 양육 참고용이며 의학적 진단이 아닙니다.</p>
+ <p class="small"><a href="privacy.html">개인정보처리방침</a></p>`; };
 
 let tq={list:[],i:0,mode:''};
 function startTest(mode){ tq.mode=mode; tq.list= mode==='quick'? FREE.slice() : ITEMS.filter(x=>st.ans[x.id]==null); if(mode==='full'&&!tq.list.length) tq.list=ITEMS; tq.i=0; }
@@ -896,7 +897,7 @@ V.pay=()=>{ const k=payKind(), p=nextPrice();
    </ul>
    <button class="btn" data-buy>${fmtP(p)} 결제하고 검사 시작</button>
    ${priceNote()}
-   <p class="small muted">시제품이라 실제 결제는 일어나지 않습니다. 앱에서는 구글 플레이 결제로 연결됩니다.</p>
+   <p class="small muted">시제품이라 실제 결제는 일어나지 않습니다. 앱에서는 구글 플레이 결제로 연결됩니다. <a href="privacy.html">개인정보처리방침</a></p>
   </div>
   <div class="row"><button class="btn ghost" data-go="${k==='retest'?'report':'home'}">나중에 하기</button></div>`; };
 const demoTools=()=>`<details><summary class="small muted">시제품 확인용 도구</summary><div><div class="row"><button class="btn ghost" data-reset>이 아이 기록 전부 지우기</button></div></div></details>`;
@@ -918,14 +919,14 @@ function kakaoReady(){ if(!SHARE.kakaoKey) return Promise.resolve(false); if(kak
     s.onload=()=>{ try{ Kakao.init(SHARE.kakaoKey); ok(true); }catch(e){ ok(false); } }; s.onerror=()=>ok(false); document.head.appendChild(s); }); }
 let invRole='';
 function msg(kind){ const r= done(ITEMS)? score() : null;
-  if(kind==='result'&&r) return {title:`우리 아이는 ${r.code} '${NICK[r.code]}'`, text:'만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', url:SHARE.web+'?t='+r.code, btn:'우리 아이도 검사하기', img:SHARE.web+'assets/share/'+r.code+'.png'};
+  if(kind==='result'&&r) return {title:`우리 아이는 ${r.code} '${NICK[r.code]}'`, text:'만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', url:SHARE.web+'#t='+r.code, btn:'우리 아이도 검사하기', img:SHARE.web+'assets/share/'+r.code+'.png'};
   if(kind==='invite'){ const w=invRole||CGL.find(n=>n!==st.who);
     return {title:`${ga(st.who)} ${nm()} 기질검사에 초대했어요`, text:`${w}의 눈으로 본 ${nm()}는 어떤 아이일까요? 따로 답하고 결과를 나란히 비교해요.`, btn:'검사하러 가기',
-     url:SHARE.web+'?i='+b64e({k:st.key,n:st.name,a:st.age,f:st.who,w,p:firstDone()?1:0})}; }
+     url:SHARE.web+'#i='+b64e({k:st.key,n:st.name,a:st.age,f:st.who,w,p:firstDone()?1:0})}; }
   if(kind==='back'){ const to=st.inv&&st.inv.from||'가족';
     return {title:`${ga(st.who)} ${nm()} 검사 결과를 보냈어요`, text:`${to}의 휴대폰에서 열면 '양육자 비교'에 합쳐집니다.`, btn:'결과 합쳐 보기',
-     url:SHARE.web+'?c='+b64e({k:st.key,n:st.name,a:st.age,w:st.who,d:st.date,x:encA(st.ans)})}; }
-  return {title:'내 아이의 MBTI · 영유아 기질검사', text:'부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?', url:SHARE.web+'?r=app', btn:SHARE.store?'앱 받기':'검사해 보기'}; }
+     url:SHARE.web+'#c='+b64e({k:st.key,n:st.name,a:st.age,w:st.who,d:st.date,x:encA(st.ans)})}; }
+  return {title:'내 아이의 MBTI · 영유아 기질검사', text:'부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?', url:SHARE.web+'#r=app', btn:SHARE.store?'앱 받기':'검사해 보기'}; }
 let toastT=0;
 function toast(t){ let el=$('#toast'); if(!el){ el=document.createElement('div'); el.id='toast'; el.setAttribute('role','status'); document.body.appendChild(el); }
   el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),2600); }
@@ -958,11 +959,13 @@ V.share=()=>{ const r= done(ITEMS)&&st.paid? score() : null; const roles=CGL.fil
    <p class="small muted">받은 사람은 ${SHARE.store?'구글 플레이의 앱 설치 화면':'검사 첫 화면'}으로 연결됩니다.</p>
    ${shareBtns('app')}
   </section>
+  <p class="small muted">초대·결과 링크에는 아이 이름·연령(결과 링크는 답도)이 실립니다. 믿을 수 있는 가족에게만 보내 주세요. <a href="privacy.html">개인정보처리방침</a></p>
   ${SHARE.kakaoKey?'':'<p class="small muted">시제품: 카카오 앱 키를 아직 넣지 않아 \'카카오톡으로 보내기\'는 휴대폰 공유 창(카카오톡 선택 가능)이나 링크 복사로 대신합니다.</p>'}`; };
 
 /* ---------- 공유 링크로 들어왔을 때 ---------- */
 let land=null;
-function readLanding(){ const q=new URLSearchParams(location.search); let L=null;
+// 공유 링크 값은 주소의 # 뒤에 싣는다(서버로 전송되지 않아 접속 기록에 남지 않음). 예전 ? 링크도 읽는다.
+function readLanding(){ const h=location.hash.slice(1), q=new URLSearchParams(/^[icrt]=/.test(h)? h : location.search); let L=null;
   if(q.get('i')){ const d=b64d(q.get('i')); if(d&&d.k) L={kind:'inv',d}; }
   else if(q.get('c')){ const d=b64d(q.get('c')); if(d&&d.k&&d.x) L={kind:'res',d,ans:decA(d.x)}; }
   else if(NICK[q.get('t')]) L={kind:'type',code:q.get('t')};
@@ -1068,7 +1071,7 @@ function route(){ const h=location.hash.slice(1); view= V[h]&&!['test','pay','la
 document.addEventListener('submit',e=>e.preventDefault());
 // 홈의 '답하는 사람'을 바꾸면 그 양육자의 기록으로 바꿔 끼운다
 document.addEventListener('change',e=>{ if(e.target.id==='in-who'){ grab(); render(); } if(e.target.id==='in-restore'&&e.target.files[0]) restore(e.target.files[0]); });
-window.addEventListener('hashchange',route);
+window.addEventListener('hashchange',()=>{ readLanding(); route(); });
 readLanding();
 if(SHARE.kakaoKey) kakaoReady(); // 버튼을 누른 순간 바로 열리도록 미리 불러 둔다
 route();
