@@ -116,7 +116,9 @@ class Btn extends StatelessWidget {
   final VoidCallback? onTap;
   final BtnKind kind;
   final Widget? icon;
-  const Btn(this.label, this.onTap, {super.key, this.kind = BtnKind.blue, this.icon});
+  /// 좁은 칸에 여럿 놓을 때: 옆 여백과 글자를 줄여 한 줄에
+  final bool dense;
+  const Btn(this.label, this.onTap, {super.key, this.kind = BtnKind.blue, this.icon, this.dense = false});
   @override
   Widget build(BuildContext context) {
     final n = switch (kind) { BtnKind.blue => nBtn, BtnKind.dark => nBtnDark, BtnKind.ghost => nBtnGhost };
@@ -129,10 +131,10 @@ class Btn extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 52),
           child: NineBox(n,
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: dense ? 6 : 18, vertical: 12),
               child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
                 if (icon != null) ...[icon!, const SizedBox(width: 8)],
-                Flexible(child: Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: kind == BtnKind.ghost ? FontWeight.w500 : FontWeight.w700, color: fg))),
+                Flexible(child: Text(label, textAlign: TextAlign.center, maxLines: dense ? 1 : null, softWrap: !dense, style: TextStyle(fontSize: dense ? 14 : 16, fontWeight: kind == BtnKind.ghost ? FontWeight.w500 : FontWeight.w700, color: fg))),
               ])),
         ),
       ),
@@ -143,7 +145,8 @@ class Btn extends StatelessWidget {
 /// 카카오톡 노란 버튼(손그림 대신 카카오 색)
 class KakaoBtn extends StatelessWidget {
   final VoidCallback onTap;
-  const KakaoBtn(this.onTap, {super.key});
+  final String label;
+  const KakaoBtn(this.onTap, {super.key, this.label = '카카오톡으로 보내기'});
   @override
   Widget build(BuildContext context) => Material(
         color: const Color(0xFFFEE500),
@@ -151,7 +154,7 @@ class KakaoBtn extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: onTap,
-          child: const SizedBox(height: 52, child: Center(child: Text('카카오톡으로 보내기', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF191600))))),
+          child: SizedBox(height: 52, child: Center(child: Text(label, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF191600))))),
         ),
       );
 }
@@ -174,6 +177,11 @@ class ChipBtn extends StatelessWidget {
 }
 
 Widget chips(List<Widget> c) => Wrap(spacing: 8, runSpacing: 8, children: c);
+
+/// 칩 한 줄: 넘치면 옆으로 밀어 보기(세로 길이를 늘리지 않음)
+Widget chipRow(List<Widget> c) => SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(children: [for (var i = 0; i < c.length; i++) ...[if (i > 0) const SizedBox(width: 8), c[i]]]));
 
 class Tag extends StatelessWidget {
   final String label;
@@ -246,15 +254,24 @@ Widget mascot(String code, {double size = 112}) => Image.asset('assets/img/t_$co
 class Fold extends StatefulWidget {
   final String title;
   final Widget child;
-  const Fold(this.title, this.child, {super.key});
+  /// 접힌 상태에서도 보이는 머리(막대 같은 핵심). 있으면 제목 대신 이것을 누른다
+  final Widget? head;
+  final bool open;
+  const Fold(this.title, this.child, {super.key, this.head, this.open = false});
   @override
   State<Fold> createState() => _FoldState();
 }
 
 class _FoldState extends State<Fold> {
-  bool open = false;
+  late bool open = widget.open;
   @override
   Widget build(BuildContext context) => col([
+        if (widget.head != null)
+          InkWell(
+            onTap: () => setState(() => open = !open),
+            child: Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: widget.head),
+          )
+        else
         InkWell(
           onTap: () => setState(() => open = !open),
           child: Padding(

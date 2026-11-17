@@ -34,28 +34,25 @@ class _ReportViewState extends State<ReportView> {
     }
     final r = score(cur.ans);
     Widget tabBtn(String id, String t) => Expanded(
+        flex: t.length + 2,
         child: GestureDetector(
             onTap: () => setState(() => rtab = id),
             child: NineBox(rtab == id ? nChipOn : nChip,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Center(child: Text(t, style: disp(19, color: rtab == id ? kOnAccent : kMuted))))));
+                padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 4),
+                child: Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text(t, maxLines: 1, style: disp(17, color: rtab == id ? kOnAccent : kMuted)))))));
     return AppPage([
       switcher(),
-      sheetHead(r),
-      col([
-        Row(children: [tabBtn('temp', '기질'), const SizedBox(width: 8), tabBtn('grow', '성격(자라는 힘)')]),
-        Row(children: [tabBtn('cg', '양육자 비교'), const SizedBox(width: 8), tabBtn('chg', '달라진 점')]),
-      ], gap: 8),
-      ...switch (rtab) { 'grow' => growTab(r), 'cg' => cgTab(), 'chg' => changeTab(r), _ => tempTab(r) },
-      Note(rich(
-          "**결과를 읽을 때.** 이 보고서는 ${kid.who}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있으며, '양육자 비교' 탭에서 나란히 볼 수 있습니다.${r.cons == '낮음' ? ' 이번 응답은 비슷한 문항 사이에 답이 엇갈린 경우가 많아, 시간을 두고 다시 검사해 보기를 권합니다.' : ''} 점수는 또래와 비교한 순위가 아니라 문항 응답으로 본 아이 안의 경향입니다. 기질에는 좋고 나쁨이 없으며, 이 검사는 의학적 진단이나 발달 평가를 대신하지 않습니다.",
-          style: small)),
-      Cta([
-        h2('${store.nm}의 결과를 함께 보세요', color: kBg),
-        const Text('친구·가족에게 결과 카드를 보내거나, 다른 휴대폰의 공동 양육자가 따로 검사하게 초대할 수 있습니다.', style: TextStyle(color: kBg, fontSize: 14, height: 1.6)),
-        Btn(kid.inv != null ? '${kid.inv!['from'] ?? '가족'}에게 결과 보내기' : '공유하기', () => tab.value = 2),
+      typeHead(r),
+      Row(children: [
+        tabBtn('temp', '기질'), const SizedBox(width: 6), tabBtn('grow', '자라는 힘'),
+        const SizedBox(width: 6), tabBtn('cg', '양육자 비교'), const SizedBox(width: 6), tabBtn('chg', '달라진 점'),
       ]),
-      Btn('다시 검사하기 · ${Price.fmt(Price.more)}', () => startRetest(context), kind: BtnKind.ghost),
+      ...switch (rtab) { 'grow' => growTab(r), 'cg' => cgTab(), 'chg' => changeTab(r), _ => tempTab(r) },
+      Row(children: [
+        Expanded(child: Btn(kid.inv != null ? '${kid.inv!['from'] ?? '가족'}에게 보내기' : '결과 공유하기', () => tab.value = 2)),
+        const SizedBox(width: 10),
+        Expanded(child: Btn('다시 검사 · ${Price.fmt(Price.more)}', () => startRetest(context), kind: BtnKind.ghost)),
+      ]),
       Fold(
           '시제품 확인용 도구',
           Btn('이 아이 기록 전부 지우기', () {
@@ -65,80 +62,75 @@ class _ReportViewState extends State<ReportView> {
     ]);
   }
 
-  /// 아이(둘 이상일 때)와 양육자 고르기
+  /// 아이(둘 이상일 때)와 양육자 고르기: 한 줄씩, 옆으로 밀어 보기
   Widget switcher() {
     final kid = store.kid, ks = store.kids, all = kid.cgs, has = all.map((e) => e.key).toSet();
     final add = kCgl.where((n) => !has.contains(n)).take(3);
-    return PaperCard(gap: 10, [
-      if (ks.length > 1) ...[
-        h3('아이'),
-        chips([for (var i = 0; i < ks.length; i++) ChipBtn(ks[i].label(i), on: ks[i].id == kid.id, onTap: () => store.setKid(ks[i].id))]),
-      ],
-      Row(children: [
-        Expanded(child: h3('양육자별 결과')),
-        TextButton(onPressed: () => tab.value = 2, child: const Text('다른 휴대폰으로 초대')),
-      ]),
-      chips([
-        for (final e in all)
-          ChipBtn('${e.key} · ${fullDone(e.value.ans) ? score(e.value.ans).code : '${answered(e.value.ans)}/${C.items.length}'}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
-        for (final n in add) ChipBtn('+ $n', onTap: () => addCaregiver(context, n)),
-      ]),
-    ]);
-  }
-
-  Widget sheetHead(Result r) {
-    final kid = store.kid, cur = store.cur;
-    Widget meta(String k, String v) => SizedBox(
-        width: 140,
-        child: col([Text(k, style: smallMuted), Text(v, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))], gap: 0));
     return NineBox(nCard,
-        padding: const EdgeInsets.all(14),
-        child: col([
-          ClipRRect(borderRadius: BorderRadius.circular(14), child: Image.asset('assets/img/banner_result.webp', fit: BoxFit.cover)),
-          NineBox(nDark,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 18),
-              child: col([
-                const Text('내 아이의 MBTI · 정밀검사', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: kAccent)),
-                h2('정밀검사 결과 보고서', color: kBg),
-                Text('기질 결과와 성격(자라는 힘) 결과', style: TextStyle(fontSize: 13, color: kBg.withValues(alpha: .8))),
-              ], gap: 4)),
-          Wrap(runSpacing: 10, spacing: 10, children: [
-            meta('이름', store.nm),
-            meta('연령', kid.age.isEmpty ? '미입력' : kid.age),
-            meta('평가자', kid.who),
-            meta('검사일', '${cur.date}${cur.prev != null ? ' · 이전 ${cur.prev!.code}' : ''}'),
-            meta('문항', '66문항 · 5점 척도'),
-            meta('응답 일관성', '${r.cons ?? '판단 불가'} · 잘 모르겠다 ${r.unk}문항'),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        child: col(gap: 8, [
+          if (ks.length > 1) chipRow([for (var i = 0; i < ks.length; i++) ChipBtn(ks[i].label(i), on: ks[i].id == kid.id, onTap: () => store.setKid(ks[i].id))]),
+          chipRow([
+            for (final e in all)
+              ChipBtn('${e.key} · ${fullDone(e.value.ans) ? score(e.value.ans).code : '${answered(e.value.ans)}/${C.items.length}'}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
+            for (final n in add) ChipBtn('+ $n', onTap: () => addCaregiver(context, n)),
+            ChipBtn('다른 휴대폰 초대', onTap: () => tab.value = 2),
           ]),
         ]));
+  }
+
+  /// 리포트 머리: 유형(핵심)과 검사 정보 한 줄. 읽는 법·일관성은 펼쳐서
+  Widget typeHead(Result r) {
+    final kid = store.kid, cur = store.cur;
+    return PaperCard(gap: 8, [
+      Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+            child: col([
+          eyebrow('정밀검사 결과 · ${cur.date}'),
+          codeText(letters(r), size: 46),
+          h1(C.nick[r.code]!),
+        ], gap: 4)),
+        mascot(r.code, size: 92),
+      ]),
+      p('${store.nm}${eun(store.nm)} ${oneLine(r)}'),
+      muted('${store.nm} · ${kid.age.isEmpty ? '연령 미입력' : kid.age} · ${kid.who} 답함${cur.prev != null ? ' · 이전 ${cur.prev!.code}' : ''}'),
+      Fold(
+          '검사 정보와 결과 읽는 법',
+          col([
+            rich('66문항 · 5점 척도 · 응답 일관성 **${r.cons ?? '판단 불가'}** · 잘 모르겠다 ${r.unk}문항', style: small),
+            muted(
+                "이 보고서는 ${kid.who}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있으며, '양육자 비교' 탭에서 나란히 볼 수 있습니다.${r.cons == '낮음' ? ' 이번 응답은 비슷한 문항 사이에 답이 엇갈린 경우가 많아, 시간을 두고 다시 검사해 보기를 권합니다.' : ''} 점수는 또래와 비교한 순위가 아니라 문항 응답으로 본 아이 안의 경향입니다. 기질에는 좋고 나쁨이 없으며, 이 검사는 의학적 진단이나 발달 평가를 대신하지 않습니다."),
+          ], gap: 8)),
+    ]);
   }
 
   List<(String, Color)> letters(Result r) => [for (final x in r.ax) (x.letter, x.a.color)];
 
   // ---------- 기질 탭 ----------
+  bool showWatch = false;
   List<Widget> tempTab(Result r) => [
         PaperCard([
-          Row(children: [Expanded(child: eyebrow('기질 유형')), mascot(r.code, size: 96)]),
-          codeText(letters(r)),
-          h1(C.nick[r.code]!),
-          p('${store.nm}${eun(store.nm)} ${oneLine(r)}'),
-        ]),
-        PaperCard([
-          h2('한눈에 보는 기질 프로필'),
-          for (final x in r.ax) axisBar(x.a, x.sc),
-          muted('가운데 옅은 띠는 균형 구간(40~60)입니다. 점이 끝에 가까울수록 성향이 뚜렷합니다.'),
-        ]),
-        for (final x in r.ax) axisCard(x),
-        PaperCard([
-          h2('강점과 살펴볼 점'),
-          h3('타고난 강점'),
-          for (final x in r.ax) Text('· ${C.poles[x.letter]!.st}', style: small),
-          h3('살펴볼 점'),
-          for (final x in r.ax) Text('· ${C.poles[x.letter]!.wa}', style: small),
+          Row(children: [Expanded(child: h2('기질 4축')), muted('눌러서 자세히')]),
+          for (final x in r.ax) axisFold(x),
+          muted('가운데 옅은 띠는 균형 구간(40~60). 끝에 가까울수록 뚜렷합니다.'),
         ]),
         PaperCard([
           h2('${store.nm}에게 잘 통하는 말'),
           for (final x in r.ax) col([muted('${x.pole} 기질에게'), say(C.poles[x.letter]!.say)], gap: 4),
+        ]),
+        PaperCard([
+          Row(children: [
+            for (final (w, t) in const [(false, '타고난 강점'), (true, '살펴볼 점')]) ...[
+              if (w) const SizedBox(width: 8),
+              Expanded(
+                  child: GestureDetector(
+                      onTap: () => setState(() => showWatch = w),
+                      child: NineBox(showWatch == w ? nChipOn : nChip,
+                          padding: const EdgeInsets.symmetric(vertical: 9),
+                          child: Center(child: Text(t, style: disp(17, color: showWatch == w ? kOnAccent : kMuted)))))),
+            ],
+          ]),
+          for (final x in r.ax) Text('· ${showWatch ? C.poles[x.letter]!.wa : C.poles[x.letter]!.st}', style: small),
         ]),
       ];
 
@@ -149,26 +141,31 @@ class _ReportViewState extends State<ReportView> {
             style: avoid ? const TextStyle(fontSize: 13, color: kMuted, decoration: TextDecoration.lineThrough) : disp(18, w: FontWeight.w400)),
       );
 
-  Widget axisCard(AxScore x) {
+  /// 축 한 줄: 막대와 짧은 요약은 늘 보이고, 누르면 상세·세부 기질·말 가이드가 펼쳐진다
+  Widget axisFold(AxScore x) {
     final pl = C.poles[x.letter]!, bal = x.d < 8;
-    return PaperCard([
-      Row(children: [
-        Expanded(child: col([muted(x.a.q), h2('${x.a.hi} · ${x.a.lo}')], gap: 0)),
-        Pill('${x.pole} ${x.clar}', x.a.c),
-      ]),
-      axisBar(x.a, x.sc),
-      rich('**요약.** ${bal ? '두 성향의 가운데에 가깝습니다. 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다. ' : ''}${pl.sum}'),
-      Wrap(spacing: 6, runSpacing: 6, children: [for (final t in pl.tags) Tag('#$t')]),
-      Fold(
-          '상세 설명과 세부 기질 보기',
-          col([
-            p(pl.det),
-            for (var i = 0; i < x.a.subs.length; i++) subRow(x.a, x.a.subs[i], x.subs[i]),
-            muted('이렇게 말해 보세요'),
-            say(pl.say),
-            say(pl.no, avoid: true),
-          ])),
-    ]);
+    return Fold('',
+        key: ValueKey('ax-${x.a.id}'),
+        head: col([
+          Row(children: [
+            Expanded(child: Text('${x.a.hi} · ${x.a.lo}', style: disp(19))),
+            Pill('${x.pole} ${x.clar}', x.a.c),
+            const SizedBox(width: 6),
+            Image.asset('assets/ui/i_tri.webp', width: 14, height: 14),
+          ]),
+          axisBar(x.a, x.sc),
+          Text(pl.sum, style: small),
+        ], gap: 6),
+        col([
+          if (bal) rich('**균형에 가까움.** 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다.', style: small),
+          Wrap(spacing: 6, runSpacing: 6, children: [for (final t in pl.tags) Tag('#$t')]),
+          Text(pl.det, style: small),
+          muted('세부 기질 · ${x.a.q}'),
+          for (var i = 0; i < x.a.subs.length; i++) subRow(x.a, x.a.subs[i], x.subs[i]),
+          muted('이렇게 말해 보세요'),
+          say(pl.say),
+          say(pl.no, avoid: true),
+        ]));
   }
 
   Widget subRow(Ax a, Sub s, int? sc) => sc == null

@@ -21,8 +21,8 @@ void main() {
     expect(find.text('샘플로 보기'), findsOneWidget);
     await t.tap(find.text('샘플로 보기'));
     await t.pump();
-    expect(find.text('정밀검사 결과 보고서'), findsOneWidget);
-    for (final x in ['성격(자라는 힘)', '양육자 비교', '달라진 점', '기질']) {
+    expect(find.textContaining('정밀검사 결과'), findsOneWidget);
+    for (final x in ['자라는 힘', '양육자 비교', '달라진 점', '기질']) {
       final f = find.text(x).first;
       await t.scrollUntilVisible(f, -200, scrollable: find.byType(Scrollable).first);
       await t.tap(f);
