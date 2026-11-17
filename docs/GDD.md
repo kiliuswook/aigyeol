@@ -1,6 +1,6 @@
 ﻿# 내 아이의 MBTI · 전체 기획서
 
-- 최종 수정일: 2026-11-17
+- 최종 수정일: 2026-11-18
 - 버전: 웹 시제품(별도 버전 번호 없음, `main` 브랜치 = 배포본)
 - 구현 파일: `index.html` 한 파일(HTML, CSS, JS). 그림은 `assets/`, 손그림 UI 조각은 `assets/ui/`
 
@@ -107,7 +107,10 @@
 - 2026-11-17 반영: ko-KR 앱 이름·간단한 설명·자세한 설명, 연락처 이메일 contact@wonderwheel.co.kr, 웹사이트 https://childmbti.wonderwheel.co.kr/, 기본 언어 ko-KR. 검토 제출·출시는 하지 않았다.
 - 2026-11-17 그래픽 반영: 아이콘 512(힉스필드 원본 `higgsfield/c4_ui/raw/matte/mascot_child.png` 를 잘라 줄임), 그래픽 이미지 1024x500(`.../matte/banner_result.png` 아래쪽을 잘라 줄임), 휴대폰 스크린샷 6장(웹 https://childmbti.wonderwheel.co.kr/ 의 샘플 리포트·공유 화면을 360x640 x3 = 1080x1920 으로 찍음. 시제품 가격 $1 이 보이는 화면은 뺌). 파일은 `release/play-store/graphics/`.
 - API 로 안 되는 콘솔 입력(앱 콘텐츠·콘텐츠 등급·타겟층·데이터 보안·카테고리)은 `release/play-store/CONSOLE_GUIDE.md` 에 넣을 값을 정리했다. 데이터 보안은 콘솔에서 직접 입력하기로 해 data-safety.csv 는 만들지 않았다.
-- 남은 문제: 안드로이드 실행 아이콘(`app/android/app/src/main/res/mipmap-*/ic_launcher.png`)이 아직 플러터 기본 로고이고, 앱에 구글 플레이 결제 연결이 아직 없다.
+- 실행 아이콘: 2026-11-18 플러터 기본 로고를 물방울 캐릭터로 바꿈. 원본은 `higgsfield/c4_ui/raw/matte/mascot_child.png`. 예전 방식 `mipmap-*/ic_launcher.png`(48~192px)과 적응형 아이콘(`mipmap-anydpi-v26/ic_launcher.xml`, 전경 `ic_launcher_foreground.png` 108dp 안에 70% 크기, 배경색 `values/ic_launcher_background.xml` #FDFDFE).
+- 업로드 키: `%USERPROFILE%\keystores\childmbti\`(upload-keystore.jks, key.properties, 별칭 upload). 2026-11-18 만듦. `app/android/key.properties` 가 있으면 release 를 이 키로 서명한다(`app/android/app/build.gradle.kts`). 키·비밀번호는 저장소에 넣지 않는다.
+- AAB: `cd app; flutter build appbundle --release` → `app/build/app/outputs/bundle/release/app-release.aab`, 이름 붙인 사본 `childmbti-<버전>+<빌드>.aab`. "failed to strip debug symbols" 는 SDK 경로 공백 때문에 나는 알림이라 AAB 는 정상.
+- 남은 문제: 앱에 구글 플레이 결제 연결이 아직 없다(결제 버튼이 바로 검사를 연다).
 
 ## 7. 그림
 
