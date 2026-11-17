@@ -28,3 +28,10 @@ flutter build appbundle  # 플레이 등록용 AAB (서명 키는 PC에만, 저�
 - Firebase 메일 인증 동기화, 앱 안 계정 삭제 + 웹 삭제 요청 주소, 심사용 로그인 계정.
 - 카카오 SDK 공유(지금은 휴대폰 공유 창), 앱 링크(도메인에 assetlinks.json).
 - 패키지 이름 `kr.co.wonderwheel.childmbti`는 임시. 원더의 앱 패키지 규칙이 정해지면 바꿈.
+
+## Firebase
+
+- 프로젝트 `childmbti-wonderwheel` (원더휠 회사 구글 계정, 무료 Spark), 콘솔 https://console.firebase.google.com/project/childmbti-wonderwheel/overview
+- 안드로이드 앱 등록됨, 설정 파일 `android/app/google-services.json` (앱에 들어가는 공개 설정이라 저장소에 둠).
+- Firestore 서울(asia-northeast3), 보안 규칙은 아직 기본값(모두 막힘). 이메일 로그인(비밀번호·메일 링크) 켜짐.
+- 패키지 이름을 바꾸면 Firebase에 앱을 다시 등록하고 이 파일을 새로 받아야 함.

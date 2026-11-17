@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "799874537360",
+    "project_id": "childmbti-wonderwheel",
+    "storage_bucket": "childmbti-wonderwheel.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799874537360:android:fc51d0261851e8196d0515",
+        "android_client_info": {
+          "package_name": "kr.co.wonderwheel.childmbti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMDJ2QMKse-_nkUXMafSQqadgeMDVoKvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
