@@ -104,7 +104,10 @@
 
 - 패키지 `kr.co.wonderwheel.childmbti` (플러터 앱 `app/`). 플레이 콘솔에 앱이 있다.
 - 스토어 등록정보는 `E:\WonderWheel\Apps\MyChildTemperament\release\play-store\listing.json` 이 원본이고, 같은 폴더의 `play_upload.py` 로 올린다(JSON 키 없이 PC gcloud 대리 인증, `--dry-run` 은 검증만 하고 편집을 버림).
-- 2026-11-17 반영: ko-KR 앱 이름·간단한 설명·자세한 설명, 연락처 이메일 contact@wonderwheel.co.kr, 웹사이트 https://childmbti.wonderwheel.co.kr/, 기본 언어 ko-KR. 그래픽(아이콘·그래픽 이미지·스크린샷)과 데이터 보안은 아직 안 올림. 검토 제출·출시는 하지 않았다.
+- 2026-11-17 반영: ko-KR 앱 이름·간단한 설명·자세한 설명, 연락처 이메일 contact@wonderwheel.co.kr, 웹사이트 https://childmbti.wonderwheel.co.kr/, 기본 언어 ko-KR. 검토 제출·출시는 하지 않았다.
+- 2026-11-17 그래픽 반영: 아이콘 512(힉스필드 원본 `higgsfield/c4_ui/raw/matte/mascot_child.png` 를 잘라 줄임), 그래픽 이미지 1024x500(`.../matte/banner_result.png` 아래쪽을 잘라 줄임), 휴대폰 스크린샷 6장(웹 https://childmbti.wonderwheel.co.kr/ 의 샘플 리포트·공유 화면을 360x640 x3 = 1080x1920 으로 찍음. 시제품 가격 $1 이 보이는 화면은 뺌). 파일은 `release/play-store/graphics/`.
+- API 로 안 되는 콘솔 입력(앱 콘텐츠·콘텐츠 등급·타겟층·데이터 보안·카테고리)은 `release/play-store/CONSOLE_GUIDE.md` 에 넣을 값을 정리했다. 데이터 보안은 콘솔에서 직접 입력하기로 해 data-safety.csv 는 만들지 않았다.
+- 남은 문제: 안드로이드 실행 아이콘(`app/android/app/src/main/res/mipmap-*/ic_launcher.png`)이 아직 플러터 기본 로고이고, 앱에 구글 플레이 결제 연결이 아직 없다.
 
 ## 7. 그림
 
