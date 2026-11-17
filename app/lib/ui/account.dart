@@ -1,5 +1,5 @@
 // 계정 화면: 메일 인증 로그인(선택)과 동기화, 로그아웃, 계정 삭제
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';

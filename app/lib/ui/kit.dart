@@ -1,7 +1,7 @@
 // 손그림(색연필) UI 조각. 웹 CSS 의 border-image(9조각 늘이기)를 같은 비율로 그린다.
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../content.dart';
 
 const kBg = Color(0xFFFBF5EA), kSurface = Color(0xFFFFFDF8), kSunk = Color(0xFFF5EDE0), kLine = Color(0xFFE2D4BF);

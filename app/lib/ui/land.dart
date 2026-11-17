@@ -1,5 +1,5 @@
 // 받은 링크 화면: 공동 양육자 초대장, 도착한 결과, 친구네 유형, 앱 추천
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
 import '../scoring.dart';

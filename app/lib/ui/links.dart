@@ -1,7 +1,7 @@
 // 공유(휴대폰 공유 창), 개인정보처리방침 열기, 기록 파일 저장·불러오기, 받은 링크 읽기
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../content.dart';

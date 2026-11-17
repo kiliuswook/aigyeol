@@ -1,6 +1,6 @@
 // 정밀 리포트: 아이·양육자 고르기 + 결과 보고서 머리 + 4탭(기질 / 성격(자라는 힘) / 양육자 비교 / 달라진 점) + 아래 영역
 import 'dart:math';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
 import '../scoring.dart';

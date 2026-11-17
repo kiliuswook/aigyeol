@@ -1,6 +1,6 @@
 // 공유: 초대받은 사람의 결과 보내기, 결과 카드, 공동 양육자 초대, 앱 추천, 받은 링크 열기
 import 'package:flutter/services.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
 import '../scoring.dart';

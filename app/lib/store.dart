@@ -1,7 +1,7 @@
 // 앱 상태: 자녀, 양육자별 기록, 결제 기록. 웹(index.html)과 같은 규칙이지만 바꿔 끼우기 없이 아이마다 기록을 그대로 둔다.
 import 'dart:convert';
 import 'dart:math';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'content.dart';
 import 'scoring.dart';

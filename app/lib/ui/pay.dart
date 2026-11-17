@@ -1,5 +1,5 @@
 // 검사 1회 결제 화면(시제품: 실제 결제 없음. 앱 출시 때 구글 플레이 결제로 바꿈)
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../main.dart';
 import '../store.dart';
 import 'kit.dart';

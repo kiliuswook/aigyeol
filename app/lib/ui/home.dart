@@ -1,5 +1,5 @@
 // 홈: 우리 아이(자녀 고르기·추가), 답하는 사람, 양육자별 검사 현황, 정밀검사 카드, 공유 안내, 기록 파일
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
 import '../scoring.dart';

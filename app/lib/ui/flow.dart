@@ -1,5 +1,5 @@
 // 화면 사이 이동: 검사 시작(결제 → 검사), 다시 검사하기, 리포트로 가기
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../main.dart';
 import '../scoring.dart';
 import '../store.dart';

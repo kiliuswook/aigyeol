@@ -1,5 +1,5 @@
 // 한 문항씩 답하기. 다시 검사할 때는 선택지 옆에 지난번 내 답과 다른 양육자의 답을 보여 준다.
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
 import '../store.dart';

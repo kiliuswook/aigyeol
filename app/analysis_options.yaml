@@ -9,7 +9,10 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+# 원더 PC(Flutter 3.41)와 클라우드(3.50) 둘 다에서 빌드되도록 package:flutter/material.dart 를 쓴다(3.47부터 폐지 예고 안내만 숨김).
 analyzer:
+  errors:
+    deprecated_member_use: ignore
   exclude:
     - build/**
     - android/**
@@ -32,3 +35,4 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
