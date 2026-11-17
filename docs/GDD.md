@@ -110,7 +110,9 @@
 - 실행 아이콘: 2026-11-18 플러터 기본 로고를 물방울 캐릭터로 바꿈. 원본은 `higgsfield/c4_ui/raw/matte/mascot_child.png`. 예전 방식 `mipmap-*/ic_launcher.png`(48~192px)과 적응형 아이콘(`mipmap-anydpi-v26/ic_launcher.xml`, 전경 `ic_launcher_foreground.png` 108dp 안에 70% 크기, 배경색 `values/ic_launcher_background.xml` #FDFDFE).
 - 업로드 키: `%USERPROFILE%\keystores\childmbti\`(upload-keystore.jks, key.properties, 별칭 upload). 2026-11-18 만듦. `app/android/key.properties` 가 있으면 release 를 이 키로 서명한다(`app/android/app/build.gradle.kts`). 키·비밀번호는 저장소에 넣지 않는다.
 - AAB: `cd app; flutter build appbundle --release` → `app/build/app/outputs/bundle/release/app-release.aab`, 이름 붙인 사본 `childmbti-<버전>+<빌드>.aab`. "failed to strip debug symbols" 는 SDK 경로 공백 때문에 나는 알림이라 AAB 는 정상.
-- 남은 문제: 앱에 구글 플레이 결제 연결이 아직 없다(결제 버튼이 바로 검사를 연다).
+- 콘솔 앱 콘텐츠 선언(2026-11-18 완료): 정부 앱·금융·건강 해당 없음, 광고 없음, 콘텐츠 등급 IARC 3+(브라질 14, 디지털 구매 때문), 타겟층 만 18세 이상, 데이터 보안(로그인한 사람만 이름·이메일·사용자 ID·구매 내역·검사 기록 수집, 공유 안 함, 계정 삭제 URL delete-account.html), 카테고리 출산/육아, 앱 액세스는 로그인 선택 안내문. 값은 `release/play-store/CONSOLE_GUIDE.md`.
+- 공개 테스트(beta 트랙): 2026-11-18 versionCode 1(1.0.0) 올림, 국가 대한민국만, 한국어 출시 노트. 앱이 처음 게시 전(draft)이라 API 로는 draft 버전만 만들 수 있어, 콘솔 "버전 미리보기 및 확인 → 저장 → 게시 개요 → 검토를 위해 변경사항 11개 제출"로 심사에 보냄. 관리형 게시는 꺼져 있어 승인되면 바로 공개된다. 프로덕션 트랙은 비어 있음.
+- 남은 문제: 앱에 구글 플레이 결제 연결이 아직 없다(결제 버튼이 바로 검사를 연다). 결제를 붙이면 앱 액세스 안내문도 고쳐야 한다.
 
 ## 7. 그림
 
