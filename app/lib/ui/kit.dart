@@ -276,7 +276,9 @@ class PaperField extends StatelessWidget {
   final String hint;
   final ValueChanged<String>? onChanged;
   final int maxLength;
-  const PaperField(this.ctl, {super.key, this.hint = '', this.onChanged, this.maxLength = 10});
+  final bool obscure;
+  final TextInputType? keyboard;
+  const PaperField(this.ctl, {super.key, this.hint = '', this.onChanged, this.maxLength = 10, this.obscure = false, this.keyboard});
   @override
   Widget build(BuildContext context) => NineBox(nInput,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
@@ -284,6 +286,9 @@ class PaperField extends StatelessWidget {
         controller: ctl,
         onChanged: onChanged,
         maxLength: maxLength,
+        obscureText: obscure,
+        keyboardType: keyboard,
+        autocorrect: !obscure && keyboard == null,
         decoration: InputDecoration(hintText: hint, border: InputBorder.none, counterText: '', isDense: false),
       ));
 }

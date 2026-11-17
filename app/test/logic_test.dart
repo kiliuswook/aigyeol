@@ -95,4 +95,42 @@ void main() {
     // links.dart 의 Landing 은 UI 파일이라 여기서는 형식만 확인
     expect(Uri.splitQueryString('t=ENFP')['t'], 'ENFP');
   });
+
+  test('동기화 합치기: 같은 아이는 최근 기록, 결제 합침, 새 아이 추가', () {
+    final a = Store(), b = Store();
+    a.kids.first.name = '콩이';
+    a.buy(false);
+    for (final it in C.items.take(10)) {
+      a.answer(it, 3);
+    }
+    // 다른 폰(b): 같은 아이를 서버에서 받은 뒤 아빠가 검사, 그리고 동생 추가
+    b.mergeFrom(jsonDecode(jsonEncode(a.toJson())));
+    expect(b.kids.length, 1);
+    expect(b.kid.name, '콩이');
+    b.setWho('아빠');
+    b.buy(false);
+    for (final it in C.items) {
+      b.answer(it, 4);
+    }
+    b.addKid(name: '동동');
+    // a 는 그 사이 엄마 답을 더 함
+    for (final it in C.items.skip(10).take(5)) {
+      a.answer(it, 2);
+    }
+    a.mergeFrom(jsonDecode(jsonEncode(b.toJson())));
+    expect(a.kids.length, 2);
+    final k = a.kids.firstWhere((x) => x.name == '콩이');
+    expect(k.buys.length, 2);
+    expect(k.recs['엄마']!.ans.length, 15);
+    expect(k.recs['아빠']!.ans.length, C.items.length);
+    // 다시 검사하기로 답을 지운 기록이 예전 전체 기록보다 최근이면 그대로 남는다
+    final c = Store()..mergeFrom(jsonDecode(jsonEncode(a.toJson())));
+    c.setKid(c.kids.firstWhere((x) => x.name == '콩이').id);
+    c.setWho('아빠');
+    c.buy(true);
+    a.mergeFrom(jsonDecode(jsonEncode(c.toJson())));
+    final r = a.kids.firstWhere((x) => x.name == '콩이').recs['아빠']!;
+    expect(r.ans.isEmpty, true);
+    expect(r.prev, isNotNull);
+  });
 }

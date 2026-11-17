@@ -35,3 +35,4 @@ flutter build appbundle  # 플레이 등록용 AAB (서명 키는 PC에만, 저�
 - 안드로이드 앱 등록됨, 설정 파일 `android/app/google-services.json` (앱에 들어가는 공개 설정이라 저장소에 둠).
 - Firestore 서울(asia-northeast3), 보안 규칙은 아직 기본값(모두 막힘). 이메일 로그인(비밀번호·메일 링크) 켜짐.
 - 패키지 이름을 바꾸면 Firebase에 앱을 다시 등록하고 이 파일을 새로 받아야 함.
+- 로그인·동기화: `lib/sync.dart`, 계정 화면 `lib/ui/account.dart`. 설명 `docs/systems/account-sync.md`.

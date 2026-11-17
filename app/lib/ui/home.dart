@@ -5,6 +5,7 @@ import '../main.dart';
 import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
+import 'account.dart';
 import 'kit.dart';
 import 'links.dart';
 import 'pay.dart';
@@ -119,11 +120,12 @@ class _HomeViewState extends State<HomeView> {
         muted('다른 휴대폰의 아빠, 할머니도 따로 검사하게 초대하거나 친구·가족에게 알려 주세요.'),
         Btn('공유하기', () => tab.value = 2, kind: BtnKind.ghost),
       ]),
+      const AccountCard(),
       PaperCard([
         Fold(
-            '휴대폰을 바꾸거나 앱을 지울 때',
+            '로그인 없이 기록 옮기기',
             col([
-              muted('검사 기록과 결제한 검사는 이 휴대폰 안에만 저장됩니다. 지우기 전에 기록 파일을 저장해 두고, 새 휴대폰에서 불러오면 그대로 이어집니다.'),
+              muted('로그인하지 않으면 검사 기록과 결제한 검사는 이 휴대폰 안에만 저장됩니다. 기록 파일을 저장해 두고 새 휴대폰에서 불러오면 그대로 이어집니다.'),
               Row(children: [
                 Expanded(child: Btn('기록 파일 저장', () => saveBackup(context), kind: BtnKind.ghost)),
                 const SizedBox(width: 10),

@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/main.dart';
+import 'package:childmbti/ui/account.dart';
 import 'package:childmbti/store.dart';
 
 void main() {
@@ -30,5 +31,12 @@ void main() {
     tab.value = 2;
     await t.pump();
     expect(find.text('함께 보면 더 잘 보여요'), findsWidgets);
+  });
+
+  testWidgets('계정 화면: Firebase 없는 기기에서는 안내만', (t) async {
+    await t.binding.setSurfaceSize(const Size(390, 844));
+    await t.pumpWidget(const MaterialApp(home: AccountScreen()));
+    await t.pump();
+    expect(find.textContaining('로그인과 동기화를 쓸 수 없어요'), findsOneWidget);
   });
 }

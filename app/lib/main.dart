@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'content.dart';
 import 'store.dart';
+import 'sync.dart';
 import 'ui/kit.dart';
 import 'ui/home.dart';
 import 'ui/report.dart';
@@ -9,6 +10,7 @@ import 'ui/share.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([loadContent(), preloadUi(), store.load()]);
+  await sync.init();
   runApp(const App());
 }
 

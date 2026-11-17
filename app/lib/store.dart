@@ -33,12 +33,15 @@ class Rec {
   String date;
   bool paid, recv, sample;
   Snap? prev;
-  Rec({Ans? ans, this.date = '', this.paid = false, this.prev, this.recv = false, this.sample = false}) : ans = ans ?? {};
+  /// 마지막으로 바뀐 때(ms). 기기 사이 동기화에서 더 최근 기록을 고르는 데 쓴다.
+  int t;
+  Rec({Ans? ans, this.date = '', this.paid = false, this.prev, this.recv = false, this.sample = false, this.t = 0}) : ans = ans ?? {};
+  void touch() => t = DateTime.now().millisecondsSinceEpoch;
   bool get hasAny => ans.isNotEmpty || prev != null || paid;
-  Map<String, dynamic> toJson() => {'ans': ans, 'date': date, 'paid': paid, if (prev != null) 'prev': prev!.toJson(), if (recv) 'recv': true, if (sample) 'sample': true};
+  Map<String, dynamic> toJson() => {'ans': ans, 'date': date, 'paid': paid, if (prev != null) 'prev': prev!.toJson(), if (recv) 'recv': true, if (sample) 'sample': true, if (t > 0) 't': t};
   factory Rec.fromJson(dynamic j) => Rec(
       ans: _ans(j['ans']), date: '${j['date'] ?? ''}', paid: j['paid'] == true || j['paid'] == 1,
-      prev: Snap.fromJson(j['prev']), recv: j['recv'] == true || j['recv'] == 1, sample: j['sample'] == true || j['sample'] == 1);
+      prev: Snap.fromJson(j['prev']), recv: j['recv'] == true || j['recv'] == 1, sample: j['sample'] == true || j['sample'] == 1, t: (j['t'] as num?)?.round() ?? 0);
 }
 
 class Buy {
@@ -127,9 +130,13 @@ class Store extends ChangeNotifier {
     if (kidId.isEmpty) kidId = kids.first.id;
   }
 
+  /// 저장할 때마다 부르는 곳(로그인했으면 서버로 동기화)
+  void Function()? onSaved;
+
   void save() {
     _sp?.setString(_k, jsonEncode(toJson()));
     notifyListeners();
+    onSaved?.call();
   }
 
   Map<String, dynamic> toJson() => {'v': 2, 'kid': kidId, 'kids': [for (final k in kids) k.toJson()]};
@@ -167,6 +174,43 @@ class Store extends ChangeNotifier {
     }
   }
 
+  /// 다른 기기(서버)의 기록과 합치기. 같은 아이(key)는 양육자별로 더 최근(같은 날이면 답이 더 많은) 기록을 남기고, 결제 기록은 합친다.
+  void mergeFrom(Map j) {
+    final remote = [for (final k in (j['kids'] ?? []) as List) Kid.fromJson(k)];
+    if (remote.isEmpty) return;
+    if (kids.length == 1 && kids.first.isBlank) kids = [];
+    for (final r in remote) {
+      final l = kidByKey(r.key);
+      if (l == null) {
+        kids.add(r);
+        continue;
+      }
+      if (l.name.isEmpty) l.name = r.name;
+      if (l.age.isEmpty) l.age = r.age;
+      l.ext ??= r.ext;
+      l.inv ??= r.inv;
+      final ids = {for (final b in l.buys) b.id};
+      l.buys.addAll(r.buys.where((b) => !ids.contains(b.id)));
+      l.buys.sort((a, b) => a.t.compareTo(b.t));
+      for (final e in r.recs.entries) {
+        final mine = l.recs[e.key], o = e.value;
+        if (mine == null || !mine.hasAny) {
+          l.recs[e.key] = o;
+          continue;
+        }
+        final dc = o.t != mine.t ? o.t.compareTo(mine.t) : o.date.compareTo(mine.date);
+        final better = dc > 0 || (dc == 0 && o.ans.length > mine.ans.length);
+        final keep = better ? o : mine, other = better ? mine : o;
+        keep.prev ??= other.prev;
+        keep.paid = keep.paid || other.paid;
+        l.recs[e.key] = keep;
+      }
+    }
+    if (kids.isEmpty) kids = [Kid()];
+    if (!kids.any((k) => k.id == kidId)) kidId = kids.first.id;
+    save();
+  }
+
   String exportBackup() => jsonEncode({'app': 'aigyeol', 'v': 2, 'at': DateTime.now().millisecondsSinceEpoch, 'data': toJson()});
 
   // ---------- 자녀 ----------
@@ -201,6 +245,7 @@ class Store extends ChangeNotifier {
   void answer(Item it, int a) {
     cur.ans[it.id] = a;
     cur.date = today();
+    cur.touch();
     save();
   }
 
@@ -214,8 +259,10 @@ class Store extends ChangeNotifier {
     if (k == 'retest') {
       cur.prev = Snap.of(cur.ans, cur.date, kid.who);
       cur.ans = {};
+      cur.date = today();
     }
     cur.paid = true;
+    cur.touch();
     save();
   }
 
