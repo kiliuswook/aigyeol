@@ -1,6 +1,6 @@
-# 내 아이의 MBTI · 전체 기획서
+﻿# 내 아이의 MBTI · 전체 기획서
 
-- 최종 수정일: 2026-11-16
+- 최종 수정일: 2026-11-17
 - 버전: 웹 시제품(별도 버전 번호 없음, `main` 브랜치 = 배포본)
 - 구현 파일: `index.html` 한 파일(HTML, CSS, JS). 그림은 `assets/`, 손그림 UI 조각은 `assets/ui/`
 
@@ -99,6 +99,12 @@
 - 이 저장소가 곧 GitHub Pages 배포다. `main` 에 들어가면 바로 공개된다.
 - 주소: https://childmbti.wonderwheel.co.kr/ (2026-11-16 자체 도메인으로 옮김, 예전 https://kiliuswook.github.io/aigyeol/ 는 넘겨 줌. [자체 도메인](systems/domain.md). 주소는 `tools/set_domain.py` 로 한 번에 바꾼다)
 - 빌드 도구 없음. `index.html` 과 `assets/` 를 그대로 올린다.
+
+### 구글 플레이
+
+- 패키지 `kr.co.wonderwheel.childmbti` (플러터 앱 `app/`). 플레이 콘솔에 앱이 있다.
+- 스토어 등록정보는 `E:\WonderWheel\Apps\MyChildTemperament\release\play-store\listing.json` 이 원본이고, 같은 폴더의 `play_upload.py` 로 올린다(JSON 키 없이 PC gcloud 대리 인증, `--dry-run` 은 검증만 하고 편집을 버림).
+- 2026-11-17 반영: ko-KR 앱 이름·간단한 설명·자세한 설명, 연락처 이메일 contact@wonderwheel.co.kr, 웹사이트 https://childmbti.wonderwheel.co.kr/, 기본 언어 ko-KR. 그래픽(아이콘·그래픽 이미지·스크린샷)과 데이터 보안은 아직 안 올림. 검토 제출·출시는 하지 않았다.
 
 ## 7. 그림
 
