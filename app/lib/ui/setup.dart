@@ -1,5 +1,6 @@
 // 아이 등록: 한 화면에 하나씩 묻는다(이름·태어난 해와 달 → 답하는 사람 → 결제). 아이 정보 바꾸기는 아래에서 올라오는 창.
 import 'package:flutter/material.dart';
+import '../stats.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'kit.dart';
@@ -43,6 +44,22 @@ Widget birthPicker(VoidCallback changed) {
   ], gap: 8);
 }
 
+/// 성별 고르기(같은 나이·성별 아이들의 평균과 비교하는 데 쓴다)
+Widget sexPicker(VoidCallback changed) => Row(children: [
+      for (final (v, t) in const [('M', '남자아이'), ('F', '여자아이')]) ...[
+        if (v == 'F') const SizedBox(width: 8),
+        Expanded(
+            child: GestureDetector(
+                onTap: () {
+                  store.setInfo(sex: v);
+                  changed();
+                },
+                child: NineBox(store.kid.sex == v ? nChipOn : nChip,
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    child: Center(child: Text(t, style: disp(19, color: store.kid.sex == v ? kOnAccent : kMuted)))))),
+      ],
+    ]);
+
 class SetupScreen extends StatefulWidget {
   const SetupScreen({super.key});
   @override
@@ -75,14 +92,15 @@ class _SetupState extends State<SetupScreen> {
     final kid = store.kid;
     final pages = [
       col([
-        Center(child: Image.asset('assets/img/mascot_child.webp', width: 96, height: 96)),
+        Center(child: Image.asset('assets/img/mascot_child.webp', width: 72, height: 72)),
         h1('어떤 아이인가요?'),
         muted('이름은 이 휴대폰에만 저장됩니다. 별명이어도 좋아요.'),
         PaperField(name, hint: '아이 이름 또는 별명 (예: 콩이)', onChanged: (v) => store.setInfo(name: v)),
         const SizedBox(height: 2),
         muted('태어난 해와 달 (만 나이는 자동으로 계산해요)'),
         birthPicker(() => setState(() {})),
-      ]),
+        sexPicker(() => setState(() {})),
+      ], gap: 8),
       col([
         Center(child: Image.asset('assets/img/mascot_parent.webp', width: 96, height: 96)),
         h1('누가 답하나요?'),
@@ -127,7 +145,11 @@ Future<void> editKid(BuildContext context) {
         PaperField(name, hint: '아이 이름 또는 별명', onChanged: (v) => store.setInfo(name: v)),
         muted('태어난 해와 달'),
         birthPicker(() => set(() {})),
-        Btn('완료', () => Navigator.of(c).pop()),
+        sexPicker(() => set(() {})),
+        Btn('완료', () {
+          Navigator.of(c).pop();
+          stats.submitPending();
+        }),
       ]);
 }
 

@@ -44,3 +44,6 @@ flutter build appbundle  # 플레이 등록용 AAB (서명 키는 PC에만, 저�
 - Firestore 서울(asia-northeast3), 보안 규칙은 아직 기본값(모두 막힘). 이메일 로그인(비밀번호·메일 링크) 켜짐.
 - 패키지 이름을 바꾸면 Firebase에 앱을 다시 등록하고 이 파일을 새로 받아야 함.
 - 로그인·동기화: `lib/sync.dart`, 계정 화면 `lib/ui/account.dart`. 설명 `docs/systems/account-sync.md`.
+
+## 또래 평균 통계
+지표 옆 아이콘을 누르면 같은 만 나이·성별 아이들의 평균을 보여 준다(5건 이상 모였을 때). 자료 구조와 규칙은 [docs/systems/stats.md](../docs/systems/stats.md), 코드는 `lib/stats.dart`. 서버 규칙 `firestore.rules` 를 고치면 `firebase deploy --only firestore:rules` 로 배포해야 한다.

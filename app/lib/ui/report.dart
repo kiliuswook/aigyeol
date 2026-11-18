@@ -7,6 +7,7 @@ import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'insight.dart';
+import '../stats.dart';
 import 'kit.dart';
 import 'setup.dart';
 
@@ -125,7 +126,14 @@ class _ReportViewState extends State<ReportView> {
         Text('${store.nm}${eun(store.nm)} ${oneLine(r)}', style: small),
         for (var i = 0; i < r.ax.length; i++)
           col([
-            Row(children: [Expanded(child: Text('${r.ax[i].a.hi} · ${r.ax[i].a.lo}', style: disp(19))), MoreBtn(() => open('ax$i'))]),
+            Row(children: [
+              Expanded(
+                  child: Row(children: [
+                Flexible(child: FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text('${r.ax[i].a.hi} · ${r.ax[i].a.lo}', maxLines: 1, style: disp(19)))),
+                avgBtn(r.ax[i].a.id, '${r.ax[i].a.hi} · ${r.ax[i].a.lo}', r.ax[i].sc, r.ax[i].a.c, lo: r.ax[i].a.lo, hi: r.ax[i].a.hi),
+              ])),
+              MoreBtn(() => open('ax$i')),
+            ]),
             axisBar(r.ax[i].a, r.ax[i].sc),
           ], gap: 4),
         Row(children: [
@@ -171,10 +179,71 @@ class _ReportViewState extends State<ReportView> {
     };
   }
 
+  /// 예시 문장 속 '엄마'를 지금 답하는 양육자로 바꾼다(아빠·할머니·할아버지가 볼 때)
+  String me(String t) => const ['아빠', '할머니', '할아버지'].contains(store.kid.who) ? t.replaceAll('엄마', store.kid.who) : t;
+
+  /// 지표 옆 작은 평균 아이콘. 누르면 같은 나이·성별 아이들의 평균을 보여 준다.
+  Widget avgBtn(String key, String name, int sc, String c, {String? lo, String? hi}) => InkWell(
+        key: Key('avg-$key'),
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => avgPopup(key, name, sc, c, lo: lo, hi: hi),
+        child: const Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1), child: Icon(Icons.bar_chart_rounded, size: 19, color: kAccentInk)),
+      );
+
+  void avgPopup(String key, String name, int sc, String c, {String? lo, String? hi}) {
+    final kid = store.kid, nm = store.nm, b = bucketOf(kid, store.cur.date);
+    popup(context, title: '또래 평균 · $name', (ctx, set) {
+      if (b == null) {
+        return [
+          Text('같은 나이, 같은 성별 아이들의 평균과 비교하려면 $nm의 ${kid.sex.isEmpty ? '성별' : '태어난 해와 달'}이 필요합니다.', style: small),
+          Btn('아이 정보 넣기', () async {
+            Navigator.of(ctx).pop();
+            await editKid(context);
+            if (mounted && bucketOf(store.kid, store.cur.date) != null) avgPopup(key, name, sc, c, lo: lo, hi: hi);
+          }),
+        ];
+      }
+      return [
+        FutureBuilder(
+            future: stats.load(b),
+            builder: (_, snap) {
+              if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
+              final all = snap.data, a = all?[key], label = bucketLabel(b);
+              if (all == null) return const Text('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.', style: small);
+              if (a == null || a.n < kStatMin) {
+                return col([
+                  rich('**$label 평균 준비 중.** 검사 결과가 $kStatMin건 이상 모이면 평균이 표시됩니다. 지금 ${a?.n ?? 0}건이 모였습니다.', style: small),
+                  Row(children: [SizedBox(width: 72, child: Text(nm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700))), Expanded(child: Track(sc, c, thin: true)), SizedBox(width: 36, child: Text('$sc', textAlign: TextAlign.right, style: disp(19)))]),
+                ]);
+              }
+              final av = a.avg.round(), d = sc - av;
+              final diff = d.abs() < 5
+                  ? '$label 평균과 비슷합니다.'
+                  : lo != null
+                      ? '$label 평균보다 ${d.abs()}점 ${d > 0 ? hi : lo} 쪽입니다.'
+                      : '$label 평균보다 ${d.abs()}점 ${d > 0 ? '높습니다' : '낮습니다'}.';
+              Widget line(String t, int v, {bool ring = false}) => Row(children: [
+                    SizedBox(width: 72, child: Text(t, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: ring ? FontWeight.w500 : FontWeight.w700, fontSize: 14))),
+                    Expanded(child: ring ? Track(null, c, thin: true, was: v) : Track(v, c, thin: true)),
+                    SizedBox(width: 36, child: Text('$v', textAlign: TextAlign.right, style: disp(19))),
+                  ]);
+              return col([
+                Align(alignment: Alignment.centerLeft, child: Tag('$label · ${a.n}건')),
+                if (lo != null) Row(children: [const SizedBox(width: 72), Expanded(child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [muted(lo), muted(hi!)])), const SizedBox(width: 36)]),
+                line(nm, sc),
+                line('또래 평균', av, ring: true),
+                Text(diff, style: body.copyWith(fontWeight: FontWeight.w700)),
+                muted(lo != null ? '기질에는 좋고 나쁨이 없습니다. 평균과의 차이는 $nm의 개성입니다.' : '자라는 힘은 나이가 들수록 높아집니다. 평균은 이 앱으로 검사한 같은 나이 아이들의 값입니다.'),
+              ]);
+            }),
+      ];
+    });
+  }
+
   Widget say(String t, {bool avoid = false}) => Container(
         padding: const EdgeInsets.fromLTRB(12, 2, 0, 2),
         decoration: BoxDecoration(border: Border(left: BorderSide(color: avoid ? kColors['c3']! : kAccent, width: 3))),
-        child: Text('“$t”',
+        child: Text('“${me(t)}”',
             style: avoid ? const TextStyle(fontSize: 13, color: kMuted, decoration: TextDecoration.lineThrough) : disp(18, w: FontWeight.w400)),
       );
 
@@ -194,7 +263,7 @@ class _ReportViewState extends State<ReportView> {
               const SizedBox(width: 8),
               Expanded(child: Text('이렇게 말해 보세요', style: disp(24))),
             ]),
-            Text('“${pl.say}”', style: disp(20, w: FontWeight.w400)),
+            Text('“${me(pl.say)}”', style: disp(20, w: FontWeight.w400)),
             Row(children: [const Expanded(child: Text('상황별 말 예시 4가지', style: smallMuted)), MoreBtn(() => popup(context, title: '이렇게 말해 보세요', icon: 'i_bulb', (c, set) => axisMore(x)))]),
           ], gap: 8)),
       Row(children: [
@@ -207,7 +276,7 @@ class _ReportViewState extends State<ReportView> {
                   Text(pl.det, style: body),
                 ])),
       ]),
-      for (var i = 0; i < x.a.subs.length; i++) subRow(x.a, x.a.subs[i], x.subs[i]),
+      for (var i = 0; i < x.a.subs.length; i++) subRow(x.a, x.a.subs[i], x.subs[i], i),
     ], gap: 10);
   }
 
@@ -221,16 +290,21 @@ class _ReportViewState extends State<ReportView> {
             padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
             child: col([
               Text('${i + 1}. ${pl.says[i][0]}', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kAccentInk)),
-              Text('“${pl.says[i][1]}”', style: disp(19, w: FontWeight.w400)),
+              Text('“${me(pl.says[i][1])}”', style: disp(19, w: FontWeight.w400)),
             ], gap: 3)),
       col([muted('이런 말은 피해 주세요'), say(pl.no, avoid: true)], gap: 4),
     ];
   }
 
-  Widget subRow(Ax a, Sub s, int? sc) => sc == null
+  Widget subRow(Ax a, Sub s, int? sc, [int i = -1]) => sc == null
       ? col([Row(children: [Expanded(child: Text(s.n, style: const TextStyle(fontWeight: FontWeight.w700))), muted('정보 부족')]), muted("이 항목은 '잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다.")], gap: 2)
       : col([
-          Row(children: [Expanded(child: Text(s.n, style: const TextStyle(fontWeight: FontWeight.w700))), muted(sc < 40 ? s.lo : sc > 60 ? s.hi : '중간')]),
+          Row(children: [
+            Flexible(flex: 0, child: Text(s.n, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700))),
+            if (i >= 0) avgBtn('${a.id}$i', s.n, sc, a.c, lo: s.lo, hi: s.hi),
+            const SizedBox(width: 4),
+            Expanded(child: Text(sc < 40 ? s.lo : sc > 60 ? s.hi : '중간', textAlign: TextAlign.right, maxLines: 1, overflow: TextOverflow.ellipsis, style: smallMuted)),
+          ]),
           Track(sc, a.c, thin: true),
         ], gap: 4);
 
@@ -246,7 +320,8 @@ class _ReportViewState extends State<ReportView> {
           col([
             Row(children: [
               Text(r.gr[i].g.n, style: disp(19)),
-              const SizedBox(width: 8),
+              if (r.gr[i].sc != null) avgBtn(r.gr[i].g.id, r.gr[i].g.n, r.gr[i].sc!, 'g'),
+              const SizedBox(width: 4),
               Expanded(child: Text(r.gr[i].sc == null ? '정보 부족' : lvName[r.gr[i].lv!], style: smallMuted)),
               MoreBtn(() => open('g$i')),
             ]),
@@ -617,12 +692,12 @@ class _ReportViewState extends State<ReportView> {
             Text('네 축 모두 지난번과 비슷합니다. $chgStable 지금 쓰고 있는 말과 방식이 아이에게 잘 맞고 있다는 뜻이기도 합니다.', style: body)
           else
             for (final o in moved.take(2))
-              insight('${o.x.a.hi} · ${o.x.a.lo}', chgMove[o.x.letter]!, tipLabel: '이렇게 말해 보세요', tip: '“${C.poles[o.x.letter]!.say}”', right: Pill(o.v.$1, o.v.$2)),
+              insight('${o.x.a.hi} · ${o.x.a.lo}', chgMove[o.x.letter]!, tipLabel: '이렇게 말해 보세요', tip: '“${me(C.poles[o.x.letter]!.say)}”', right: Pill(o.v.$1, o.v.$2)),
           if (moved.length > 2)
             Align(
                 alignment: Alignment.centerLeft,
                 child: linkBtn('나머지 ${moved.length - 2}개 축 더 보기', () => popup(context, title: '변화가 뜻하는 것', (c, set) => [
-                      for (final o in moved.skip(2)) insight('${o.x.a.hi} · ${o.x.a.lo}', chgMove[o.x.letter]!, tipLabel: '이렇게 말해 보세요', tip: '“${C.poles[o.x.letter]!.say}”'),
+                      for (final o in moved.skip(2)) insight('${o.x.a.hi} · ${o.x.a.lo}', chgMove[o.x.letter]!, tipLabel: '이렇게 말해 보세요', tip: '“${me(C.poles[o.x.letter]!.say)}”'),
                     ]))),
           if (moved.isNotEmpty && moved.length < 4) muted('나머지 ${4 - moved.length}개 축은 $chgStable'),
         ], gap: 12),

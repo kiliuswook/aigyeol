@@ -1,5 +1,6 @@
 rules_version = '2';
 // 내 아이의 MBTI: users/{uid} 문서 하나에 앱 기록(JSON 문자열)을 둔다. 메일 인증을 마친 본인만 읽고 쓴다.
+// stats, results 는 또래 평균 통계용(아래 설명).
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{uid} {
@@ -9,6 +10,34 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['json', 'at', 'v'])
         && request.resource.data.json is string
         && request.resource.data.json.size() < 900000;
+    }
+    // 또래 평균 통계(로그인 없이): stats/y<만 나이>_<M|F> 문서에 전체 건수 n 과 지표마다 점수 합(s*).
+    // 누구나 읽고, 쓰기는 '검사 한 건 더하기'만 된다: n 은 1 늘고, 지표마다 합이 0~100 늘어난다.
+    // (규칙 한 번에 식 1000개까지라 지표별 건수는 두지 않는다. 지표 19개가 모두 있는 검사만 더한다.)
+    function first(d, k) {
+      return d[k] >= 0 && d[k] <= 100;
+    }
+    function added(d, o, k) {
+      return d[k] - o[k] >= 0 && d[k] - o[k] <= 100;
+    }
+    match /stats/{b} {
+      allow read: if true;
+      allow create: if b.matches('^y([0-9]|1[0-2])_[MF]$')
+        && request.resource.data.keys().hasOnly(['n', 'sA', 'sA0', 'sA1', 'sA2', 'sB', 'sB0', 'sB1', 'sB2', 'sC', 'sC0', 'sC1', 'sC2', 'sD', 'sD0', 'sD1', 'sD2', 'sG1', 'sG2', 'sG3'])
+        && request.resource.data.n == 1
+        && first(request.resource.data, 'sA') && first(request.resource.data, 'sA0') && first(request.resource.data, 'sA1') && first(request.resource.data, 'sA2') && first(request.resource.data, 'sB') && first(request.resource.data, 'sB0') && first(request.resource.data, 'sB1') && first(request.resource.data, 'sB2') && first(request.resource.data, 'sC') && first(request.resource.data, 'sC0') && first(request.resource.data, 'sC1') && first(request.resource.data, 'sC2') && first(request.resource.data, 'sD') && first(request.resource.data, 'sD0') && first(request.resource.data, 'sD1') && first(request.resource.data, 'sD2') && first(request.resource.data, 'sG1') && first(request.resource.data, 'sG2') && first(request.resource.data, 'sG3');
+      allow update: if request.resource.data.keys().hasOnly(['n', 'sA', 'sA0', 'sA1', 'sA2', 'sB', 'sB0', 'sB1', 'sB2', 'sC', 'sC0', 'sC1', 'sC2', 'sD', 'sD0', 'sD1', 'sD2', 'sG1', 'sG2', 'sG3'])
+        && request.resource.data.n == resource.data.n + 1
+        && added(request.resource.data, resource.data, 'sA') && added(request.resource.data, resource.data, 'sA0') && added(request.resource.data, resource.data, 'sA1') && added(request.resource.data, resource.data, 'sA2') && added(request.resource.data, resource.data, 'sB') && added(request.resource.data, resource.data, 'sB0') && added(request.resource.data, resource.data, 'sB1') && added(request.resource.data, resource.data, 'sB2') && added(request.resource.data, resource.data, 'sC') && added(request.resource.data, resource.data, 'sC0') && added(request.resource.data, resource.data, 'sC1') && added(request.resource.data, resource.data, 'sC2') && added(request.resource.data, resource.data, 'sD') && added(request.resource.data, resource.data, 'sD0') && added(request.resource.data, resource.data, 'sD1') && added(request.resource.data, resource.data, 'sD2') && added(request.resource.data, resource.data, 'sG1') && added(request.resource.data, resource.data, 'sG2') && added(request.resource.data, resource.data, 'sG3');
+    }
+    // 검사 한 건의 점수 기록(이름·계정 없음). 만들기만 되고 앱에서는 읽지 못한다.
+    match /results/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['b', 'mo', 'who', 'sc', 'at'])
+        && request.resource.data.b is string && request.resource.data.b.matches('^y([0-9]|1[0-2])_[MF]$')
+        && request.resource.data.mo is int && request.resource.data.mo >= 0 && request.resource.data.mo < 160
+        && request.resource.data.who is string && request.resource.data.who.size() < 20
+        && request.resource.data.sc is map && request.resource.data.sc.size() <= 19
+        && request.resource.data.at == request.time;
     }
     match /{document=**} {
       allow read, write: if false;

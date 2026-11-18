@@ -42,16 +42,18 @@ class Rec {
   Ans ans;
   String date;
   bool paid, recv, sample;
+  /// 통계에 이미 보낸 검사인지(같은 검사를 두 번 세지 않게)
+  bool st;
   Snap? prev;
   /// 마지막으로 바뀐 때(ms). 기기 사이 동기화에서 더 최근 기록을 고르는 데 쓴다.
   int t;
-  Rec({Ans? ans, this.date = '', this.paid = false, this.prev, this.recv = false, this.sample = false, this.t = 0}) : ans = ans ?? {};
+  Rec({Ans? ans, this.date = '', this.paid = false, this.prev, this.recv = false, this.sample = false, this.st = false, this.t = 0}) : ans = ans ?? {};
   void touch() => t = DateTime.now().millisecondsSinceEpoch;
   bool get hasAny => ans.isNotEmpty || prev != null || paid;
-  Map<String, dynamic> toJson() => {'ans': ans, 'date': date, 'paid': paid, if (prev != null) 'prev': prev!.toJson(), if (recv) 'recv': true, if (sample) 'sample': true, if (t > 0) 't': t};
+  Map<String, dynamic> toJson() => {'ans': ans, 'date': date, 'paid': paid, if (prev != null) 'prev': prev!.toJson(), if (recv) 'recv': true, if (sample) 'sample': true, if (st) 'st': true, if (t > 0) 't': t};
   factory Rec.fromJson(dynamic j) => Rec(
       ans: _ans(j['ans']), date: '${j['date'] ?? ''}', paid: j['paid'] == true || j['paid'] == 1,
-      prev: Snap.fromJson(j['prev']), recv: j['recv'] == true || j['recv'] == 1, sample: j['sample'] == true || j['sample'] == 1, t: (j['t'] as num?)?.round() ?? 0);
+      prev: Snap.fromJson(j['prev']), recv: j['recv'] == true || j['recv'] == 1, sample: j['sample'] == true || j['sample'] == 1, st: j['st'] == true, t: (j['t'] as num?)?.round() ?? 0);
 }
 
 class Buy {
@@ -67,11 +69,12 @@ class Buy {
 /// ext: 다른 휴대폰에서 첫 검사를 결제한 아이(초대로 받은 아이) {o: 첫 결제 번호, from}. inv: 받은 초대 {from}
 class Kid {
   /// age: '만 5세' 같은 글(링크·예전 기록용). birth: 태어난 해와 달 'YYYY-MM'. birth 가 있으면 age 는 거기서 계산한다.
-  String id, key, name, age, who, birth;
+  /// sex: 'M' 남자아이, 'F' 여자아이, '' 아직 안 넣음(또래 평균을 고르는 데만 쓴다)
+  String id, key, name, age, who, birth, sex;
   Map<String, Rec> recs;
   List<Buy> buys;
   Map<String, dynamic>? ext, inv;
-  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
+  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.sex = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
       : id = id ?? 'k${rid()}', key = key ?? rid(), recs = recs ?? {}, buys = buys ?? [] {
     if (ageOf(birth).$1.isNotEmpty) age = ageOf(birth).$1;
   }
@@ -95,12 +98,12 @@ class Kid {
       ];
 
   Map<String, dynamic> toJson() => {
-        'id': id, 'key': key, 'name': name, 'age': age, if (birth.isNotEmpty) 'birth': birth, 'who': who,
+        'id': id, 'key': key, 'name': name, 'age': age, if (birth.isNotEmpty) 'birth': birth, if (sex.isNotEmpty) 'sex': sex, 'who': who,
         'recs': {for (final e in recs.entries) if (e.value.hasAny || e.key == who) e.key: e.value.toJson()},
         'buys': [for (final b in buys) b.toJson()], if (ext != null) 'ext': ext, if (inv != null) 'inv': inv,
       };
   factory Kid.fromJson(dynamic j) => Kid(
-        id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', birth: '${j['birth'] ?? ''}', who: '${j['who'] ?? '엄마'}',
+        id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', birth: '${j['birth'] ?? ''}', sex: j['sex'] == 'M' || j['sex'] == 'F' ? j['sex'] : '', who: '${j['who'] ?? '엄마'}',
         recs: {for (final e in ((j['recs'] ?? {}) as Map).entries) '${e.key}': Rec.fromJson(e.value)},
         buys: [for (final b in (j['buys'] ?? []) as List) Buy.fromJson(b)],
         ext: (j['ext'] as Map?)?.cast<String, dynamic>(), inv: (j['inv'] as Map?)?.cast<String, dynamic>(),
@@ -207,6 +210,7 @@ class Store extends ChangeNotifier {
       if (l.name.isEmpty) l.name = r.name;
       if (l.age.isEmpty) l.age = r.age;
       if (l.birth.isEmpty) l.birth = r.birth;
+      if (l.sex.isEmpty) l.sex = r.sex;
       l.ext ??= r.ext;
       l.inv ??= r.inv;
       final ids = {for (final b in l.buys) b.id};
@@ -260,7 +264,8 @@ class Store extends ChangeNotifier {
 
   Kid? kidByKey(String key) => kids.where((k) => k.key == key).firstOrNull;
 
-  void setInfo({String? name, String? age, String? birth}) {
+  void setInfo({String? name, String? age, String? birth, String? sex}) {
+    if (sex != null) kid.sex = sex;
     if (name != null) kid.name = name.trim();
     if (age != null) kid.age = age;
     if (birth != null) {
@@ -295,6 +300,7 @@ class Store extends ChangeNotifier {
       cur.prev = Snap.of(cur.ans, cur.date, kid.who);
       cur.ans = {};
       cur.date = today();
+      cur.st = false;
     }
     cur.paid = true;
     cur.touch();
@@ -326,7 +332,7 @@ class Store extends ChangeNotifier {
 
   /// 샘플 리포트 열기: 예시 아이 '콩이'(엄마·아빠 검사, 지난 검사 기록 포함)를 만들어 잠시 보여 준다. 내 아이 기록은 건드리지 않는다.
   void openSample() {
-    final k = Kid(name: '콩이', age: '만 5세', who: '엄마');
+    final k = Kid(name: '콩이', age: '만 5세', sex: 'F', who: '엄마');
     final c = k.cur;
     genAns(C.items, {'A': 2, 'B': 4, 'C': 2, 'D': 4}, 4, c.ans);
     c.date = today();
@@ -389,7 +395,7 @@ class Store extends ChangeNotifier {
           if ('012345'.contains(s[i])) C.items[i].id: int.parse(s[i])
       };
 
-  String inviteUrl(String role) => '$kSite#i=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, 'f': kid.who, 'w': role, 'p': kid.firstDone ? 1 : 0, 'o': kid.firstBuyId()})}';
+  String inviteUrl(String role) => '$kSite#i=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, if (kid.birth.isNotEmpty) 'b': kid.birth, if (kid.sex.isNotEmpty) 's': kid.sex, 'f': kid.who, 'w': role, 'p': kid.firstDone ? 1 : 0, 'o': kid.firstBuyId()})}';
   String backUrl() => '$kSite#c=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, 'w': kid.who, 'd': cur.date, 'x': encA(cur.ans)})}';
   static String typeUrl(String code) => '$kSite#t=$code';
   static const appUrl = '$kSite#r=app';
@@ -407,6 +413,9 @@ class Store extends ChangeNotifier {
     final n = '${d['n'] ?? ''}', a = '${d['a'] ?? ''}';
     if (n.isNotEmpty && kid.name.isEmpty) kid.name = n;
     if (a.isNotEmpty && kid.age.isEmpty) kid.age = a;
+    final b = '${d['b'] ?? ''}', sx = '${d['s'] ?? ''}';
+    if (ageOf(b).$1.isNotEmpty && kid.birth.isEmpty) kid.birth = b;
+    if ((sx == 'M' || sx == 'F') && kid.sex.isEmpty) kid.sex = sx;
     if (d['p'] == 1) kid.ext = {'o': '${d['o'] ?? ''}', 'from': '${d['f'] ?? ''}'};
     kid.inv = {'from': '${d['f'] ?? ''}', 'at': DateTime.now().millisecondsSinceEpoch};
     kid.who = role;

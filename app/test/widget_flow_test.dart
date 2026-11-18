@@ -5,7 +5,16 @@ import 'package:childmbti/content.dart';
 import 'package:childmbti/main.dart';
 import 'package:childmbti/ui/account.dart';
 import 'package:childmbti/ui/kit.dart';
+import 'package:childmbti/stats.dart';
 import 'package:childmbti/store.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+
+/// 통계 서버로 보낸 요청들
+final sent = <String>[];
+
+/// 서버에 모인 검사 건수(가짜)
+var statN = 3;
 
 Future<void> boot(WidgetTester t, Size size) async {
   SharedPreferences.setMockInitialValues({});
@@ -15,6 +24,13 @@ Future<void> boot(WidgetTester t, Size size) async {
   });
   store.kids = [Kid()];
   store.kidId = store.kids.first.id;
+  sent.clear();
+  statN = 3;
+  stats.clear();
+  stats.client = MockClient((q) async {
+    if (q.method == 'POST') sent.add(q.body);
+    return http.Response(q.method == 'POST' ? '{}' : '{"fields":{"n":{"integerValue":"$statN"},"sA":{"integerValue":"150"},"sG1":{"integerValue":"300"}}}', 200);
+  });
   tab.value = 0;
   await t.binding.setSurfaceSize(size);
   await t.pumpWidget(const App());
@@ -76,6 +92,9 @@ void main() {
       await t.tap(find.text('1월').last);
       await t.pumpAndSettle();
       expect(store.kid.birth, '$by-01');
+      await t.tap(find.text('남자아이'));
+      await t.pump();
+      expect(store.kid.sex, 'M');
       expect(store.kid.age, startsWith('만 '));
       await t.tap(find.text('다음'));
       await t.pumpAndSettle();
@@ -93,6 +112,33 @@ void main() {
       }
       expect(tab.value, 1);
       expect(find.textContaining('정밀검사 결과'), findsOneWidget);
+      // 끝난 검사는 나이·성별 묶음으로 통계에 한 번만 보낸다
+      await t.runAsync(() => stats.submitPending());
+      expect(sent.length, 1);
+      expect(sent.first, contains('/stats/y'));
+      expect(sent.first, contains('_M'));
+      expect(store.cur.st, true);
+      await t.runAsync(() => stats.submitPending());
+      expect(sent.length, 1);
+      // 지표 옆 아이콘: 5건 이상 모인 지표만 평균이 나온다
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const Key('avg-A')));
+      await t.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
+      await t.pumpAndSettle();
+      expect(find.textContaining('평균 준비 중'), findsOneWidget);
+      await t.tap(find.byKey(const Key('popup-close')));
+      await t.pumpAndSettle();
+      statN = 6;
+      stats.clear();
+      await t.tap(find.text('자라는 힘').first);
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const Key('avg-G1')));
+      await t.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
+      await t.pumpAndSettle();
+      expect(find.text('또래 평균'), findsOneWidget);
+      expect(find.textContaining('6건'), findsOneWidget);
+      await t.tap(find.byKey(const Key('popup-close')));
+      await t.pumpAndSettle();
       // 리포트의 모든 탭, 모든 쪽을 넘겨 본다
       for (final x in ['기질', '자라는 힘', '양육자 비교', '달라진 점']) {
         await t.tap(find.text(x).first);

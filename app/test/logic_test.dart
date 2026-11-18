@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/scoring.dart';
+import 'package:childmbti/stats.dart';
 import 'package:childmbti/store.dart';
 
 void main() {
@@ -154,5 +155,29 @@ void main() {
     s.closeSample();
     expect(s.kid.name, '');
     expect(s.kid.recs.values.every((r) => !r.hasAny), true);
+  });
+
+  test('통계: 나이·성별 묶음, 보내는 값, 평균 읽기', () {
+    final k = Kid(birth: '2021-03', sex: 'F');
+    expect(bucketOf(k, '2026.11.19'), 'y5_F');
+    expect(bucketOf(k, '2027.03.01'), 'y6_F');
+    expect(bucketLabel('y5_F'), '만 5세 여자아이');
+    expect(bucketOf(Kid(birth: '2021-03'), '2026.11.19'), isNull); // 성별 없음
+    expect(bucketOf(Kid(age: '만 4세', sex: 'M'), '2026.11.19'), 'y4_M'); // 예전 기록
+    final r = score(Store().genAns(C.items, {'A': 2, 'B': 4, 'C': 2, 'D': 4}, 4));
+    final v = statVals(r);
+    expect(v.length, 19);
+    expect(v.keys.toSet(), statKeys.toSet());
+    final body = Stats.commitBody('y5_F', v, 68, '엄마', 'x1');
+    final tr = (body['writes'] as List)[0]['updateTransforms'] as List;
+    expect(tr.length, 1 + 19);
+    expect(tr.first, {'fieldPath': 'n', 'increment': {'integerValue': '1'}});
+    final avg = Stats.parse({'fields': {'n': {'integerValue': '10'}, 'sA': {'integerValue': '250'}, 'sB1': {'integerValue': '455'}}});
+    expect(avg['A']!.n, 10);
+    expect(avg['A']!.avg, 25);
+    expect(avg['B1']!.avg, 45.5);
+    expect(Stats.parse({}), isEmpty);
+    // 판단하지 않은 지표가 있는 검사는 평균에 더하지 않고 기록만 남긴다
+    expect((Stats.commitBody('y5_F', Map.of(v)..remove('G1'), 68, '엄마', 'x2')['writes'] as List).length, 1);
   });
 }

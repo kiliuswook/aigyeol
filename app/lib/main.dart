@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'content.dart';
+import 'stats.dart';
 import 'store.dart';
 import 'sync.dart';
 import 'ui/kit.dart';
@@ -15,6 +17,8 @@ Future<void> main() async {
   await Future.wait([loadContent(), preloadUi(), store.load()]);
   // 웹(미리 보기)은 Firebase 웹 설정이 없어 로그인·동기화를 켜지 않는다
   if (!kIsWeb) await sync.init();
+  // 예전에 마친 검사 중 아직 통계에 넣지 않은 것을 보낸다
+  unawaited(stats.submitPending());
   runApp(const App());
 }
 

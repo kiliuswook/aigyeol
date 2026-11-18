@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
+import '../stats.dart';
 import '../store.dart';
 import 'kit.dart';
 
@@ -32,6 +33,7 @@ class _TestScreenState extends State<TestScreen> {
     } else {
       tab.value = 1;
       Navigator.of(context).pop();
+      stats.submitPending();
     }
   }
 
