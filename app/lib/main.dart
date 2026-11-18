@@ -7,7 +7,6 @@ import 'ui/kit.dart';
 import 'ui/home.dart';
 import 'ui/report.dart';
 import 'ui/more.dart';
-import 'ui/share.dart';
 import 'ui/links.dart' show initKakao;
 
 Future<void> main() async {
@@ -19,7 +18,7 @@ Future<void> main() async {
   runApp(const App());
 }
 
-/// 아래 메뉴: 0 홈, 1 리포트, 2 함께(가족 초대·공유), 3 더보기(계정·기록·안내)
+/// 아래 메뉴: 0 홈, 1 리포트, 2 더보기(가족 초대·공유, 계정, 안내)
 final tab = ValueNotifier<int>(0);
 
 class App extends StatelessWidget {
@@ -48,7 +47,7 @@ class Shell extends StatelessWidget {
             child: ListenableBuilder(
               listenable: store,
               // const 로 두면 store 가 바뀌어도 화면이 다시 그려지지 않는다
-              builder: (ctx, _) => IndexedStack(index: i, children: [HomeView(), ReportView(), ShareView(), MoreView()]),
+              builder: (ctx, _) => IndexedStack(index: i, children: [HomeView(), ReportView(), MoreView()]),
             ),
           ),
           bottomNavigationBar: NineBox(nCard,
@@ -56,7 +55,7 @@ class Shell extends StatelessWidget {
               child: SafeArea(
                 top: false,
                 child: Row(children: [
-                  for (final (k, label, icon) in const [(0, '홈', 'i_home'), (1, '리포트', 'i_doc'), (2, '함께', 'i_heart'), (3, '더보기', 'i_star')])
+                  for (final (k, label, icon) in const [(0, '홈', 'i_home'), (1, '리포트', 'i_doc'), (2, '더보기', 'i_star')])
                     Expanded(
                       child: InkWell(
                         onTap: () => tab.value = k,
@@ -66,7 +65,7 @@ class Shell extends StatelessWidget {
                             Container(
                               width: 56, height: 32,
                               decoration: BoxDecoration(color: i == k ? kAccent : null, borderRadius: BorderRadius.circular(99)),
-                              child: Center(child: Opacity(opacity: i == k ? 1 : .55, child: Image.asset('assets/ui/$icon${i == k || icon == 'i_heart' ? '' : '_off'}.webp', width: 28, height: 28))),
+                              child: Center(child: Opacity(opacity: i == k ? 1 : .55, child: Image.asset('assets/ui/$icon${i == k ? '' : '_off'}.webp', width: 28, height: 28))),
                             ),
                             const SizedBox(height: 2),
                             Text(label, style: TextStyle(fontSize: 12, fontWeight: i == k ? FontWeight.w700 : FontWeight.w500, color: i == k ? kFg : kMuted)),

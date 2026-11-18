@@ -1,6 +1,4 @@
-// 공유(휴대폰 공유 창), 개인정보처리방침 열기, 기록 파일 저장·불러오기, 받은 링크 읽기
-import 'dart:convert';
-import 'package:file_picker/file_picker.dart';
+// 공유(휴대폰 공유 창), 개인정보처리방침 열기, 받은 링크 읽기
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -88,20 +86,6 @@ Future<void> doKakao(BuildContext ctx, String kind, {String role = ''}) async {
   if (ok) return;
   if (ctx.mounted) toast(ctx, '카카오톡을 열 수 없어 공유 창으로 보냅니다.');
   if (ctx.mounted) await doShare(ctx, kind, role: role);
-}
-
-Future<void> saveBackup(BuildContext ctx) async {
-  final bytes = utf8.encode(store.exportBackup());
-  final name = '내아이의MBTI_기록_${today().replaceAll('.', '')}.json';
-  await SharePlus.instance.share(ShareParams(files: [XFile.fromData(bytes, mimeType: 'application/json', name: name)], fileNameOverrides: [name], subject: '내 아이의 MBTI 기록 파일'));
-}
-
-Future<void> loadBackup(BuildContext ctx) async {
-  final r = await FilePicker.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
-  if (r.isEmpty) return;
-  final b = await r.first.readAsBytes();
-  final ok = store.importBackup(utf8.decode(b));
-  if (ctx.mounted) toast(ctx, ok ? '기록을 불러왔습니다.' : '이 파일은 불러올 수 없습니다.');
 }
 
 /// 받은 링크(초대·결과·유형·앱 추천)를 읽는다. 값은 주소의 # 뒤(예전 ? 링크도 읽음).

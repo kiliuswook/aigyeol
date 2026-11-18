@@ -99,7 +99,7 @@ void main() {
         await t.pumpAndSettle();
         await walk(t);
       }
-      for (final k in [2, 3, 0]) {
+      for (final k in [2, 0]) {
         tab.value = k;
         await t.pumpAndSettle();
       }
@@ -136,7 +136,10 @@ void main() {
     tab.value = 2;
     await t.pumpAndSettle();
     expect(find.text('함께 보기'), findsOneWidget);
-    await t.tap(find.text('공동 양육자 초대'));
+    expect(find.text('원더휠 WonderWheel'), findsOneWidget);
+    expect(find.text('받은 링크 열기'), findsNothing);
+    expect(find.text('개인정보처리방침'), findsNothing);
+    await t.tap(find.text('양육자 초대'));
     await t.pumpAndSettle();
     expect(find.text('카카오톡'), findsOneWidget);
   });
