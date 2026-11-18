@@ -29,9 +29,12 @@ class Grow {
 class Pole {
   final List<String> tags;
   final String sum, det, st, wa, say, no, ph;
+  /// 상황별 말 예시 4가지: [상황, 이렇게 말해 보세요]
+  final List<List<String>> says;
   Pole(Map j)
       : tags = List<String>.from(j['tags']), sum = j['sum'], det = j['det'], st = j['st'],
-        wa = j['wa'], say = j['say'], no = j['no'], ph = j['ph'];
+        wa = j['wa'], say = j['say'], no = j['no'], ph = j['ph'],
+        says = [for (final x in (j['says'] ?? const [])) List<String>.from(x)];
 }
 
 class Item {

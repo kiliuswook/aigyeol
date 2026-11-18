@@ -179,28 +179,56 @@ class _ReportViewState extends State<ReportView> {
 
   /// 축 상세: 막대·요약·세부 기질 3가지. 긴 설명과 말 가이드는 한 번 더 자세히 보기
   Widget axisPage(AxScore x, VoidCallback more) {
-    final pl = C.poles[x.letter]!;
+    final pl = C.poles[x.letter]!, bal = x.d < 8;
     return col([
       Row(children: [Expanded(child: Text('${x.a.hi} · ${x.a.lo}', style: disp(23))), Pill('${x.pole} ${x.clar}', x.a.c)]),
       axisBar(x.a, x.sc),
       Text(pl.sum, style: body),
-      Wrap(spacing: 6, runSpacing: 6, children: [for (final t in pl.tags) Tag('#$t')]),
-      muted('세부 기질 · ${x.a.q}'),
+      // 이렇게 말해 보세요: 크게 강조. 자세히 보기에서 상황 4가지
+      NineBox(nPink,
+          padding: const EdgeInsets.fromLTRB(14, 12, 10, 14),
+          child: col([
+            Row(children: [
+              Image.asset('assets/ui/i_bulb.webp', width: 30, height: 30),
+              const SizedBox(width: 8),
+              Expanded(child: Text('이렇게 말해 보세요', style: disp(24))),
+            ]),
+            Text('“${pl.say}”', style: disp(20, w: FontWeight.w400)),
+            Row(children: [const Expanded(child: Text('상황별 말 예시 4가지', style: smallMuted)), MoreBtn(more)]),
+          ], gap: 8)),
+      Row(children: [
+        Expanded(child: muted('세부 기질 · ${x.a.q}')),
+        linkBtn(
+            '기질 설명',
+            () => sheet(context, title: '${x.pole} 기질', (c, set) => [
+                  Wrap(spacing: 6, runSpacing: 6, children: [for (final t in pl.tags) Tag('#$t')]),
+                  if (bal) rich('**균형에 가까움.** 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다.', style: small),
+                  Text(pl.det, style: body),
+                ])),
+      ]),
       for (var i = 0; i < x.a.subs.length; i++) subRow(x.a, x.a.subs[i], x.subs[i]),
-      Row(children: [const Expanded(child: Text('설명과 이렇게 말해 보세요', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kFg))), MoreBtn(more)]),
     ], gap: 10);
   }
 
+  /// 이렇게 말해 보세요: 상황 4가지와 그때 해 볼 말, 피하면 좋은 말
   Widget axisMore(AxScore x) {
-    final pl = C.poles[x.letter]!, bal = x.d < 8;
+    final pl = C.poles[x.letter]!;
     return col([
-      Row(children: [Expanded(child: Text('${x.pole} 기질', style: disp(23))), Pill('${x.pole} ${x.clar}', x.a.c)]),
-      if (bal) rich('**균형에 가까움.** 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다.', style: small),
-      Text(pl.det, style: body),
-      muted('이렇게 말해 보세요'),
-      say(pl.say),
-      say(pl.no, avoid: true),
-    ]);
+      Row(children: [
+        Image.asset('assets/ui/i_bulb.webp', width: 30, height: 30),
+        const SizedBox(width: 8),
+        Expanded(child: Text('이렇게 말해 보세요', style: disp(24))),
+        Pill(x.pole, x.a.c),
+      ]),
+      for (var i = 0; i < pl.says.length; i++)
+        NineBox(nSoft,
+            padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
+            child: col([
+              Text('${i + 1}. ${pl.says[i][0]}', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kAccentInk)),
+              Text('“${pl.says[i][1]}”', style: disp(19, w: FontWeight.w400)),
+            ], gap: 3)),
+      col([muted('이런 말은 피해 주세요'), say(pl.no, avoid: true)], gap: 4),
+    ], gap: 9);
   }
 
   Widget subRow(Ax a, Sub s, int? sc) => sc == null
@@ -208,7 +236,6 @@ class _ReportViewState extends State<ReportView> {
       : col([
           Row(children: [Expanded(child: Text(s.n, style: const TextStyle(fontWeight: FontWeight.w700))), muted(sc < 40 ? s.lo : sc > 60 ? s.hi : '중간')]),
           Track(sc, a.c, thin: true),
-          Row(children: [Expanded(child: muted(s.lo)), muted(s.hi)]),
         ], gap: 4);
 
   // ---------- 성격 탭 ----------
