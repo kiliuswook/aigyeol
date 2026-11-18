@@ -112,7 +112,7 @@ void main() {
     await t.tap(find.text('샘플 리포트 먼저 보기'));
     await t.pumpAndSettle();
     expect(find.textContaining('정밀검사 결과'), findsOneWidget);
-    expect(find.textContaining('내 기록에는 저장되지 않아요'), findsOneWidget);
+    expect(find.textContaining('예시 아이 콩이의 리포트예요'), findsOneWidget);
     for (final x in ['자라는 힘', '양육자 비교', '달라진 점', '기질']) {
       await t.tap(find.text(x).first);
       await t.pumpAndSettle();

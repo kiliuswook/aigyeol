@@ -51,7 +51,7 @@ class SampleScreen extends StatelessWidget {
                     child: Row(children: [
                       const Tag('샘플'),
                       const SizedBox(width: 8),
-                      const Expanded(child: Text('예시 아이 콩이의 리포트예요. 내 기록에는 저장되지 않아요.', style: small)),
+                      const Expanded(child: Text('예시 아이 콩이의 리포트예요.', style: small)),
                       InkWell(
                         key: const Key('sample-close'),
                         borderRadius: BorderRadius.circular(22),
