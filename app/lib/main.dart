@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'content.dart';
 import 'store.dart';
@@ -11,7 +12,8 @@ import 'ui/share.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([loadContent(), preloadUi(), store.load()]);
-  await sync.init();
+  // 웹(미리 보기)은 Firebase 웹 설정이 없어 로그인·동기화를 켜지 않는다
+  if (!kIsWeb) await sync.init();
   runApp(const App());
 }
 
