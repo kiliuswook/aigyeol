@@ -462,3 +462,54 @@ class ProgressBar extends StatelessWidget {
                 ])),
       );
 }
+
+/// '자세히 보기': 눈에 띄는 파란 버튼. 화면에 나타날 때 세 번 통통 튀어 눌러 볼 곳임을 알린다.
+class MoreBtn extends StatefulWidget {
+  final VoidCallback onTap;
+  final String label;
+  const MoreBtn(this.onTap, {super.key, this.label = '자세히 보기'});
+  @override
+  State<MoreBtn> createState() => _MoreBtnState();
+}
+
+class _MoreBtnState extends State<MoreBtn> with SingleTickerProviderStateMixin {
+  late final c = AnimationController(vsync: this, duration: const Duration(milliseconds: 520));
+  int n = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    c.addStatusListener((st) {
+      if (st == AnimationStatus.completed) c.reverse();
+      if (st == AnimationStatus.dismissed && ++n < 3) c.forward();
+    });
+    c.forward();
+  }
+
+  @override
+  void dispose() {
+    c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onTap,
+        child: AnimatedBuilder(
+          animation: c,
+          builder: (ctx, child) => Transform.scale(scale: 1 + .07 * Curves.easeInOut.transform(c.value), child: child),
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(4, 2, 5, 4),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(99), boxShadow: const [BoxShadow(color: Color(0x552D6C98), blurRadius: 8, offset: Offset(0, 3))]),
+            child: NineBox(nChipOn,
+                padding: const EdgeInsets.fromLTRB(14, 8, 10, 8),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Text(widget.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kOnAccent)),
+                  const SizedBox(width: 4),
+                  Image.asset('assets/ui/i_arrow_r.webp', width: 16, height: 16),
+                ])),
+          ),
+        ),
+      );
+}

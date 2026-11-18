@@ -21,6 +21,34 @@ Future<void> boot(WidgetTester t, Size size) async {
   await t.pump();
 }
 
+/// 리포트 탭 하나: 요약의 '자세히 보기'를 모두 눌러 끝까지 들어갔다가 '이전'으로 돌아온다
+Future<void> walk(WidgetTester t) async {
+  final n = find.byType(MoreBtn).evaluate().length;
+  for (var k = 0; k < n; k++) {
+    await t.ensureVisible(find.byType(MoreBtn).at(k));
+    await t.tap(find.byType(MoreBtn).at(k));
+    await t.pumpAndSettle();
+    expect(find.byKey(const Key('back')), findsOneWidget);
+    while (find.byType(MoreBtn).evaluate().isNotEmpty) {
+      await t.ensureVisible(find.byType(MoreBtn).first);
+      await t.tap(find.byType(MoreBtn).first);
+      await t.pumpAndSettle();
+    }
+    while (find.byKey(const Key('back')).evaluate().isNotEmpty) {
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+    }
+  }
+  for (final x in ['잘 통하는 말', '강점 · 살펴볼 점']) {
+    if (find.text(x).evaluate().isEmpty) continue;
+    await t.ensureVisible(find.text(x));
+    await t.tap(find.text(x));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(const Key('back')));
+    await t.pumpAndSettle();
+  }
+}
+
 void main() {
   // 작은 폰(360x640)과 보통 폰(390x844) 모두에서 넘침 없이 끝까지 간다
   for (final size in const [Size(360, 640), Size(390, 844)]) {
@@ -52,10 +80,7 @@ void main() {
       for (final x in ['기질', '자라는 힘', '양육자 비교', '달라진 점']) {
         await t.tap(find.text(x).first);
         await t.pumpAndSettle();
-        while (find.text('다음 →').evaluate().isNotEmpty) {
-          await t.tap(find.text('다음 →'));
-          await t.pumpAndSettle();
-        }
+        await walk(t);
       }
       for (final k in [2, 3, 0]) {
         tab.value = k;
@@ -73,10 +98,7 @@ void main() {
     for (final x in ['자라는 힘', '양육자 비교', '달라진 점', '기질']) {
       await t.tap(find.text(x).first);
       await t.pumpAndSettle();
-      while (find.text('다음 →').evaluate().isNotEmpty) {
-        await t.tap(find.text('다음 →'));
-        await t.pumpAndSettle();
-      }
+      await walk(t);
     }
     tab.value = 2;
     await t.pumpAndSettle();

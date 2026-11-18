@@ -57,12 +57,21 @@ class _ReportViewState extends State<ReportView> {
           const SizedBox(width: 6), tabBtn('cg', '양육자 비교'), const SizedBox(width: 6), tabBtn('chg', '달라진 점'),
         ]),
       ]),
-      // 탭·아이·양육자가 바뀌면 첫 쪽부터
-      body: Pager(
+      // 탭·아이·양육자가 바뀌면 요약 화면부터
+      body: Drill(
           key: ValueKey('$rtab-${store.kid.id}-${store.kid.who}'),
-          (go) => switch (rtab) { 'grow' => growTab(r, go), 'cg' => cgTab(), 'chg' => changeTab(r), _ => tempTab(r, go) }),
+          (open) => switch (rtab) { 'grow' => growTab(r, open), 'cg' => cgTab(open), 'chg' => changeTab(r, open), _ => tempTab(r, open) }),
     );
   }
+
+  /// 요약 한 장 + 줄마다 '자세히 보기'. pages[0] 이 요약, 나머지는 제목 줄로 들어간다.
+  Map<String, Widget> hub(void Function(String) open, List<String> titles, List<Widget> pages) => {
+        'root': col([
+          pages[0],
+          for (var i = 1; i < pages.length; i++) Row(children: [Expanded(child: Text(titles[i], style: disp(19))), MoreBtn(() => open('p$i'))]),
+        ], gap: 14),
+        for (var i = 1; i < pages.length; i++) 'p$i': pages[i],
+      };
 
   /// 아이(둘 이상일 때는 눌러서 고르기)와 양육자 고르기: 한 줄, 옆으로 밀어 보기
   Widget switcher() {
@@ -97,41 +106,43 @@ class _ReportViewState extends State<ReportView> {
 
   // ---------- 기질 탭 ----------
   bool showWatch = false;
-  List<Widget> tempTab(Result r, void Function(int) go) {
+  Map<String, Widget> tempTab(Result r, void Function(String) open) {
     final kid = store.kid, cur = store.cur;
-    return [
-      // 1 유형
-      col(x: CrossAxisAlignment.center, gap: 6, [
-        eyebrow('정밀검사 결과 · ${cur.date}'),
-        mascot(r.code, size: 132),
-        codeText(letters(r), size: 50),
-        h1(C.nick[r.code]!),
-        p('${store.nm}${eun(store.nm)} ${oneLine(r)}', align: TextAlign.center),
-        Text('${store.nm} · ${kid.age.isEmpty ? '연령 미입력' : kid.age} · ${kid.who} 답함${cur.prev != null ? ' · 이전 ${cur.prev!.code}' : ''}', style: smallMuted, textAlign: TextAlign.center),
-        linkBtn('검사 정보와 읽는 법', () => info(r)),
-        const Text('옆으로 넘기면 자세한 결과가 이어집니다 →', style: smallMuted),
-      ]),
-      // 2 네 축 한눈에
-      col([
-        Row(children: [Expanded(child: h2('기질 4축')), muted('눌러서 자세히')]),
+    return {
+      // 요약: 유형과 네 축. 축마다 자세히 보기
+      'root': col([
+        Row(children: [
+          mascot(r.code, size: 92),
+          const SizedBox(width: 12),
+          Expanded(
+              child: col([
+            eyebrow('정밀검사 결과 · ${cur.date}'),
+            FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: codeText(letters(r), size: 42)),
+            Text(C.nick[r.code]!, style: disp(23)),
+          ], gap: 0, x: CrossAxisAlignment.start)),
+        ]),
+        Text('${store.nm}${eun(store.nm)} ${oneLine(r)}', style: small),
         for (var i = 0; i < r.ax.length; i++)
-          InkWell(
-            onTap: () => go(2 + i),
-            child: col([
-              Row(children: [Expanded(child: Text('${r.ax[i].a.hi} · ${r.ax[i].a.lo}', style: disp(19))), Pill('${r.ax[i].pole} ${r.ax[i].clar}', r.ax[i].a.c)]),
-              axisBar(r.ax[i].a, r.ax[i].sc),
-            ], gap: 6),
-          ),
-      ], gap: 14),
-      // 3~6 축마다
-      for (final x in r.ax) axisPage(x),
-      // 7 잘 통하는 말
-      col([
+          col([
+            Row(children: [Expanded(child: Text('${r.ax[i].a.hi} · ${r.ax[i].a.lo}', style: disp(19))), MoreBtn(() => open('ax$i'))]),
+            axisBar(r.ax[i].a, r.ax[i].sc),
+          ], gap: 4),
+        Row(children: [
+          Expanded(child: Btn('잘 통하는 말', () => open('say'), kind: BtnKind.ghost, dense: true)),
+          const SizedBox(width: 8),
+          Expanded(child: Btn('강점 · 살펴볼 점', () => open('st'), kind: BtnKind.ghost, dense: true)),
+        ]),
+        Wrap(alignment: WrapAlignment.spaceBetween, children: [
+          linkBtn('검사 정보와 읽는 법', () => info(r)),
+          linkBtn('공유 · 다시 검사', () => open('next')),
+        ]),
+      ], gap: 10),
+      for (var i = 0; i < r.ax.length; i++) ...{'ax$i': axisPage(r.ax[i], () => open('ax$i+')), 'ax$i+': axisMore(r.ax[i])},
+      'say': col([
         h2('${store.nm}에게 잘 통하는 말'),
         for (final x in r.ax) col([muted('${x.pole} 기질에게'), say(C.poles[x.letter]!.say)], gap: 4),
       ], gap: 14),
-      // 8 강점과 살펴볼 점
-      col([
+      'st': col([
         Row(children: [
           for (final (w, t) in const [(false, '타고난 강점'), (true, '살펴볼 점')]) ...[
             if (w) const SizedBox(width: 8),
@@ -150,14 +161,13 @@ class _ReportViewState extends State<ReportView> {
             Expanded(child: Text(showWatch ? C.poles[x.letter]!.wa : C.poles[x.letter]!.st, style: body)),
           ]),
       ], gap: 14),
-      // 9 다음에 할 일
-      col([
+      'next': col([
         h2('이제 무엇을 할까요?'),
         Tile(kid.inv != null ? '${kid.inv!['from'] ?? '가족'}에게 결과 보내기' : '결과 카드 공유하기', icon: 'i_share', sub: '유형과 별명만 보냅니다', onTap: () => tab.value = 2),
         Tile('다른 양육자도 검사하기', icon: 'i_heart', sub: '서로 다르게 본 점을 비교해요', onTap: () => addWho(context, invite: () => tab.value = 2)),
         Tile('다시 검사하기 · ${Price.fmt(Price.more)}', icon: 'i_retry', sub: '시간이 지나 달라진 점을 봅니다', onTap: () => startRetest(context)),
       ]),
-    ];
+    };
   }
 
   Widget say(String t, {bool avoid = false}) => Container(
@@ -167,9 +177,9 @@ class _ReportViewState extends State<ReportView> {
             style: avoid ? const TextStyle(fontSize: 13, color: kMuted, decoration: TextDecoration.lineThrough) : disp(18, w: FontWeight.w400)),
       );
 
-  /// 축 한 쪽: 막대·요약·세부 기질 3가지. 긴 설명과 말 가이드는 아래 창에서
-  Widget axisPage(AxScore x) {
-    final pl = C.poles[x.letter]!, bal = x.d < 8;
+  /// 축 상세: 막대·요약·세부 기질 3가지. 긴 설명과 말 가이드는 한 번 더 자세히 보기
+  Widget axisPage(AxScore x, VoidCallback more) {
+    final pl = C.poles[x.letter]!;
     return col([
       Row(children: [Expanded(child: Text('${x.a.hi} · ${x.a.lo}', style: disp(23))), Pill('${x.pole} ${x.clar}', x.a.c)]),
       axisBar(x.a, x.sc),
@@ -177,18 +187,20 @@ class _ReportViewState extends State<ReportView> {
       Wrap(spacing: 6, runSpacing: 6, children: [for (final t in pl.tags) Tag('#$t')]),
       muted('세부 기질 · ${x.a.q}'),
       for (var i = 0; i < x.a.subs.length; i++) subRow(x.a, x.a.subs[i], x.subs[i]),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: linkBtn(
-              '자세한 설명과 이렇게 말해 보세요',
-              () => sheet(context, title: '${x.pole} 기질', (c, set) => [
-                    if (bal) rich('**균형에 가까움.** 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다.', style: small),
-                    Text(pl.det, style: body),
-                    muted('이렇게 말해 보세요'),
-                    say(pl.say),
-                    say(pl.no, avoid: true),
-                  ]))),
+      Row(children: [const Expanded(child: Text('설명과 이렇게 말해 보세요', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kFg))), MoreBtn(more)]),
     ], gap: 10);
+  }
+
+  Widget axisMore(AxScore x) {
+    final pl = C.poles[x.letter]!, bal = x.d < 8;
+    return col([
+      Row(children: [Expanded(child: Text('${x.pole} 기질', style: disp(23))), Pill('${x.pole} ${x.clar}', x.a.c)]),
+      if (bal) rich('**균형에 가까움.** 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다.', style: small),
+      Text(pl.det, style: body),
+      muted('이렇게 말해 보세요'),
+      say(pl.say),
+      say(pl.no, avoid: true),
+    ]);
   }
 
   Widget subRow(Ax a, Sub s, int? sc) => sc == null
@@ -200,45 +212,50 @@ class _ReportViewState extends State<ReportView> {
         ], gap: 4);
 
   // ---------- 성격 탭 ----------
-  List<Widget> growTab(Result r, void Function(int) go) {
+  Map<String, Widget> growTab(Result r, void Function(String) open) {
     const lvName = ['지금 자라는 중', '고르게 자라는 중', '탄탄함'];
-    return [
-      col([
+    return {
+      'root': col([
         eyebrow('성격 결과'),
         h2('자라는 힘'),
         muted('기질은 타고나지만 끈기, 스스로 힘, 함께 힘은 경험으로 자랍니다. 나이가 어릴수록 낮게 나오는 것이 자연스럽습니다.'),
         for (var i = 0; i < r.gr.length; i++)
-          InkWell(
-            onTap: () => go(1 + i),
-            child: r.gr[i].sc == null
-                ? Row(children: [Expanded(child: Text(r.gr[i].g.n, style: disp(19))), muted('정보 부족')])
-                : col([
-                    Row(children: [Expanded(child: Text(r.gr[i].g.n, style: disp(19))), Pill(lvName[r.gr[i].lv!], 'g')]),
-                    Row(children: [
-                      Expanded(child: Track(r.gr[i].sc, 'g', fill: true)),
-                      SizedBox(width: 40, child: Text('${r.gr[i].sc}', textAlign: TextAlign.right, style: disp(20))),
-                    ]),
-                  ], gap: 6),
-          ),
-      ], gap: 14),
-      for (final x in r.gr)
-        col([
-          eyebrow('자라는 힘'),
-          Row(children: [Expanded(child: h2(x.g.n)), if (x.sc != null) Pill(lvName[x.lv!], 'g')]),
-          muted(x.g.d),
-          if (x.sc == null)
-            Note(const Text("'잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다."))
-          else ...[
+          col([
             Row(children: [
-              Expanded(child: Track(x.sc, 'g', fill: true)),
-              SizedBox(width: 40, child: Text('${x.sc}', textAlign: TextAlign.right, style: disp(20))),
+              Text(r.gr[i].g.n, style: disp(19)),
+              const SizedBox(width: 8),
+              Expanded(child: Text(r.gr[i].sc == null ? '정보 부족' : lvName[r.gr[i].lv!], style: smallMuted)),
+              MoreBtn(() => open('g$i')),
             ]),
-            Text(x.g.lv[x.lv!][0], style: body.copyWith(fontWeight: FontWeight.w700)),
-            Text(x.g.lv[x.lv!][1], style: body),
-          ],
-        ]),
-      cmpPage(r),
-    ];
+            if (r.gr[i].sc != null)
+              Row(children: [
+                Expanded(child: Track(r.gr[i].sc, 'g', fill: true)),
+                SizedBox(width: 40, child: Text('${r.gr[i].sc}', textAlign: TextAlign.right, style: disp(20))),
+              ]),
+          ], gap: 4),
+        Row(children: [Expanded(child: Text('지난번과 달라진 점', style: disp(19))), MoreBtn(() => open('cmp'))]),
+      ], gap: 14),
+      for (var i = 0; i < r.gr.length; i++)
+        'g$i': () {
+          final x = r.gr[i];
+          return col([
+            eyebrow('자라는 힘'),
+            Row(children: [Expanded(child: h2(x.g.n)), if (x.sc != null) Pill(lvName[x.lv!], 'g')]),
+            muted(x.g.d),
+            if (x.sc == null)
+              Note(const Text("'잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다."))
+            else ...[
+              Row(children: [
+                Expanded(child: Track(x.sc, 'g', fill: true)),
+                SizedBox(width: 40, child: Text('${x.sc}', textAlign: TextAlign.right, style: disp(20))),
+              ]),
+              Text(x.g.lv[x.lv!][0], style: body.copyWith(fontWeight: FontWeight.w700)),
+              Text(x.g.lv[x.lv!][1], style: body),
+            ],
+          ]);
+        }(),
+      'cmp': cmpPage(r),
+    };
   }
 
   Widget cmpPage(Result r) {
@@ -271,14 +288,14 @@ class _ReportViewState extends State<ReportView> {
   List<List<T>> chunk<T>(List<T> l, int n) => [for (var i = 0; i < l.length; i += n) l.sublist(i, min(i + n, l.length))];
 
   // ---------- 양육자 비교 탭 ----------
-  List<Widget> cgTab() {
+  Map<String, Widget> cgTab(void Function(String) open) {
     final kid = store.kid, nm = store.nm, all = kid.cgs, fin = all.where((e) => fullDone(e.value.ans)).toList();
     final head = [
       eyebrow('양육자 비교'),
       h2('양육자마다 다르게 본 점'),
     ];
     if (fin.length < 2) {
-      return [
+      return hub(open, const [''], [
         col([
           ...head,
           muted('같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다.'),
@@ -286,7 +303,7 @@ class _ReportViewState extends State<ReportView> {
           Tile('이 휴대폰에서 다른 양육자 검사', icon: 'i_heart', sub: '추가 검사 ${Price.fmt(Price.more)}', onTap: () => addWho(context, invite: () => tab.value = 2)),
           Tile('다른 휴대폰으로 초대 보내기', icon: 'i_share', sub: '결과를 보내 주면 이곳에 합쳐집니다', onTap: () => tab.value = 2),
         ])
-      ];
+      ]);
     }
     final rs = [for (final e in fin) (who: e.key, rec: e.value, r: score(e.value.ans))];
     final codes = rs.map((x) => x.r.code).toSet();
@@ -316,7 +333,7 @@ class _ReportViewState extends State<ReportView> {
           Wrap(spacing: 12, children: [for (final o in rs) rich('**${o.who}** ${optName(o.rec.ans[it.id])}', style: small)]),
         ], gap: 2);
     final qs = chunk(split.map((x) => x.it).toList(), 4);
-    return [
+    return hub(open, ['', '기질 4축, 사람마다', '자라는 힘, 사람마다', if (qs.length <= 1) '답이 크게 갈린 문항' else for (var i = 0; i < qs.length; i++) '답이 크게 갈린 문항 ${i + 1}/${qs.length}'], [
       col([
         ...head,
         rich(summary + summary2),
@@ -370,11 +387,11 @@ class _ReportViewState extends State<ReportView> {
             if (i == 0) muted('${Cmp.gap}칸 이상 다른 답을 고른 문항 ${split.length}개입니다. 이 장면을 언제, 어디서 봤는지 서로 이야기해 보세요.'),
             for (final it in qs[i]) qrow(it),
           ], gap: 14),
-    ];
+    ]);
   }
 
   // ---------- 달라진 점 탭 ----------
-  List<Widget> changeTab(Result r) {
+  Map<String, Widget> changeTab(Result r, void Function(String) open) {
     final kid = store.kid, cur = store.cur, pv = cur.prev;
     final head = [
       eyebrow('이전 검사와 비교 · ${kid.who}'),
@@ -382,18 +399,18 @@ class _ReportViewState extends State<ReportView> {
       if (pv != null) muted('이전 ${pv.date.isEmpty ? '날짜 없음' : pv.date} → 이번 ${cur.date} · 평가자 ${pv.who.isEmpty ? kid.who : pv.who}${pv.sample ? ' · 샘플 예시 기록' : ''}'),
     ];
     if (pv == null) {
-      return [
+      return hub(open, const [''], [
         col([
           ...head,
           rich("**비교 기록 없음.** ${kid.who}의 이전 검사 기록이 없습니다. 다시 검사하면 지금 결과가 이전 기록으로 남고, 다시 답한 결과와 나란히 정리됩니다.", style: small),
           Tile('다시 검사하기 · ${Price.fmt(Price.more)}', icon: 'i_retry', sub: '시간이 지나 달라진 점을 봅니다', onTap: () => startRetest(context)),
         ])
-      ];
+      ]);
     }
     if (pv.who.isNotEmpty && pv.who != kid.who) {
-      return [
+      return hub(open, const [''], [
         col([...head, rich("**평가자가 달라 직접 비교하기 어렵습니다.** 이전 검사는 ${pv.who}, 이번 검사는 ${kid.who}가 답했습니다. 양육자 사이의 차이는 '양육자 비교' 탭에서 볼 수 있습니다.", style: small)])
-      ];
+      ]);
     }
     final axr = pv.ax == null
         ? []
@@ -434,12 +451,18 @@ class _ReportViewState extends State<ReportView> {
           Flexible(child: col([muted(label), rich('**$code** ${C.nick[code] ?? ''}', style: small)], gap: 0, x: CrossAxisAlignment.start)),
         ]);
     final sp = chunk(subs, 5), qs = chunk(big, 4);
-    return [
+    return hub(open, [
+      '',
+      if (axr.isNotEmpty) '기질 4축 변화',
+      for (var i = 0; i < sp.length; i++) '달라진 세부 기질${sp.length > 1 ? ' ${i + 1}/${sp.length}' : ''}',
+      if (g.rows.isNotEmpty) '자라는 힘 변화',
+      if (pa != null && qs.isEmpty) '답이 크게 바뀐 문항',
+      for (var i = 0; i < qs.length; i++) '답이 크게 바뀐 문항${qs.length > 1 ? ' ${i + 1}/${qs.length}' : ''}',
+    ], [
       col([
         ...head,
         rich(sum),
         Wrap(spacing: 14, runSpacing: 8, children: [typeMini('이전', pv.code, faded: true), typeMini('지금', r.code)]),
-        const Note(Text("두 검사 사이의 차이는 아이가 자란 모습일 수도, 답한 날의 기분이나 최근 일의 영향일 수도 있습니다. 작은 차이는 '비슷함'으로 봅니다.")),
       ]),
       if (axr.isNotEmpty)
         col([
@@ -454,6 +477,7 @@ class _ReportViewState extends State<ReportView> {
               ]),
             ], gap: 6),
           muted("빈 동그라미: 이전, 색 점: 지금. ${Cmp.same}점보다 작은 차이는 '비슷함'"),
+          const Note(Text("두 검사 사이의 차이는 아이가 자란 모습일 수도, 답한 날의 기분이나 최근 일의 영향일 수도 있습니다.")),
         ], gap: 14),
       for (var i = 0; i < sp.length; i++)
         col([
@@ -478,54 +502,79 @@ class _ReportViewState extends State<ReportView> {
           for (final it in qs[i]) qrow(it),
           if (i == qs.length - 1 && unkCh > 0) muted("'잘 모르겠다'로 바뀌었거나 '잘 모르겠다'에서 답이 생긴 문항이 $unkCh개 있습니다."),
         ], gap: 14),
-    ];
+    ]);
   }
 }
 
-/// 옆으로 넘기는 쪽 묶음: 쪽마다 카드 한 장이 한 화면에 들어온다. 아래에 쪽 표시 점.
-class Pager extends StatefulWidget {
-  final List<Widget> Function(void Function(int) go) build;
-  const Pager(this.build, {super.key});
+/// 요약 화면('root')에서 '자세히 보기'로 들어가고 '이전'으로 돌아오는 묶음. 화면마다 카드 한 장.
+class Drill extends StatefulWidget {
+  final Map<String, Widget> Function(void Function(String) open) build;
+  const Drill(this.build, {super.key});
   @override
-  State<Pager> createState() => _PagerState();
+  State<Drill> createState() => _DrillState();
 }
 
-class _PagerState extends State<Pager> {
-  final ctl = PageController();
-  int i = 0;
-  void go(int k) => ctl.animateToPage(k, duration: const Duration(milliseconds: 260), curve: Curves.easeOut);
+class _DrillState extends State<Drill> {
+  final path = <String>[];
+  void open(String k) => setState(() => path.add(k));
+  void back() => setState(() => path.removeLast());
+  // 다른 메뉴로 가면 요약으로 되돌린다(뒤로 가기가 리포트에 붙잡히지 않게)
+  void onTab() {
+    if (tab.value != 1 && path.isNotEmpty) setState(path.clear);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tab.addListener(onTab);
+  }
 
   @override
   void dispose() {
-    ctl.dispose();
+    tab.removeListener(onTab);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final pages = widget.build(go);
-    final cur = i.clamp(0, pages.length - 1);
-    return Column(children: [
-      Expanded(
-        child: PageView(
-          controller: ctl,
-          onPageChanged: (k) => setState(() => i = k),
-          children: [
-            for (final pg in pages)
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 2), child: NineBox(nCard, padding: const EdgeInsets.fromLTRB(20, 18, 20, 18), child: Fit(pg))),
-          ],
+    final pages = widget.build(open);
+    while (path.isNotEmpty && !pages.containsKey(path.last)) {
+      path.removeLast();
+    }
+    final key = path.isEmpty ? 'root' : path.last;
+    return PopScope(
+      canPop: path.isEmpty,
+      onPopInvokedWithResult: (did, _) {
+        if (!did && path.isNotEmpty) back();
+      },
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (path.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                key: const Key('back'),
+                onTap: back,
+                child: NineBox(nChip,
+                    padding: const EdgeInsets.fromLTRB(12, 7, 16, 7),
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Image.asset('assets/ui/i_arrow_l.webp', width: 18, height: 18),
+                      const SizedBox(width: 6),
+                      const Text('이전', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kFg)),
+                    ])),
+              ),
+            ),
+          ),
+        Expanded(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            transitionBuilder: (c, a) => FadeTransition(opacity: a, child: SlideTransition(position: Tween(begin: const Offset(.06, 0), end: Offset.zero).animate(a), child: c)),
+            child: NineBox(nCard, key: ValueKey(key), padding: const EdgeInsets.fromLTRB(20, 18, 20, 18), child: Fit(pages[key]!)),
+          ),
         ),
-      ),
-      const SizedBox(height: 4),
-      SizedBox(
-        height: 38,
-        child: Row(children: [
-          SizedBox(width: 72, child: cur > 0 ? Align(alignment: Alignment.centerLeft, child: linkBtn('← 이전', () => go(cur - 1))) : null),
-          Expanded(child: pages.length > 1 ? Dots(pages.length, cur) : const SizedBox()),
-          SizedBox(width: 72, child: cur < pages.length - 1 ? Align(alignment: Alignment.centerRight, child: linkBtn('다음 →', () => go(cur + 1))) : null),
-        ]),
-      ),
-    ]);
+      ]),
+    );
   }
 }
 
