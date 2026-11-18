@@ -4,33 +4,98 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/main.dart';
 import 'package:childmbti/ui/account.dart';
+import 'package:childmbti/ui/kit.dart';
 import 'package:childmbti/store.dart';
 
+Future<void> boot(WidgetTester t, Size size) async {
+  SharedPreferences.setMockInitialValues({});
+  await t.runAsync(() async {
+    await loadContent();
+    await store.load();
+  });
+  store.kids = [Kid()];
+  store.kidId = store.kids.first.id;
+  tab.value = 0;
+  await t.binding.setSurfaceSize(size);
+  await t.pumpWidget(const App());
+  await t.pump();
+}
+
 void main() {
-  testWidgets('샘플 리포트가 열리고 탭이 바뀐다', (t) async {
-    SharedPreferences.setMockInitialValues({});
-    await t.runAsync(() async {
-      await loadContent();
-      await store.load();
+  // 작은 폰(360x640)과 보통 폰(390x844) 모두에서 넘침 없이 끝까지 간다
+  for (final size in const [Size(360, 640), Size(390, 844)]) {
+    testWidgets('처음 → 아이 등록 → 결제 → 66문항 → 리포트 (${size.width.round()}x${size.height.round()})', (t) async {
+      await boot(t, size);
+      expect(find.text('시작하기'), findsOneWidget);
+      await t.tap(find.text('시작하기'));
+      await t.pumpAndSettle();
+      await t.enterText(find.byType(TextField), '콩이');
+      await t.tap(find.text('만 5세'));
+      await t.pump();
+      await t.tap(find.text('다음'));
+      await t.pumpAndSettle();
+      await t.tap(find.text('아빠'));
+      await t.pump();
+      await t.tap(find.text('검사 준비 끝'));
+      await t.pumpAndSettle();
+      expect(store.kid.name, '콩이');
+      expect(store.kid.who, '아빠');
+      await t.tap(find.textContaining('결제하고 검사 시작'));
+      await t.pumpAndSettle();
+      for (var i = 0; i < C.items.length; i++) {
+        await t.tap(find.text(C.opt[i % 5]));
+        await t.pumpAndSettle();
+      }
+      expect(tab.value, 1);
+      expect(find.textContaining('정밀검사 결과'), findsOneWidget);
+      // 리포트의 모든 탭, 모든 쪽을 넘겨 본다
+      for (final x in ['기질', '자라는 힘', '양육자 비교', '달라진 점']) {
+        await t.tap(find.text(x).first);
+        await t.pumpAndSettle();
+        while (find.text('다음 →').evaluate().isNotEmpty) {
+          await t.tap(find.text('다음 →'));
+          await t.pumpAndSettle();
+        }
+      }
+      for (final k in [2, 3, 0]) {
+        tab.value = k;
+        await t.pumpAndSettle();
+      }
+      expect(find.text('리포트 보기'), findsOneWidget);
     });
-    await t.binding.setSurfaceSize(const Size(390, 844));
-    await t.pumpWidget(const App());
-    await t.pump();
-    tab.value = 1;
-    await t.pump();
-    expect(find.text('샘플로 보기'), findsOneWidget);
-    await t.tap(find.text('샘플로 보기'));
-    await t.pump();
+  }
+
+  testWidgets('샘플 리포트: 양육자 비교·달라진 점까지 쪽을 넘긴다', (t) async {
+    await boot(t, const Size(360, 640));
+    await t.tap(find.text('샘플 리포트 먼저 보기'));
+    await t.pumpAndSettle();
     expect(find.textContaining('정밀검사 결과'), findsOneWidget);
     for (final x in ['자라는 힘', '양육자 비교', '달라진 점', '기질']) {
-      final f = find.text(x).first;
-      await t.scrollUntilVisible(f, -200, scrollable: find.byType(Scrollable).first);
-      await t.tap(f);
-      await t.pump();
+      await t.tap(find.text(x).first);
+      await t.pumpAndSettle();
+      while (find.text('다음 →').evaluate().isNotEmpty) {
+        await t.tap(find.text('다음 →'));
+        await t.pumpAndSettle();
+      }
     }
     tab.value = 2;
-    await t.pump();
-    expect(find.text('함께 보면 더 잘 보여요'), findsWidgets);
+    await t.pumpAndSettle();
+    expect(find.text('함께 보기'), findsOneWidget);
+    await t.tap(find.text('공동 양육자 초대'));
+    await t.pumpAndSettle();
+    expect(find.text('카카오톡'), findsOneWidget);
+  });
+
+  testWidgets('아이 추가를 그만두면 빈 아이가 남지 않는다', (t) async {
+    await boot(t, const Size(390, 844));
+    store.sample();
+    await t.pumpAndSettle();
+    await t.tap(find.text('+ 아이 추가'));
+    await t.pumpAndSettle();
+    expect(store.kids.length, 2);
+    await t.tap(find.descendant(of: find.byType(TopBar), matching: find.byType(InkWell)));
+    await t.pumpAndSettle();
+    expect(store.kids.length, 1);
   });
 
   testWidgets('계정 화면: Firebase 없는 기기에서는 안내만', (t) async {

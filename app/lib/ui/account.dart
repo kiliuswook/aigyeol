@@ -2,34 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../main.dart';
 import '../store.dart';
 import '../sync.dart';
 import 'kit.dart';
 import 'links.dart';
 
 Future<void> openDeletePage() => launchUrl(Uri.parse('${kSite}delete-account.html'), mode: LaunchMode.externalApplication);
-
-/// 홈에 넣는 작은 카드: 지금 상태와 계정 화면으로 가는 버튼
-class AccountCard extends StatelessWidget {
-  const AccountCard({super.key});
-  @override
-  Widget build(BuildContext context) => ListenableBuilder(
-    listenable: sync,
-    builder: (context, _) {
-      final (t, d, b) = !sync.signedIn
-          ? ('기록 지키기', '메일로 로그인하면 검사 기록과 결제한 검사가 서버에 저장되어, 휴대폰을 바꾸거나 앱을 다시 깔아도 그대로 이어집니다. 로그인하지 않아도 이 휴대폰에서는 모두 쓸 수 있어요.', '메일로 로그인·가입')
-          : !sync.verified
-          ? ('메일 인증이 남았어요', '${sync.email} 메일함에서 인증 링크를 눌러야 동기화가 시작됩니다.', '인증 확인하기')
-          : ('기록이 동기화되고 있어요', '${sync.email} 계정에 저장됩니다. 다른 휴대폰에서 같은 메일로 로그인하면 이어서 볼 수 있어요.', '계정 관리');
-      return PaperCard([
-        h2(t),
-        muted(d),
-        Btn(b, () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccountScreen())), kind: BtnKind.ghost),
-      ]);
-    },
-  );
-}
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -56,22 +34,20 @@ class _AccountState extends State<AccountScreen> {
     body: SafeArea(
       child: ListenableBuilder(
         listenable: sync,
-        builder: (context, _) => AppPage(brand: false, [
-          col([eyebrow('계정'), h1(!sync.signedIn ? (joining ? '메일로 가입' : '메일로 로그인') : '내 계정')], gap: 6),
-          if (!sync.ready)
-            PaperCard([p('이 기기에서는 로그인과 동기화를 쓸 수 없어요. 안드로이드 앱에서 이용해 주세요.')])
-          else if (!sync.signedIn)
-            ..._signIn()
-          else if (!sync.verified)
-            ..._verify()
-          else
-            ..._signedIn(),
-          Btn('돌아가기', () => Navigator.of(context).pop(), kind: BtnKind.ghost),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton(onPressed: openPrivacy, child: const Text('개인정보처리방침')),
-          ),
-        ]),
+        builder: (context, _) => Frame(
+          top: TopBar(!sync.signedIn ? (joining ? '메일로 가입' : '메일로 로그인') : '내 계정'),
+          body: Fit(col([
+            if (!sync.ready)
+              PaperCard([p('이 기기에서는 로그인과 동기화를 쓸 수 없어요. 안드로이드 앱에서 이용해 주세요.')])
+            else if (!sync.signedIn)
+              ..._signIn()
+            else if (!sync.verified)
+              ..._verify()
+            else
+              ..._signedIn(),
+            Align(alignment: Alignment.centerLeft, child: linkBtn('개인정보처리방침', openPrivacy)),
+          ])),
+        ),
       ),
     ),
   );
@@ -135,7 +111,7 @@ class _AccountState extends State<AccountScreen> {
     ]),
     PaperCard([
       h3('계정 삭제'),
-      muted('계정과 서버에 저장된 검사 기록이 모두 지워지고 되돌릴 수 없습니다. 이 휴대폰 안의 기록은 남으며, 리포트 아래 초기화로 지울 수 있어요. 구글 플레이 결제 내역은 구글에 남습니다.'),
+      muted('계정과 서버에 저장된 검사 기록이 모두 지워지고 되돌릴 수 없습니다. 이 휴대폰 안의 기록은 남으며, 더보기의 기록 지우기로 지울 수 있어요. 구글 플레이 결제 내역은 구글에 남습니다.'),
       Btn('계정 삭제', () => _delete(), kind: BtnKind.ghost),
       Align(
         alignment: Alignment.centerLeft,

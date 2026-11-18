@@ -313,3 +313,152 @@ class PaperField extends StatelessWidget {
 void toast(BuildContext ctx, String t) => ScaffoldMessenger.of(ctx)
   ..hideCurrentSnackBar()
   ..showSnackBar(SnackBar(content: Text(t), backgroundColor: kFg, behavior: SnackBarBehavior.floating));
+
+// ---------- 앱 화면 틀(스크롤 없이 한 화면) ----------
+/// 한 화면에 맞추는 칸. 내용이 칸보다 길 때만(작은 폰·큰 글씨) 그 칸 안에서 밀린다.
+class Fit extends StatelessWidget {
+  final Widget child;
+  final Alignment align;
+  const Fit(this.child, {super.key, this.align = Alignment.topCenter});
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+      builder: (c, bc) => SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: ConstrainedBox(constraints: BoxConstraints(minHeight: bc.maxHeight, minWidth: bc.maxWidth, maxWidth: bc.maxWidth), child: Align(alignment: align, child: child))));
+}
+
+/// 화면 하나: 위 줄(top) · 남는 높이를 채우는 가운데(body) · 아래에 붙는 버튼(foot). 최대 폭 480.
+class Frame extends StatelessWidget {
+  final Widget? top;
+  final Widget body;
+  final List<Widget> foot;
+  const Frame({super.key, this.top, required this.body, this.foot = const []});
+  @override
+  Widget build(BuildContext context) => Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              if (top != null) ...[top!, const SizedBox(height: 10)],
+              Expanded(child: body),
+              for (final f in foot) ...[const SizedBox(height: 8), f],
+            ]),
+          ),
+        ),
+      );
+}
+
+/// 밀어 넣은 화면의 위 줄: 왼쪽 뒤로/닫기, 가운데 제목, 오른쪽 덧붙임
+class TopBar extends StatelessWidget {
+  final String title;
+  final bool close;
+  final Widget? right;
+  final VoidCallback? onBack;
+  const TopBar(this.title, {super.key, this.close = false, this.right, this.onBack});
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        height: 44,
+        child: Row(children: [
+          InkWell(
+            borderRadius: BorderRadius.circular(22),
+            onTap: onBack ?? () => Navigator.of(context).maybePop(),
+            child: SizedBox(width: 44, height: 44, child: Center(child: Image.asset(close ? 'assets/ui/i_close.webp' : 'assets/ui/i_arrow_l.webp', width: 22, height: 22))),
+          ),
+          Expanded(child: Text(title, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: disp(20))),
+          SizedBox(width: 44, child: right ?? const SizedBox()),
+        ]),
+      );
+}
+
+/// 탭 화면의 위 줄: 큰 제목
+Widget tabTitle(String t, {Widget? right}) => SizedBox(height: 44, child: Row(children: [Expanded(child: Text(t, style: disp(26))), if (right != null) right]));
+
+/// 줄 메뉴 한 칸: 그림 · 제목 · 설명 · 화살표
+class Tile extends StatelessWidget {
+  final String? icon;
+  final String title;
+  final String? sub;
+  final VoidCallback? onTap;
+  const Tile(this.title, {super.key, this.icon, this.sub, this.onTap});
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Opacity(
+          opacity: onTap == null ? .55 : 1,
+          child: NineBox(nCard,
+              padding: const EdgeInsets.fromLTRB(16, 11, 14, 12),
+              child: Row(children: [
+                if (icon != null) ...[Image.asset('assets/ui/$icon.webp', width: 28, height: 28), const SizedBox(width: 12)],
+                Expanded(
+                    child: col([
+                  Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 15.5, fontWeight: FontWeight.w700, color: kFg, height: 1.3)),
+                  if (sub != null) Text(sub!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12.5, color: kMuted, height: 1.35)),
+                ], gap: 1)),
+                const SizedBox(width: 8),
+                Image.asset('assets/ui/i_tri.webp', width: 14, height: 14),
+              ])),
+        ),
+      );
+}
+
+/// 쪽 표시 점
+class Dots extends StatelessWidget {
+  final int n, i;
+  const Dots(this.n, this.i, {super.key});
+  @override
+  Widget build(BuildContext context) => Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        for (var k = 0; k < n; k++)
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            margin: const EdgeInsets.symmetric(horizontal: 3),
+            width: k == i ? 18 : 7, height: 7,
+            decoration: BoxDecoration(color: k == i ? kAccentInk : kLine, borderRadius: BorderRadius.circular(9)),
+          ),
+      ]);
+}
+
+/// 아래에서 올라오는 창. 자세한 설명·고르기·보내기는 화면을 옮기지 않고 여기서 한다.
+Future<T?> sheet<T>(BuildContext ctx, List<Widget> Function(BuildContext c, StateSetter set) build, {String? title}) => showModalBottomSheet<T>(
+      context: ctx,
+      isScrollControlled: true,
+      backgroundColor: kBg,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
+      builder: (c) => StatefulBuilder(
+          builder: (c, set) => SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 18 + MediaQuery.of(c).viewInsets.bottom),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: MediaQuery.of(c).size.height * .82, maxWidth: 480),
+                    child: SingleChildScrollView(
+                      child: col([
+                        Center(child: Container(width: 44, height: 5, decoration: BoxDecoration(color: kLine, borderRadius: BorderRadius.circular(9)))),
+                        if (title != null) h2(title),
+                        ...build(c, set),
+                      ], gap: 12),
+                    ),
+                  ),
+                ),
+              )),
+    );
+
+/// 글줄 버튼(가벼운 보조 행동)
+Widget linkBtn(String t, VoidCallback onTap) => InkWell(
+    onTap: onTap,
+    child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4), child: Text(t, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kAccentInk))));
+
+/// 진행 막대(0~1)
+class ProgressBar extends StatelessWidget {
+  final double v;
+  const ProgressBar(this.v, {super.key});
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        height: 14,
+        child: LayoutBuilder(
+            builder: (c, bc) => Stack(children: [
+                  Positioned.fill(child: NineBox(nTrack, padding: EdgeInsets.zero, child: const SizedBox.expand())),
+                  Positioned(left: 2, top: 2, bottom: 2, width: (bc.maxWidth - 4) * v.clamp(0, 1), child: Image.asset('assets/ui/bar_sky.webp', fit: BoxFit.fill)),
+                ])),
+      );
+}

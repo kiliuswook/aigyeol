@@ -95,6 +95,6 @@ class _LandScreenState extends State<LandScreen> {
         ])
       ];
     }
-    return Scaffold(body: SafeArea(child: AppPage([...body, Btn('닫기', () => Navigator.of(context).pop(), kind: BtnKind.ghost)])));
+    return Scaffold(body: SafeArea(child: Frame(top: const TopBar('받은 링크', close: true), body: Fit(align: Alignment.center, col(body, gap: 14)))));
   }
 }

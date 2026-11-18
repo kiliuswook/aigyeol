@@ -227,6 +227,16 @@ class Store extends ChangeNotifier {
     return k;
   }
 
+  /// 추가하다 그만둔 빈 아이를 지운다(아이가 하나뿐이면 그대로 둔다)
+  void dropBlankKid(String id) {
+    if (kids.length <= 1) return;
+    final k = kids.where((k) => k.id == id).firstOrNull;
+    if (k == null || !k.isBlank) return;
+    kids.remove(k);
+    if (kidId == id) kidId = kids.last.id;
+    save();
+  }
+
   Kid? kidByKey(String key) => kids.where((k) => k.key == key).firstOrNull;
 
   void setInfo({String? name, String? age}) {
