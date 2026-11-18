@@ -37,7 +37,7 @@ class _ReportViewState extends State<ReportView> {
         ]),
         foot: [
           Btn(cur.paid ? '검사 이어서 하기' : '검사 시작하기', () => startFull(context), kind: BtnKind.dark),
-          Btn('샘플로 보기', store.sample, kind: BtnKind.ghost),
+          Btn('샘플로 보기', () => showSample(context), kind: BtnKind.ghost),
         ],
       );
     }
@@ -77,7 +77,7 @@ class _ReportViewState extends State<ReportView> {
   Widget switcher() {
     final kid = store.kid, ks = store.kids, all = kid.cgs;
     return chipRow([
-      if (ks.length > 1)
+      if (ks.length > 1 && store.demo == null)
         ChipBtn('${store.nm} ▾',
             onTap: () => popup(context, title: '아이 고르기', (c, set) => [
                   for (var i = 0; i < ks.length; i++)
@@ -88,7 +88,7 @@ class _ReportViewState extends State<ReportView> {
                 ])),
       for (final e in all)
         ChipBtn('${e.key} · ${fullDone(e.value.ans) ? score(e.value.ans).code : '${answered(e.value.ans)}/${C.items.length}'}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
-      ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => tab.value = 2)),
+      if (store.demo == null) ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => tab.value = 2)),
     ]);
   }
 
@@ -134,7 +134,7 @@ class _ReportViewState extends State<ReportView> {
         ]),
         Wrap(alignment: WrapAlignment.spaceBetween, children: [
           linkBtn('검사 정보와 읽는 법', () => info(r)),
-          linkBtn('공유 · 다시 검사', () => open('next')),
+          if (store.demo == null) linkBtn('공유 · 다시 검사', () => open('next')),
         ]),
       ], gap: 10),
       for (var i = 0; i < r.ax.length; i++) 'ax$i': axisPage(r.ax[i]),

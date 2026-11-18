@@ -107,16 +107,24 @@ void main() {
     });
   }
 
-  testWidgets('샘플 리포트: 양육자 비교·달라진 점까지 쪽을 넘긴다', (t) async {
+  testWidgets('샘플 리포트: 끝까지 보고 닫아도 내 아이 기록에 아무것도 남지 않는다', (t) async {
     await boot(t, const Size(360, 640));
     await t.tap(find.text('샘플 리포트 먼저 보기'));
     await t.pumpAndSettle();
     expect(find.textContaining('정밀검사 결과'), findsOneWidget);
+    expect(find.textContaining('내 기록에는 저장되지 않아요'), findsOneWidget);
     for (final x in ['자라는 힘', '양육자 비교', '달라진 점', '기질']) {
       await t.tap(find.text(x).first);
       await t.pumpAndSettle();
       await walk(t);
     }
+    await t.tap(find.byKey(const Key('sample-close')));
+    await t.pumpAndSettle();
+    expect(store.demo, isNull);
+    expect(store.kids.length, 1);
+    expect(store.kid.name, '');
+    expect(store.kid.recs.values.every((r) => !r.hasAny), true);
+    expect(find.text('시작하기'), findsOneWidget);
     tab.value = 2;
     await t.pumpAndSettle();
     expect(find.text('함께 보기'), findsOneWidget);
@@ -127,7 +135,7 @@ void main() {
 
   testWidgets('아이 추가를 그만두면 빈 아이가 남지 않는다', (t) async {
     await boot(t, const Size(390, 844));
-    store.sample();
+    store.setInfo(name: '콩이');
     await t.pumpAndSettle();
     await t.tap(find.text('+ 아이 추가'));
     await t.pumpAndSettle();

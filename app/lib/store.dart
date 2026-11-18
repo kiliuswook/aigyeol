@@ -131,7 +131,9 @@ class Store extends ChangeNotifier {
   String kidId = '';
   SharedPreferences? _sp;
 
-  Kid get kid => kids.firstWhere((k) => k.id == kidId, orElse: () => kids.first);
+  /// 샘플 리포트용 예시 아이. 있는 동안 화면은 이 아이를 보여 주지만 kids 에 넣지 않아 저장·동기화되지 않는다.
+  Kid? demo;
+  Kid get kid => demo ?? kids.firstWhere((k) => k.id == kidId, orElse: () => kids.first);
   Rec get cur => kid.cur;
   String get nm => kid.name.isNotEmpty ? kid.name : '우리 아이';
 
@@ -143,6 +145,7 @@ class Store extends ChangeNotifier {
         fromJson(jsonDecode(s));
       } catch (_) {}
     }
+    _dropSample();
     if (kidId.isEmpty) kidId = kids.first.id;
   }
 
@@ -223,6 +226,7 @@ class Store extends ChangeNotifier {
         l.recs[e.key] = keep;
       }
     }
+    _dropSample();
     if (kids.isEmpty) kids = [Kid()];
     if (!kids.any((k) => k.id == kidId)) kidId = kids.first.id;
     save();
@@ -320,30 +324,48 @@ class Store extends ChangeNotifier {
     return o;
   }
 
-  void sample() {
-    final c = cur;
+  /// 샘플 리포트 열기: 예시 아이 '콩이'(엄마·아빠 검사, 지난 검사 기록 포함)를 만들어 잠시 보여 준다. 내 아이 기록은 건드리지 않는다.
+  void openSample() {
+    final k = Kid(name: '콩이', age: '만 5세', who: '엄마');
+    final c = k.cur;
     genAns(C.items, {'A': 2, 'B': 4, 'C': 2, 'D': 4}, 4, c.ans);
-    if (kid.name.isEmpty) kid.name = '콩이';
-    if (kid.age.isEmpty) kid.age = '만 5세';
     c.date = today();
     c.paid = true;
-    if (c.prev == null) {
-      final pa = genAns(C.items.where((x) => x.ax == 'D'), {'D': 2}, 0, Map.of(c.ans));
-      for (final x in C.items.where((x) => x.gr == 'G1')) {
-        pa[x.id] = x.r ? min(5, pa[x.id]! + 1) : max(1, pa[x.id]! - 1);
-      }
-      for (final x in C.items.where((x) => x.gr == 'G3').take(4)) {
-        pa[x.id] = 0;
-      }
-      c.prev = Snap.of(pa, today(-60), kid.who, sample: true);
+    final pa = genAns(C.items.where((x) => x.ax == 'D'), {'D': 2}, 0, Map.of(c.ans));
+    for (final x in C.items.where((x) => x.gr == 'G1')) {
+      pa[x.id] = x.r ? min(5, pa[x.id]! + 1) : max(1, pa[x.id]! - 1);
     }
-    if (!kid.cgs.any((e) => e.key != kid.who && fullDone(e.value.ans))) {
-      final other = kCgl.where((n) => n != kid.who && !(kid.recs[n]?.hasAny ?? false)).firstOrNull;
-      if (other != null) {
-        kid.recs[other] = Rec(ans: genAns(C.items, {'A': 4, 'B': 4, 'C': 2, 'D': 3}, 3), date: today(), paid: true, sample: true);
+    for (final x in C.items.where((x) => x.gr == 'G3').take(4)) {
+      pa[x.id] = 0;
+    }
+    c.prev = Snap.of(pa, today(-60), k.who, sample: true);
+    k.recs['아빠'] = Rec(ans: genAns(C.items, {'A': 4, 'B': 4, 'C': 2, 'D': 3}, 3), date: today(), paid: true, sample: true);
+    demo = k;
+    notifyListeners();
+  }
+
+  void closeSample() {
+    if (demo == null) return;
+    demo = null;
+    notifyListeners();
+  }
+
+  /// 예전 버전은 샘플을 내 아이 기록에 써 넣었다. 그렇게 섞여 들어간 샘플 기록을 걷어 낸다.
+  /// (실제 검사는 늘 결제 기록 buys 가 있고, 샘플은 없다)
+  void _dropSample() {
+    for (final k in kids) {
+      if (k.buys.isNotEmpty || k.ext != null) {
+        k.recs.removeWhere((n, r) => r.sample);
+        continue;
+      }
+      final had = k.recs.values.any((r) => r.sample || (r.prev?.sample ?? false));
+      if (!had) continue;
+      k.recs.removeWhere((n, r) => r.sample || (r.prev?.sample ?? false));
+      if (k.recs.values.every((r) => !r.hasAny)) {
+        if (k.name == '콩이') k.name = '';
+        if (k.age == '만 5세' && k.birth.isEmpty) k.age = '';
       }
     }
-    save();
   }
 
   // ---------- 공유 링크 ----------

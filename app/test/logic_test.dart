@@ -46,7 +46,7 @@ void main() {
 
   test('다시 검사하기는 이전 기록을 남기고 답을 지운다', () {
     final s = Store();
-    s.sample();
+    s.genAns(C.items, {'A': 2, 'B': 4, 'C': 2, 'D': 4}, 4, s.cur.ans);
     final code = score(s.cur.ans).code;
     s.cur.prev = null;
     s.buy(true);
@@ -74,7 +74,9 @@ void main() {
 
   test('기록 파일: 앱 형식 왕복, 웹 시제품 형식 불러오기', () {
     final a = Store();
-    a.sample();
+    a.setInfo(name: '첫째');
+    a.buy(false);
+    a.genAns(C.items, {'A': 2, 'B': 4, 'C': 2, 'D': 4}, 4, a.cur.ans);
     a.addKid(name: '둘째');
     final b = Store();
     expect(b.importBackup(a.exportBackup()), true);
@@ -142,5 +144,15 @@ void main() {
     final k = Kid.fromJson(Kid(birth: '2020-01').toJson());
     expect(k.birth, '2020-01');
     expect(k.age, startsWith('만 '));
+  });
+  test('샘플 리포트는 내 아이 기록에 남지 않는다', () {
+    final s = Store();
+    s.openSample();
+    expect(s.nm, '콩이');
+    expect(fullDone(s.cur.ans), true);
+    expect(s.toJson()['kids'].length, 1);
+    s.closeSample();
+    expect(s.kid.name, '');
+    expect(s.kid.recs.values.every((r) => !r.hasAny), true);
   });
 }
