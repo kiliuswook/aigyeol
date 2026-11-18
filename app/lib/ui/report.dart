@@ -79,9 +79,9 @@ class _ReportViewState extends State<ReportView> {
     return chipRow([
       if (ks.length > 1)
         ChipBtn('${store.nm} ▾',
-            onTap: () => sheet(context, title: '아이 고르기', (c, set) => [
+            onTap: () => popup(context, title: '아이 고르기', (c, set) => [
                   for (var i = 0; i < ks.length; i++)
-                    Tile('${ks[i].label(i)}${fullDone(ks[i].cur.ans) ? ' · ${score(ks[i].cur.ans).code}' : ''}', sub: ks[i].age.isEmpty ? null : ks[i].age, onTap: () {
+                    Tile('${ks[i].label(i)}${fullDone(ks[i].cur.ans) ? ' · ${score(ks[i].cur.ans).code}' : ''}', sub: ks[i].ageText.isEmpty ? null : ks[i].ageText, onTap: () {
                       store.setKid(ks[i].id);
                       Navigator.of(c).pop();
                     }),

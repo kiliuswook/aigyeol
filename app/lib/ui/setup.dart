@@ -1,18 +1,47 @@
-// 아이 등록: 한 화면에 하나씩 묻는다(이름·연령 → 답하는 사람 → 결제). 아이 정보 바꾸기는 아래에서 올라오는 창.
+// 아이 등록: 한 화면에 하나씩 묻는다(이름·태어난 해와 달 → 답하는 사람 → 결제). 아이 정보 바꾸기는 아래에서 올라오는 창.
 import 'package:flutter/material.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'kit.dart';
 
-const kAges = ['만 2세', '만 3세', '만 4세', '만 5세', '만 6세', '만 7세'];
+/// 태어난 해와 달 고르기. 만 나이는 앱이 계산해서 아래에 보여 준다(만 나이를 헷갈리지 않게).
+Widget birthPicker(VoidCallback changed) {
+  final kid = store.kid, p = kid.birth.split('-'), now = DateTime.now();
+  final y = p.length == 2 ? p[0] : '', m = p.length == 2 ? '${int.tryParse(p[1]) ?? ''}' : '';
+  void set(String yy, String mm) {
+    // 해와 달을 모두 골라야 나이를 센다. 하나만 고른 동안은 'YYYY-' / '-M' 로 잠시 둔다
+    store.setInfo(birth: yy.isEmpty && mm.isEmpty ? '' : '$yy-${mm.isEmpty ? '' : mm.padLeft(2, '0')}');
+    changed();
+  }
 
-Widget ageChips(VoidCallback changed) => chips([
-      for (final a in kAges)
-        ChipBtn(a, on: store.kid.age == a, onTap: () {
-          store.setInfo(age: store.kid.age == a ? '' : a);
-          changed();
-        }),
-    ]);
+  Widget drop(String hint, String value, List<(String, String)> items, ValueChanged<String> on) => NineBox(nInput,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: DropdownButton<String>(
+        value: value.isEmpty ? null : value,
+        hint: Text(hint),
+        isExpanded: true,
+        menuMaxHeight: 320,
+        underline: const SizedBox(),
+        items: [for (final (v, t) in items) DropdownMenuItem(value: v, child: Text(t))],
+        onChanged: (v) => on(v ?? ''),
+      ));
+  final age = ageOf(kid.birth).$2, yrs = int.tryParse(RegExp(r'\d+').firstMatch(ageOf(kid.birth).$1)?.group(0) ?? '');
+  return col([
+    Row(children: [
+      Expanded(flex: 6, child: drop('태어난 해', y, [for (var k = now.year; k >= now.year - 9; k--) ('$k', '$k년')], (v) => set(v, m))),
+      const SizedBox(width: 10),
+      Expanded(flex: 5, child: drop('태어난 달', m, [for (var k = 1; k <= 12; k++) ('$k', '$k월')], (v) => set(y, v))),
+    ]),
+    if (age.isNotEmpty)
+      Row(children: [
+        Tag('지금 $age'),
+        const SizedBox(width: 8),
+        if (yrs != null && (yrs < 2 || yrs > 7)) const Expanded(child: Text('이 검사는 만 2~7세에 맞춰져 있어요.', style: smallMuted)),
+      ])
+    else if (kid.age.isNotEmpty)
+      muted('전에 고른 연령: ${kid.age}. 태어난 해와 달을 넣으면 나이가 자동으로 맞춰져요.'),
+  ], gap: 8);
+}
 
 class SetupScreen extends StatefulWidget {
   const SetupScreen({super.key});
@@ -51,8 +80,8 @@ class _SetupState extends State<SetupScreen> {
         muted('이름은 이 휴대폰에만 저장됩니다. 별명이어도 좋아요.'),
         PaperField(name, hint: '아이 이름 또는 별명 (예: 콩이)', onChanged: (v) => store.setInfo(name: v)),
         const SizedBox(height: 2),
-        muted('연령 (만 2~7세)'),
-        ageChips(() => setState(() {})),
+        muted('태어난 해와 달 (만 나이는 자동으로 계산해요)'),
+        birthPicker(() => setState(() {})),
       ]),
       col([
         Center(child: Image.asset('assets/img/mascot_parent.webp', width: 96, height: 96)),
@@ -94,10 +123,10 @@ class _SetupState extends State<SetupScreen> {
 /// 아이 이름·연령 바꾸기
 Future<void> editKid(BuildContext context) {
   final name = TextEditingController(text: store.kid.name);
-  return sheet(context, title: '아이 정보', (c, set) => [
+  return popup(context, title: '아이 정보', (c, set) => [
         PaperField(name, hint: '아이 이름 또는 별명', onChanged: (v) => store.setInfo(name: v)),
-        muted('연령'),
-        ageChips(() => set(() {})),
+        muted('태어난 해와 달'),
+        birthPicker(() => set(() {})),
         Btn('완료', () => Navigator.of(c).pop()),
       ]);
 }
@@ -105,7 +134,7 @@ Future<void> editKid(BuildContext context) {
 /// 답하는 사람 추가: 이 휴대폰에서 답할 사람을 고르거나, 다른 휴대폰으로 초대한다
 Future<void> addWho(BuildContext context, {required VoidCallback invite}) {
   final has = store.kid.cgs.map((e) => e.key).toSet();
-  return sheet(context, title: '답하는 사람 추가', (c, set) => [
+  return popup(context, title: '답하는 사람 추가', (c, set) => [
         muted('이 휴대폰에서 이어서 답할 사람을 골라 주세요. 추가 검사는 ${Price.fmt(Price.more)}입니다.'),
         chips([
           for (final n in kCgl.where((n) => !has.contains(n)))

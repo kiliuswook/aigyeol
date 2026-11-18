@@ -40,13 +40,13 @@ class ShareView extends StatelessWidget {
         const Text('함께 보면 아이가 더 잘 보여요.', style: smallMuted),
         if (kid.inv != null && r != null)
           Tile('$from에게 결과 보내기', icon: 'i_send', sub: "$from의 휴대폰 '양육자 비교'에 합쳐집니다",
-              onTap: () => sheet(context, title: '$from에게 결과 보내기', (c, set) => [
+              onTap: () => popup(context, title: '$from에게 결과 보내기', (c, set) => [
                     muted('결과 링크에는 아이 이름·연령과 답이 실립니다.'),
                     buttons(c, 'back'),
                   ])),
         Tile('공동 양육자 초대', icon: 'i_heart', sub: '다른 휴대폰에서 $nm 검사하고 비교하기', onTap: () {
           var role = roles.first;
-          sheet(context, title: '다른 휴대폰에서 $nm 검사하게 초대', (c, set) => [
+          popup(context, title: '다른 휴대폰에서 $nm 검사하게 초대', (c, set) => [
                 muted('누구를 초대하나요?'),
                 chips([for (final n in roles) ChipBtn(n, on: role == n, onTap: () => set(() => role = n))]),
                 buttons(c, 'invite', role: () => role),
@@ -57,7 +57,7 @@ class ShareView extends StatelessWidget {
         Tile(r != null ? '결과 카드 공유 · ${r.code}' : '결과 카드 공유', icon: 'i_share', sub: r != null ? '이름과 답은 빼고 유형과 별명만 보냅니다' : '정밀검사를 마치면 보낼 수 있어요',
             onTap: r == null
                 ? null
-                : () => sheet(context, (c, set) => [
+                : () => popup(context, title: '결과 카드 공유', (c, set) => [
                       Row(children: [
                         mascot(r.code, size: 92),
                         const SizedBox(width: 12),
@@ -66,10 +66,10 @@ class ShareView extends StatelessWidget {
                       muted('아이 이름과 답은 빼고 유형과 별명만 보냅니다.'),
                       buttons(c, 'result'),
                     ])),
-        Tile('친구에게 앱 추천', icon: 'i_star', sub: '우리 아이는 어떤 네 글자일까요?', onTap: () => sheet(context, title: '친구에게 앱 추천하기', (c, set) => [buttons(c, 'app')])),
+        Tile('친구에게 앱 추천', icon: 'i_star', sub: '우리 아이는 어떤 네 글자일까요?', onTap: () => popup(context, title: '친구에게 앱 추천하기', (c, set) => [buttons(c, 'app')])),
         Tile('받은 링크 열기', icon: 'i_doc', sub: '카카오톡으로 받은 초대·결과 링크', onTap: () {
           final ctl = TextEditingController();
-          sheet(context, title: '받은 초대·결과 링크 열기', (c, set) => [
+          popup(context, title: '받은 초대·결과 링크 열기', (c, set) => [
                 PaperField(ctl, hint: '받은 링크 붙여 넣기', maxLength: 4000),
                 Btn('열기', () {
                   final l = Landing.parse(ctl.text);

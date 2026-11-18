@@ -25,6 +25,16 @@ String today([int dd = 0]) {
   return '${d.year}.${d.month.toString().padLeft(2, '0')}.${d.day.toString().padLeft(2, '0')}';
 }
 
+/// 태어난 해·달('YYYY-MM')로 만 나이를 센다. ('만 5세', '만 5세 3개월'). 달만 받으므로 생일이 든 달부터 한 살 더한다.
+(String, String) ageOf(String birth, [DateTime? now]) {
+  final p = birth.split('-'), y = int.tryParse(p[0]), m = p.length > 1 ? int.tryParse(p[1]) : null;
+  if (y == null || m == null) return ('', '');
+  final n = now ?? DateTime.now();
+  final mo = (n.year - y) * 12 + (n.month - m);
+  if (mo < 0) return ('', '');
+  return ('만 ${mo ~/ 12}세', '만 ${mo ~/ 12}세${mo % 12 > 0 ? ' ${mo % 12}개월' : ''}');
+}
+
 Ans _ans(dynamic j) => j is Map ? {for (final e in j.entries) '${e.key}': (e.value as num).round()} : {};
 
 /// 양육자 한 사람의 기록
@@ -56,12 +66,18 @@ class Buy {
 /// 아이 한 명. key: 기기 사이에서 같은 아이를 알아보는 무작위 값(초대·결과 링크에 실림).
 /// ext: 다른 휴대폰에서 첫 검사를 결제한 아이(초대로 받은 아이) {o: 첫 결제 번호, from}. inv: 받은 초대 {from}
 class Kid {
-  String id, key, name, age, who;
+  /// age: '만 5세' 같은 글(링크·예전 기록용). birth: 태어난 해와 달 'YYYY-MM'. birth 가 있으면 age 는 거기서 계산한다.
+  String id, key, name, age, who, birth;
   Map<String, Rec> recs;
   List<Buy> buys;
   Map<String, dynamic>? ext, inv;
-  Kid({String? id, String? key, this.name = '', this.age = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
-      : id = id ?? 'k${rid()}', key = key ?? rid(), recs = recs ?? {}, buys = buys ?? [];
+  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
+      : id = id ?? 'k${rid()}', key = key ?? rid(), recs = recs ?? {}, buys = buys ?? [] {
+    if (ageOf(birth).$1.isNotEmpty) age = ageOf(birth).$1;
+  }
+
+  /// 화면에 보여 줄 나이: 생년월이 있으면 '만 5세 3개월', 없으면 예전에 고른 연령
+  String get ageText => ageOf(birth).$2.isNotEmpty ? ageOf(birth).$2 : age;
   Rec get cur => recs.putIfAbsent(who, () => Rec());
   bool get firstDone => buys.isNotEmpty || ext != null;
   double get nextPrice => firstDone ? Price.more : Price.first;
@@ -79,12 +95,12 @@ class Kid {
       ];
 
   Map<String, dynamic> toJson() => {
-        'id': id, 'key': key, 'name': name, 'age': age, 'who': who,
+        'id': id, 'key': key, 'name': name, 'age': age, if (birth.isNotEmpty) 'birth': birth, 'who': who,
         'recs': {for (final e in recs.entries) if (e.value.hasAny || e.key == who) e.key: e.value.toJson()},
         'buys': [for (final b in buys) b.toJson()], if (ext != null) 'ext': ext, if (inv != null) 'inv': inv,
       };
   factory Kid.fromJson(dynamic j) => Kid(
-        id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', who: '${j['who'] ?? '엄마'}',
+        id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', birth: '${j['birth'] ?? ''}', who: '${j['who'] ?? '엄마'}',
         recs: {for (final e in ((j['recs'] ?? {}) as Map).entries) '${e.key}': Rec.fromJson(e.value)},
         buys: [for (final b in (j['buys'] ?? []) as List) Buy.fromJson(b)],
         ext: (j['ext'] as Map?)?.cast<String, dynamic>(), inv: (j['inv'] as Map?)?.cast<String, dynamic>(),
@@ -187,6 +203,7 @@ class Store extends ChangeNotifier {
       }
       if (l.name.isEmpty) l.name = r.name;
       if (l.age.isEmpty) l.age = r.age;
+      if (l.birth.isEmpty) l.birth = r.birth;
       l.ext ??= r.ext;
       l.inv ??= r.inv;
       final ids = {for (final b in l.buys) b.id};
@@ -239,9 +256,13 @@ class Store extends ChangeNotifier {
 
   Kid? kidByKey(String key) => kids.where((k) => k.key == key).firstOrNull;
 
-  void setInfo({String? name, String? age}) {
+  void setInfo({String? name, String? age, String? birth}) {
     if (name != null) kid.name = name.trim();
     if (age != null) kid.age = age;
+    if (birth != null) {
+      kid.birth = birth;
+      if (ageOf(birth).$1.isNotEmpty) kid.age = ageOf(birth).$1;
+    }
     save();
   }
 

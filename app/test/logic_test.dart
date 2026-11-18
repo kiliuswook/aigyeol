@@ -133,4 +133,14 @@ void main() {
     expect(r.ans.isEmpty, true);
     expect(r.prev, isNotNull);
   });
+  test('태어난 해·달로 만 나이를 센다', () {
+    final now = DateTime(2026, 11, 19);
+    expect(ageOf('2021-03', now), ('만 5세', '만 5세 8개월'));
+    expect(ageOf('2021-11', now), ('만 5세', '만 5세'));
+    expect(ageOf('2021-12', now), ('만 4세', '만 4세 11개월'));
+    expect(ageOf('2021-', now), ('', ''));
+    final k = Kid.fromJson(Kid(birth: '2020-01').toJson());
+    expect(k.birth, '2020-01');
+    expect(k.age, startsWith('만 '));
+  });
 }

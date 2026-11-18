@@ -419,30 +419,6 @@ class Dots extends StatelessWidget {
       ]);
 }
 
-/// 아래에서 올라오는 창. 자세한 설명·고르기·보내기는 화면을 옮기지 않고 여기서 한다.
-Future<T?> sheet<T>(BuildContext ctx, List<Widget> Function(BuildContext c, StateSetter set) build, {String? title}) => showModalBottomSheet<T>(
-      context: ctx,
-      isScrollControlled: true,
-      backgroundColor: kBg,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
-      builder: (c) => StatefulBuilder(
-          builder: (c, set) => SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 18 + MediaQuery.of(c).viewInsets.bottom),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: MediaQuery.of(c).size.height * .82, maxWidth: 480),
-                    child: SingleChildScrollView(
-                      child: col([
-                        Center(child: Container(width: 44, height: 5, decoration: BoxDecoration(color: kLine, borderRadius: BorderRadius.circular(9)))),
-                        if (title != null) h2(title),
-                        ...build(c, set),
-                      ], gap: 12),
-                    ),
-                  ),
-                ),
-              )),
-    );
-
 /// 글줄 버튼(가벼운 보조 행동)
 Widget linkBtn(String t, VoidCallback onTap) => InkWell(
     onTap: onTap,
@@ -514,8 +490,8 @@ class _MoreBtnState extends State<MoreBtn> with SingleTickerProviderStateMixin {
       );
 }
 
-/// 가운데 뜨는 팝업창. 설명·읽는 법처럼 한 단계 더 들어가는 정보는 화면을 옮기지 않고 여기에 띄운다.
-/// (고르기·보내기처럼 누르는 일은 아래에서 올라오는 `sheet`)
+/// 가운데 뜨는 팝업창. 설명·읽는 법, 고르기·보내기·입력까지 한 단계 더 들어가는 것은 모두 여기에 띄운다.
+/// 아래에서 올라오는 창(bottom sheet)은 쓰지 않는다(2026-11-19 원더).
 Future<T?> popup<T>(BuildContext ctx, List<Widget> Function(BuildContext c, StateSetter set) build, {String? title, String? icon}) => showDialog<T>(
       context: ctx,
       barrierColor: const Color(0x8836405A),

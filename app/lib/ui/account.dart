@@ -74,7 +74,7 @@ class _AccountState extends State<AccountScreen> {
         ],
       ),
     ]),
-    muted('로그인하면 메일 주소와 검사 기록(아이 별명·연령, 답, 결제한 검사)이 서버(구글 Firebase, 서울)에 저장됩니다. 계정을 지우면 서버의 기록도 함께 지워집니다.'),
+    muted('로그인하면 메일 주소와 검사 기록(아이 별명·태어난 해와 달, 답, 결제한 검사)이 서버(구글 Firebase, 서울)에 저장됩니다. 계정을 지우면 서버의 기록도 함께 지워집니다.'),
   ];
 
   List<Widget> _verify() => [

@@ -58,7 +58,7 @@ class HomeView extends StatelessWidget {
                       child: Text.rich(
                           TextSpan(style: body, children: [
                             TextSpan(text: store.nm, style: const TextStyle(fontWeight: FontWeight.w700)),
-                            TextSpan(text: ' · ${kid.age.isEmpty ? '연령 미입력' : kid.age}', style: const TextStyle(color: kMuted)),
+                            TextSpan(text: ' · ${kid.ageText.isEmpty ? '나이 미입력' : kid.ageText}', style: const TextStyle(color: kMuted)),
                           ]),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis)),
