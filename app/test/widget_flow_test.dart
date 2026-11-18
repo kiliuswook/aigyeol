@@ -29,9 +29,17 @@ Future<void> walk(WidgetTester t) async {
     await t.tap(find.byType(MoreBtn).at(k));
     await t.pumpAndSettle();
     expect(find.byKey(const Key('back')), findsOneWidget);
-    while (find.byType(MoreBtn).evaluate().isNotEmpty) {
+    // 상세 안의 자세히 보기는 화면을 옮기지 않고 팝업창을 띄운다
+    if (find.byType(MoreBtn).evaluate().isNotEmpty) {
       await t.ensureVisible(find.byType(MoreBtn).first);
       await t.tap(find.byType(MoreBtn).first);
+      await t.pumpAndSettle();
+      expect(find.textContaining('이런 말은 피해 주세요'), findsOneWidget);
+      await t.tap(find.byKey(const Key('popup-close')));
+      await t.pumpAndSettle();
+      await t.tap(find.text('기질 설명'));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const Key('popup-close')));
       await t.pumpAndSettle();
     }
     while (find.byKey(const Key('back')).evaluate().isNotEmpty) {

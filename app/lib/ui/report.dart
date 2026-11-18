@@ -94,7 +94,7 @@ class _ReportViewState extends State<ReportView> {
 
   void info(Result r) {
     final kid = store.kid;
-    sheet(context, title: '검사 정보와 결과 읽는 법', (c, set) => [
+    popup(context, title: '검사 정보와 결과 읽는 법', (c, set) => [
           rich('66문항 · 5점 척도 · 응답 일관성 **${r.cons ?? '판단 불가'}** · 잘 모르겠다 ${r.unk}문항', style: small),
           muted(
               "이 보고서는 ${kid.who}가 관찰한 내용을 바탕으로 하므로 평가자의 시선이 반영됩니다. 다른 양육자가 답하면 결과가 달라질 수 있으며, '양육자 비교' 탭에서 나란히 볼 수 있습니다.${r.cons == '낮음' ? ' 이번 응답은 비슷한 문항 사이에 답이 엇갈린 경우가 많아, 시간을 두고 다시 검사해 보기를 권합니다.' : ''} 점수는 또래와 비교한 순위가 아니라 문항 응답으로 본 아이 안의 경향입니다. 기질에는 좋고 나쁨이 없으며, 이 검사는 의학적 진단이나 발달 평가를 대신하지 않습니다."),
@@ -137,7 +137,7 @@ class _ReportViewState extends State<ReportView> {
           linkBtn('공유 · 다시 검사', () => open('next')),
         ]),
       ], gap: 10),
-      for (var i = 0; i < r.ax.length; i++) ...{'ax$i': axisPage(r.ax[i], () => open('ax$i+')), 'ax$i+': axisMore(r.ax[i])},
+      for (var i = 0; i < r.ax.length; i++) 'ax$i': axisPage(r.ax[i]),
       'say': col([
         h2('${store.nm}에게 잘 통하는 말'),
         for (final x in r.ax) col([muted('${x.pole} 기질에게'), say(C.poles[x.letter]!.say)], gap: 4),
@@ -177,8 +177,8 @@ class _ReportViewState extends State<ReportView> {
             style: avoid ? const TextStyle(fontSize: 13, color: kMuted, decoration: TextDecoration.lineThrough) : disp(18, w: FontWeight.w400)),
       );
 
-  /// 축 상세: 막대·요약·세부 기질 3가지. 긴 설명과 말 가이드는 한 번 더 자세히 보기
-  Widget axisPage(AxScore x, VoidCallback more) {
+  /// 축 상세: 막대·요약·말 가이드·세부 기질 3가지. 더 깊은 내용(상황별 말 4가지, 기질 설명)은 팝업창
+  Widget axisPage(AxScore x) {
     final pl = C.poles[x.letter]!, bal = x.d < 8;
     return col([
       Row(children: [Expanded(child: Text('${x.a.hi} · ${x.a.lo}', style: disp(23))), Pill('${x.pole} ${x.clar}', x.a.c)]),
@@ -194,13 +194,13 @@ class _ReportViewState extends State<ReportView> {
               Expanded(child: Text('이렇게 말해 보세요', style: disp(24))),
             ]),
             Text('“${pl.say}”', style: disp(20, w: FontWeight.w400)),
-            Row(children: [const Expanded(child: Text('상황별 말 예시 4가지', style: smallMuted)), MoreBtn(more)]),
+            Row(children: [const Expanded(child: Text('상황별 말 예시 4가지', style: smallMuted)), MoreBtn(() => popup(context, title: '이렇게 말해 보세요', icon: 'i_bulb', (c, set) => axisMore(x)))]),
           ], gap: 8)),
       Row(children: [
         Expanded(child: muted('세부 기질 · ${x.a.q}')),
         linkBtn(
             '기질 설명',
-            () => sheet(context, title: '${x.pole} 기질', (c, set) => [
+            () => popup(context, title: '${x.pole} 기질', (c, set) => [
                   Wrap(spacing: 6, runSpacing: 6, children: [for (final t in pl.tags) Tag('#$t')]),
                   if (bal) rich('**균형에 가까움.** 상황에 따라 ${x.a.hi}, ${x.a.lo} 두 모습을 오가며, 굳이 나누면 ${x.pole} 쪽입니다.', style: small),
                   Text(pl.det, style: body),
@@ -210,16 +210,11 @@ class _ReportViewState extends State<ReportView> {
     ], gap: 10);
   }
 
-  /// 이렇게 말해 보세요: 상황 4가지와 그때 해 볼 말, 피하면 좋은 말
-  Widget axisMore(AxScore x) {
+  /// 이렇게 말해 보세요 팝업: 상황 4가지와 그때 해 볼 말, 피하면 좋은 말
+  List<Widget> axisMore(AxScore x) {
     final pl = C.poles[x.letter]!;
-    return col([
-      Row(children: [
-        Image.asset('assets/ui/i_bulb.webp', width: 30, height: 30),
-        const SizedBox(width: 8),
-        Expanded(child: Text('이렇게 말해 보세요', style: disp(24))),
-        Pill(x.pole, x.a.c),
-      ]),
+    return [
+      Align(alignment: Alignment.centerLeft, child: Pill('${x.pole} 기질에게', x.a.c)),
       for (var i = 0; i < pl.says.length; i++)
         NineBox(nSoft,
             padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
@@ -228,7 +223,7 @@ class _ReportViewState extends State<ReportView> {
               Text('“${pl.says[i][1]}”', style: disp(19, w: FontWeight.w400)),
             ], gap: 3)),
       col([muted('이런 말은 피해 주세요'), say(pl.no, avoid: true)], gap: 4),
-    ], gap: 9);
+    ];
   }
 
   Widget subRow(Ax a, Sub s, int? sc) => sc == null
@@ -386,7 +381,7 @@ class _ReportViewState extends State<ReportView> {
                 SizedBox(width: 24, child: Text(o.r.ax[x.i].letter, textAlign: TextAlign.right, style: disp(17))),
               ]),
           ], gap: 4),
-        linkBtn('읽는 법', () => sheet(context, title: '읽는 법', (c, set) => [
+        linkBtn('읽는 법', () => popup(context, title: '읽는 법', (c, set) => [
               Text("점 위치는 0~100 점수입니다. 가운데 옅은 띠(40~60)는 균형 구간입니다. 같은 방향이어도 ${Cmp.same}점 넘게 벌어지면 '정도가 다름'으로 표시합니다.", style: small),
               for (final x in splitAx) Text('${x.a.hi}·${x.a.lo}: ${rs.map((o) => '${o.who}는 ${o.r.ax[x.i].pole}').join(', ')} 쪽으로 보았습니다. ${x.a.q}의 모습이 함께 있는 사람이나 장소에 따라 달라질 수 있습니다.', style: small),
             ])),

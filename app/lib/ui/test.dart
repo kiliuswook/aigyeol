@@ -35,7 +35,7 @@ class _TestScreenState extends State<TestScreen> {
     }
   }
 
-  void help() => sheet(context, title: '답하기 애매할 때', (c, set) => [
+  void help() => popup(context, title: '답하기 애매할 때', (c, set) => [
         Text("'보통이다'는 그럴 때도 있고 아닐 때도 있다는 뜻입니다. 예시와 꼭 같지 않아도 비슷한 모습이면 됩니다.", style: small),
         Text("떠오르는 장면이 없으면 '잘 모르겠다'를 골라 주세요. 그 문항은 점수에 넣지 않고 비슷한 다른 문항으로 판단합니다.", style: small),
         if (re) Text('다시 검사 중에는 선택지 옆에 지난번 나(${store.cur.prev!.date})와 다른 양육자가 고른 답이 보입니다. 지난 답에 맞추지 말고 요즘 모습대로 골라 주세요.', style: small),

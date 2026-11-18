@@ -513,3 +513,34 @@ class _MoreBtnState extends State<MoreBtn> with SingleTickerProviderStateMixin {
         ),
       );
 }
+
+/// 가운데 뜨는 팝업창. 설명·읽는 법처럼 한 단계 더 들어가는 정보는 화면을 옮기지 않고 여기에 띄운다.
+/// (고르기·보내기처럼 누르는 일은 아래에서 올라오는 `sheet`)
+Future<T?> popup<T>(BuildContext ctx, List<Widget> Function(BuildContext c, StateSetter set) build, {String? title, String? icon}) => showDialog<T>(
+      context: ctx,
+      barrierColor: const Color(0x8836405A),
+      builder: (c) => StatefulBuilder(
+          builder: (c, set) => Dialog(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                insetPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 28),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 440),
+                  child: NineBox(nCard,
+                      padding: const EdgeInsets.fromLTRB(18, 12, 12, 18),
+                      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                        Row(children: [
+                          if (icon != null) ...[Image.asset('assets/ui/$icon.webp', width: 28, height: 28), const SizedBox(width: 8)],
+                          Expanded(child: Text(title ?? '', style: disp(23))),
+                          InkWell(
+                            key: const Key('popup-close'),
+                            borderRadius: BorderRadius.circular(22),
+                            onTap: () => Navigator.of(c).pop(),
+                            child: SizedBox(width: 44, height: 44, child: Center(child: Image.asset('assets/ui/i_close.webp', width: 22, height: 22))),
+                          ),
+                        ]),
+                        Flexible(child: SingleChildScrollView(padding: const EdgeInsets.only(right: 6, top: 4), child: col(build(c, set), gap: 10))),
+                      ])),
+                ),
+              )),
+    );

@@ -11,7 +11,7 @@ Widget priceNote() => rich(
     '아이마다 첫 검사 **${Price.fmt(Price.first)}**, 그 아이의 다른 양육자 검사와 다시 검사하기는 **${Price.fmt(Price.more)}**입니다. 동생·형제는 새 아이로 등록하면 첫 검사 ${Price.fmt(Price.first)}입니다. 자동 결제는 없습니다.',
     style: small);
 
-Future<void> priceSheet(BuildContext context) => sheet(context, title: '가격 안내', (c, set) => [
+Future<void> priceSheet(BuildContext context) => popup(context, title: '가격 안내', (c, set) => [
       priceNote(),
       muted("결과는 기간 없이 계속 볼 수 있습니다. 엄마, 아빠, 할머니처럼 양육자마다 따로 답하면 리포트의 '양육자 비교'에서 서로 다르게 본 점을 정리해 드립니다."),
       muted('시제품이라 실제 결제는 일어나지 않습니다. 앱 출시 때 구글 플레이 결제로 연결됩니다.'),
