@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../content.dart';
@@ -34,10 +35,26 @@ String ga(String w) {
   return w + ((c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 != 0) ? '이' : '가');
 }
 
-/// 지금은 휴대폰 공유 창으로 보낸다(카카오톡 선택 가능). 카카오 SDK 는 원더가 카카오 앱 키를 준 뒤에 붙인다.
+/// 휴대폰 공유 창으로 보낸다.
 Future<void> doShare(BuildContext ctx, String kind, {String role = ''}) async {
   final (title, text, url) = shareMsg(kind, role: role);
   await SharePlus.instance.share(ShareParams(text: '$title\n$text\n$url', subject: title));
+}
+
+const _shareCh = MethodChannel('childmbti/share');
+
+/// 카카오톡으로 바로 보낸다(공유 창 없이 카카오톡 친구 고르기 화면). 카카오 앱 키가 필요 없다.
+/// 카카오톡이 없거나 안드로이드가 아니면 휴대폰 공유 창으로 대신한다.
+/// 카카오 앱 키를 받으면 카카오 SDK 의 카드형 공유(그림·버튼)로 바꿀 수 있다: docs/systems/kakao-share.md
+Future<void> doKakao(BuildContext ctx, String kind, {String role = ''}) async {
+  final (title, text, url) = shareMsg(kind, role: role);
+  var ok = false;
+  try {
+    ok = await _shareCh.invokeMethod<bool>('kakao', {'text': '$title\n$text\n$url'}) ?? false;
+  } catch (_) {}
+  if (ok) return;
+  if (ctx.mounted) toast(ctx, '카카오톡을 열 수 없어 공유 창으로 보냅니다.');
+  if (ctx.mounted) await doShare(ctx, kind, role: role);
 }
 
 Future<void> saveBackup(BuildContext ctx) async {

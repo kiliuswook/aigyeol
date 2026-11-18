@@ -21,7 +21,7 @@ class _ShareViewState extends State<ShareView> {
 
   // 카카오톡 · 다른 앱 · 링크 복사를 한 줄로
   Widget buttons(String kind, {String role = ''}) => Row(children: [
-        Expanded(flex: 13, child: KakaoBtn(() => doShare(context, kind, role: role), label: '카카오톡')),
+        Expanded(flex: 13, child: KakaoBtn(() => doKakao(context, kind, role: role), label: '카카오톡')),
         const SizedBox(width: 8),
         Expanded(flex: 10, child: Btn('다른 앱', () => doShare(context, kind, role: role), kind: BtnKind.ghost, dense: true)),
         const SizedBox(width: 8),
@@ -95,7 +95,6 @@ class _ShareViewState extends State<ShareView> {
         }, kind: BtnKind.ghost),
             ], gap: 10)),
       ]),
-      muted('시제품: 카카오 앱 키를 넣기 전이라 카카오톡으로 보내기는 휴대폰 공유 창(카카오톡 선택 가능)으로 보냅니다.'),
       Align(alignment: Alignment.centerLeft, child: TextButton(onPressed: openPrivacy, child: const Text('개인정보처리방침'))),
     ]);
   }
