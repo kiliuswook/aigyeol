@@ -80,6 +80,8 @@ class HomeView extends StatelessWidget {
                   Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: '${store.nm}의 '), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), const TextSpan(text: '는?')]), textAlign: TextAlign.center),
                   const SizedBox(height: 4),
                   Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [Tag(kid.firstDone ? '추가 검사 ${Price.fmt(pr)}' : '첫 검사 ${Price.fmt(pr)}'), const Tag('66문항'), const Tag('약 10분')]),
+                  const SizedBox(height: 6),
+                  const Text('기질검사 + 성격검사 정밀 리포트', style: smallMuted, textAlign: TextAlign.center),
                 ],
               ])),
         ),
@@ -126,7 +128,17 @@ class HomeView extends StatelessWidget {
           const SizedBox(height: 4),
           Text.rich(TextSpan(style: disp(30), children: const [TextSpan(text: '우리 아이의 '), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: '는 무엇일까요?')])),
           const SizedBox(height: 4),
-          muted('66문항 · 약 10분 · 네 글자 유형과 정밀 리포트'),
+          for (final (t, d) in const [('기질검사', '타고난 성향 4축과 세부 기질 12가지'), ('성격검사', '경험으로 자라는 끈기 · 스스로 힘 · 함께 힘')])
+            Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Padding(padding: const EdgeInsets.only(top: 2), child: Image.asset('assets/ui/i_check.webp', width: 18, height: 18)),
+                const SizedBox(width: 8),
+                Expanded(child: rich('**$t** $d', style: small)),
+              ]),
+            ),
+          const SizedBox(height: 4),
+          muted('전문기관 결과지 같은 정밀 리포트 · 66문항 · 약 10분 · 첫 검사 ${Price.fmt(Price.first)}'),
         ]),
         foot: [
           Btn('시작하기', () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen())), kind: BtnKind.dark),
