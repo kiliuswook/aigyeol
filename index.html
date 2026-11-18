@@ -970,7 +970,7 @@ const demoTools=()=>`<details><summary class="small muted">시제품 확인용 �
 // store: 구글 플레이 주소(출시 뒤 채움). 비어 있으면 '앱 받기' 대신 웹 검사로 보낸다.
 // SITE: 공유·초대·결과 링크에 쓰는 앱 주소. 자체 도메인으로 바꿀 때는 직접 고치지 말고 tools/set_domain.py 를 쓴다(og 태그, CNAME 까지 함께 바꿈).
 const SITE='https://childmbti.wonderwheel.co.kr/';
-const SHARE={kakaoKey:'', web:SITE, store:'', img:SITE+'assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
+const SHARE={kakaoKey:'7f384e7c7f27f5981b1e8dd43f5953ff', web:SITE, store:'', img:SITE+'assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
 const b64e=o=> btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const b64d=s=>{ try{ s=s.replace(/-/g,'+').replace(/_/g,'/'); return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))); }catch(e){ return null; } };
 // 문항 답을 66글자로: 문항 순서대로 0~5, 답 없음은 '-'
@@ -1000,7 +1000,7 @@ async function copyLink(u){ try{ await navigator.clipboard.writeText(u); }catch(
 // via: 'kakao' 카카오톡 공유 카드, 'any' 휴대폰 공유 창, 'copy' 링크 복사
 async function doShare(kind,via){ const o=msg(kind);
   if(via==='kakao'){ if(await kakaoReady()){ try{ Kakao.Share.sendDefault({objectType:'feed',content:{title:o.title,description:o.text,imageUrl:o.img||SHARE.img,link:{mobileWebUrl:o.url,webUrl:o.url}},buttons:[{title:o.btn,link:{mobileWebUrl:o.url,webUrl:o.url}}]}); return; }catch(e){} }
-    toast('카카오 앱 키를 연결하기 전이라 휴대폰 공유 창으로 보냅니다.'); }
+    toast('카카오톡 공유를 열 수 없어 휴대폰 공유 창으로 보냅니다.'); }
   if(via!=='copy'&&navigator.share){ try{ await navigator.share({title:o.title,text:o.title+'\n'+o.text,url:o.url}); return; }catch(e){ if(e.name==='AbortError') return; } }
   copyLink(o.url); }
 const shareBtns=kind=>`<div class="sharerow"><button class="btn kakao" data-share="${kind}" data-via="kakao" aria-label="카카오톡으로 보내기">카카오톡</button><button class="btn ghost" data-share="${kind}" data-via="any">다른 앱</button><button class="btn ghost" data-share="${kind}" data-via="copy">링크 복사</button></div>`;

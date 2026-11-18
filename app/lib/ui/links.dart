@@ -1,8 +1,10 @@
 // 공유(휴대폰 공유 창), 개인정보처리방침 열기, 기록 파일 저장·불러오기, 받은 링크 읽기
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart' as kk;
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../content.dart';
@@ -43,15 +45,46 @@ Future<void> doShare(BuildContext ctx, String kind, {String role = ''}) async {
 
 const _shareCh = MethodChannel('childmbti/share');
 
-/// 카카오톡으로 바로 보낸다(공유 창 없이 카카오톡 친구 고르기 화면). 카카오 앱 키가 필요 없다.
-/// 카카오톡이 없거나 안드로이드가 아니면 휴대폰 공유 창으로 대신한다.
-/// 카카오 앱 키를 받으면 카카오 SDK 의 카드형 공유(그림·버튼)로 바꿀 수 있다: docs/systems/kakao-share.md
+/// 카카오 개발자 콘솔 앱 '내 아이의 MBTI'(ID 1656799)의 키. 둘 다 공개되는 값이다(앱·웹 코드에 들어감).
+/// 네이티브 키는 패키지 이름·키 해시(플레이 앱 서명 키, 업로드 키)가 등록된 앱에서만,
+/// JavaScript 키는 등록된 도메인에서만 쓸 수 있다. 설정 docs/systems/kakao-share.md
+const kKakaoNativeKey = '29136e8e9e21e8bbdab28bceee0dbd57';
+const kKakaoJsKey = '7f384e7c7f27f5981b1e8dd43f5953ff';
+
+void initKakao() => kk.KakaoSdk.init(nativeAppKey: kKakaoNativeKey, javaScriptAppKey: kKakaoJsKey);
+
+/// 공유 카드 버튼 글자
+String _btnTitle(String kind) => switch (kind) {
+      'invite' => '검사하러 가기',
+      'back' => '결과 합치기',
+      'result' => '우리 아이도 검사하기',
+      _ => '앱 보러 가기',
+    };
+
+/// 카카오톡으로 보낸다.
+/// 1) 카카오 SDK 카드 공유(그림·제목·버튼). 2) 안 되면 카카오톡에 글+링크로 바로 보내기(앱 키 불필요).
+/// 3) 카카오톡이 없으면 휴대폰 공유 창.
 Future<void> doKakao(BuildContext ctx, String kind, {String role = ''}) async {
   final (title, text, url) = shareMsg(kind, role: role);
-  var ok = false;
+  final u = Uri.parse(url);
   try {
-    ok = await _shareCh.invokeMethod<bool>('kakao', {'text': '$title\n$text\n$url'}) ?? false;
-  } catch (_) {}
+    if (await kk.ShareClient.instance.isKakaoTalkSharingAvailable()) {
+      await kk.ShareClient.instance.shareDefault(
+          template: kk.FeedTemplate(
+        content: kk.Content(title: title, description: text, imageUrl: Uri.parse('${kSite}assets/og.png'), link: kk.Link(webUrl: u, mobileWebUrl: u)),
+        buttons: [kk.Button(title: _btnTitle(kind), link: kk.Link(webUrl: u, mobileWebUrl: u))],
+      ));
+      return;
+    }
+  } catch (e) {
+    debugPrint('kakao share: $e');
+  }
+  var ok = false;
+  if (!kIsWeb) {
+    try {
+      ok = await _shareCh.invokeMethod<bool>('kakao', {'text': '$title\n$text\n$url'}) ?? false;
+    } catch (_) {}
+  }
   if (ok) return;
   if (ctx.mounted) toast(ctx, '카카오톡을 열 수 없어 공유 창으로 보냅니다.');
   if (ctx.mounted) await doShare(ctx, kind, role: role);

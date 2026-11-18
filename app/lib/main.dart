@@ -8,9 +8,11 @@ import 'ui/home.dart';
 import 'ui/report.dart';
 import 'ui/more.dart';
 import 'ui/share.dart';
+import 'ui/links.dart' show initKakao;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initKakao();
   await Future.wait([loadContent(), preloadUi(), store.load()]);
   // 웹(미리 보기)은 Firebase 웹 설정이 없어 로그인·동기화를 켜지 않는다
   if (!kIsWeb) await sync.init();
