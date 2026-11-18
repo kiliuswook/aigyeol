@@ -138,7 +138,7 @@ class HomeView extends StatelessWidget {
               ]),
             ),
           const SizedBox(height: 4),
-          muted('전문기관 결과지 같은 정밀 리포트 · 66문항 · 약 10분 · 첫 검사 ${Price.fmt(Price.first)}'),
+          muted('기질 이론 기반 정밀 분석 리포트 · 66문항 · 약 10분 · 첫 검사 ${Price.fmt(Price.first)}'),
         ]),
         foot: [
           Btn('시작하기', () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen())), kind: BtnKind.dark),
