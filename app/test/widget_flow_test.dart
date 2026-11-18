@@ -118,6 +118,14 @@ void main() {
       await t.pumpAndSettle();
       await walk(t);
     }
+    // 양육자를 바꾸면 그 사람의 결과로 바뀐다
+    await t.tap(find.textContaining('아빠 · ').first);
+    await t.pumpAndSettle();
+    expect(store.kid.who, '아빠');
+    expect(find.textContaining(store.kid.who == '아빠' ? 'ESTP' : 'ISTJ'), findsWidgets);
+    await t.tap(find.textContaining('엄마 · ').first);
+    await t.pumpAndSettle();
+    expect(find.textContaining(store.kid.who == '아빠' ? 'ESTP' : 'ISTJ'), findsWidgets);
     await t.tap(find.byKey(const Key('sample-close')));
     await t.pumpAndSettle();
     expect(store.demo, isNull);

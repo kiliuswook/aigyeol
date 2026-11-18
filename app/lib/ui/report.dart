@@ -6,6 +6,7 @@ import '../main.dart';
 import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
+import 'insight.dart';
 import 'kit.dart';
 import 'setup.dart';
 
@@ -69,7 +70,7 @@ class _ReportViewState extends State<ReportView> {
         'root': col([
           pages[0],
           for (var i = 1; i < pages.length; i++) Row(children: [Expanded(child: Text(titles[i], style: disp(19))), MoreBtn(() => open('p$i'))]),
-        ], gap: 14),
+        ], gap: 8),
         for (var i = 1; i < pages.length; i++) 'p$i': pages[i],
       };
 
@@ -309,19 +310,32 @@ class _ReportViewState extends State<ReportView> {
   /// 긴 목록을 쪽으로 나눈다
   List<List<T>> chunk<T>(List<T> l, int n) => [for (var i = 0; i < l.length; i += n) l.sublist(i, min(i + n, l.length))];
 
+  /// 해석 한 덩어리: 굵은 머리 + 본문 (+ 질문·조언 상자)
+  Widget insight(String head, String text, {String? tip, String? tipLabel, Widget? right}) => col([
+        Row(children: [Expanded(child: Text(head, style: disp(19))), if (right != null) right]),
+        Text(text, style: small),
+        if (tip != null) Note(rich('**${tipLabel ?? '함께 이야기해 보세요'}** $tip', style: small)),
+      ], gap: 6);
+
+  /// 숫자 한 칸(요약용)
+  Widget stat(String n, String label) => Expanded(
+      child: NineBox(nSoft,
+          padding: const EdgeInsets.fromLTRB(6, 8, 6, 10),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            FittedBox(fit: BoxFit.scaleDown, child: Text(n, style: disp(24))),
+            Text(label, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: kMuted)),
+          ])));
+
   // ---------- 양육자 비교 탭 ----------
   Map<String, Widget> cgTab(void Function(String) open) {
     final kid = store.kid, nm = store.nm, all = kid.cgs, fin = all.where((e) => fullDone(e.value.ans)).toList();
-    final head = [
-      eyebrow('양육자 비교'),
-      h2('양육자마다 다르게 본 점'),
-    ];
     if (fin.length < 2) {
       return hub(open, const [''], [
         col([
-          ...head,
+          eyebrow('양육자 비교'),
+          h2('양육자마다 다르게 본 점'),
           muted('같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다.'),
-          rich("**비교할 양육자가 아직 없습니다.** 정밀검사를 마친 양육자가 두 명 이상이면 이곳에 결과가 나란히 정리됩니다. 지금 마친 사람: ${fin.isEmpty ? '없음' : fin.map((e) => e.key).join(', ')}.", style: small),
+          rich("**비교할 양육자가 아직 없습니다.** 정밀검사를 마친 양육자가 두 명 이상이면 일치도, 다르게 본 이유, 함께 정할 약속까지 이곳에 정리됩니다. 지금 마친 사람: ${fin.isEmpty ? '없음' : fin.map((e) => e.key).join(', ')}.", style: small),
           Tile('이 휴대폰에서 다른 양육자 검사', icon: 'i_heart', sub: '추가 검사 ${Price.fmt(Price.more)}', onTap: () => addWho(context, invite: () => tab.value = 2)),
           Tile('다른 휴대폰으로 초대 보내기', icon: 'i_share', sub: '결과를 보내 주면 이곳에 합쳐집니다', onTap: () => tab.value = 2),
         ])
@@ -334,43 +348,87 @@ class _ReportViewState extends State<ReportView> {
         () {
           final sc = rs.map((x) => x.r.ax[i].sc), letters = rs.map((x) => x.r.ax[i].letter).toSet(), range = sc.reduce(max) - sc.reduce(min);
           final split = letters.length > 1;
-          return (a: C.axes[i], i: i, split: split, v: split ? ('시선이 갈림', 'c1') : range >= Cmp.same ? ('정도가 다름', 'c3') : ('비슷하게 봄', 'c2'));
+          return (a: C.axes[i], i: i, split: split, range: range, v: split ? ('시선이 갈림', 'c1') : range >= Cmp.same ? ('정도가 다름', 'c3') : ('비슷하게 봄', 'c2'));
         }()
     ];
     final splitAx = axv.where((x) => x.split).toList();
+    final diffAx = axv.where((x) => x.split || x.range >= Cmp.same).toList(), sameAx = axv.where((x) => !x.split).toList();
     final summary = codes.length == 1
         ? '${rs.map((x) => x.who).join(', ')} 모두 **${codes.first} ${C.nick[codes.first]}**로 같은 유형이 나왔습니다.'
         : '${rs.map((x) => '${x.who}는 **${x.r.code}**').join(', ')}로 유형이 다르게 나왔습니다.';
     final summary2 = splitAx.isNotEmpty ? ' **${splitAx.map((x) => '${x.a.hi}·${x.a.lo}').join(', ')}** 축에서 방향이 갈렸고, 나머지 ${4 - splitAx.length}축은 같은 방향입니다.' : ' 네 축 모두 같은 방향으로 보았습니다.';
-    final split = [
+    // 문항별 답 차이
+    final spreads = [
       for (final it in C.items)
         () {
           final a = rs.map((o) => o.rec.ans[it.id]).whereType<int>().where((x) => x > 0).toList();
-          return (it: it, spread: a.length > 1 ? a.reduce(max) - a.reduce(min) : 0);
+          return (it: it, n: a.length, spread: a.length > 1 ? a.reduce(max) - a.reduce(min) : 0);
         }()
-    ].where((x) => x.spread >= Cmp.gap).toList()
-      ..sort((x, y) => y.spread - x.spread);
+    ];
+    final both = spreads.where((x) => x.n > 1).toList(), close = both.where((x) => x.spread <= 1).length;
+    final agree = both.isEmpty ? null : (close * 100 / both.length).round();
+    final split = spreads.where((x) => x.spread >= Cmp.gap).toList()..sort((x, y) => y.spread - x.spread);
     Widget qrow(Item it) => col([
           Text(it.t, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
           Wrap(spacing: 12, children: [for (final o in rs) rich('**${o.who}** ${optName(o.rec.ans[it.id])}', style: small)]),
         ], gap: 2);
-    final qs = chunk(split.map((x) => x.it).toList(), 4);
-    return hub(open, ['', '기질 4축, 사람마다', '자라는 힘, 사람마다', if (qs.length <= 1) '답이 크게 갈린 문항' else for (var i = 0; i < qs.length; i++) '답이 크게 갈린 문항 ${i + 1}/${qs.length}'], [
-      col([
-        ...head,
-        rich(summary + summary2),
-        Wrap(spacing: 14, runSpacing: 8, children: [
-          for (final o in rs)
-            Row(mainAxisSize: MainAxisSize.min, children: [
-              mascot(o.r.code, size: 60),
-              const SizedBox(width: 6),
-              Flexible(child: col([Text(o.who, style: const TextStyle(fontWeight: FontWeight.w700)), muted('${o.r.code} · ${o.rec.date}')], gap: 0, x: CrossAxisAlignment.start)),
+    // 세부 기질 12가지: 사람마다 점수 차
+    final subv = [
+      for (var ai = 0; ai < C.axes.length; ai++)
+        for (var si = 0; si < C.axes[ai].subs.length; si++)
+          () {
+            final sc = [for (final o in rs) (who: o.who, s: o.r.ax[ai].subs[si])].where((x) => x.s != null).toList();
+            if (sc.length < 2) return null;
+            final hi = sc.reduce((a, b) => a.s! >= b.s! ? a : b), lo = sc.reduce((a, b) => a.s! <= b.s! ? a : b);
+            return (a: C.axes[ai], s: C.axes[ai].subs[si], sc: sc, hi: hi, lo: lo, range: hi.s! - lo.s!);
+          }()
+    ].nonNulls.toList()
+      ..sort((x, y) => y.range - x.range);
+    final subFar = subv.where((x) => x.range >= Cmp.same).take(3).toList(), subNear = subv.reversed.where((x) => x.range < Cmp.same).take(3).toList();
+    Widget subCmp(dynamic x) => col([
+          Row(children: [Expanded(child: Text(x.s.n, style: const TextStyle(fontWeight: FontWeight.w700))), Text([for (final o in x.sc) '${o.who} ${o.s}'].join(' · '), style: small)]),
+          for (final o in x.sc)
+            Row(children: [
+              SizedBox(width: 64, child: Text(o.who, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12.5, color: kMuted))),
+              Expanded(child: Track(o.s, x.a.c, thin: true)),
             ]),
+          if (x.range >= Cmp.same) muted('${x.hi.who}는 ${x.s.hi} 쪽으로, ${x.lo.who}는 ${x.s.lo} 쪽으로 더 보았습니다.'),
+        ], gap: 3);
+    // 자라는 힘
+    final grv = [
+      for (var gi = 0; gi < C.grows.length; gi++)
+        () {
+          final sc = rs.map((o) => o.r.gr[gi].sc).toList(), ok = sc.whereType<int>().toList();
+          return (g: C.grows[gi], sc: sc, range: ok.length > 1 ? ok.reduce(max) - ok.reduce(min) : null);
+        }()
+    ];
+    final level = agree == null ? '' : agree >= 80 ? '매우 비슷하게 보고 있습니다' : agree >= 60 ? '대체로 비슷하게 보고 있습니다' : '서로 다른 장면을 많이 보고 있습니다';
+    return hub(open, [
+      '',
+      '기질 4축, 사람마다',
+      '다르게 본 이유와 대화',
+      '세부 기질 비교',
+      '자라는 힘, 사람마다',
+      '함께 지키는 약속',
+      '답이 크게 갈린 문항${split.isEmpty ? '' : ' ${split.length}'}',
+    ], [
+      col([
+        eyebrow('양육자 비교 · ${rs.map((x) => x.who).join(', ')}'),
+        rich(summary + summary2, style: small),
+        Row(children: [
+          stat(agree == null ? '-' : '$agree%', '답 일치도'),
+          const SizedBox(width: 6),
+          stat('${4 - splitAx.length}/4', '같은 방향 축'),
+          const SizedBox(width: 6),
+          stat('${split.length}', '크게 갈린 문항'),
         ]),
-        muted('어느 쪽이 맞다는 뜻이 아니라, $nm${ga2(nm)} 사람과 상황에 따라 다른 모습을 보인다는 단서입니다.'),
-      ]),
+        if (agree != null) muted('함께 답한 ${both.length}문항 중 $close문항이 한 칸 이내로 같았습니다. $level.'),
+      ], gap: 8),
       col([
         h2('기질 4축, 사람마다'),
+        Wrap(spacing: 12, runSpacing: 4, children: [
+          for (final o in rs) Row(mainAxisSize: MainAxisSize.min, children: [mascot(o.r.code, size: 40), const SizedBox(width: 4), Flexible(child: rich('**${o.who}** ${o.r.code}', style: small))]),
+        ]),
         for (final x in axv)
           col([
             Row(children: [Expanded(child: Text('${x.a.lo} ← → ${x.a.hi}', style: disp(18))), Pill(x.v.$1, x.v.$2)]),
@@ -378,37 +436,69 @@ class _ReportViewState extends State<ReportView> {
               Row(children: [
                 SizedBox(width: 64, child: Text(o.who, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700))),
                 Expanded(child: Track(o.r.ax[x.i].sc, x.a.c, thin: true)),
-                SizedBox(width: 24, child: Text(o.r.ax[x.i].letter, textAlign: TextAlign.right, style: disp(17))),
+                SizedBox(width: 44, child: Text('${o.r.ax[x.i].letter} ${o.r.ax[x.i].sc}', textAlign: TextAlign.right, style: small)),
               ]),
           ], gap: 4),
         linkBtn('읽는 법', () => popup(context, title: '읽는 법', (c, set) => [
-              Text("점 위치는 0~100 점수입니다. 가운데 옅은 띠(40~60)는 균형 구간입니다. 같은 방향이어도 ${Cmp.same}점 넘게 벌어지면 '정도가 다름'으로 표시합니다.", style: small),
-              for (final x in splitAx) Text('${x.a.hi}·${x.a.lo}: ${rs.map((o) => '${o.who}는 ${o.r.ax[x.i].pole}').join(', ')} 쪽으로 보았습니다. ${x.a.q}의 모습이 함께 있는 사람이나 장소에 따라 달라질 수 있습니다.', style: small),
+              Text("점 위치는 0~100 점수입니다. 가운데 옅은 띠(40~60)는 균형 구간입니다. 방향(글자)이 다르면 '시선이 갈림', 같은 방향이어도 ${Cmp.same}점 넘게 벌어지면 '정도가 다름'으로 표시합니다.", style: small),
+              Text('어느 쪽이 맞다는 뜻이 아니라, $nm${ga2(nm)} 사람과 상황에 따라 다른 모습을 보인다는 단서입니다.', style: small),
             ])),
-      ], gap: 10),
+      ], gap: 9),
+      col([
+        h2('다르게 본 이유와 대화'),
+        if (diffAx.isEmpty)
+          Text('네 축 모두 비슷하게 보았습니다. $nm${ga2(nm)} 누구 앞에서나 한결같은 모습을 보인다는 뜻이고, 양육자들이 아이를 같은 눈으로 보고 있다는 좋은 신호입니다. 같은 말과 같은 순서로 대해 주면 아이가 더 편안해합니다.', style: body)
+        else
+          for (final x in diffAx.take(2))
+            insight('${x.a.hi} · ${x.a.lo}', '${rs.map((o) => '${o.who}는 ${o.r.ax[x.i].pole} ${o.r.ax[x.i].sc}').join(', ')}. ${cgWhy[x.a.id]}', tip: cgAsk[x.a.id], right: Pill(x.v.$1, x.v.$2)),
+        if (diffAx.length > 2)
+          Align(
+              alignment: Alignment.centerLeft,
+              child: linkBtn('나머지 ${diffAx.length - 2}개 축 더 보기', () => popup(context, title: '다르게 본 이유와 대화', (c, set) => [
+                    for (final x in diffAx.skip(2)) insight('${x.a.hi} · ${x.a.lo}', '${rs.map((o) => '${o.who}는 ${o.r.ax[x.i].pole} ${o.r.ax[x.i].sc}').join(', ')}. ${cgWhy[x.a.id]}', tip: cgAsk[x.a.id]),
+                  ]))),
+      ], gap: 12),
+      col([
+        h2('세부 기질 비교'),
+        muted('세부 기질 12가지 중 가장 다르게 본 것과 가장 비슷하게 본 것입니다.'),
+        if (subFar.isNotEmpty) ...[eyebrow('가장 다르게 본 세부 기질'), for (final x in subFar) subCmp(x)] else const Text('크게 다르게 본 세부 기질이 없습니다.', style: small),
+        if (subNear.isNotEmpty) ...[
+          eyebrow('가장 비슷하게 본 세부 기질'),
+          Text(subNear.map((x) => '${x.s.n}(${[for (final o in x.sc) '${o.s}'].join('·')})').join(', '), style: small),
+        ],
+      ], gap: 9),
       col([
         h2('자라는 힘, 사람마다'),
-        for (var gi = 0; gi < C.grows.length; gi++)
-          () {
-            final sc = rs.map((o) => o.r.gr[gi].sc).toList(), ok = sc.whereType<int>().toList();
-            final range = ok.length > 1 ? ok.reduce(max) - ok.reduce(min) : null;
-            return Row(children: [
-              SizedBox(width: 72, child: Text(C.grows[gi].n, style: const TextStyle(fontWeight: FontWeight.w700))),
-              Expanded(child: Text([for (var k = 0; k < rs.length; k++) '${rs[k].who} ${sc[k] ?? '판단 안 함'}'].join(' · '), style: small)),
-              if (range != null) Pill(range < Cmp.same ? '비슷하게 봄' : '정도가 다름', range < Cmp.same ? 'c2' : 'c3'),
-            ]);
-          }(),
-        Note(rich("**함께 맞춰 보기.** 시선이 갈린 축은 $nm${ga2(nm)} ${splitAx.isNotEmpty ? '그 사람 앞에서' : '상황에 따라'} 다른 모습을 보이는 부분일 수 있습니다. 양육자끼리 '잘 통하는 말'을 하나 정해 같은 말로 대해 주면 아이가 덜 헷갈립니다.", style: small)),
-      ], gap: 14),
-      if (qs.isEmpty)
-        col([h2('답이 크게 갈린 문항'), muted('${Cmp.gap}칸 이상 벌어진 문항이 없습니다. 양육자들이 $nm${ga2(nm)} 꽤 비슷하게 보고 있습니다.')])
-      else
-        for (var i = 0; i < qs.length; i++)
+        for (final x in grv)
           col([
-            h2('답이 크게 갈린 문항${qs.length > 1 ? ' ${i + 1}/${qs.length}' : ''}'),
-            if (i == 0) muted('${Cmp.gap}칸 이상 다른 답을 고른 문항 ${split.length}개입니다. 이 장면을 언제, 어디서 봤는지 서로 이야기해 보세요.'),
-            for (final it in qs[i]) qrow(it),
-          ], gap: 14),
+            Row(children: [
+              SizedBox(width: 72, child: Text(x.g.n, style: const TextStyle(fontWeight: FontWeight.w700))),
+              Expanded(child: Text([for (var k = 0; k < rs.length; k++) '${rs[k].who} ${x.sc[k] ?? '판단 안 함'}'].join(' · '), style: small)),
+              if (x.range != null) Pill(x.range! < Cmp.same ? '비슷하게 봄' : '정도가 다름', x.range! < Cmp.same ? 'c2' : 'c3'),
+            ]),
+            if (x.range != null && x.range! >= Cmp.same) muted(cgGrowWhy[x.g.id]!),
+          ], gap: 4),
+        if (grv.every((x) => x.range == null || x.range! < Cmp.same)) muted('자라는 힘은 모두 비슷하게 보았습니다. 끈기, 스스로 힘, 함께 힘은 경험으로 자라므로, 같은 기준으로 칭찬해 주면 더 빨리 자랍니다.'),
+      ], gap: 12),
+      col([
+        h2('함께 지키는 약속'),
+        for (var i = 0; i < cgPromises.length; i++) col([Text('${i + 1}. ${cgPromises[i].$1}', style: const TextStyle(fontWeight: FontWeight.w700)), muted(cgPromises[i].$2)], gap: 2),
+        if (sameAx.isNotEmpty) ...[
+          eyebrow('모두 같은 방향으로 본 기질 · 함께 쓸 말'),
+          for (final x in sameAx.take(2)) col([muted('${rs.first.r.ax[x.i].pole} 기질에게'), say(C.poles[rs.first.r.ax[x.i].letter]!.say)], gap: 3),
+        ],
+      ], gap: 10),
+      col([
+        h2('답이 크게 갈린 문항'),
+        if (split.isEmpty)
+          Text('${Cmp.gap}칸 이상 벌어진 문항이 없습니다. 양육자들이 $nm${ga2(nm)} 꽤 비슷하게 보고 있습니다.', style: small)
+        else ...[
+          muted('${Cmp.gap}칸 이상 다른 답을 고른 문항 ${split.length}개 중 차이가 큰 순서입니다. 이 장면을 언제, 어디서 봤는지 서로 이야기해 보세요.'),
+          for (final x in split.take(4)) qrow(x.it),
+          if (split.length > 4)
+            Align(alignment: Alignment.centerLeft, child: linkBtn('나머지 ${split.length - 4}문항 더 보기', () => popup(context, title: '답이 크게 갈린 문항', (c, set) => [for (final x in split.skip(4)) qrow(x.it)]))),
+        ],
+      ], gap: 12),
     ]);
   }
 
@@ -417,21 +507,22 @@ class _ReportViewState extends State<ReportView> {
     final kid = store.kid, cur = store.cur, pv = cur.prev;
     final head = [
       eyebrow('이전 검사와 비교 · ${kid.who}'),
-      h2('다시 검사로 달라진 점'),
-      if (pv != null) muted('이전 ${pv.date.isEmpty ? '날짜 없음' : pv.date} → 이번 ${cur.date} · 평가자 ${pv.who.isEmpty ? kid.who : pv.who}${pv.sample ? ' · 샘플 예시 기록' : ''}'),
+      if (pv != null) muted('이전 ${pv.date.isEmpty ? '날짜 없음' : pv.date} → 이번 ${cur.date}${pv.sample ? ' · 샘플 예시 기록' : ''}'),
     ];
     if (pv == null) {
       return hub(open, const [''], [
         col([
           ...head,
-          rich("**비교 기록 없음.** ${kid.who}의 이전 검사 기록이 없습니다. 다시 검사하면 지금 결과가 이전 기록으로 남고, 다시 답한 결과와 나란히 정리됩니다.", style: small),
-          Tile('다시 검사하기 · ${Price.fmt(Price.more)}', icon: 'i_retry', sub: '시간이 지나 달라진 점을 봅니다', onTap: () => startRetest(context)),
+          h2('다시 검사로 달라진 점'),
+          rich("**비교 기록 없음.** ${kid.who}의 이전 검사 기록이 없습니다. 다시 검사하면 지금 결과가 이전 기록으로 남고, 유형·4축·세부 기질·자라는 힘이 어떻게 달라졌는지와 그 뜻을 정리해 드립니다.", style: small),
+          muted('기질은 천천히 변하므로 3~6개월 간격으로 다시 검사하면 변화를 가장 잘 볼 수 있습니다.'),
+          if (store.demo == null) Tile('다시 검사하기 · ${Price.fmt(Price.more)}', icon: 'i_retry', sub: '시간이 지나 달라진 점을 봅니다', onTap: () => startRetest(context)),
         ])
       ]);
     }
     if (pv.who.isNotEmpty && pv.who != kid.who) {
       return hub(open, const [''], [
-        col([...head, rich("**평가자가 달라 직접 비교하기 어렵습니다.** 이전 검사는 ${pv.who}, 이번 검사는 ${kid.who}가 답했습니다. 양육자 사이의 차이는 '양육자 비교' 탭에서 볼 수 있습니다.", style: small)])
+        col([...head, h2('다시 검사로 달라진 점'), rich("**평가자가 달라 직접 비교하기 어렵습니다.** 이전 검사는 ${pv.who}, 이번 검사는 ${kid.who}가 답했습니다. 양육자 사이의 차이는 '양육자 비교' 탭에서 볼 수 있습니다.", style: small)])
       ]);
     }
     final axr = pv.ax == null
@@ -449,43 +540,61 @@ class _ReportViewState extends State<ReportView> {
     final moved = axr.where((o) => o.flip || o.d.abs() >= Cmp.same).toList();
     final subs = pv.sub == null
         ? []
-        : [
+        : ([
             for (final x in r.ax)
-              for (var i = 0; i < x.a.subs.length; i++) (s: x.a.subs[i], ps: pv.sub![x.a.id]?[i], cs: x.subs[i])
-          ].where((o) => o.ps != null && o.cs != null && (o.cs! - o.ps!).abs() >= Cmp.sub).toList();
+              for (var i = 0; i < x.a.subs.length; i++) (a: x.a, s: x.a.subs[i], ps: pv.sub![x.a.id]?[i], cs: x.subs[i])
+          ].where((o) => o.ps != null && o.cs != null && (o.cs! - o.ps!).abs() >= Cmp.sub).toList()
+            ..sort((a, b) => (b.cs! - b.ps!).abs() - (a.cs! - a.ps!).abs()));
     final pa = pv.ans, ca = cur.ans;
     final ch = pa == null ? <Item>[] : C.items.where((it) => pa[it.id] != null && ca[it.id] != null && pa[it.id] != ca[it.id]).toList();
     final big = ch.where((it) => pa![it.id]! > 0 && ca[it.id]! > 0 && (pa[it.id]! - ca[it.id]!).abs() >= Cmp.gap).toList()
       ..sort((a, b) => (pa![b.id]! - ca[b.id]!).abs() - (pa[a.id]! - ca[a.id]!).abs());
     final unkCh = ch.where((it) => pa![it.id] == 0 || ca[it.id] == 0).length;
-    final sum = (pv.code == r.code ? '유형은 **${r.code}** 그대로입니다.' : '유형이 **${pv.code}**에서 **${r.code}**로 바뀌었습니다.') +
-        (axr.isNotEmpty ? (moved.isNotEmpty ? ' 4축 중 **${moved.map((o) => '${o.x.a.hi}·${o.x.a.lo}').join(', ')}** 축이 움직였고, 나머지는 비슷합니다.' : ' 4축 모두 비슷합니다.') : '') +
-        (pa != null ? ' ${C.items.length}문항 중 **${ch.length}문항**의 답이 바뀌었습니다.' : '');
+    final sum = (pv.code == r.code ? '유형은 **${r.code} ${C.nick[r.code]}** 그대로입니다.' : '유형이 **${pv.code}**에서 **${r.code}**로 바뀌었습니다.') +
+        (axr.isNotEmpty ? (moved.isNotEmpty ? ' 4축 중 **${moved.map((o) => '${o.x.a.hi}·${o.x.a.lo}').join(', ')}** 축이 움직였고, 나머지는 비슷합니다.' : ' 4축 모두 비슷합니다.') : '');
     Widget qrow(Item it) => col([
           Text(it.t, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
           Wrap(spacing: 12, children: [rich('**이전** ${optName(pa![it.id])}', style: small), rich('**지금** ${optName(ca[it.id])}', style: small)]),
         ], gap: 2);
+    Widget subRow2(dynamic o) => col([
+          Row(children: [Expanded(child: Text(o.s.n, style: const TextStyle(fontWeight: FontWeight.w700))), Text('${o.ps} → ${o.cs}', style: small)]),
+          Track(o.cs, o.a.c, thin: true, was: o.ps),
+          muted('${o.cs! > o.ps! ? o.s.hi : o.s.lo} 쪽으로 ${(o.cs! - o.ps!).abs()}점 움직였습니다.'),
+        ], gap: 3);
     final g = compareGrow(r, pv, kid.who, ca);
     const cmpv = [('비슷함', 'c2'), ('자랐음', 'c4'), ('낮아졌음', 'c1')];
     Widget typeMini(String label, String code, {bool faded = false}) => Row(mainAxisSize: MainAxisSize.min, children: [
-          if (C.nick.containsKey(code)) Opacity(opacity: faded ? .6 : 1, child: mascot(code, size: 60)),
-          const SizedBox(width: 6),
-          Flexible(child: col([muted(label), rich('**$code** ${C.nick[code] ?? ''}', style: small)], gap: 0, x: CrossAxisAlignment.start)),
+          if (C.nick.containsKey(code)) Opacity(opacity: faded ? .6 : 1, child: mascot(code, size: 40)),
+          const SizedBox(width: 4),
+          Flexible(child: col([rich('$label **$code**', style: small), Text(C.nick[code] ?? '', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: kMuted))], gap: 0, x: CrossAxisAlignment.start)),
         ]);
-    final sp = chunk(subs, 5), qs = chunk(big, 4);
+    // 다음 검사까지 지켜볼 것
+    final watch = [...moved.map((o) => '${o.x.a.hi}·${o.x.a.lo}'), ...subs.take(2).map((o) => '${o.s.n}')];
+    dynamic top;
+    for (final o in moved) {
+      if (top == null || o.d.abs() > top.d.abs()) top = o;
+    }
     return hub(open, [
       '',
       if (axr.isNotEmpty) '기질 4축 변화',
-      for (var i = 0; i < sp.length; i++) '달라진 세부 기질${sp.length > 1 ? ' ${i + 1}/${sp.length}' : ''}',
+      if (axr.isNotEmpty) '변화가 뜻하는 것',
+      if (pv.sub != null) '달라진 세부 기질${subs.isEmpty ? '' : ' ${subs.length}'}',
       if (g.rows.isNotEmpty) '자라는 힘 변화',
-      if (pa != null && qs.isEmpty) '답이 크게 바뀐 문항',
-      for (var i = 0; i < qs.length; i++) '답이 크게 바뀐 문항${qs.length > 1 ? ' ${i + 1}/${qs.length}' : ''}',
+      if (pa != null) '답이 크게 바뀐 문항${big.isEmpty ? '' : ' ${big.length}'}',
+      '다음 검사까지',
     ], [
       col([
         ...head,
-        rich(sum),
-        Wrap(spacing: 14, runSpacing: 8, children: [typeMini('이전', pv.code, faded: true), typeMini('지금', r.code)]),
-      ]),
+        rich(sum, style: small),
+        Row(children: [Expanded(child: typeMini('이전', pv.code, faded: true)), const SizedBox(width: 6), Expanded(child: typeMini('지금', r.code))]),
+        Row(children: [
+          stat('${moved.length}/4', '움직인 축'),
+          const SizedBox(width: 6),
+          stat('${subs.length}/12', '달라진 세부 기질'),
+          const SizedBox(width: 6),
+          stat(pa == null ? '-' : '${ch.length}', '바뀐 답'),
+        ]),
+      ], gap: 8),
       if (axr.isNotEmpty)
         col([
           h2('기질 4축 변화'),
@@ -499,31 +608,70 @@ class _ReportViewState extends State<ReportView> {
               ]),
             ], gap: 6),
           muted("빈 동그라미: 이전, 색 점: 지금. ${Cmp.same}점보다 작은 차이는 '비슷함'"),
-          const Note(Text("두 검사 사이의 차이는 아이가 자란 모습일 수도, 답한 날의 기분이나 최근 일의 영향일 수도 있습니다.")),
+          const Note(Text('두 검사 사이의 차이는 아이가 자란 모습일 수도, 답한 날의 기분이나 최근 일의 영향일 수도 있습니다.')),
         ], gap: 14),
-      for (var i = 0; i < sp.length; i++)
+      if (axr.isNotEmpty)
         col([
-          h2('달라진 세부 기질${sp.length > 1 ? ' ${i + 1}/${sp.length}' : ''}'),
-          for (final o in sp[i])
+          h2('변화가 뜻하는 것'),
+          if (moved.isEmpty)
+            Text('네 축 모두 지난번과 비슷합니다. $chgStable 지금 쓰고 있는 말과 방식이 아이에게 잘 맞고 있다는 뜻이기도 합니다.', style: body)
+          else
+            for (final o in moved.take(2))
+              insight('${o.x.a.hi} · ${o.x.a.lo}', chgMove[o.x.letter]!, tipLabel: '이렇게 말해 보세요', tip: '“${C.poles[o.x.letter]!.say}”', right: Pill(o.v.$1, o.v.$2)),
+          if (moved.length > 2)
+            Align(
+                alignment: Alignment.centerLeft,
+                child: linkBtn('나머지 ${moved.length - 2}개 축 더 보기', () => popup(context, title: '변화가 뜻하는 것', (c, set) => [
+                      for (final o in moved.skip(2)) insight('${o.x.a.hi} · ${o.x.a.lo}', chgMove[o.x.letter]!, tipLabel: '이렇게 말해 보세요', tip: '“${C.poles[o.x.letter]!.say}”'),
+                    ]))),
+          if (moved.isNotEmpty && moved.length < 4) muted('나머지 ${4 - moved.length}개 축은 $chgStable'),
+        ], gap: 12),
+      if (pv.sub != null)
+        col([
+          h2('달라진 세부 기질'),
+          if (subs.isEmpty)
+            Text('세부 기질 12가지 모두 ${Cmp.sub}점 안쪽으로만 움직였습니다. 큰 변화 없이 안정적입니다.', style: small)
+          else ...[
+            muted('세부 기질 12가지 중 ${Cmp.sub}점 이상 움직인 ${subs.length}가지입니다. 많이 움직인 순서입니다.'),
+            for (final o in subs.take(4)) subRow2(o),
+            if (subs.length > 4)
+              Align(alignment: Alignment.centerLeft, child: linkBtn('나머지 ${subs.length - 4}가지 더 보기', () => popup(context, title: '달라진 세부 기질', (c, set) => [for (final o in subs.skip(4)) subRow2(o)]))),
+          ],
+        ], gap: 10),
+      if (g.rows.isNotEmpty)
+        col([
+          h2('자라는 힘 변화'),
+          for (final o in g.rows)
             col([
-              Row(children: [Expanded(child: Text(o.s.n, style: const TextStyle(fontWeight: FontWeight.w700))), Text('이전 ${o.ps} → 지금 ${o.cs}', style: small)]),
-              muted('${o.cs! > o.ps! ? o.s.hi : o.s.lo} 쪽으로 ${(o.cs! - o.ps!).abs()}점 움직였습니다.'),
-            ], gap: 2),
-        ], gap: 14),
-      if (g.rows.isNotEmpty) col([h2('자라는 힘 변화'), for (final o in g.rows) growRow(o, cmpv)], gap: 14),
-      if (pa != null && qs.isEmpty)
+              growRow(o, cmpv),
+              if (o.skip == null) muted(o.v == 0 ? chgGrowSame : chgGrow[o.x.g.id]![o.v! - 1]),
+            ], gap: 4),
+        ], gap: 12),
+      if (pa != null)
         col([
           h2('답이 크게 바뀐 문항'),
-          muted('${Cmp.gap}칸 이상 바뀐 문항은 없습니다.'),
+          muted('${C.items.length}문항 중 ${ch.length}문항의 답이 바뀌었고, 그중 ${Cmp.gap}칸 이상 바뀐 문항은 ${big.length}개입니다.${big.isEmpty ? '' : ' 이 장면에서 요즘 무엇이 달라졌는지 떠올려 보세요.'}'),
+          for (final it in big.take(4)) qrow(it),
+          if (big.length > 4)
+            Align(alignment: Alignment.centerLeft, child: linkBtn('나머지 ${big.length - 4}문항 더 보기', () => popup(context, title: '답이 크게 바뀐 문항', (c, set) => [for (final it in big.skip(4)) qrow(it)]))),
           if (unkCh > 0) muted("'잘 모르겠다'로 바뀌었거나 '잘 모르겠다'에서 답이 생긴 문항이 $unkCh개 있습니다."),
-        ]),
-      for (var i = 0; i < qs.length; i++)
+        ], gap: 12),
+      col([
+        h2('다음 검사까지'),
         col([
-          h2('답이 크게 바뀐 문항${qs.length > 1 ? ' ${i + 1}/${qs.length}' : ''}'),
-          if (i == 0) muted('${Cmp.gap}칸 이상 다른 답을 고른 문항 ${big.length}개입니다. 이 장면에서 요즘 무엇이 달라졌는지 떠올려 보세요.'),
-          for (final it in qs[i]) qrow(it),
-          if (i == qs.length - 1 && unkCh > 0) muted("'잘 모르겠다'로 바뀌었거나 '잘 모르겠다'에서 답이 생긴 문항이 $unkCh개 있습니다."),
-        ], gap: 14),
+          const Text('1. 지켜볼 것', style: TextStyle(fontWeight: FontWeight.w700)),
+          muted(watch.isEmpty ? '큰 변화가 없었습니다. 새 기관, 이사, 동생처럼 환경이 바뀔 때 아이의 반응을 눈여겨봐 주세요.' : '${watch.join(', ')}. 이 모습이 계속되는지, 특정한 날에만 그런지 지켜봐 주세요.'),
+        ], gap: 2),
+        col([
+          const Text('2. 해 볼 것', style: TextStyle(fontWeight: FontWeight.w700)),
+          muted(top == null ? "기질 탭의 '이렇게 말해 보세요' 문장 중 하나를 골라 2주 동안 써 보세요." : "가장 크게 움직인 ${top.x.a.hi}·${top.x.a.lo} 축의 '이렇게 말해 보세요' 문장을 2주 동안 써 보세요."),
+        ], gap: 2),
+        col([
+          const Text('3. 다시 검사할 때', style: TextStyle(fontWeight: FontWeight.w700)),
+          muted('기질은 천천히 변하므로 3~6개월 뒤가 알맞습니다. 같은 사람이 답해야 변화를 정확히 볼 수 있습니다.'),
+        ], gap: 2),
+        if (store.demo == null) Tile('다시 검사하기 · ${Price.fmt(Price.more)}', icon: 'i_retry', sub: '지금 결과가 이전 기록으로 남습니다', onTap: () => startRetest(context)),
+      ], gap: 12),
     ]);
   }
 }

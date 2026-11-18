@@ -61,7 +61,10 @@ class SampleScreen extends StatelessWidget {
                     ])),
               ),
             ),
-            Expanded(child: ListenableBuilder(listenable: store, builder: (c, _) => store.demo == null ? const SizedBox() : const ReportView())),
+            Expanded(child: ListenableBuilder(listenable: store, builder: (c, _) => store.demo == null ? const SizedBox() : 
+                // const 이면 양육자를 바꿔도 다시 그려지지 않는다
+                // ignore: prefer_const_constructors
+                ReportView())),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
               child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 480), child: SizedBox(width: double.infinity, child: Btn('샘플 닫고 내 아이 검사하기', () => Navigator.of(context).pop(), kind: BtnKind.dark))),
