@@ -29,5 +29,5 @@
 ## 남은 일
 
 1. ASC 신규 앱 만들기(크롬, API 로 못 함).
-2. Codemagic 에 이 저장소(`kiliuswook/aigyeol`) 추가 → Fetch profiles 로 `ChildMBTI App Store` 받기(참조 이름 `childmbti_app_store`) → 빌드.
+2. Codemagic 빌드 시작(앱 `aigyeol` 은 2026-11-19 추가, 프로파일 `ChildMBTI App Store` 는 참조 이름 `childmbti_app_store` 로 받아 둠).
 3. 빌드가 VALID 가 되면 내부 테스트 그룹 만들기(`asc_setup.py internal`).

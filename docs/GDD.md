@@ -120,6 +120,7 @@
 - AAB: `cd app; flutter build appbundle --release` → `app/build/app/outputs/bundle/release/app-release.aab`, 이름 붙인 사본 `childmbti-<버전>+<빌드>.aab`. "failed to strip debug symbols" 는 SDK 경로 공백 때문에 나는 알림이라 AAB 는 정상.
 - 콘솔 앱 콘텐츠 선언(2026-11-18 완료): 정부 앱·금융·건강 해당 없음, 광고 없음, 콘텐츠 등급 IARC 3+(브라질 14, 디지털 구매 때문), 타겟층 만 18세 이상, 데이터 보안(로그인한 사람만 이름·이메일·사용자 ID·구매 내역·검사 기록 수집, 공유 안 함, 계정 삭제 URL delete-account.html), 카테고리 출산/육아, 앱 액세스는 로그인 선택 안내문. 값은 `release/play-store/CONSOLE_GUIDE.md`.
 - 공개 테스트(beta 트랙): 2026-11-18 versionCode 1(1.0.0) 올림, 국가 대한민국만, 한국어 출시 노트. 앱이 처음 게시 전(draft)이라 API 로는 draft 버전만 만들 수 있어, 콘솔 "버전 미리보기 및 확인 → 저장 → 게시 개요 → 검토를 위해 변경사항 11개 제출"로 심사에 보냄. 관리형 게시는 꺼져 있어 승인되면 바로 공개된다. 프로덕션 트랙은 비어 있음.
+- 2026-11-19 beta 트랙에 versionCode 2(1.0.1) 를 API 로 전체 출시(completed) 커밋(draft 제한 없이 됨). 출시 노트 ko-KR "화면을 앱답게 새로 구성했어요. …카카오톡 공유를 고쳤어요." 관리형 게시가 꺼져 있어 커밋과 함께 검토로 넘어간다. 프로덕션은 여전히 비어 있음.
 - 남은 문제: 앱에 구글 플레이 결제 연결이 아직 없다(결제 버튼이 바로 검사를 연다). 결제를 붙이면 앱 액세스 안내문도 고쳐야 한다.
 
 ## 7. 그림
