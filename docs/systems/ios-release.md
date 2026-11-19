@@ -13,7 +13,7 @@
 | ASC 앱 | '내 아이의 MBTI', Apple ID 6836670196, SKU `childmbti`, 기본 언어 한국어 (2026-11-19 크롬으로 만듦) |
 | 빌드 | Codemagic 워크플로 `ios-testflight` (저장소 루트 `codemagic.yaml`, `working_directory: app`) |
 | 최소 iOS | 15.0 (`project.pbxproj`) |
-| TestFlight | 1.0.1 빌드 1 VALID (Codemagic 첫 빌드, 커밋 ef15f44). 내부 테스트 그룹 '내부 테스트'(모든 빌드 자동)에 원더 계정 |
+| TestFlight | 1.0.1 빌드 1 VALID (Codemagic 첫 빌드, 커밋 ef15f44). 내부 테스트 그룹 '내부 테스트'(모든 빌드 자동)에 팀 계정 contact@ 만. 외부 그룹 '외부 테스트'에 kilius@naver.com, 2026-11-19 빌드 1 베타 심사 제출(WAITING_FOR_BETA_REVIEW). 통과하면 초대 메일이 간다 |
 
 ## 빌드 방법
 
@@ -29,5 +29,5 @@
 ## 남은 일
 
 - 정식 심사 제출은 하지 않는다(결제가 시제품). 인앱결제를 붙이고 원더가 내라고 할 때 등록정보·스크린샷(`store/appstore/`, appstore-connect 스킬)과 함께 낸다.
-- 외부 테스터(원더 개인 메일 등)는 외부 그룹 + 베타 심사가 필요하다(스킬 9번).
+- 외부 테스터는 내부 그룹에 못 넣는다(내부 그룹은 ASC 팀 사용자만). 새 빌드도 외부 그룹에 붙이고 베타 심사를 다시 받아야 외부 테스터에게 간다.
 - iOS 계정 기능을 쓰려면 Firebase 에 iOS 앱을 만들고 `GoogleService-Info.plist` 를 넣는다.
