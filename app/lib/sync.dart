@@ -6,9 +6,21 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 
 import 'store.dart';
+
+/// iOS Firebase 설정 (Firebase 콘솔 프로젝트 childmbti-wonderwheel 의 iOS 앱, 2026-11-19 등록).
+/// GoogleService-Info.plist 를 Xcode 프로젝트에 넣는 대신 코드로 넘긴다. API 키는 앱에 들어가는 공개 키다(google-services.json 과 같음).
+const _iosOptions = FirebaseOptions(
+  apiKey: 'AIzaSyAG7qZZ5xAP_6AwjqkX3sHIMgwDIDjSHwc',
+  appId: '1:799874537360:ios:dd24a7bc0ac936976d0515',
+  messagingSenderId: '799874537360',
+  projectId: 'childmbti-wonderwheel',
+  storageBucket: 'childmbti-wonderwheel.firebasestorage.app',
+  iosBundleId: 'kr.co.wonderwheel.childmbti',
+);
 
 class Sync extends ChangeNotifier {
   /// Firebase 를 쓸 수 있는 기기인지(안드로이드 앱). 웹 미리보기·테스트에서는 false.
@@ -28,7 +40,8 @@ class Sync extends ChangeNotifier {
 
   Future<void> init() async {
     try {
-      await Firebase.initializeApp();
+      // 안드로이드는 google-services.json, iOS 는 아래 값(Firebase 콘솔 iOS 앱 '내 아이의 MBTI iOS')으로 연다
+      await Firebase.initializeApp(options: defaultTargetPlatform == TargetPlatform.iOS ? _iosOptions : null);
       _auth.setLanguageCode('ko');
       ready = true;
     } catch (_) {

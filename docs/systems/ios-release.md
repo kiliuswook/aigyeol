@@ -24,10 +24,10 @@
 - `Info.plist` 에 `ITSAppUsesNonExemptEncryption=false` (표준 HTTPS 만 씀).
 - `.github/workflows/ios.yml` 은 서명 없는 빌드 확인만 한다(GitHub 맥 러너).
 - 결제는 아직 시제품이라 iOS 빌드도 결제 없이 열린다. 그래서 정식 심사 제출은 하지 않고 TestFlight 까지만 한다(애플은 인앱결제 연결이 필요).
-- 계정(Firebase 로그인)은 iOS 에 `GoogleService-Info.plist` 가 없어 iOS 에서는 쓸 수 없다(`sync.dart` 가 초기화 실패를 잡아 계정 화면에 안내만 보인다). 또래 평균 통계는 REST 로 읽고 써서 iOS 에서도 된다.
+- 계정(Firebase 메일 로그인·동기화): Firebase 프로젝트 `childmbti-wonderwheel` 에 iOS 앱 '내 아이의 MBTI iOS'(앱 ID `1:799874537360:ios:dd24a7bc0ac936976d0515`, 2026-11-19 콘솔에서 등록)를 만들고, `GoogleService-Info.plist` 를 Xcode 프로젝트에 넣는 대신 `app/lib/sync.dart` 의 `_iosOptions` 로 값을 넘긴다(안드로이드는 `google-services.json`). 메일 인증·비밀번호 재설정은 Firebase 기본 웹 페이지 링크라 iOS 에 URL 스킴이 따로 필요 없다. 또래 평균 통계는 REST 라 로그인과 상관없다.
 
 ## 남은 일
 
 - 정식 심사 제출은 하지 않는다(결제가 시제품). 인앱결제를 붙이고 원더가 내라고 할 때 등록정보·스크린샷(`store/appstore/`, appstore-connect 스킬)과 함께 낸다.
 - 외부 테스터는 내부 그룹에 못 넣는다(내부 그룹은 ASC 팀 사용자만). 새 빌드도 외부 그룹에 붙이고 베타 심사를 다시 받아야 외부 테스터에게 간다.
-- iOS 계정 기능을 쓰려면 Firebase 에 iOS 앱을 만들고 `GoogleService-Info.plist` 를 넣는다.
+- iOS 계정 기능은 다음 TestFlight 빌드부터 들어간다(빌드 1 에는 없음).
