@@ -1,0 +1,24 @@
+# iOS 빌드 확인(서명 없이). 맥이 없어 GitHub 의 맥 러너에서 빌드가 되는지만 본다.
+# 앱스토어 업로드(서명·TestFlight)는 애플 개발자 계정과 App Store Connect 키가 준비되면 이 파일에 단계를 더한다.
+name: iOS build
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['app/ios/**', 'app/pubspec.yaml', '.github/workflows/ios.yml']
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter build ios --release --no-codesign
