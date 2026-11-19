@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^6.2.0
   cloud_firestore: ^6.0.0
   kakao_flutter_sdk_share: ^2.1.0
+  video_player: ^2.11.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
     - assets/data/
     - assets/ui/
     - assets/img/
+    - assets/video/
   fonts:
     - family: Gaegu
       fonts:
