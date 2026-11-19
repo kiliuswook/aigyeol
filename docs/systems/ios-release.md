@@ -13,7 +13,7 @@
 | ASC 앱 | '내 아이의 MBTI', Apple ID 6836670196, SKU `childmbti`, 기본 언어 한국어 (2026-11-19 크롬으로 만듦) |
 | 빌드 | Codemagic 워크플로 `ios-testflight` (저장소 루트 `codemagic.yaml`, `working_directory: app`) |
 | 최소 iOS | 15.0 (`project.pbxproj`) |
-| TestFlight | 1.0.1 빌드 1 VALID (Codemagic 첫 빌드, 커밋 ef15f44). 내부 테스트 그룹 '내부 테스트'(모든 빌드 자동)에 팀 계정 contact@ 만. 외부 그룹 '외부 테스트'에 kilius@naver.com, 2026-11-19 빌드 1 베타 심사 제출(WAITING_FOR_BETA_REVIEW). 통과하면 초대 메일이 간다 |
+| TestFlight | 1.0.1 (1), 1.0.2 (2), 1.0.2 (3, 영상 스플래시·커밋 632db1b). 내부 그룹 '내부 테스트'(모든 빌드 자동, 팀 계정 contact@)에 셋 다. 외부 그룹 '외부 테스트'(kilius@naver.com)에 1.0.1 (1)·1.0.2 (3), 둘 다 2026-11-19 베타 심사 제출(WAITING_FOR_BETA_REVIEW). 통과하면 초대 메일이 간다 |
 
 ## 빌드 방법
 
