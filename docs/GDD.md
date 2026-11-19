@@ -140,3 +140,4 @@
 - [양육자별 검사 · 다시 검사하기](systems/caregivers.md): 양육자 프로필, 양육자 비교 탭, 달라진 점 탭, 재검사 화면의 이전 답 표시, 검사별 결제
 - [결제·공유](systems/pay-share.md): 검사 1회 결제, 자녀 등록, 카카오톡 공유, 공동 양육자 초대와 결과 합치기, 기록 파일
 - [자체 도메인](systems/domain.md): 도메인 바꾸는 도구, DNS, 카카오 도메인 등록
+- [iOS 출시](systems/ios-release.md): 번들 ID·프로파일, Codemagic 빌드, TestFlight 상태
