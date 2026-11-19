@@ -10,10 +10,10 @@
 | Apple 팀 | 원더휠 주식회사 (팀 키, `%USERPROFILE%\keystores\appstore\`) |
 | 번들 ID | `kr.co.wonderwheel.childmbti` (2026-11-19 API 로 등록, 이름 ChildMBTI) |
 | 배포 프로파일 | `ChildMBTI App Store` (2026-11-19, 팀 배포 인증서 `wonderwheel_distribution`) |
-| ASC 앱 | 아직 없음. 만들 값: 이름 '내 아이의 MBTI', 기본 언어 한국어, SKU `childmbti` |
+| ASC 앱 | '내 아이의 MBTI', Apple ID 6836670196, SKU `childmbti`, 기본 언어 한국어 (2026-11-19 크롬으로 만듦) |
 | 빌드 | Codemagic 워크플로 `ios-testflight` (저장소 루트 `codemagic.yaml`, `working_directory: app`) |
 | 최소 iOS | 15.0 (`project.pbxproj`) |
-| TestFlight | 아직 없음 |
+| TestFlight | 1.0.1 빌드 1 VALID (Codemagic 첫 빌드, 커밋 ef15f44). 내부 테스트 그룹 '내부 테스트'(모든 빌드 자동)에 원더 계정 |
 
 ## 빌드 방법
 
@@ -28,6 +28,6 @@
 
 ## 남은 일
 
-1. ASC 신규 앱 만들기(크롬, API 로 못 함).
-2. Codemagic 빌드 시작(앱 `aigyeol` 은 2026-11-19 추가, 프로파일 `ChildMBTI App Store` 는 참조 이름 `childmbti_app_store` 로 받아 둠).
-3. 빌드가 VALID 가 되면 내부 테스트 그룹 만들기(`asc_setup.py internal`).
+- 정식 심사 제출은 하지 않는다(결제가 시제품). 인앱결제를 붙이고 원더가 내라고 할 때 등록정보·스크린샷(`store/appstore/`, appstore-connect 스킬)과 함께 낸다.
+- 외부 테스터(원더 개인 메일 등)는 외부 그룹 + 베타 심사가 필요하다(스킬 9번).
+- iOS 계정 기능을 쓰려면 Firebase 에 iOS 앱을 만들고 `GoogleService-Info.plist` 를 넣는다.
