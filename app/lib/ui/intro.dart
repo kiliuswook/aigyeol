@@ -127,7 +127,21 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
   /// 타이틀 화면: 그림과 앱 소개. 버튼 없이 화면을 터치하면 시작한다.
   Widget title() => SafeArea(
         key: const ValueKey('title'),
-        child: Frame(
+        child: Stack(children: [
+          Positioned.fill(child: titleBody()),
+          // 화면 한가운데에서 깜빡이는 안내 (터치는 화면 전체가 받는다)
+          Center(
+            child: IgnorePointer(
+              child: FadeTransition(
+                opacity: CurvedAnimation(parent: _blink, curve: Curves.easeInOut),
+                child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10), child: Text('화면을 터치하면 시작해요', style: disp(24, color: kAccentInk))),
+              ),
+            ),
+          ),
+        ]),
+      );
+
+  Widget titleBody() => Frame(
           body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Expanded(
               child: ClipRRect(
@@ -155,13 +169,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
               ),
             const SizedBox(height: 6),
             Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text('전문기관 수준의 정밀 리포트 · 66문항 · 약 10분 · 첫 검사 ${Price.fmt(Price.first)}', maxLines: 1, style: smallMuted))),
-            const SizedBox(height: 22),
-            FadeTransition(
-              opacity: Tween(begin: .25, end: 1.0).animate(_blink),
-              child: Center(child: Text('화면을 터치하면 시작해요', style: disp(22, color: kAccentInk))),
-            ),
             const SizedBox(height: 18),
           ]),
-        ),
-      );
+        );
 }
