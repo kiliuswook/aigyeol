@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/main.dart';
 import 'package:childmbti/ui/account.dart';
+import 'package:childmbti/ui/intro.dart';
 import 'package:childmbti/ui/kit.dart';
 import 'package:childmbti/stats.dart';
 import 'package:childmbti/store.dart';
@@ -16,7 +17,7 @@ final sent = <String>[];
 /// 서버에 모인 검사 건수(가짜)
 var statN = 3;
 
-Future<void> boot(WidgetTester t, Size size) async {
+Future<void> boot(WidgetTester t, Size size, {bool intro = false}) async {
   SharedPreferences.setMockInitialValues({});
   await t.runAsync(() async {
     await loadContent();
@@ -32,6 +33,7 @@ Future<void> boot(WidgetTester t, Size size) async {
     return http.Response(q.method == 'POST' ? '{}' : '{"fields":{"n":{"integerValue":"$statN"},"sA":{"integerValue":"150"},"sG1":{"integerValue":"300"}}}', 200);
   });
   tab.value = 0;
+  introDone.value = !intro;
   await t.binding.setSurfaceSize(size);
   await t.pumpWidget(const App());
   await t.pump();
@@ -152,6 +154,23 @@ void main() {
       expect(find.text('리포트 보기'), findsOneWidget);
     });
   }
+
+  testWidgets('인트로: 원더휠 스플래시 → 타이틀(버튼 없음) → 화면을 터치하면 홈', (t) async {
+    await boot(t, const Size(360, 640), intro: true);
+    expect(find.byKey(const ValueKey('splash')), findsOneWidget);
+    expect(find.text('시작하기'), findsNothing);
+    await t.pump(const Duration(milliseconds: 1900));
+    await t.pump(const Duration(milliseconds: 600));
+    expect(find.text('화면을 터치하면 시작해요'), findsOneWidget);
+    expect(find.text('시작하기'), findsNothing);
+    expect(find.text('샘플 리포트 먼저 보기'), findsNothing);
+    await t.tap(find.byKey(const Key('intro')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 500));
+    expect(introDone.value, true);
+    expect(find.text('시작하기'), findsOneWidget);
+    expect(find.text('샘플 리포트 먼저 보기'), findsOneWidget);
+  });
 
   testWidgets('샘플 리포트: 끝까지 보고 닫아도 내 아이 기록에 아무것도 남지 않는다', (t) async {
     await boot(t, const Size(360, 640));

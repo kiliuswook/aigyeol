@@ -7,6 +7,7 @@ import 'store.dart';
 import 'sync.dart';
 import 'ui/kit.dart';
 import 'ui/home.dart';
+import 'ui/intro.dart';
 import 'ui/report.dart';
 import 'ui/more.dart';
 import 'ui/links.dart' show initKakao;
@@ -36,7 +37,7 @@ class App extends StatelessWidget {
           scaffoldBackgroundColor: kBg,
           textTheme: const TextTheme(bodyMedium: body),
         ),
-        home: const Shell(),
+        home: ValueListenableBuilder(valueListenable: introDone, builder: (_, done, _) => AnimatedSwitcher(duration: const Duration(milliseconds: 350), child: done ? const Shell() : const Intro())),
       );
 }
 

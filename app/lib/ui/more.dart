@@ -77,7 +77,7 @@ class MoreView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 4),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Image.asset('assets/img/wonderwheel.webp', width: 26, height: 26, errorBuilder: (_, _, _) => const SizedBox()),
+            Image.asset('assets/img/wonderwheel.png', height: 34, errorBuilder: (_, _, _) => const SizedBox()),
             const SizedBox(width: 8),
             const Text('만든 사람', style: TextStyle(fontSize: 12.5, color: kMuted)),
             const SizedBox(width: 6),

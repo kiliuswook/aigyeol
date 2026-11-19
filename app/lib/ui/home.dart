@@ -1,4 +1,5 @@
-// 홈: 한 화면. 아이 고르기 · 아이 카드(지금 상태) · 답하는 사람 · 지금 할 일 버튼 하나
+// 홈: 한 화면. 인사 줄 · 아이 카드(지금 상태와 할 일 버튼) · 답하는 사람 · 바로 가기 세 칸.
+// 앱 소개(타이틀)는 intro.dart 가 맡고, 홈은 '지금 무엇을 할까'만 보여 준다.
 import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
@@ -6,6 +7,7 @@ import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'kit.dart';
+import 'report.dart' show eun;
 import 'setup.dart';
 
 class HomeView extends StatelessWidget {
@@ -15,6 +17,43 @@ class HomeView extends StatelessWidget {
     store.addKid();
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen()));
   }
+
+  /// 바로 가기 칸: 아이콘 + 이름
+  Widget quick(String icon, String label, VoidCallback? onTap) => Expanded(
+      child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: Opacity(
+              opacity: onTap == null ? .5 : 1,
+              child: NineBox(nSoft,
+                  padding: const EdgeInsets.fromLTRB(6, 9, 6, 10),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Image.asset('assets/ui/$icon.webp', width: 26, height: 26),
+                    const SizedBox(height: 3),
+                    FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kFg))),
+                  ])))));
+
+  /// 순서 한 칸(처음 화면): 번호 + 할 일
+  Widget stepCell(int n, String t, String d) => Expanded(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+            width: 30, height: 30,
+            decoration: const BoxDecoration(color: kAccent, shape: BoxShape.circle),
+            child: Center(child: Text('$n', style: disp(19, color: kOnAccent)))),
+        const SizedBox(height: 4),
+        FittedBox(fit: BoxFit.scaleDown, child: Text(t, maxLines: 1, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kFg))),
+        FittedBox(fit: BoxFit.scaleDown, child: Text(d, maxLines: 1, style: const TextStyle(fontSize: 12, color: kMuted))),
+      ]));
+
+  Widget header(String sub) => Row(children: [
+        Image.asset('assets/img/mascot_child.webp', width: 40, height: 40),
+        const SizedBox(width: 10),
+        Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+          Text('내 아이의 MBTI', style: disp(24)),
+          Text(sub, maxLines: 1, overflow: TextOverflow.ellipsis, style: smallMuted),
+        ])),
+      ]);
 
   @override
   Widget build(BuildContext context) {
@@ -30,44 +69,41 @@ class HomeView extends StatelessWidget {
         : cur.paid
             ? Btn('검사 이어서 하기 ($n/${C.items.length})', () => startFull(context), kind: BtnKind.dark)
             : Btn('${Price.fmt(pr)} 결제하고 검사 시작', () => startFull(context), kind: BtnKind.dark);
+    final sub = done ? '${store.nm}의 결과가 준비됐어요' : cur.paid ? '검사를 이어서 해 볼까요?' : '${store.nm}${eun(store.nm)} 어떤 아이일까요?';
 
     return Frame(
-      top: Row(children: [
-        Image.asset('assets/img/mascot_child.webp', width: 32, height: 32),
-        const SizedBox(width: 8),
-        Text('내 아이의 MBTI', style: disp(22)),
-      ]),
+      top: header(sub),
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         chipRow([
           for (var i = 0; i < ks.length; i++)
             ChipBtn('${ks[i].label(i)}${fullDone(ks[i].cur.ans) ? ' · ${score(ks[i].cur.ans).code}' : ''}', on: ks[i].id == kid.id, onTap: () => store.setKid(ks[i].id)),
           ChipBtn('+ 아이 추가', onTap: () => newKid(context)),
         ]),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
+        // 아이 카드: 지금 상태와 할 일 버튼을 한 장에
         Expanded(
           child: NineBox(nCard,
-              padding: const EdgeInsets.fromLTRB(20, 14, 20, 18),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 16),
               child: Column(children: [
                 Row(children: [
                   Expanded(
                       child: Text.rich(
                           TextSpan(style: body, children: [
                             TextSpan(text: store.nm, style: const TextStyle(fontWeight: FontWeight.w700)),
-                            TextSpan(text: ' · ${kid.ageText.isEmpty ? '나이 미입력' : kid.ageText}', style: const TextStyle(color: kMuted)),
+                            TextSpan(text: ' · ${[if (kid.ageText.isNotEmpty) kid.ageText else '나이 미입력', if (kid.sex == 'M') '남자아이', if (kid.sex == 'F') '여자아이'].join(' · ')}', style: const TextStyle(color: kMuted)),
                           ]),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis)),
                   linkBtn('바꾸기', () => editKid(context)),
                 ]),
                 Expanded(child: r != null ? Image.asset('assets/img/t_${r.code}.webp', fit: BoxFit.contain) : Padding(padding: const EdgeInsets.all(8), child: Image.asset('assets/img/mascot_child.webp', fit: BoxFit.contain))),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
                 if (r != null) ...[
-                  codeText([for (final x in r.ax) (x.letter, x.a.color)], size: 44),
-                  Text(C.nick[r.code]!, style: disp(24)),
+                  FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: [codeText([for (final x in r.ax) (x.letter, x.a.color)], size: 40), const SizedBox(width: 10), Text(C.nick[r.code]!, style: disp(24))])),
                   Text('${kid.who}가 본 ${store.nm} · ${cur.date}', style: smallMuted),
                 ] else if (cur.paid) ...[
                   Text('검사 중이에요', style: disp(26)),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   ProgressBar(n / C.items.length),
                   const SizedBox(height: 4),
                   Text('$n / ${C.items.length}문항 · 언제든 이어서 할 수 있어요', style: smallMuted),
@@ -75,12 +111,12 @@ class HomeView extends StatelessWidget {
                   Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: '${store.nm}의 '), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), const TextSpan(text: '는?')]), textAlign: TextAlign.center),
                   const SizedBox(height: 4),
                   Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [Tag(kid.firstDone ? '추가 검사 ${Price.fmt(pr)}' : '첫 검사 ${Price.fmt(pr)}'), const Tag('66문항'), const Tag('약 10분')]),
-                  const SizedBox(height: 6),
-                  const Text('기질검사 + 성격검사 정밀 리포트', style: smallMuted, textAlign: TextAlign.center),
                 ],
+                const SizedBox(height: 10),
+                SizedBox(width: double.infinity, child: mainBtn),
               ])),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         Row(children: [
           const Text('답하는 사람', style: smallMuted),
           const SizedBox(width: 10),
@@ -91,53 +127,42 @@ class HomeView extends StatelessWidget {
             ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => tab.value = 2)),
           ])),
         ]),
+        const SizedBox(height: 8),
+        Row(children: [
+          quick('i_heart', '가족 초대', () => tab.value = 2),
+          const SizedBox(width: 6),
+          if (done) quick('i_retry', '다시 검사', () => startRetest(context)) else quick('i_doc', '샘플 리포트', () => showSample(context)),
+          const SizedBox(width: 6),
+          quick('i_share', '결과 공유', done ? () => tab.value = 2 : null),
+        ]),
       ]),
-      foot: [
-        mainBtn,
-        if (done)
-          Row(children: [
-            Expanded(child: Btn('가족 초대·공유', () => tab.value = 2, kind: BtnKind.ghost, dense: true)),
-            const SizedBox(width: 8),
-            Expanded(child: Btn('다시 검사 · ${Price.fmt(Price.more)}', () => startRetest(context), kind: BtnKind.ghost, dense: true)),
-          ])
-        else
-          Btn('샘플 리포트 먼저 보기', () => showSample(context), kind: BtnKind.ghost),
-      ],
     );
   }
 
-  /// 처음 연 사람: 그림 한 장과 시작 버튼
+  /// 처음 연 사람: 무엇을 하게 되는지 세 걸음과 시작 버튼
   Widget welcome(BuildContext context) => Frame(
+        top: header('만 2~7세 · 부모가 답하는 기질·성격 검사'),
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: Stack(fit: StackFit.expand, children: [
-                Image.asset('assets/img/key_home.webp', fit: BoxFit.cover, alignment: const Alignment(0, .38)),
-                Positioned(left: 14, top: 14, child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), child: Text('오늘도 말랑하게, 우리 아이 이야기', style: disp(17)))),
-              ]),
-            ),
+            child: NineBox(nCard,
+                padding: const EdgeInsets.fromLTRB(18, 14, 18, 16),
+                child: Column(children: [
+                  Expanded(child: Padding(padding: const EdgeInsets.all(4), child: Image.asset('assets/img/mascot_child.webp', fit: BoxFit.contain))),
+                  FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(27), children: const [TextSpan(text: '우리 아이 '), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: ', 알아볼까요?')]))),
+                  const SizedBox(height: 4),
+                  Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [Tag('첫 검사 ${Price.fmt(Price.first)}'), const Tag('66문항'), const Tag('약 10분')]),
+                  const SizedBox(height: 12),
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    stepCell(1, '아이 등록', '이름 · 생년월 · 성별'),
+                    stepCell(2, '66문항 답하기', '평소 모습 그대로'),
+                    stepCell(3, '리포트 받기', '기질 · 성격 · 또래 평균'),
+                  ]),
+                  const SizedBox(height: 12),
+                  SizedBox(width: double.infinity, child: Btn('시작하기', () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen())), kind: BtnKind.dark)),
+                ])),
           ),
-          const SizedBox(height: 14),
-          eyebrow('만 2~7세 · 부모가 답하는 기질검사'),
-          const SizedBox(height: 4),
-          Text.rich(TextSpan(style: disp(30), children: const [TextSpan(text: '우리 아이의 '), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: '는 무엇일까요?')])),
-          const SizedBox(height: 4),
-          for (final (t, d) in const [('기질검사', '타고난 성향 4축과 세부 기질 12가지'), ('성격검사', '경험으로 자라는 끈기 · 스스로 힘 · 함께 힘')])
-            Padding(
-              padding: const EdgeInsets.only(top: 3),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(padding: const EdgeInsets.only(top: 2), child: Image.asset('assets/ui/i_check.webp', width: 18, height: 18)),
-                const SizedBox(width: 8),
-                Expanded(child: rich('**$t** $d', style: small)),
-              ]),
-            ),
-          const SizedBox(height: 4),
-          muted('전문기관 수준의 정밀 리포트 · 66문항 · 약 10분 · 첫 검사 ${Price.fmt(Price.first)}'),
+          const SizedBox(height: 8),
+          Tile('샘플 리포트 먼저 보기', icon: 'i_doc', sub: '예시 아이 콩이의 리포트', onTap: () => showSample(context)),
         ]),
-        foot: [
-          Btn('시작하기', () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen())), kind: BtnKind.dark),
-          Btn('샘플 리포트 먼저 보기', () => showSample(context), kind: BtnKind.ghost),
-        ],
       );
 }

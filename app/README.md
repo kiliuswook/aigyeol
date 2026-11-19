@@ -47,3 +47,6 @@ flutter build appbundle  # 플레이 등록용 AAB (서명 키는 PC에만, 저�
 
 ## 또래 평균 통계
 지표 옆 아이콘을 누르면 같은 만 나이·성별 아이들의 평균을 보여 준다(5건 이상 모였을 때). 자료 구조와 규칙은 [docs/systems/stats.md](../docs/systems/stats.md), 코드는 `lib/stats.dart`. 서버 규칙 `firestore.rules` 를 고치면 `firebase deploy --only firestore:rules` 로 배포해야 한다.
+
+## 인트로
+앱을 켜면 원더휠 스플래시(흰 바탕, `assets/img/wonderwheel.png`, 1.8초) → 타이틀 화면(버튼 없이 화면을 터치하면 시작) → 홈. 코드는 `lib/ui/intro.dart`, 지났는지는 `introDone`.
