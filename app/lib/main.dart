@@ -16,6 +16,7 @@ import 'ui/intro.dart';
 import 'ui/report.dart';
 import 'ui/more.dart';
 import 'ui/today.dart';
+import 'ui/sibling.dart' show sibOther;
 import 'ui/links.dart' show initKakao;
 
 Future<void> main() async {
@@ -79,7 +80,7 @@ class Shell extends StatelessWidget {
           body: SafeArea(
             bottom: false,
             child: ListenableBuilder(
-              listenable: store,
+              listenable: Listenable.merge([store, sibOther]),
               // 보고 있는 탭만 다시 그린다. 안 보이는 탭은 열 때 한 번 다시 그린다(검사 중 답할 때마다 세 탭을 모두 그리지 않게).
               builder: (ctx, _) => IndexedStack(index: i, children: [
                 for (var k = 0; k < 4; k++) _TabPage(active: i == k, build: () => switch (k) { 0 => HomeView(), 1 => ReportView(), 2 => MoreView(), _ => TodayView() }),

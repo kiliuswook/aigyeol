@@ -11,6 +11,7 @@ import '../stats.dart';
 import 'kit.dart';
 import 'share.dart' show inviteCg, openShare;
 import 'setup.dart';
+import 'sibling.dart';
 
 class ReportView extends StatefulWidget {
   const ReportView({super.key});
@@ -58,12 +59,14 @@ class _ReportViewState extends State<ReportView> {
         Row(children: [
           tabBtn('temp', '기질'), const SizedBox(width: 6), tabBtn('grow', '자라는 힘'),
           const SizedBox(width: 6), tabBtn('cg', '양육자 비교'), const SizedBox(width: 6), tabBtn('chg', '달라진 점'),
+          // 아이가 둘 이상이면 형제 궁합
+          if (store.kids.length > 1 && store.demo == null) ...[const SizedBox(width: 6), tabBtn('sib', '형제')],
         ]),
       ]),
       // 탭·아이·양육자가 바뀌면 요약 화면부터
       body: Drill(
-          key: ValueKey('$rtab-${store.kid.id}-${store.kid.who}'),
-          (open) => switch (rtab) { 'grow' => growTab(r, open), 'cg' => cgTab(open), 'chg' => changeTab(r, open), _ => tempTab(r, open) }),
+          key: ValueKey('$rtab-${store.kid.id}-${store.kid.who}-${sibOther.value}'),
+          (open) => switch (rtab) { 'sib' => sibTab(context, open, hub), 'grow' => growTab(r, open), 'cg' => cgTab(open), 'chg' => changeTab(r, open), _ => tempTab(r, open) }),
     );
   }
 

@@ -34,8 +34,26 @@ class Notice {
   Notice(Map j) : when = j['when'], t = j['t'];
 }
 
+/// 형제 궁합 한 축의 한 경우(둘 다 앞 글자 hh / 둘 다 뒤 글자 ll / 서로 다름 mix)
+class SibAx {
+  final String good, clash, tip, sit;
+  final List<String> play;
+  SibAx(Map j) : good = j['good'], clash = j['clash'], tip = j['tip'], sit = j['sit'], play = List<String>.from(j['play']);
+}
+
+class Sib {
+  final Map<String, Map<String, SibAx>> axes; // 축 id → hh/ll/mix
+  final Map<String, String> praise; // 극 → 칭찬 한마디
+  final List<List<String>> level; // 같은 축 수(0~4) → [이름, 설명]
+  Sib(Map j)
+      : axes = {for (final e in (j['axes'] as Map).entries) e.key as String: {for (final x in (e.value as Map).entries) x.key as String: SibAx(x.value)}},
+        praise = Map<String, String>.from(j['praise']),
+        level = [for (final x in j['level']) List<String>.from(x)];
+}
+
 class Daily {
   final Map<String, List<Mission>> missions;
+  final Sib sib;
   final List<Situation> situations;
   final Map<String, List<Notice>> notice;
   final List<String> plans;
@@ -43,7 +61,8 @@ class Daily {
       : missions = {for (final e in (j['missions'] as Map).entries) e.key as String: [for (final m in e.value) Mission(m)]},
         situations = [for (final s in j['situations']) Situation(s)],
         notice = {for (final e in (j['notice'] as Map).entries) e.key as String: [for (final n in e.value) Notice(n)]},
-        plans = List<String>.from(j['plans']);
+        plans = List<String>.from(j['plans']),
+        sib = Sib(j['sib']);
 }
 
 late Daily D;

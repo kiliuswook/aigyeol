@@ -353,4 +353,43 @@ void main() {
     expect(find.textContaining('콩이에게'), findsWidgets);
     expect(find.textContaining('이렇게 말해 보세요'), findsWidgets);
   });
+
+  testWidgets('리포트 형제 탭: 두 아이 궁합, 놀이·부딪히는 상황·칭찬 (360x640)', (t) async {
+    await boot(t, const Size(360, 640));
+    store.setInfo(name: '콩이');
+    for (final it in C.items) {
+      store.answer(it, 5);
+    }
+    store.addKid();
+    store.setInfo(name: '별이');
+    for (final it in C.items) {
+      store.answer(it, 1);
+    }
+    await t.pumpAndSettle();
+    tab.value = 1;
+    await t.pumpAndSettle();
+    await t.tap(find.text('형제'));
+    await t.pumpAndSettle();
+    expect(find.text('정반대 짝꿍'), findsOneWidget);
+    expect(find.text('다름'), findsNWidgets(4));
+    for (final title in ['잘 맞는 점과 함께할 놀이', '자주 부딪히는 상황', '아이마다 다르게 칭찬하기']) {
+      final row = find.ancestor(of: find.text(title), matching: find.byType(Row)).first;
+      await t.ensureVisible(row);
+      await t.pumpAndSettle();
+      await t.tap(find.descendant(of: row, matching: find.byType(MoreBtn)));
+      await t.pumpAndSettle();
+      expect(find.byKey(const Key('back')), findsOneWidget);
+      if (title == '자주 부딪히는 상황') {
+        await t.ensureVisible(find.text('형제·자매가 다툴 때'));
+        await t.tap(find.text('형제·자매가 다툴 때'));
+        await t.pumpAndSettle();
+        expect(find.textContaining('이렇게 말해 보세요'), findsWidgets);
+        await t.tap(find.byKey(const Key('popup-close')));
+        await t.pumpAndSettle();
+      }
+      if (title == '아이마다 다르게 칭찬하기') expect(find.textContaining('별이에게'), findsWidgets);
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+    }
+  });
 }
