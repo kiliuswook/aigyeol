@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import '../store.dart';
 import 'kit.dart';
 
 /// 인트로를 지났는지. 앱을 켤 때마다 한 번 보여 준다.
@@ -168,7 +167,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                 ]),
               ),
             const SizedBox(height: 6),
-            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text('전문기관 수준의 정밀 리포트 · 66문항 · 약 10분 · 첫 검사 ${Price.fmt(Price.first)}', maxLines: 1, style: smallMuted))),
+            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text('전문기관 수준의 정밀 리포트 · 66문항 · 약 10분 · 광고 보고 무료', maxLines: 1, style: smallMuted))),
             const SizedBox(height: 18),
           ]),
         );

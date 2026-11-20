@@ -78,7 +78,7 @@ Future<void> walk(WidgetTester t) async {
 void main() {
   // 작은 폰(360x640)과 보통 폰(390x844) 모두에서 넘침 없이 끝까지 간다
   for (final size in const [Size(360, 640), Size(390, 844)]) {
-    testWidgets('처음 → 아이 등록 → 결제 → 66문항 → 리포트 (${size.width.round()}x${size.height.round()})', (t) async {
+    testWidgets('처음 → 아이 등록 → 광고 → 66문항 → 리포트 (${size.width.round()}x${size.height.round()})', (t) async {
       await boot(t, size);
       expect(find.text('시작하기'), findsOneWidget);
       await t.tap(find.text('시작하기'));
@@ -106,7 +106,7 @@ void main() {
       await t.pumpAndSettle();
       expect(store.kid.name, '콩이');
       expect(store.kid.who, '아빠');
-      await t.tap(find.textContaining('결제하고 검사 시작'));
+      await t.tap(find.textContaining('광고 보고 무료로 검사 시작'));
       await t.pumpAndSettle();
       for (var i = 0; i < C.items.length; i++) {
         await t.tap(find.text(C.opt[i % 5]));

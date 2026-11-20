@@ -1,4 +1,4 @@
-// 화면 사이 이동: 검사 시작(결제 → 검사), 다시 검사하기, 리포트로 가기
+// 화면 사이 이동: 검사 시작(보상형 광고 → 검사), 다시 검사하기, 리포트로 가기
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../scoring.dart';

@@ -74,7 +74,7 @@ class _AccountState extends State<AccountScreen> {
         ],
       ),
     ]),
-    muted('로그인하면 메일 주소와 검사 기록(아이 별명·태어난 해와 달, 답, 결제한 검사)이 서버(구글 Firebase, 서울)에 저장됩니다. 계정을 지우면 서버의 기록도 함께 지워집니다.'),
+    muted('로그인하면 메일 주소와 검사 기록(아이 별명·태어난 해와 달, 답)이 서버(구글 Firebase, 서울)에 저장됩니다. 계정을 지우면 서버의 기록도 함께 지워집니다.'),
   ];
 
   List<Widget> _verify() => [
@@ -111,7 +111,7 @@ class _AccountState extends State<AccountScreen> {
     ]),
     PaperCard([
       h3('계정 삭제'),
-      muted('계정과 서버에 저장된 검사 기록이 모두 지워지고 되돌릴 수 없습니다. 이 휴대폰 안의 기록은 남으며, 더보기의 기록 지우기로 지울 수 있어요. 구글 플레이 결제 내역은 구글에 남습니다.'),
+      muted('계정과 서버에 저장된 검사 기록이 모두 지워지고 되돌릴 수 없습니다. 이 휴대폰 안의 기록은 남으며, 더보기의 기록 지우기로 지울 수 있어요.'),
       Btn('계정 삭제', () => _delete(), kind: BtnKind.ghost),
       Align(
         alignment: Alignment.centerLeft,

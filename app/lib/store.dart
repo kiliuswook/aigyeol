@@ -6,8 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'content.dart';
 import 'scoring.dart';
 
-/// 가격(바꿀 때는 이곳만). first: 아이마다 첫 정밀검사, more: 그 아이의 다른 양육자 검사·다시 검사하기.
-/// 실제 결제는 구글 플레이 인앱 상품(소모성) 두 개로 연결하고, 화면 가격은 플레이가 주는 현지 가격으로 바꾼다.
+/// 예전 검사별 결제 가격(2026-11-20 부터 결제 대신 보상형 광고, ads.dart). 지난 기록(buys)을 읽을 때만 남겨 둔다.
 class Price {
   static const first = 1.0, more = 0.5;
   static const skuFirst = 'test_first', skuMore = 'test_more';
@@ -292,9 +291,9 @@ class Store extends ChangeNotifier {
   /// 결제 종류: 'retest' 다시 검사하기, 'cg' 양육자 추가 검사, 'first' 아이의 첫 검사
   String payKind(bool retest) => retest ? 'retest' : kid.firstDone ? 'cg' : 'first';
 
-  /// 결제(시제품은 바로 열림). 다시 검사하기면 지금 결과를 이전 기록으로 남기고 답을 지운다.
+  /// 검사 열기(보상형 광고를 본 뒤). 다시 검사하기면 지금 결과를 이전 기록으로 남기고 답을 지운다.
   void buy(bool retest) {
-    final k = payKind(retest), p = kid.nextPrice;
+    final k = payKind(retest), p = 0.0; // 광고로 연 검사는 0원
     kid.buys.add(Buy(rid(), DateTime.now().millisecondsSinceEpoch, k, kid.who, p));
     if (k == 'retest') {
       cur.prev = Snap.of(cur.ans, cur.date, kid.who);

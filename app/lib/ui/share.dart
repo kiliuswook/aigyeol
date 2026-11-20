@@ -49,7 +49,7 @@ class ShareActions {
                 chips([for (final n in roles) ChipBtn(n, on: role == n, onTap: () => set(() => role = n))]),
                 buttons(c, 'invite', role: () => role),
                 muted(
-                    "링크를 열면 $nm의 검사로 바로 들어갑니다. ${kid.firstDone ? '첫 검사가 이미 결제되어 ${Price.fmt(Price.more)}로 시작합니다.' : '아직 첫 검사 전이라 받은 사람이 먼저 하면 첫 검사 ${Price.fmt(Price.first)}입니다.'} 다 마치면 결과를 다시 보내 '양육자 비교'에 합칩니다. 링크에는 아이 이름·연령이 실리니 믿을 수 있는 가족에게만 보내 주세요."),
+                    "링크를 열면 $nm의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사합니다. 다 마치면 결과를 다시 보내 '양육자 비교'에 합칩니다. 링크에는 아이 이름·연령이 실리니 믿을 수 있는 가족에게만 보내 주세요."),
               ]);
         }),
         (title: '결과 공유', icon: 'i_share',

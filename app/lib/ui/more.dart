@@ -1,5 +1,6 @@
 // 더보기: 함께 보기(초대·공유) + 계정·가격·기록 지우기 + 만든 사람. 한 화면.
 import 'package:flutter/material.dart';
+import '../ads.dart';
 import '../main.dart';
 import '../store.dart';
 import '../sync.dart';
@@ -16,7 +17,7 @@ class MoreView extends StatelessWidget {
       context: context,
       builder: (c) => AlertDialog(
         title: Text('${store.nm}의 기록을 지울까요?'),
-        content: const Text('이 아이의 검사 답과 결제한 검사가 이 휴대폰에서 모두 지워집니다. 되돌릴 수 없어요.'),
+        content: const Text('이 아이의 검사 답과 검사 기록이 이 휴대폰에서 모두 지워집니다. 되돌릴 수 없어요.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('취소')),
           TextButton(onPressed: () => Navigator.pop(c, true), child: const Text('지우기', style: TextStyle(color: Color(0xFFC0392B)))),
@@ -65,11 +66,17 @@ class MoreView extends StatelessWidget {
                       : ('내 계정 · 동기화 중', sync.email);
               return Tile(t, icon: 'i_lock', sub: d, onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccountScreen())));
             }),
-        Tile('가격 안내', icon: 'i_bulb', sub: '첫 검사 ${Price.fmt(Price.first)} · 추가 검사 ${Price.fmt(Price.more)}', onTap: () => priceSheet(context)),
+        Tile('이용 안내', icon: 'i_bulb', sub: '검사는 광고 1번 보고 무료', onTap: () => priceSheet(context)),
+        // 유럽·영국 등 광고 동의가 필요한 곳에서만 보인다
+        FutureBuilder<bool>(
+            future: ads.privacyOptionsRequired(),
+            builder: (context, s) => s.data == true
+                ? Tile('광고 개인정보 설정', icon: 'i_lock', sub: '맞춤 광고 동의 바꾸기', onTap: ads.showPrivacyOptions)
+                : const SizedBox.shrink()),
         Tile('${store.nm}의 기록 지우기', icon: 'i_close', sub: '이 휴대폰에서 이 아이의 기록 초기화', onTap: () => reset(context)),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 4),
-          child: Text('양육 참고용이며 의학적 진단이 아닙니다. 공개 테스트 중이라 결제 버튼을 누르면 실제 결제 없이 검사가 열립니다.', style: smallMuted),
+          child: Text('양육 참고용이며 의학적 진단이 아닙니다. 검사는 광고를 보고 무료로 이용합니다.', style: smallMuted),
         ),
       ], gap: 8)),
       // 만든 사람

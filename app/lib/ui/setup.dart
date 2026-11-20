@@ -1,4 +1,4 @@
-// 아이 등록: 한 화면에 하나씩 묻는다(이름·태어난 해와 달 → 답하는 사람 → 결제). 아이 정보 바꾸기는 아래에서 올라오는 창.
+// 아이 등록: 한 화면에 하나씩 묻는다(이름·태어난 해와 달 → 답하는 사람 → 광고 보고 검사). 아이 정보 바꾸기는 아래에서 올라오는 창.
 import 'package:flutter/material.dart';
 import '../stats.dart';
 import '../store.dart';
@@ -157,7 +157,7 @@ Future<void> editKid(BuildContext context) {
 Future<void> addWho(BuildContext context, {required VoidCallback invite}) {
   final has = store.kid.cgs.map((e) => e.key).toSet();
   return popup(context, title: '답하는 사람 추가', (c, set) => [
-        muted('이 휴대폰에서 이어서 답할 사람을 골라 주세요. 추가 검사는 ${Price.fmt(Price.more)}입니다.'),
+        muted('이 휴대폰에서 이어서 답할 사람을 골라 주세요. 광고 1번 보면 무료로 검사합니다.'),
         chips([
           for (final n in kCgl.where((n) => !has.contains(n)))
             ChipBtn(n, onTap: () {

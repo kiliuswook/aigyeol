@@ -58,7 +58,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kid = store.kid, cur = store.cur, ks = store.kids;
-    final n = answered(cur.ans), full = fullDone(cur.ans), pr = kid.nextPrice;
+    final n = answered(cur.ans), full = fullDone(cur.ans);
     final fresh = ks.length <= 1 && kid.name.isEmpty && !kid.cgs.any((e) => e.value.hasAny);
     if (fresh) return welcome(context);
 
@@ -68,7 +68,7 @@ class HomeView extends StatelessWidget {
         ? Btn('리포트 보기', () => tab.value = 1, kind: BtnKind.dark)
         : cur.paid
             ? Btn('검사 이어서 하기 ($n/${C.items.length})', () => startFull(context), kind: BtnKind.dark)
-            : Btn('${Price.fmt(pr)} 결제하고 검사 시작', () => startFull(context), kind: BtnKind.dark);
+            : Btn('광고 보고 무료로 검사 시작', () => startFull(context), kind: BtnKind.dark);
     final sub = done ? '${store.nm}의 결과가 준비됐어요' : cur.paid ? '검사를 이어서 해 볼까요?' : '${store.nm}${eun(store.nm)} 어떤 아이일까요?';
 
     return Frame(
@@ -110,7 +110,7 @@ class HomeView extends StatelessWidget {
                 ] else ...[
                   Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: '${store.nm}의 '), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), const TextSpan(text: '는?')]), textAlign: TextAlign.center),
                   const SizedBox(height: 4),
-                  Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [Tag(kid.firstDone ? '추가 검사 ${Price.fmt(pr)}' : '첫 검사 ${Price.fmt(pr)}'), const Tag('66문항'), const Tag('약 10분')]),
+                  Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [const Tag('무료'), const Tag('66문항'), const Tag('약 10분')]),
                 ],
                 const SizedBox(height: 10),
                 SizedBox(width: double.infinity, child: mainBtn),
@@ -150,7 +150,7 @@ class HomeView extends StatelessWidget {
                   Expanded(child: Padding(padding: const EdgeInsets.all(4), child: Image.asset('assets/img/mascot_child.webp', fit: BoxFit.contain))),
                   FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(27), children: const [TextSpan(text: '우리 아이 '), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: ', 알아볼까요?')]))),
                   const SizedBox(height: 4),
-                  Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [Tag('첫 검사 ${Price.fmt(Price.first)}'), const Tag('66문항'), const Tag('약 10분')]),
+                  Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [const Tag('무료'), const Tag('66문항'), const Tag('약 10분')]),
                   const SizedBox(height: 12),
                   Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     stepCell(1, '아이 등록', '이름 · 생년월 · 성별'),

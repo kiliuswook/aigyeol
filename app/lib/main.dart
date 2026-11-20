@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'ads.dart';
 import 'content.dart';
 import 'stats.dart';
 import 'store.dart';
@@ -21,6 +22,10 @@ Future<void> main() async {
   // 예전에 마친 검사 중 아직 통계에 넣지 않은 것을 보낸다
   unawaited(stats.submitPending());
   runApp(const App());
+  // 광고 동의(유럽 등)와 AdMob 초기화는 화면을 띄운 뒤에
+  unawaited(ads.init());
+  // 아래 메뉴를 옮기는 것도 페이지 전환으로 센다
+  tab.addListener(ads.onPageChange);
 }
 
 /// 아래 메뉴: 0 홈, 1 리포트, 2 더보기(가족 초대·공유, 계정, 안내)
@@ -32,6 +37,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: '내 아이의 MBTI',
         debugShowCheckedModeBanner: false,
+        navigatorObservers: [AdRouteObserver()],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: kAccent, surface: kBg),
           scaffoldBackgroundColor: kBg,
@@ -55,7 +61,9 @@ class Shell extends StatelessWidget {
               builder: (ctx, _) => IndexedStack(index: i, children: [HomeView(), ReportView(), MoreView()]),
             ),
           ),
-          bottomNavigationBar: NineBox(nCard,
+          bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, children: [
+            const BannerBox(),
+            NineBox(nCard,
               padding: const EdgeInsets.only(top: 6),
               child: SafeArea(
                 top: false,
@@ -80,6 +88,7 @@ class Shell extends StatelessWidget {
                     ),
                 ]),
               )),
+          ]),
         ),
       );
 }

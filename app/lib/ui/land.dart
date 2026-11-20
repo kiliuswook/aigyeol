@@ -26,7 +26,6 @@ class _LandScreenState extends State<LandScreen> {
       final n = '${d['n'] ?? ''}'.isEmpty ? '우리 아이' : '${d['n']}', f = '${d['f'] ?? '가족'}';
       final roles = {'${d['w'] ?? ''}', ...kCgl}.where((x) => x.isNotEmpty && x != f).toList();
       if (!roles.contains(role)) role = roles.first;
-      final paid = d['p'] == 1;
       body = [
         PaperCard([
           eyebrow('초대장'),
@@ -35,9 +34,9 @@ class _LandScreenState extends State<LandScreen> {
           muted('나는'),
           chips([for (final x in roles) ChipBtn(x, on: role == x, onTap: () => setState(() => role = x))]),
           Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
-            Text(Price.fmt(paid ? Price.more : Price.first), style: disp(34)),
+            Text('무료', style: disp(34)),
             const SizedBox(width: 8),
-            Text(paid ? '추가 검사 가격' : '첫 검사 가격', style: smallMuted),
+            const Text('광고 1번 보고 검사', style: smallMuted),
           ]),
           Btn('검사 시작하기', () {
             store.joinInvite(d, role);
@@ -76,7 +75,7 @@ class _LandScreenState extends State<LandScreen> {
         ]),
         Cta([
           h2('우리 아이는 어떤 네 글자일까요?', color: kBg),
-          Text('만 2~7세, 부모가 답하는 66문항 기질검사. 첫 검사 ${Price.fmt(Price.first)}.', style: const TextStyle(color: kBg)),
+          Text('만 2~7세, 부모가 답하는 66문항 기질검사. 광고 1번 보고 무료.', style: const TextStyle(color: kBg)),
           Btn('우리 아이 검사하기', () {
             tab.value = 0;
             Navigator.of(context).pop();
@@ -87,7 +86,7 @@ class _LandScreenState extends State<LandScreen> {
       body = [
         Cta([
           h2('우리 아이의 MBTI는 무엇일까요?', color: kBg),
-          Text('친구가 추천한 영유아 기질검사입니다. 부모가 답하는 66문항, 첫 검사 ${Price.fmt(Price.first)}.', style: const TextStyle(color: kBg)),
+          Text('친구가 추천한 영유아 기질검사입니다. 부모가 답하는 66문항, 광고 1번 보고 무료.', style: const TextStyle(color: kBg)),
           Btn('우리 아이 검사하기', () {
             tab.value = 0;
             Navigator.of(context).pop();
