@@ -1,5 +1,6 @@
-// 한 문항씩 답하기: 한 화면에 문항과 선택지가 모두 보인다. 고르면 바로 다음 문항.
+// 한 문항씩 답하기: 한 화면에 문항과 선택지가 모두 보인다. 고르면 짧은 선택 연출(약 0.4초) 뒤 다음 문항.
 // 다시 검사할 때는 선택지 옆에 지난번 내 답과 다른 양육자의 답을 보여 준다.
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../content.dart';
 import '../main.dart';
@@ -13,9 +14,13 @@ class TestScreen extends StatefulWidget {
   State<TestScreen> createState() => _TestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class _TestScreenState extends State<TestScreen> with SingleTickerProviderStateMixin {
   late final List<Item> list;
   int i = 0;
+
+  /// 고른 답 연출: 고른 칸이 살짝 커졌다 돌아오고 체크가 뜨며, 나머지는 흐려진다. 끝나면 다음 문항.
+  late final _fx = AnimationController(vsync: this, duration: const Duration(milliseconds: 420));
+  int? _picked;
 
   @override
   void initState() {
@@ -26,8 +31,24 @@ class _TestScreenState extends State<TestScreen> {
 
   bool get re => store.cur.prev?.ans != null;
 
-  void pick(int a) {
+  @override
+  void dispose() {
+    _fx.dispose();
+    super.dispose();
+  }
+
+  Future<void> pick(int a) async {
+    if (_fx.isAnimating) return;
     store.answer(list[i], a);
+    setState(() => _picked = a);
+    await _fx.forward(from: 0);
+    if (!mounted) return;
+    _picked = null;
+    _fx.value = 0;
+    next();
+  }
+
+  void next() {
     if (i < list.length - 1) {
       setState(() => i++);
     } else {
@@ -53,8 +74,8 @@ class _TestScreenState extends State<TestScreen> {
           for (final o in others) if (o.value.ans[it.id] == k) o.key,
         ];
     Widget opt(int k, String label) {
-      final sel = cur.ans[it.id] == k, unk = k == 0, m = marks(k);
-      return GestureDetector(
+      final sel = cur.ans[it.id] == k, unk = k == 0, m = marks(k), hit = _picked == k;
+      final box = GestureDetector(
         onTap: () => pick(k),
         child: NineBox(sel ? nOptSel : unk ? nOptUnk : nOpt,
             padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
@@ -67,7 +88,21 @@ class _TestScreenState extends State<TestScreen> {
               const SizedBox(width: 12),
               Expanded(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 15.5, fontWeight: sel ? FontWeight.w700 : FontWeight.w500, color: unk ? kMuted : kFg))),
               for (final x in m) Padding(padding: const EdgeInsets.only(left: 4), child: Tag(x)),
+              if (hit)
+                FadeTransition(
+                  opacity: CurvedAnimation(parent: _fx, curve: const Interval(0, .4)),
+                  child: Padding(padding: const EdgeInsets.only(left: 6), child: Image.asset('assets/ui/i_check.webp', width: 22, height: 22)),
+                ),
             ])),
+      );
+      if (_picked == null) return box;
+      // 고른 칸: 1 → 1.05 → 1 로 톡 튀기, 나머지 칸: 흐리게
+      return AnimatedBuilder(
+        animation: _fx,
+        builder: (_, child) => hit
+            ? Transform.scale(scale: 1 + .05 * math.sin(math.pi * math.min(1, _fx.value / .6)), child: child)
+            : Opacity(opacity: 1 - .55 * math.min(1, _fx.value / .3), child: child),
+        child: box,
       );
     }
 
@@ -98,7 +133,7 @@ class _TestScreenState extends State<TestScreen> {
             for (var k = 1; k <= 5; k++) opt(k, C.opt[k - 1]),
             opt(0, '잘 모르겠다'),
             Row(children: [
-              linkBtn('← 이전 문항', i == 0 ? () {} : () => setState(() => i--)),
+              linkBtn('← 이전 문항', i == 0 || _picked != null ? () {} : () => setState(() => i--)),
               const Spacer(),
               linkBtn('답하기 애매할 때', help),
             ]),
