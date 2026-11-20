@@ -11,6 +11,13 @@ import 'setup.dart' show askCgName;
 /// 함께 보기 칸 하나
 typedef ShareItem = ({String title, String icon, VoidCallback? onTap});
 
+/// 함께 보기 칸 하나의 창을 바로 연다(결과 공유·결과 보내기). 더보기 탭으로 옮기지 않는다.
+void openShare(BuildContext context, String title) {
+  for (final e in const ShareActions().items(context)) {
+    if (e.title == title) return e.onTap?.call();
+  }
+}
+
 class ShareActions {
   const ShareActions();
 

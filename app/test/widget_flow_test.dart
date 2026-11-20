@@ -114,6 +114,17 @@ void main() {
       }
       expect(tab.value, 1);
       expect(find.textContaining('정밀검사 결과'), findsOneWidget);
+      // 홈의 결과 공유는 더보기로 가지 않고 공유 창을 바로 연다
+      tab.value = 0;
+      await t.pumpAndSettle();
+      await t.tap(find.text('결과 공유'));
+      await t.pumpAndSettle();
+      expect(tab.value, 0);
+      expect(find.text('카카오톡'), findsOneWidget);
+      await t.tap(find.byKey(const Key('popup-close')));
+      await t.pumpAndSettle();
+      tab.value = 1;
+      await t.pumpAndSettle();
       // 끝난 검사는 나이·성별 묶음으로 통계에 한 번만 보낸다
       await t.runAsync(() => stats.submitPending());
       expect(sent.length, 1);

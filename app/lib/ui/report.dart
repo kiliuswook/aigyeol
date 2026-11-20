@@ -9,7 +9,7 @@ import 'flow.dart';
 import 'insight.dart';
 import '../stats.dart';
 import 'kit.dart';
-import 'share.dart' show inviteCg;
+import 'share.dart' show inviteCg, openShare;
 import 'setup.dart';
 
 class ReportView extends StatefulWidget {
@@ -173,7 +173,7 @@ class _ReportViewState extends State<ReportView> {
       ], gap: 14),
       'next': col([
         h2('이제 무엇을 할까요?'),
-        Tile(kid.inv != null ? '${kid.inv!['from'] ?? '가족'}에게 결과 보내기' : '결과 카드 공유하기', icon: 'i_share', sub: '유형과 별명만 보냅니다', onTap: () => tab.value = 2),
+        Tile(kid.inv != null ? '${kid.inv!['from'] ?? '가족'}에게 결과 보내기' : '결과 카드 공유하기', icon: 'i_share', sub: '유형과 별명만 보냅니다', onTap: () => openShare(context, kid.inv != null ? '결과 보내기' : '결과 공유')),
         Tile('다른 양육자도 검사하기', icon: 'i_heart', sub: '서로 다르게 본 점을 비교해요', onTap: () => addWho(context, invite: () => inviteCg(context))),
         Tile('다시 검사하기', icon: 'i_retry', sub: '시간이 지나 달라진 점을 봅니다', onTap: () => startRetest(context)),
       ]),

@@ -7,7 +7,7 @@ import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'kit.dart';
-import 'share.dart' show inviteCg;
+import 'share.dart' show inviteCg, openShare;
 import 'report.dart' show eun;
 import 'setup.dart';
 
@@ -134,7 +134,7 @@ class HomeView extends StatelessWidget {
           const SizedBox(width: 6),
           if (done) quick('i_retry', '다시 검사', () => startRetest(context)) else quick('i_doc', '샘플 리포트', () => showSample(context)),
           const SizedBox(width: 6),
-          quick('i_share', '결과 공유', done ? () => tab.value = 2 : null),
+          quick('i_share', '결과 공유', done ? () => openShare(context, '결과 공유') : null),
         ]),
       ]),
     );
