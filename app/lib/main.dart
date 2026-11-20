@@ -2,8 +2,11 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'ads.dart';
 import 'content.dart';
+import 'daily.dart';
+import 'notify.dart';
 import 'stats.dart';
 import 'store.dart';
 import 'sync.dart';
@@ -12,13 +15,14 @@ import 'ui/home.dart';
 import 'ui/intro.dart';
 import 'ui/report.dart';
 import 'ui/more.dart';
+import 'ui/today.dart';
 import 'ui/links.dart' show initKakao;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initKakao();
   // 첫 화면에 꼭 필요한 것(문항·손그림 테두리·이 폰 기록)만 기다리고 바로 화면을 띄운다
-  await Future.wait([loadContent(), preloadUi(), store.load()]);
+  await Future.wait([loadContent(), loadDaily(), preloadUi(), store.load(), daily.load()]);
   runApp(const App());
   // 로그인·동기화(Firebase)는 화면을 띄운 뒤에 연다. 기다리면 앱을 켤 때 빈 화면이 그만큼 길어진다.
   // 웹(미리 보기)은 Firebase 웹 설정이 없어 로그인·동기화를 켜지 않는다
@@ -29,11 +33,14 @@ Future<void> main() async {
   // 영상과 겹치면 광고 SDK 준비 때문에 영상이 끊긴다.
   // 인트로를 건너뛴 경우에도 광고는 준비한다(이미 준비 중이면 그대로)
   introDone.addListener(() => unawaited(ads.init()));
+  // 오늘의 미션·약속 알림(켠 사람만): 날짜가 바뀌어도 앞으로 7일 치가 걸려 있게 앱을 켤 때마다 다시 건다
+  unawaited(notify.reschedule());
   // 아래 메뉴를 옮기는 것도 페이지 전환으로 센다
   tab.addListener(ads.onPageChange);
 }
 
-/// 아래 메뉴: 0 홈, 1 리포트, 2 더보기(가족 초대·공유, 계정, 안내)
+/// 아래 메뉴: 0 홈, 1 리포트, 2 더보기(가족 초대·공유, 계정, 안내), 3 오늘(미션·약속·상황 카드).
+/// 화면에 놓이는 순서는 홈 · 오늘 · 리포트 · 더보기(번호는 예전 그대로 두어 tab.value = 1 이 리포트).
 final tab = ValueNotifier<int>(0);
 
 class App extends StatelessWidget {
@@ -43,6 +50,10 @@ class App extends StatelessWidget {
         title: '내 아이의 MBTI',
         debugShowCheckedModeBanner: false,
         navigatorObservers: [AdRouteObserver()],
+        // 날짜·시각 고르기 창을 한국어로
+        locale: const Locale('ko'),
+        supportedLocales: const [Locale('ko'), Locale('en')],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: kAccent, surface: kBg),
           scaffoldBackgroundColor: kBg,
@@ -71,7 +82,7 @@ class Shell extends StatelessWidget {
               listenable: store,
               // 보고 있는 탭만 다시 그린다. 안 보이는 탭은 열 때 한 번 다시 그린다(검사 중 답할 때마다 세 탭을 모두 그리지 않게).
               builder: (ctx, _) => IndexedStack(index: i, children: [
-                for (var k = 0; k < 3; k++) _TabPage(active: i == k, build: () => switch (k) { 0 => HomeView(), 1 => ReportView(), _ => MoreView() }),
+                for (var k = 0; k < 4; k++) _TabPage(active: i == k, build: () => switch (k) { 0 => HomeView(), 1 => ReportView(), 2 => MoreView(), _ => TodayView() }),
               ]),
             ),
           ),
@@ -82,7 +93,7 @@ class Shell extends StatelessWidget {
               child: SafeArea(
                 top: false,
                 child: Row(children: [
-                  for (final (k, label, icon) in const [(0, '홈', 'i_home'), (1, '리포트', 'i_doc'), (2, '더보기', 'i_star')])
+                  for (final (k, label, icon) in const [(0, '홈', 'i_home'), (3, '오늘', 'i_chat'), (1, '리포트', 'i_doc'), (2, '더보기', 'i_star')])
                     Expanded(
                       child: InkWell(
                         onTap: () => tab.value = k,

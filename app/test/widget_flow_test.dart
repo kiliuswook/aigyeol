@@ -2,10 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:childmbti/content.dart';
+import 'package:childmbti/daily.dart';
+import 'package:childmbti/notify.dart';
 import 'package:childmbti/main.dart';
+import 'package:childmbti/scoring.dart';
 import 'package:childmbti/ui/account.dart';
 import 'package:childmbti/ui/intro.dart';
 import 'package:childmbti/ui/kit.dart';
+import 'package:childmbti/ui/today.dart';
 import 'package:childmbti/stats.dart';
 import 'package:childmbti/store.dart';
 import 'package:http/http.dart' as http;
@@ -21,8 +25,14 @@ Future<void> boot(WidgetTester t, Size size, {bool intro = false}) async {
   SharedPreferences.setMockInitialValues({});
   await t.runAsync(() async {
     await loadContent();
+    await loadDaily();
     await store.load();
+    await daily.load();
   });
+  notify.off = true;
+  daily.days.clear();
+  daily.plans.clear();
+  todaySeg.value = 0;
   store.kids = [Kid()];
   store.kidId = store.kids.first.id;
   sent.clear();
@@ -281,5 +291,66 @@ void main() {
     await t.pumpWidget(const MaterialApp(home: AccountScreen()));
     await t.pump();
     expect(find.textContaining('로그인과 동기화를 쓸 수 없어요'), findsOneWidget);
+  });
+
+  testWidgets('오늘 탭: 미션 해 보고 스티커 받기 · 약속 적고 지키기 · 상황 카드 (360x640)', (t) async {
+    await boot(t, const Size(360, 640));
+    store.setInfo(name: '콩이');
+    for (final it in C.items) {
+      store.answer(it, 5);
+    }
+    await t.pumpAndSettle();
+    await t.tap(find.text('오늘'));
+    await t.pumpAndSettle();
+    expect(tab.value, 3);
+    expect(find.text('엄마·아빠 스티커판'), findsOneWidget);
+    expect(find.textContaining('콩이에게 맞춘 미션'), findsOneWidget);
+    // 다른 미션으로 바꾸면 글이 바뀐다
+    final before = daily.mission(store.kid, today0).$1;
+    await t.tap(find.text('다른 미션'));
+    await t.pumpAndSettle();
+    expect(daily.mission(store.kid, today0).$1, isNot(before));
+    await t.tap(find.text('해 봤어요'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('잘 통했어요'));
+    await t.tap(find.textContaining('스티커 받기'));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(Key('sticker-${score(store.kid.cur.ans).code}')));
+    await t.pumpAndSettle();
+    expect(daily.streak(store.kid), 1);
+    expect(find.text('오늘 스티커를 받았어요'), findsOneWidget);
+
+    // 약속 적기 → 지키기
+    await t.tap(find.text('약속·일정'));
+    await t.pump(const Duration(seconds: 5)); // 알림 글(toast)이 사라질 때까지
+    await t.pumpAndSettle();
+    await t.tap(find.text('+ 약속·일정 적기'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('놀이터 가기'));
+    await t.pump();
+    await t.ensureVisible(find.text('저장'));
+    await t.tap(find.text('저장'));
+    await t.pumpAndSettle();
+    expect(daily.plansOf(store.kid).length, 1);
+    await t.pump(const Duration(seconds: 5));
+    await t.pumpAndSettle();
+    await t.tap(find.text('놀이터 가기'));
+    await t.pumpAndSettle();
+    expect(find.textContaining('미리 알려 주기'), findsOneWidget);
+    await t.ensureVisible(find.text('약속 지켰어요'));
+    await t.tap(find.text('약속 지켰어요'));
+    await t.pumpAndSettle();
+    await t.tap(find.byKey(Key('sticker-${score(store.kid.cur.ans).code}')));
+    await t.pumpAndSettle();
+    expect(daily.plansOf(store.kid).first.done, true);
+    expect(daily.stickers(store.kid), 2);
+
+    // 상황 카드
+    await t.tap(find.text('상황 카드'));
+    await t.pumpAndSettle();
+    await t.tap(find.text(D.situations.first.t));
+    await t.pumpAndSettle();
+    expect(find.textContaining('콩이에게'), findsWidgets);
+    expect(find.textContaining('이렇게 말해 보세요'), findsWidgets);
   });
 }
