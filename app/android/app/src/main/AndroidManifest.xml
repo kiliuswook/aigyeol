@@ -31,6 +31,13 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8781487635021961~6299775807"/>
+        <!-- 광고 SDK 준비·광고 받기를 화면 스레드 대신 뒤에서 하도록(화면 끊김·멈춤 줄이기) -->
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+            android:value="true"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+            android:value="true"/>
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

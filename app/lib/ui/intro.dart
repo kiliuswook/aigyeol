@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import '../ads.dart';
 import 'kit.dart';
 
 /// 인트로를 지났는지. 앱을 켤 때마다 한 번 보여 준다.
@@ -29,7 +30,11 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _t = Timer(const Duration(seconds: 3), _toLogo);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _open());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _open();
+      // 타이틀 그림은 영상이 도는 동안 미리 풀어 둔다(넘어갈 때 그림이 늦게 뜨지 않게)
+      precacheImage(const AssetImage('assets/img/key_home.webp'), context);
+    });
   }
 
   Future<void> _open() async {
@@ -78,6 +83,11 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
     _blink.repeat(reverse: true);
     _c?.removeListener(_tick);
     _c?.pause();
+    // 영상이 끝난 뒤(타이틀 화면은 거의 멈춰 있다)에 광고를 준비하고, 앱에서 쓰는 그림을 미리 풀어 둔다
+    unawaited(ads.init());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) warmImages(context);
+    });
   }
 
   @override

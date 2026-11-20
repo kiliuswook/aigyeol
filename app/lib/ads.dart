@@ -42,8 +42,15 @@ class Ads {
   // 앱을 켠 뒤 3분이 지나야 첫 앱 오프닝 광고가 나온다
   DateTime _lastFull = DateTime.now();
 
-  Future<void> init() async {
-    if (!supported || ready.value) return;
+  Future<void>? _init;
+
+  /// 여러 곳에서 불러도 한 번만 준비한다(실패했으면 다음에 다시 시도).
+  Future<void> init() {
+    if (!supported || ready.value) return Future.value();
+    return _init ??= _doInit().whenComplete(() => _init = null);
+  }
+
+  Future<void> _doInit() async {
     try {
       await _consent();
       if (!await ConsentInformation.instance.canRequestAds()) return;

@@ -1,5 +1,7 @@
 // 손그림(색연필) UI 조각. 웹 CSS 의 border-image(9조각 늘이기)를 같은 비율로 그린다.
+import 'dart:async';
 import 'dart:ui' as ui;
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../content.dart';
@@ -21,13 +23,58 @@ const nTag = Nine('tag', 33, 13), nChip = Nine('tag', 33, 18), nChipOn = Nine('b
 const nOpt = Nine('opt', 30, 13), nOptSel = Nine('opt_sel', 32, 13), nOptUnk = Nine('opt_unk', 31, 13), nTrack = Nine('track', 25, 7);
 
 final Map<String, ui.Image> _imgs = {};
+
+/// 9조각 테두리 그림을 한꺼번에(동시에) 풀어 둔다. 앱을 켤 때 기다리는 시간이라 하나씩 풀지 않는다.
 Future<void> preloadUi() async {
   const names = ['card', 'box_soft', 'box_dark', 'box_pink', 'btn_blue', 'btn_dark', 'btn_ghost', 'tag', 'input', 'opt', 'opt_sel', 'opt_unk', 'track'];
-  for (final n in names) {
-    final data = await rootBundle.load('assets/ui/$n.webp');
-    final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
-    _imgs[n] = (await codec.getNextFrame()).image;
-  }
+  await Future.wait([
+    for (final n in names)
+      () async {
+        final data = await rootBundle.load('assets/ui/$n.webp');
+        final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+        _imgs[n] = (await codec.getNextFrame()).image;
+      }(),
+  ]);
+}
+
+bool _warmed = false;
+
+/// 앱에서 쓰는 작은 그림(아이콘·마스코트·유형 그림·막대)을 미리 풀어 둔다.
+/// 처음 보는 화면에서 그림이 한 박자 늦게 뜨거나 화면이 덜컥이는 것을 막는다. 앱을 켤 때 한 번.
+Future<void> warmImages(BuildContext context) async {
+  if (_warmed) return;
+  _warmed = true;
+  try {
+    final all = (await AssetManifest.loadFromAssetBundle(rootBundle)).listAssets();
+    final names = [
+      for (final a in all)
+        if ((a.startsWith('assets/ui/') || a.startsWith('assets/img/mascot') || a.startsWith('assets/img/t_')) && a.endsWith('.webp')) a,
+    ];
+    // 인트로가 먼저 닫혀도 이어서 풀 수 있게 설정을 미리 받아 둔다
+    if (!context.mounted) return;
+    final cfg = createLocalImageConfiguration(context);
+    // 한 번에 몰아서 풀면 그 순간 화면이 버벅일 수 있어 몇 개씩 나눈다
+    for (var i = 0; i < names.length; i += 6) {
+      await Future.wait([for (final n in names.skip(i).take(6)) _warm(AssetImage(n), cfg)]);
+    }
+  } catch (_) {}
+}
+
+/// precacheImage 와 같지만 BuildContext 없이: 그림을 풀어 이미지 캐시에 남긴다
+Future<void> _warm(ImageProvider p, ImageConfiguration cfg) {
+  final done = Completer<void>();
+  final stream = p.resolve(cfg);
+  late final ImageStreamListener l;
+  l = ImageStreamListener((_, _) {
+    if (!done.isCompleted) done.complete();
+    // 캐시에 남도록 다음 프레임에 듣기를 멈춘다(precacheImage 와 같은 방식)
+    SchedulerBinding.instance.addPostFrameCallback((_) => stream.removeListener(l));
+  }, onError: (_, _) {
+    if (!done.isCompleted) done.complete();
+    stream.removeListener(l);
+  });
+  stream.addListener(l);
+  return done.future;
 }
 
 class _NinePainter extends CustomPainter {
