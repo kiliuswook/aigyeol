@@ -212,6 +212,21 @@ void main() {
     expect(find.text('샘플 리포트 먼저 보기'), findsOneWidget);
   });
 
+  testWidgets('인트로: 스플래시 중 화면을 터치하면 바로 타이틀로(그 터치로 홈까지 가지는 않음)', (t) async {
+    await boot(t, const Size(360, 640), intro: true);
+    await t.pump(const Duration(milliseconds: 300));
+    expect(find.text('화면을 터치하면 시작해요'), findsNothing);
+    await t.tap(find.byKey(const Key('intro')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 500));
+    expect(find.text('화면을 터치하면 시작해요'), findsOneWidget);
+    expect(introDone.value, false);
+    await t.tap(find.byKey(const Key('intro')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 500));
+    expect(introDone.value, true);
+  });
+
   testWidgets('샘플 리포트: 끝까지 보고 닫아도 내 아이 기록에 아무것도 남지 않는다', (t) async {
     await boot(t, const Size(360, 640));
     await t.tap(find.text('샘플 리포트 먼저 보기'));

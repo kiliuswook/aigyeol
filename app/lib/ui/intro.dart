@@ -24,12 +24,15 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
   /// 영상을 못 열면(테스트·3초 안에 시작 못 함) 로고 그림을 1.8초 보여 준다.
   VideoPlayerController? _c;
   bool _videoOn = false, _fallback = false;
-  final _clock = Stopwatch()..start();
+  // 처음 0.2초가 지나야 터치로 건너뛸 수 있다
+  bool _armed = false;
+  Timer? _arm;
 
   @override
   void initState() {
     super.initState();
     _t = Timer(const Duration(seconds: 3), _toLogo);
+    _arm = Timer(const Duration(milliseconds: 200), () => _armed = true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _open();
       // 타이틀 그림은 영상이 도는 동안 미리 풀어 둔다(넘어갈 때 그림이 늦게 뜨지 않게)
@@ -72,8 +75,23 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
     _t = Timer(const Duration(milliseconds: 1800), toTitle);
   }
 
+  /// 스플래시 중 화면에 손가락이 닿은 그 순간 건너뛴다(손을 뗄 때까지 기다리지 않는다).
+  /// 앱을 켜던 손가락이 잘못 닿는 것만 막으려고 처음 0.2초는 무시한다.
   void _skip() {
-    if (_clock.elapsedMilliseconds >= 500) toTitle();
+    if (phase != 0 || !_armed) return;
+    _skipTap = true;
+    toTitle();
+  }
+
+  /// 스플래시를 건너뛴 그 터치의 '손 뗌'은 타이틀 터치로 치지 않는다(바로 홈으로 가 버리지 않게)
+  bool _skipTap = false;
+
+  void _tap() {
+    if (_skipTap) {
+      _skipTap = false;
+      return;
+    }
+    if (phase == 1) introDone.value = true;
   }
 
   void toTitle() {
@@ -93,6 +111,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _t?.cancel();
+    _arm?.cancel();
     _c?.removeListener(_tick);
     _c?.dispose();
     _blink.dispose();
@@ -102,11 +121,16 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: phase == 0 ? Colors.white : kBg,
-        body: GestureDetector(
-          key: const Key('intro'),
+        body: Listener(
           behavior: HitTestBehavior.opaque,
-          onTap: () => phase == 0 ? _skip() : introDone.value = true,
-          child: AnimatedSwitcher(duration: const Duration(milliseconds: 450), child: phase == 0 ? splash() : title()),
+          onPointerDown: (_) => _skip(),
+          child: GestureDetector(
+            key: const Key('intro'),
+            behavior: HitTestBehavior.opaque,
+            onTap: _tap,
+            onTapCancel: () => _skipTap = false,
+            child: AnimatedSwitcher(duration: const Duration(milliseconds: 450), child: phase == 0 ? splash() : title()),
+          ),
         ),
       );
 
