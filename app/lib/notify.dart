@@ -64,7 +64,7 @@ class Notify {
     if (!_ready) return;
     try {
       await _p.cancelAll();
-      if (!daily.alarm) return;
+      if (!daily.anyAlarm) return;
       final now = tz.TZDateTime.now(tz.local);
       var id = 1;
       Future<void> at(DateTime t, String title, String body) async {
@@ -75,24 +75,30 @@ class Notify {
 
       final k = store.kids.firstWhere((x) => x.id == store.kidId, orElse: () => store.kids.first);
       final nm = k.name.isNotEmpty ? k.name : '우리 아이';
-      // 약속·일정 미리 알려주기(가까운 것부터)
-      final ns = daily.notices(k).map((e) => e.$2.when).toSet();
-      for (final kid in store.kids) {
-        final kn = kid.name.isNotEmpty ? kid.name : '우리 아이';
-        for (final p in daily.plansOf(kid).where((p) => !p.done)) {
-          final d = p.date;
-          final word = p.pr ? '약속' : '일정';
-          if (ns.contains('3일 전')) await at(d.subtract(const Duration(days: 3)).add(const Duration(hours: 19)), '3일 뒤 $kn의 $word', '${p.t} · 오늘부터 미리 이야기해 주세요');
-          await at(d.subtract(const Duration(days: 1)).add(const Duration(hours: 19)), '내일은 $kn와 ${p.t}', '$word을 미리 알려 주면 아이가 덜 놀라요');
-          await at(d.add(const Duration(hours: 8)), '오늘 $kn와 ${p.t}${p.tm.isNotEmpty ? ' · ${p.tm}' : ''}', p.pr ? '지키고 나면 스티커를 받아요' : '잘 다녀오세요');
+      // 약속·일정: 하루 전, 1시간 전(시각을 안 정했으면 하루 전 오후 8시, 당일 오전 9시)
+      if (daily.planAlarm) {
+        for (final kid in store.kids) {
+          final kn = kid.name.isNotEmpty ? kid.name : '우리 아이';
+          for (final p in daily.plansOf(kid).where((p) => !p.done)) {
+            final word = p.pr ? '약속' : '일정';
+            if (p.tm.isNotEmpty) {
+              final hm = p.tm.split(':').map(int.parse).toList();
+              final t = p.date.add(Duration(hours: hm[0], minutes: hm[1]));
+              await at(t.subtract(const Duration(days: 1)), '내일 ${p.tm} $kn와 ${p.t}', '$word을 미리 이야기해 주면 아이가 덜 놀라요');
+              await at(t.subtract(const Duration(hours: 1)), '1시간 뒤 $kn와 ${p.t}', p.pr ? '약속을 지키면 스티커를 받아요' : '잘 다녀오세요');
+            } else {
+              await at(p.date.subtract(const Duration(hours: 4)), '내일은 $kn와 ${p.t}', '$word을 미리 이야기해 주면 아이가 덜 놀라요');
+              await at(p.date.add(const Duration(hours: 9)), '오늘 $kn와 ${p.t}', p.pr ? '약속을 지키면 스티커를 받아요' : '잘 다녀오세요');
+            }
+          }
         }
       }
-      // 오늘의 미션(아침)과 실천 확인(저녁), 7일 치
-      for (var i = 0; i < 7; i++) {
-        final d = today0.add(Duration(days: i));
+      // 오늘의 미션(매일 오전 9시, 미션이 바뀌는 때)과 저녁 확인, 7일 치
+      for (var i = 0; i < 8; i++) {
+        final d = missionDay.add(Duration(days: i));
         final m = daily.mission(k, d).$2;
-        await at(d.add(Duration(minutes: daily.am)), '오늘 $nm에게 해 볼 한 가지', m.t);
-        if (!(daily.peek(k, d)?.done ?? false)) await at(d.add(Duration(minutes: daily.pm)), '오늘 미션 해 보셨나요?', '해 봤다면 스티커를 붙여 보세요');
+        if (daily.alarm) await at(d.add(const Duration(hours: kMissionHour)), '오늘 $nm에게 해 볼 한 가지', m.t);
+        if (daily.eve && !(daily.peek(k, d)?.done ?? false)) await at(d.add(const Duration(minutes: DailyStore.pm)), '오늘 미션 해 보셨나요?', '해 봤다면 스티커를 붙여 보세요');
       }
     } catch (_) {}
   }

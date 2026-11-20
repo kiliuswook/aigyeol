@@ -97,6 +97,15 @@ DateTime get today0 {
   return DateTime(n.year, n.month, n.day);
 }
 
+/// 미션이 바뀌는 시각: 매일 오전 9시(2026-11-20 원더). 오전 9시 전에는 어제 미션이 이어진다.
+const kMissionHour = 9;
+
+/// 지금 보여 줄 미션의 날(오전 9시 기준)
+DateTime get missionDay {
+  final n = DateTime.now().subtract(const Duration(hours: kMissionHour));
+  return DateTime(n.year, n.month, n.day);
+}
+
 /// 하루 미션 기록
 class Day {
   String id; // 미션 번호 'E3'
@@ -128,8 +137,12 @@ class DailyStore extends ChangeNotifier {
   SharedPreferences? _sp;
   final Map<String, Map<String, Day>> days = {}; // 아이 id → 날짜 → 기록
   final List<Plan> plans = [];
-  bool alarm = false; // 알림 받기(사용자가 켠 때만)
-  int am = 9 * 60, pm = 20 * 60 + 30; // 아침 미션 알림, 저녁 확인 알림(분)
+  // 푸시 알림(이 휴대폰 안의 예약 알림). 기본 켜짐, 처음 앱을 켤 때 권한을 묻는다(asked). 더보기 > 푸시 알림에서 끄고 켠다.
+  bool alarm = true; // 오늘의 미션 알림(매일 오전 9시)
+  bool eve = true; // 저녁 확인 알림(오후 8:30, 그날 해 봤으면 생략)
+  bool planAlarm = true; // 약속·일정 알림(하루 전, 1시간 전)
+  bool asked = false;
+  static const pm = 20 * 60 + 30;
 
   Future<void> load() async {
     _sp = await SharedPreferences.getInstance();
@@ -141,9 +154,10 @@ class DailyStore extends ChangeNotifier {
         days['${e.key}'] = {for (final d in (e.value as Map).entries) '${d.key}': Day.fromJson(d.value)};
       }
       plans.addAll([for (final p in (j['plans'] ?? []) as List) Plan.fromJson(p)]);
-      alarm = j['alarm'] == true;
-      am = (j['am'] as num?)?.round() ?? am;
-      pm = (j['pm'] as num?)?.round() ?? pm;
+      alarm = j['alarm'] != false;
+      eve = j['eve'] != false;
+      planAlarm = j['plan'] != false;
+      asked = j['asked'] == true;
     } catch (_) {}
   }
 
@@ -151,7 +165,7 @@ class DailyStore extends ChangeNotifier {
     _sp?.setString(_k, jsonEncode({
       'days': {for (final e in days.entries) e.key: {for (final d in e.value.entries) d.key: d.value.toJson()}},
       'plans': [for (final p in plans) p.toJson()],
-      'alarm': alarm, 'am': am, 'pm': pm,
+      'alarm': alarm, 'eve': eve, 'plan': planAlarm, 'asked': asked,
     }));
     notifyListeners();
     unawaited(notify.reschedule());
@@ -185,13 +199,13 @@ class DailyStore extends ChangeNotifier {
   }
 
   void swap(Kid k) {
-    day(k, today0).sw++;
+    day(k, missionDay).sw++;
     save();
   }
 
   void complete(Kid k, {required String sticker, required int react, required String memo}) {
-    final d = day(k, today0);
-    d.id = mission(k, today0).$1;
+    final d = day(k, missionDay);
+    d.id = mission(k, missionDay).$1;
     d.st = sticker;
     d.r = react;
     d.memo = memo;
@@ -199,7 +213,7 @@ class DailyStore extends ChangeNotifier {
   }
 
   void undo(Kid k) {
-    final d = day(k, today0);
+    final d = day(k, missionDay);
     d.st = '';
     d.r = -1;
     save();
@@ -212,7 +226,7 @@ class DailyStore extends ChangeNotifier {
 
   /// 연속으로 해 본 날(오늘 아직 안 했으면 어제까지)
   int streak(Kid k) {
-    var d = today0;
+    var d = missionDay;
     if (!(peek(k, d)?.done ?? false)) d = d.subtract(const Duration(days: 1));
     var n = 0;
     while (peek(k, d)?.done ?? false) {
@@ -260,11 +274,33 @@ class DailyStore extends ChangeNotifier {
     save();
   }
 
-  void setAlarm(bool on, {int? morning, int? evening}) {
-    alarm = on;
-    if (morning != null) am = morning;
-    if (evening != null) pm = evening;
+  void setAlarm({bool? mission, bool? evening, bool? plan}) {
+    if (mission != null) alarm = mission;
+    if (evening != null) eve = evening;
+    if (plan != null) planAlarm = plan;
     save();
+  }
+
+  bool get anyAlarm => alarm || eve || planAlarm;
+
+  /// 앱을 다시 열었을 때·오전 9시가 지날 때: 화면의 미션을 새 날 것으로 바꾸고 알림을 다시 건다
+  void refresh() {
+    notifyListeners();
+    unawaited(notify.reschedule());
+  }
+
+  Timer? _clock;
+
+  /// 앱이 켜져 있는 동안 다음 오전 9시에 미션을 바꾼다
+  void startClock() {
+    _clock?.cancel();
+    final now = DateTime.now();
+    var next = DateTime(now.year, now.month, now.day, kMissionHour);
+    if (!next.isAfter(now)) next = next.add(const Duration(days: 1));
+    _clock = Timer(next.difference(now) + const Duration(seconds: 1), () {
+      refresh();
+      startClock();
+    });
   }
 
   /// 일정 앞에 무엇을 미리 알려 줄지: 아이의 리듬·섬세·탐험 축 극에서 고른다. 검사 전이면 리듬형 기준.

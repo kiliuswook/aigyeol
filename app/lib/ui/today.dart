@@ -21,7 +21,7 @@ String _md(DateTime d) => '${d.month}월 ${d.day}일(${_wd[d.weekday - 1]})';
 List<String> _stickers(Kid k) {
   final all = C.nick.keys.toList();
   final own = kidResult(k)?.code;
-  final n = today0.difference(DateTime(2026, 1, 1)).inDays;
+  final n = missionDay.difference(DateTime(2026, 1, 1)).inDays;
   final out = <String>[?own];
   for (var i = 0; out.length < 6 && i < all.length; i++) {
     final c = all[(n * 5 + i * 3) % all.length];
@@ -103,7 +103,8 @@ class _MissionPane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t0 = today0;
+    // 미션은 매일 오전 9시에 바뀐다(9시 전에는 어제 미션)
+    final t0 = missionDay;
     final (_, m) = daily.mission(k, t0);
     final rec = daily.peek(k, t0);
     final done = rec?.done ?? false;
@@ -180,40 +181,41 @@ class _MissionPane extends StatelessWidget {
       Row(children: [
         Expanded(child: Text(r == null ? '검사를 마치면 ${store.nm} 유형에 맞춘 미션이 나와요.' : '${r.code} ${store.nm}에게 맞춘 미션이에요.', maxLines: 2, style: smallMuted)),
         linkBtn('잘 통한 말', () => log(context)),
-        if (notify.supported) linkBtn(daily.alarm ? '알림 설정' : '알림 받기', () => alarmPopup(context)),
+        if (notify.supported) linkBtn('알림 설정', () => alarmPopup(context)),
       ]),
     ]);
   }
 }
 
-/// 알림 켜기·끄기와 시각
-Future<void> alarmPopup(BuildContext context) => popup(context, title: '알림', icon: 'i_bulb', (c, set) {
-      Future<void> pick(bool morning) async {
-        final cur = morning ? daily.am : daily.pm;
-        final t = await showTimePicker(context: c, initialTime: TimeOfDay(hour: cur ~/ 60, minute: cur % 60));
-        if (t == null) return;
-        final v = t.hour * 60 + t.minute;
-        daily.setAlarm(daily.alarm, morning: morning ? v : null, evening: morning ? null : v);
+/// 푸시 알림 설정(더보기 > 푸시 알림, 오늘 탭 > 알림 설정): 세 가지를 따로 켜고 끈다
+Future<void> alarmPopup(BuildContext context) => popup(context, title: '푸시 알림', icon: 'i_bulb', (c, set) {
+      Future<void> toggle(void Function() change) async {
+        final was = daily.anyAlarm;
+        change();
         set(() {});
+        // 처음 켜는 것이면 휴대폰 알림 권한을 묻는다
+        if (!was && daily.anyAlarm) {
+          final ok = await notify.ask();
+          if (!ok && c.mounted) toast(c, '휴대폰 설정에서 이 앱의 알림을 허용해 주세요');
+        }
       }
 
+      Widget row(String t, String sub, bool v, void Function(bool) on) => NineBox(nCard,
+          padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+          child: Row(children: [
+            Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+              Text(t, style: const TextStyle(fontSize: 15.5, fontWeight: FontWeight.w700, color: kFg)),
+              Text(sub, style: const TextStyle(fontSize: 12.5, color: kMuted)),
+            ])),
+            Switch(value: v, activeThumbColor: kAccentInk, onChanged: (x) => toggle(() => on(x))),
+          ]));
+
       return [
-        muted('아침에는 오늘의 미션, 저녁에는 해 봤는지 묻는 알림이 와요. 약속·일정은 아이 성향에 맞춰 미리 알려 드려요.'),
-        if (!daily.alarm)
-          Btn('알림 받기', () async {
-            final ok = await notify.ask();
-            daily.setAlarm(true);
-            set(() {});
-            if (!ok && c.mounted) toast(c, '휴대폰 설정에서 이 앱의 알림을 허용해 주세요');
-          }, kind: BtnKind.dark)
-        else ...[
-          Tile('아침 미션 알림', icon: 'i_star', sub: hm(daily.am), onTap: () => pick(true)),
-          Tile('저녁 확인 알림', icon: 'i_check', sub: hm(daily.pm), onTap: () => pick(false)),
-          Btn('알림 끄기', () {
-            daily.setAlarm(false);
-            set(() {});
-          }, kind: BtnKind.ghost),
-        ],
+        if (!notify.supported) muted('푸시 알림은 앱에서 받을 수 있어요.'),
+        row('오늘의 미션', '매일 오전 9시, 새 미션이 나올 때', daily.alarm, (x) => daily.setAlarm(mission: x)),
+        row('저녁 확인', '오후 8:30, 그날 미션을 안 했을 때만', daily.eve, (x) => daily.setAlarm(evening: x)),
+        row('약속·일정', '하루 전, 1시간 전 (시간을 안 정했으면 전날 저녁·당일 아침)', daily.planAlarm, (x) => daily.setAlarm(plan: x)),
       ];
     });
 
@@ -322,7 +324,7 @@ Future<void> addPlan(BuildContext context, Kid k) {
         }
         daily.addPlan(Plan(id: rid(), kid: k.id, t: s, d: dkey(date), tm: tm, pr: pr));
         Navigator.of(c).pop();
-        toast(context, notify.supported && !daily.alarm ? '저장했어요. 미리 알림을 받으려면 오늘의 미션에서 알림을 켜 주세요' : '저장했어요');
+        toast(context, notify.supported && daily.planAlarm ? '저장했어요. 하루 전과 1시간 전에 알려 드려요' : '저장했어요');
       }, kind: BtnKind.dark),
     ];
   });

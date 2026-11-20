@@ -7,6 +7,9 @@ import '../sync.dart';
 import 'account.dart';
 import 'kit.dart';
 import 'share.dart';
+import 'today.dart' show alarmPopup;
+import '../daily.dart';
+import '../notify.dart';
 import 'pay.dart';
 
 class MoreView extends StatelessWidget {
@@ -66,6 +69,12 @@ class MoreView extends StatelessWidget {
                       : ('내 계정 · 동기화 중', sync.email);
               return Tile(t, icon: 'i_lock', sub: d, onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccountScreen())));
             }),
+        if (notify.supported)
+          ListenableBuilder(
+              listenable: daily,
+              builder: (context, _) => Tile('푸시 알림', icon: 'i_bulb',
+                  sub: daily.anyAlarm ? [if (daily.alarm) '미션 오전 9시', if (daily.eve) '저녁 확인', if (daily.planAlarm) '약속 하루 전·1시간 전'].join(' · ') : '꺼짐',
+                  onTap: () => alarmPopup(context))),
         Tile('이용 안내', icon: 'i_bulb', sub: '검사는 광고 1번 보고 무료', onTap: () => priceSheet(context)),
         // 유럽·영국 등 광고 동의가 필요한 곳에서만 보인다
         FutureBuilder<bool>(

@@ -36,6 +36,21 @@ Future<void> main() async {
   introDone.addListener(() => unawaited(ads.init()));
   // 오늘의 미션·약속 알림(켠 사람만): 날짜가 바뀌어도 앞으로 7일 치가 걸려 있게 앱을 켤 때마다 다시 건다
   unawaited(notify.reschedule());
+  // 미션은 매일 오전 9시에 바뀐다: 켜 둔 동안 9시가 지나면, 그리고 앱을 다시 열 때마다 새 미션으로
+  daily.startClock();
+  AppLifecycleListener(onResume: () {
+    daily.refresh();
+    daily.startClock();
+  });
+  // 처음 한 번, 인트로가 끝난 뒤 푸시 알림 권한을 묻는다(알림은 기본 켜짐, 더보기 > 푸시 알림에서 끔)
+  void askOnce() {
+    if (!introDone.value || daily.asked || !notify.supported) return;
+    daily.asked = true;
+    daily.save();
+    unawaited(notify.ask().then((_) => notify.reschedule()));
+  }
+  introDone.addListener(askOnce);
+  askOnce();
   // 아래 메뉴를 옮기는 것도 페이지 전환으로 센다
   tab.addListener(ads.onPageChange);
 }
