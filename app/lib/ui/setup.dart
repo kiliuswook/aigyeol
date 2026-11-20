@@ -105,7 +105,14 @@ class _SetupState extends State<SetupScreen> {
         Center(child: Image.asset('assets/img/mascot_parent.webp', width: 96, height: 96)),
         h1('누가 답하나요?'),
         muted('${store.nm}를 가장 가까이에서 보는 사람이 답해 주세요. 다른 양육자는 나중에 따로 검사하고 비교할 수 있어요.'),
-        chips([for (final n in kCgl) ChipBtn(n, on: kid.who == n, onTap: () => setState(() => store.setWho(n)))]),
+        chips([
+          for (final n in kCgl.where((n) => n != kOtherCg)) ChipBtn(n, on: kid.who == n, onTap: () => setState(() => store.setWho(n))),
+          // '기타 양육자' 는 이름을 직접 적는다 (예: 이모, 삼촌, 선생님). 적은 이름이 칩에 보인다.
+          ChipBtn(kCgl.contains(kid.who) ? kOtherCg : kid.who, on: !kCgl.contains(kid.who) || kid.who == kOtherCg, onTap: () async {
+            final n = await askCgName(context, initial: kCgl.contains(kid.who) ? '' : kid.who);
+            if (n != null) setState(() => store.setWho(n));
+          }),
+        ]),
       ]),
     ];
     return PopScope(
@@ -159,15 +166,39 @@ Future<void> addWho(BuildContext context, {required VoidCallback invite}) {
   return popup(context, title: '답하는 사람 추가', (c, set) => [
         muted('이 휴대폰에서 이어서 답할 사람을 골라 주세요. 광고 1번 보면 무료로 검사합니다.'),
         chips([
-          for (final n in kCgl.where((n) => !has.contains(n)))
+          for (final n in kCgl.where((n) => !has.contains(n) && n != kOtherCg))
             ChipBtn(n, onTap: () {
               store.setWho(n);
               Navigator.of(c).pop();
             }),
+          ChipBtn('$kOtherCg (이름 적기)', onTap: () async {
+            final n = await askCgName(c, taken: has);
+            if (n == null) return;
+            store.setWho(n);
+            if (c.mounted) Navigator.of(c).pop();
+          }),
         ]),
         Btn('다른 휴대폰으로 초대하기', () {
           Navigator.of(c).pop();
           invite();
         }, kind: BtnKind.ghost),
+      ]);
+}
+
+/// '기타 양육자' 이름 적기 (예: 이모, 삼촌, 선생님). 비우거나 닫으면 null.
+/// [taken] 에 이미 있는 이름이면 다시 적게 한다.
+Future<String?> askCgName(BuildContext context, {String initial = '', Set<String> taken = const {}}) {
+  final ctl = TextEditingController(text: initial);
+  String? err;
+  return popup<String>(context, title: '누가 답하나요?', (c, set) => [
+        muted('아이와의 관계나 부르는 이름을 적어 주세요. 비교 화면에 이 이름으로 보여요.'),
+        PaperField(ctl, hint: '예: 이모, 삼촌, 선생님', maxLength: 8),
+        if (err != null) Text(err!, style: smallMuted),
+        Btn('확인', () {
+          final n = ctl.text.trim();
+          if (n.isEmpty) return set(() => err = '이름을 적어 주세요.');
+          if (taken.contains(n)) return set(() => err = '이미 있는 이름이에요. 다른 이름을 적어 주세요.');
+          Navigator.of(c).pop(n);
+        }, kind: BtnKind.dark),
       ]);
 }

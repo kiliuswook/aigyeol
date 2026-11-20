@@ -6,6 +6,7 @@ import '../scoring.dart';
 import '../store.dart';
 import 'kit.dart';
 import 'links.dart';
+import 'setup.dart' show askCgName;
 
 /// 함께 보기 칸 하나
 typedef ShareItem = ({String title, String icon, VoidCallback? onTap});
@@ -46,7 +47,14 @@ class ShareActions {
           var role = roles.first;
           popup(context, title: '다른 휴대폰에서 $nm 검사하게 초대', (c, set) => [
                 muted('누구를 초대하나요?'),
-                chips([for (final n in roles) ChipBtn(n, on: role == n, onTap: () => set(() => role = n))]),
+                chips([
+                  for (final n in roles.where((n) => n != kOtherCg)) ChipBtn(n, on: role == n, onTap: () => set(() => role = n)),
+                  // '기타 양육자' 는 초대할 사람의 이름을 직접 적는다
+                  ChipBtn(roles.contains(role) && role != kOtherCg ? kOtherCg : role, on: !roles.contains(role) || role == kOtherCg, onTap: () async {
+                    final n = await askCgName(c, initial: roles.contains(role) ? '' : role, taken: {kid.who});
+                    if (n != null) set(() => role = n);
+                  }),
+                ]),
                 buttons(c, 'invite', role: () => role),
                 muted(
                     "링크를 열면 $nm의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사합니다. 다 마치면 결과를 다시 보내 '양육자 비교'에 합칩니다. 링크에는 아이 이름·연령이 실리니 믿을 수 있는 가족에게만 보내 주세요."),

@@ -17,6 +17,9 @@ class Price {
 const kSite = 'https://childmbti.wonderwheel.co.kr/';
 const kCgl = ['엄마', '아빠', '할머니', '할아버지', '기타 양육자'];
 
+/// 이름을 직접 적는 양육자 칸. 적은 이름(예: 이모)이 그대로 양육자 이름이 된다(통계에서는 '기타 양육자'로 묶는다).
+const kOtherCg = '기타 양육자';
+
 final _rnd = Random();
 String rid() => DateTime.now().millisecondsSinceEpoch.toRadixString(36) + _rnd.nextInt(1 << 30).toRadixString(36);
 String today([int dd = 0]) {

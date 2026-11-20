@@ -155,6 +155,25 @@ void main() {
     });
   }
 
+  testWidgets('아이 등록: 기타 양육자는 이름을 직접 적는다', (t) async {
+    await boot(t, const Size(390, 844));
+    await t.tap(find.text('시작하기'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('다음'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('기타 양육자'));
+    await t.pumpAndSettle();
+    // 빈 이름은 받지 않는다
+    await t.tap(find.text('확인'));
+    await t.pump();
+    expect(find.text('이름을 적어 주세요.'), findsOneWidget);
+    await t.enterText(find.byType(TextField).last, '이모');
+    await t.tap(find.text('확인'));
+    await t.pumpAndSettle();
+    expect(store.kid.who, '이모');
+    expect(find.text('이모'), findsOneWidget);
+  });
+
   testWidgets('인트로: 원더휠 스플래시 → 타이틀(버튼 없음) → 화면을 터치하면 홈', (t) async {
     await boot(t, const Size(360, 640), intro: true);
     expect(find.byKey(const ValueKey('splash')), findsOneWidget);
