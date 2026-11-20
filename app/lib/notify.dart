@@ -92,7 +92,7 @@ class Notify {
         final d = today0.add(Duration(days: i));
         final m = daily.mission(k, d).$2;
         await at(d.add(Duration(minutes: daily.am)), '오늘 $nm에게 해 볼 한 가지', m.t);
-        if (!(daily.peek(k, d)?.done ?? false)) await at(d.add(Duration(minutes: daily.pm)), '오늘 미션 해 보셨나요?', '해 봤다면 $nm에게 스티커를 붙여 달라고 해 보세요');
+        if (!(daily.peek(k, d)?.done ?? false)) await at(d.add(Duration(minutes: daily.pm)), '오늘 미션 해 보셨나요?', '해 봤다면 스티커를 붙여 보세요');
       }
     } catch (_) {}
   }

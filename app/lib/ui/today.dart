@@ -7,7 +7,6 @@ import '../main.dart';
 import '../notify.dart';
 import '../store.dart';
 import 'kit.dart';
-import 'report.dart' show eun;
 
 /// 오늘 탭 안의 칸: 0 미션, 1 약속·일정, 2 상황 카드
 final todaySeg = ValueNotifier<int>(0);
@@ -18,7 +17,7 @@ const _wd = ['월', '화', '수', '목', '금', '토', '일'];
 
 String _md(DateTime d) => '${d.month}월 ${d.day}일(${_wd[d.weekday - 1]})';
 
-/// 아이가 고를 스티커 6개: 우리 아이 유형 그림 + 날마다 바뀌는 다른 유형 그림
+/// 고를 스티커 6개: 우리 아이 유형 그림 + 날마다 바뀌는 다른 유형 그림
 List<String> _stickers(Kid k) {
   final all = C.nick.keys.toList();
   final own = kidResult(k)?.code;
@@ -33,10 +32,10 @@ List<String> _stickers(Kid k) {
 
 Widget _sticker(String code, {double size = 30}) => Image.asset('assets/img/t_$code.webp', width: size, height: size, fit: BoxFit.contain);
 
-/// 아이가 직접 스티커를 고르는 칸(휴대폰을 아이에게 건넨다)
+/// 부모가 스티커를 고르는 칸(2026-11-20 원더: 아이가 아니라 부모가 고른다)
 List<Widget> _pickSticker(BuildContext c, Kid k, void Function(String) onPick) => [
-      Text('이제 휴대폰을 ${store.nm}에게 건네주세요.', style: body),
-      muted('${store.nm}${eun(store.nm)} 마음에 드는 스티커를 하나 골라 엄마·아빠 스티커판에 붙여 줘요.'),
+      Text('오늘 받을 스티커를 골라 주세요.', style: body),
+      muted('마음에 드는 스티커를 골라 엄마·아빠 스티커판에 붙여요.'),
       Wrap(alignment: WrapAlignment.center, spacing: 10, runSpacing: 10, children: [
         for (final s in _stickers(k))
           GestureDetector(
@@ -89,7 +88,7 @@ class _MissionPane extends StatelessWidget {
         Text('${store.nm}의 반응은 어땠나요?', style: body),
         chips([for (var i = 0; i < 3; i++) ChipBtn(_reacts[i], on: react == i, onTap: () => set(() => react = i))]),
         PaperField(memo, hint: '한 줄 메모 (선택) 예: 처음엔 웃기만 했어요', maxLength: 60),
-        Btn('다음: ${store.nm}에게 스티커 받기', () => set(() => step = 1), kind: BtnKind.dark),
+        Btn('다음: 스티커 고르기', () => set(() => step = 1), kind: BtnKind.dark),
       ];
     });
   }

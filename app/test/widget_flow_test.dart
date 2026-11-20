@@ -313,7 +313,7 @@ void main() {
     await t.tap(find.text('해 봤어요'));
     await t.pumpAndSettle();
     await t.tap(find.text('잘 통했어요'));
-    await t.tap(find.textContaining('스티커 받기'));
+    await t.tap(find.text('다음: 스티커 고르기'));
     await t.pumpAndSettle();
     await t.tap(find.byKey(Key('sticker-${score(store.kid.cur.ans).code}')));
     await t.pumpAndSettle();
