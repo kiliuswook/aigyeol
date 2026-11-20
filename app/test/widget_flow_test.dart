@@ -306,10 +306,10 @@ void main() {
     expect(find.text('엄마·아빠 스티커판'), findsOneWidget);
     expect(find.textContaining('콩이에게 맞춘 미션'), findsOneWidget);
     // 다른 미션으로 바꾸면 글이 바뀐다
-    final before = daily.mission(store.kid, today0).$1;
+    final before = daily.mission(store.kid, missionDay).$1;
     await t.tap(find.text('다른 미션'));
     await t.pumpAndSettle();
-    expect(daily.mission(store.kid, today0).$1, isNot(before));
+    expect(daily.mission(store.kid, missionDay).$1, isNot(before));
     await t.tap(find.text('해 봤어요'));
     await t.pumpAndSettle();
     await t.tap(find.text('잘 통했어요'));
