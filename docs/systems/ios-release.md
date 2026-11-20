@@ -13,7 +13,7 @@
 | ASC 앱 | '내 아이의 MBTI', Apple ID 6836670196, SKU `childmbti`, 기본 언어 한국어 (2026-11-19 크롬으로 만듦) |
 | 빌드 | Codemagic 워크플로 `ios-testflight` (저장소 루트 `codemagic.yaml`, `working_directory: app`) |
 | 최소 iOS | 15.0 (`project.pbxproj`) |
-| TestFlight | 1.0.1 (1), 1.0.2 (2), 1.0.2 (3, 영상 스플래시·커밋 632db1b). 내부 그룹 '내부 테스트'(모든 빌드 자동, 팀 계정 contact@)에 셋 다. 외부 그룹 '외부 테스트'(kilius@naver.com)에 1.0.1 (1)·1.0.2 (3), 둘 다 2026-11-19 베타 심사 제출(WAITING_FOR_BETA_REVIEW). 통과하면 초대 메일이 간다 |
+| TestFlight | 1.0.1 (1), 1.0.2 (2), 1.0.2 (3, 영상 스플래시·커밋 632db1b). 내부 그룹 '내부 테스트'(모든 빌드 자동, 팀 계정 contact@)에 셋 다. 외부 그룹 '외부 테스트'(kilius@naver.com)에 1.0.1 (1)·1.0.2 (3), 둘 다 2026-11-19 베타 심사 제출(WAITING_FOR_BETA_REVIEW). 통과하면 초대 메일이 간다. 1.1.0 (4, AdMob 광고·결제 제거, 커밋 6a40b49): 2026-11-20 외부 그룹 추가·베타 심사 제출 |
 
 ## 빌드 방법
 
@@ -23,7 +23,7 @@
 - Firebase iOS SDK 새 버전이 CocoaPods 에 없어 Swift Package Manager 를 켠다(`flutter config --enable-swift-package-manager`).
 - `Info.plist` 에 `ITSAppUsesNonExemptEncryption=false` (표준 HTTPS 만 씀).
 - `.github/workflows/ios.yml` 은 서명 없는 빌드 확인만 한다(GitHub 맥 러너).
-- 결제는 아직 시제품이라 iOS 빌드도 결제 없이 열린다. 그래서 정식 심사 제출은 하지 않고 TestFlight 까지만 한다(애플은 인앱결제 연결이 필요).
+- 2026-11-20 부터 결제 없음(보상형 광고로 검사, docs/systems/ads.md). 정식 심사 전 할 일: 앱 개인정보 설문에 광고 데이터 추가, AdMob iOS 앱에 스토어 연결.
 - 계정(Firebase 메일 로그인·동기화): Firebase 프로젝트 `childmbti-wonderwheel` 에 iOS 앱 '내 아이의 MBTI iOS'(앱 ID `1:799874537360:ios:dd24a7bc0ac936976d0515`, 2026-11-19 콘솔에서 등록)를 만들고, `GoogleService-Info.plist` 를 Xcode 프로젝트에 넣는 대신 `app/lib/sync.dart` 의 `_iosOptions` 로 값을 넘긴다(안드로이드는 `google-services.json`). 메일 인증·비밀번호 재설정은 Firebase 기본 웹 페이지 링크라 iOS 에 URL 스킴이 따로 필요 없다. 또래 평균 통계는 REST 라 로그인과 상관없다.
 
 ## 남은 일
