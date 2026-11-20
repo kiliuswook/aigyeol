@@ -60,22 +60,29 @@ String _btnTitle(String kind) => switch (kind) {
     };
 
 /// 카카오톡으로 보낸다.
-/// 1) 카카오 SDK 카드 공유(그림·제목·버튼). 2) 안 되면 카카오톡에 글+링크로 바로 보내기(앱 키 불필요).
-/// 3) 카카오톡이 없으면 휴대폰 공유 창.
+/// 1) 카카오 SDK 카드 공유(그림·제목·버튼). 2) 카카오톡 앱을 못 쓰는 곳(PC 브라우저, 카카오톡 없는 휴대폰)은
+/// 카카오 웹 공유 창으로 같은 카드를 보낸다. 3) 안 되면 카카오톡에 글+링크로 바로 보내기(안드로이드, 앱 키 불필요).
+/// 4) 그것도 안 되면 휴대폰 공유 창.
 Future<void> doKakao(BuildContext ctx, String kind, {String role = ''}) async {
   final (title, text, url) = shareMsg(kind, role: role);
   final u = Uri.parse(url);
+  final tpl = kk.FeedTemplate(
+    content: kk.Content(title: title, description: text, imageUrl: Uri.parse('${kSite}assets/og.png'), link: kk.Link(webUrl: u, mobileWebUrl: u)),
+    buttons: [kk.Button(title: _btnTitle(kind), link: kk.Link(webUrl: u, mobileWebUrl: u))],
+  );
   try {
     if (await kk.ShareClient.instance.isKakaoTalkSharingAvailable()) {
-      await kk.ShareClient.instance.shareDefault(
-          template: kk.FeedTemplate(
-        content: kk.Content(title: title, description: text, imageUrl: Uri.parse('${kSite}assets/og.png'), link: kk.Link(webUrl: u, mobileWebUrl: u)),
-        buttons: [kk.Button(title: _btnTitle(kind), link: kk.Link(webUrl: u, mobileWebUrl: u))],
-      ));
+      await kk.ShareClient.instance.shareDefault(template: tpl);
       return;
     }
   } catch (e) {
     debugPrint('kakao share: $e');
+  }
+  try {
+    final w = await kk.WebSharerClient.instance.makeDefaultUrl(template: tpl);
+    if (await launchUrl(w, mode: LaunchMode.externalApplication, webOnlyWindowName: '_blank')) return;
+  } catch (e) {
+    debugPrint('kakao web share: $e');
   }
   var ok = false;
   if (!kIsWeb) {
