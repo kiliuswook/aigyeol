@@ -9,6 +9,7 @@ import 'flow.dart';
 import 'insight.dart';
 import '../stats.dart';
 import 'kit.dart';
+import 'share.dart' show inviteCg;
 import 'setup.dart';
 
 class ReportView extends StatefulWidget {
@@ -90,7 +91,7 @@ class _ReportViewState extends State<ReportView> {
                 ])),
       for (final e in all)
         ChipBtn('${e.key} · ${fullDone(e.value.ans) ? score(e.value.ans).code : '${answered(e.value.ans)}/${C.items.length}'}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
-      if (store.demo == null) ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => tab.value = 2)),
+      if (store.demo == null) ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => inviteCg(context))),
     ]);
   }
 
@@ -173,7 +174,7 @@ class _ReportViewState extends State<ReportView> {
       'next': col([
         h2('이제 무엇을 할까요?'),
         Tile(kid.inv != null ? '${kid.inv!['from'] ?? '가족'}에게 결과 보내기' : '결과 카드 공유하기', icon: 'i_share', sub: '유형과 별명만 보냅니다', onTap: () => tab.value = 2),
-        Tile('다른 양육자도 검사하기', icon: 'i_heart', sub: '서로 다르게 본 점을 비교해요', onTap: () => addWho(context, invite: () => tab.value = 2)),
+        Tile('다른 양육자도 검사하기', icon: 'i_heart', sub: '서로 다르게 본 점을 비교해요', onTap: () => addWho(context, invite: () => inviteCg(context))),
         Tile('다시 검사하기', icon: 'i_retry', sub: '시간이 지나 달라진 점을 봅니다', onTap: () => startRetest(context)),
       ]),
     };
@@ -411,8 +412,8 @@ class _ReportViewState extends State<ReportView> {
           h2('양육자마다 다르게 본 점'),
           muted('같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다.'),
           rich("**비교할 양육자가 아직 없습니다.** 정밀검사를 마친 양육자가 두 명 이상이면 일치도, 다르게 본 이유, 함께 정할 약속까지 이곳에 정리됩니다. 지금 마친 사람: ${fin.isEmpty ? '없음' : fin.map((e) => e.key).join(', ')}.", style: small),
-          Tile('이 휴대폰에서 다른 양육자 검사', icon: 'i_heart', sub: '광고 1번 보고 무료', onTap: () => addWho(context, invite: () => tab.value = 2)),
-          Tile('다른 휴대폰으로 초대 보내기', icon: 'i_share', sub: '결과를 보내 주면 이곳에 합쳐집니다', onTap: () => tab.value = 2),
+          Tile('이 휴대폰에서 다른 양육자 검사', icon: 'i_heart', sub: '광고 1번 보고 무료', onTap: () => addWho(context, invite: () => inviteCg(context))),
+          Tile('다른 휴대폰으로 초대 보내기', icon: 'i_share', sub: '결과를 보내 주면 이곳에 합쳐집니다', onTap: () => inviteCg(context)),
         ])
       ]);
     }

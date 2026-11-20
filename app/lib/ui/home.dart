@@ -7,6 +7,7 @@ import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'kit.dart';
+import 'share.dart' show inviteCg;
 import 'report.dart' show eun;
 import 'setup.dart';
 
@@ -124,12 +125,12 @@ class HomeView extends StatelessWidget {
               child: chipRow([
             for (final e in kid.cgs)
               ChipBtn('${e.key}${fullDone(e.value.ans) ? ' · ${score(e.value.ans).code}' : e.value.ans.isNotEmpty ? ' · ${answered(e.value.ans)}/${C.items.length}' : ''}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
-            ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => tab.value = 2)),
+            ChipBtn('+ 추가', onTap: () => addWho(context, invite: () => inviteCg(context))),
           ])),
         ]),
         const SizedBox(height: 8),
         Row(children: [
-          quick('i_heart', '가족 초대', () => tab.value = 2),
+          quick('i_heart', '가족 초대', () => inviteCg(context)),
           const SizedBox(width: 6),
           if (done) quick('i_retry', '다시 검사', () => startRetest(context)) else quick('i_doc', '샘플 리포트', () => showSample(context)),
           const SizedBox(width: 6),

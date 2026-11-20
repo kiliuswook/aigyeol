@@ -147,6 +147,16 @@ void main() {
         await t.pumpAndSettle();
         await walk(t);
       }
+      // 양육자 비교의 '다른 휴대폰으로 초대 보내기' 는 더보기 탭으로 가지 않고 초대 창을 바로 연다
+      await t.tap(find.text('양육자 비교').first);
+      await t.pumpAndSettle();
+      await t.ensureVisible(find.text('다른 휴대폰으로 초대 보내기'));
+      await t.tap(find.text('다른 휴대폰으로 초대 보내기'));
+      await t.pumpAndSettle();
+      expect(find.textContaining('검사하게 초대'), findsOneWidget);
+      expect(tab.value, 1);
+      await t.tap(find.byKey(const Key('popup-close')));
+      await t.pumpAndSettle();
       for (final k in [2, 0]) {
         tab.value = k;
         await t.pumpAndSettle();

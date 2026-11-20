@@ -32,9 +32,8 @@ class ShareActions {
       ]);
 
   List<ShareItem> items(BuildContext context) {
-    final kid = store.kid, cur = store.cur, nm = store.nm;
+    final kid = store.kid, cur = store.cur;
     final r = fullDone(cur.ans) && cur.paid ? score(cur.ans) : null;
-    final roles = kCgl.where((n) => n != kid.who).toList();
     final from = '${kid.inv?['from'] ?? '가족'}';
     return [
         if (kid.inv != null && r != null)
@@ -43,23 +42,7 @@ class ShareActions {
                     muted("$from의 휴대폰 '양육자 비교'에 합쳐집니다. 결과 링크에는 아이 이름·연령과 답이 실립니다."),
                     buttons(c, 'back'),
                   ])),
-        (title: '양육자 초대', icon: 'i_heart', onTap: () {
-          var role = roles.first;
-          popup(context, title: '다른 휴대폰에서 $nm 검사하게 초대', (c, set) => [
-                muted('누구를 초대하나요?'),
-                chips([
-                  for (final n in roles.where((n) => n != kOtherCg)) ChipBtn(n, on: role == n, onTap: () => set(() => role = n)),
-                  // '기타 양육자' 는 초대할 사람의 이름을 직접 적는다
-                  ChipBtn(roles.contains(role) && role != kOtherCg ? kOtherCg : role, on: !roles.contains(role) || role == kOtherCg, onTap: () async {
-                    final n = await askCgName(c, initial: roles.contains(role) ? '' : role, taken: {kid.who});
-                    if (n != null) set(() => role = n);
-                  }),
-                ]),
-                buttons(c, 'invite', role: () => role),
-                muted(
-                    "링크를 열면 $nm의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사합니다. 다 마치면 결과를 다시 보내 '양육자 비교'에 합칩니다. 링크에는 아이 이름·연령이 실리니 믿을 수 있는 가족에게만 보내 주세요."),
-              ]);
-        }),
+        (title: '양육자 초대', icon: 'i_heart', onTap: () => inviteCg(context)),
         (title: '결과 공유', icon: 'i_share',
             onTap: r == null
                 ? null
@@ -75,4 +58,26 @@ class ShareActions {
         (title: '앱 추천', icon: 'i_star', onTap: () => popup(context, title: '친구에게 앱 추천하기', (c, set) => [buttons(c, 'app')])),
     ];
   }
+}
+
+/// 양육자 초대 창: 누구를 초대할지 고르고 카카오톡 · 다른 앱 · 링크 복사로 보낸다.
+/// 더보기 '양육자 초대', 리포트 '다른 휴대폰으로 초대 보내기', 홈 '가족 초대', '답하는 사람 추가' 창의 초대 버튼이 모두 이 창을 바로 연다.
+Future<void> inviteCg(BuildContext context) {
+  final kid = store.kid, nm = store.nm;
+  final roles = kCgl.where((n) => n != kid.who).toList();
+  var role = roles.first;
+  return popup(context, title: '다른 휴대폰에서 $nm 검사하게 초대', (c, set) => [
+        muted('누구를 초대하나요?'),
+        chips([
+          for (final n in roles.where((n) => n != kOtherCg)) ChipBtn(n, on: role == n, onTap: () => set(() => role = n)),
+          // '기타 양육자' 는 초대할 사람의 이름을 직접 적는다
+          ChipBtn(roles.contains(role) && role != kOtherCg ? kOtherCg : role, on: !roles.contains(role) || role == kOtherCg, onTap: () async {
+            final n = await askCgName(c, initial: roles.contains(role) ? '' : role, taken: {kid.who});
+            if (n != null) set(() => role = n);
+          }),
+        ]),
+        const ShareActions().buttons(c, 'invite', role: () => role),
+        muted(
+            "링크를 열면 $nm의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사합니다. 다 마치면 결과를 다시 보내 '양육자 비교'에 합칩니다. 링크에는 아이 이름·연령이 실리니 믿을 수 있는 가족에게만 보내 주세요."),
+      ]);
 }
