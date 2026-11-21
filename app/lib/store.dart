@@ -335,7 +335,7 @@ class Store extends ChangeNotifier {
 
   /// 샘플 리포트 열기: 예시 아이 '콩이'(엄마·아빠 검사, 지난 검사 기록 포함)를 만들어 잠시 보여 준다. 내 아이 기록은 건드리지 않는다.
   void openSample() {
-    final k = Kid(name: '콩이', age: '만 5세', sex: 'F', who: '엄마');
+    final k = Kid(name: tr('콩이'), age: '만 5세', sex: 'F', who: '엄마');
     final c = k.cur;
     genAns(C.items, {'A': 2, 'B': 4, 'C': 2, 'D': 4}, 4, c.ans);
     c.date = today();

@@ -1,0 +1,1049 @@
+{
+ "axes": [
+  {
+   "id": "A",
+   "H": "E",
+   "L": "I",
+   "hi": "Explorador",
+   "lo": "Observador",
+   "q": "Ante lo nuevo",
+   "c": "--c1",
+   "subs": [
+    {
+     "n": "Acercarse a lo nuevo",
+     "lo": "Primero observa",
+     "hi": "Se lanza enseguida"
+    },
+    {
+     "n": "Energía de actividad",
+     "lo": "Juego tranquilo",
+     "hi": "Juego activo"
+    },
+    {
+     "n": "Acercarse a las personas",
+     "lo": "Entra en confianza despacio",
+     "hi": "Se acerca primero"
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "H": "S",
+   "L": "N",
+   "hi": "Sensible",
+   "lo": "Tranquilo",
+   "q": "Cuánto siente las cosas",
+   "c": "--c2",
+   "subs": [
+    {
+     "n": "Sensibilidad sensorial",
+     "lo": "Le afecta poco",
+     "hi": "Le afecta fácilmente"
+    },
+    {
+     "n": "Notar cambios",
+     "lo": "Suele no notarlos",
+     "hi": "Los nota rápido"
+    },
+    {
+     "n": "Huella emocional",
+     "lo": "Lo deja pasar",
+     "hi": "Le dura"
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "H": "F",
+   "L": "T",
+   "hi": "Expresivo",
+   "lo": "Sereno",
+   "q": "Cómo muestra lo que siente",
+   "c": "--c3",
+   "subs": [
+    {
+     "n": "Tamaño de las emociones",
+     "lo": "Las muestra poco",
+     "hi": "Las muestra mucho"
+    },
+    {
+     "n": "Compartir lo que siente",
+     "lo": "Lo guarda dentro",
+     "hi": "Lo cuenta primero"
+    },
+    {
+     "n": "Resaca emocional",
+     "lo": "Se calma rápido",
+     "hi": "Le dura mucho"
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "H": "J",
+   "L": "P",
+   "hi": "Rítmico",
+   "lo": "Libre",
+   "q": "Cómo vive su día",
+   "c": "--c4",
+   "subs": [
+    {
+     "n": "Ritmo diario",
+     "lo": "Cada día distinto",
+     "hi": "Regular"
+    },
+    {
+     "n": "Transiciones y avisos",
+     "lo": "Cambia al momento",
+     "hi": "Necesita aviso"
+    },
+    {
+     "n": "Orden y organización",
+     "lo": "Según venga",
+     "hi": "Según las reglas"
+    }
+   ]
+  }
+ ],
+ "grows": [
+  {
+   "id": "G1",
+   "n": "Constancia",
+   "d": "La fuerza para volver a intentarlo cuando cuesta",
+   "lv": [
+    [
+     "Tiende a rendirse rápido cuando algo se complica.",
+     "Es natural a esta edad. Elogia el volver a intentarlo más que el resultado y empieza por pasos fáciles en los que pueda tener éxito. \"¿Probamos una vez más?\" funciona mejor que \"Termínalo\"."
+    ],
+    [
+     "Persiste en lo que le gusta, pero necesita ayuda con lo difícil.",
+     "Divide las tareas en pasos pequeños para que viva el \"solo una más\". Descansar y volver también es constancia."
+    ],
+    [
+     "Tiene una base sólida para volver a intentarlo y terminar lo que empieza, aunque cueste.",
+     "Su concentración profunda puede hacer difícil parar a medias. Para que no se agote buscando la perfección, dile \"Así ya está bien\"."
+    ]
+   ],
+   "count": 6
+  },
+  {
+   "id": "G2",
+   "n": "Autonomía",
+   "d": "La fuerza para decidir y hacer las cosas por sí mismo",
+   "lv": [
+    [
+     "Todavía necesita mucha ayuda y decisiones de los adultos.",
+     "Espera solo 10 segundos antes de hacerlo por tu peque. Las cosas cambian a medida que acumula experiencias de terminar tareas pequeñas, como ponerse un calcetín, por sí solo."
+    ],
+    [
+     "Hace solo lo conocido, pero busca a un adulto ante lo nuevo.",
+     "Empieza con elecciones pequeñas, como elegir una de dos. Es importante que el adulto no cambie lo que eligió."
+    ],
+    [
+     "Tiene una base sólida para decidir y hacer las cosas por sí mismo.",
+     "Amplía sus opciones, pero deja claras las reglas de seguridad. Cuando un fuerte \"¡Yo solo!\" acaba en tira y afloja, lo más fácil es darle más tiempo."
+    ]
+   ],
+   "count": 6
+  },
+  {
+   "id": "G3",
+   "n": "Convivencia",
+   "d": "La fuerza para leer lo que sienten los demás y colaborar",
+   "lv": [
+    [
+     "Lo que quiere todavía va primero.",
+     "Es habitual a edades tempranas. Pon en palabras las caras, como \"Tu amigo parece triste\", y practica turnos cortos jugando."
+    ],
+    [
+     "Comparte y espera bien cuando está de buen humor, pero le cuesta cuando quiere algo de verdad.",
+     "Funcionan bien los juegos donde los turnos se ven, como apilar bloques por turnos o los juegos de mesa. Reconoce enseguida el momento en que esperó."
+    ],
+    [
+     "Tiene una base sólida para leer lo que sienten los demás y llevarse bien.",
+     "Para que no pierda de vista sus propios sentimientos cediendo siempre, practica también decir \"No\" y \"Yo también quiero un turno\"."
+    ]
+   ],
+   "count": 6
+  }
+ ],
+ "poles": {
+  "E": {
+   "tags": [
+    "Prueba primero",
+    "Lleno de energía",
+    "Le encanta la gente"
+   ],
+   "sum": "Se mueve primero ante lugares, juegos y personas nuevas. Aprende lanzándose con todo el cuerpo.",
+   "det": "Los niños con mucho de Explorador ven lo nuevo como una oportunidad, no como una amenaza. Aprenden haciendo más que escuchando explicaciones y necesitan mucho tiempo cada día para mover el cuerpo. Como a veces se mueven antes de mirar, las reglas de seguridad funcionan mejor si son cortas, claras y acordadas de antemano.",
+   "st": "Se adapta rápido a sitios nuevos y disfruta de los retos.",
+   "wa": "Necesita practicar parar a mirar antes de moverse.",
+   "say": "¡Quieres probarlo primero! Acordemos una sola regla y vamos.",
+   "no": "¡¿No puedes quedarte quieto?!",
+   "ph": "se lanza primero a lo nuevo",
+   "says": [
+    [
+     "Al llegar a un parque nuevo",
+     "¡Quieres probarlo primero! Acordemos una sola regla y vamos."
+    ],
+    [
+     "Al intentar trepar a un sitio que parece peligroso",
+     "¡Querías subir! Dale la mano a Mamá y vamos solo hasta aquí."
+    ],
+    [
+     "En un lugar donde hay que esperar en silencio",
+     "Tu cuerpo quiere moverse, ¿verdad? Contemos hasta diez y luego salimos a correr."
+    ],
+    [
+     "Al acercarse de repente a un niño que no conoce",
+     "¡Quieres jugar con él! Primero preguntemos: \"¿Jugamos?\""
+    ]
+   ]
+  },
+  "I": {
+   "tags": [
+    "Prudente",
+    "Atento",
+    "Aprende a fondo"
+   ],
+   "sum": "Observa con cuidado y se mueve cuando está listo. Cuando se siente cómodo, se implica a fondo.",
+   "det": "Los niños con mucho de Observador reúnen información primero ante lo nuevo. No es timidez: es su propia revisión de seguridad. Si le metes prisa, se retrae; si esperas, da el paso por sí mismo. Llega un poco antes a los sitios nuevos para darle tiempo a mirar y no le obligues a saludar a quien acaba de conocer.",
+   "st": "Cuidadoso, comete pocos errores y se concentra a fondo en lo conocido.",
+   "wa": "Necesita bastante tiempo para adaptarse a sitios nuevos.",
+   "say": "Está bien mirar primero. Avísame cuando quieras probar.",
+   "no": "Todos los demás lo hacen, ¿por qué tú no?",
+   "ph": "observa con atención antes de moverse",
+   "says": [
+    [
+     "Al ir por primera vez a un sitio nuevo",
+     "Está bien mirar primero. Avísame cuando quieras probar."
+    ],
+    [
+     "Cuando un adulto le pide que salude",
+     "Por ahora basta con decir adiós con la mano. Saluda cuando estés listo."
+    ],
+    [
+     "Al mirar jugar a otros niños sin unirse",
+     "Estás mirando cómo juegan. ¿Nos acercamos un poquito juntos?"
+    ],
+    [
+     "Antes de empezar una actividad nueva",
+     "Hoy vamos a hacer esto. Miremos una vez primero y luego decidimos."
+    ]
+   ]
+  },
+  "S": {
+   "tags": [
+    "Nota mucho",
+    "Sensible a los sentidos",
+    "De corazón tierno"
+   ],
+   "sum": "Siente pequeñas diferencias de sonido, tacto y ambiente. Por eso también se cansa con facilidad.",
+   "det": "Los niños con mucho de Sensible reciben el mismo estímulo más grande y con más detalle. Que le moleste la ropa o los sitios ruidosos no es terquedad: es una incomodidad real. Tras días intensos, reserva tiempo de descanso tranquilo. Al crecer, esta sensibilidad se convierte en la base de la observación, la empatía y el sentido de la belleza.",
+   "st": "Observador y rápido para notar cómo se sienten los demás.",
+   "wa": "Se cansa pronto en sitios concurridos, así que necesita descansar.",
+   "say": "Eso te molestó, ¿verdad? ¿Me cuentas cómo se siente?",
+   "no": "No es nada, ¿por qué haces tanto drama?",
+   "ph": "nota hasta los cambios pequeños",
+   "says": [
+    [
+     "Cuando dice que la ropa o los calcetines le molestan",
+     "Eso te molestó, ¿verdad? ¿Me cuentas cómo se siente?"
+    ],
+    [
+     "En sitios ruidosos y llenos de gente",
+     "Había demasiado ruido, ¿verdad? Descansemos un rato en un sitio tranquilo."
+    ],
+    [
+     "Cuando se asusta mucho o llora por cosas pequeñas",
+     "Eso te asustó mucho. Deja que Mamá te abrace. Respiremos despacio."
+    ],
+    [
+     "Cuando no le gusta el sabor o el olor de una comida",
+     "Este sabor es nuevo para ti. Solo un bocado, y si no te gusta puedes dejar el resto."
+    ]
+   ]
+  },
+  "N": {
+   "tags": [
+    "Despreocupado",
+    "Difícil de alterar",
+    "Se recupera rápido"
+   ],
+   "sum": "No le afectan mucho los estímulos ni los cambios. Se levanta enseguida tras una caída.",
+   "det": "Los niños con mucho de Tranquilo tienen un umbral alto de incomodidad, así que se adaptan casi a cualquier sitio. Pero dicen poco aunque estén incómodos o les duela algo, y los adultos pueden no darse cuenta. También pueden pasar por alto cambios sutiles en la cara de los demás, así que ayuda poner los sentimientos en palabras.",
+   "st": "Se mantiene estable ante los cambios y se recupera rápido del estrés.",
+   "wa": "Rara vez dice que algo le molesta, así que el adulto debe preguntar primero.",
+   "say": "Pareces bien, pero te pregunto. ¿Cómo están tu cuerpo y tu corazón ahora?",
+   "no": "A ti nunca te importa nada.",
+   "ph": "no se altera fácilmente",
+   "says": [
+    [
+     "Cuando parece estar bien tras una caída",
+     "Pareces bien, pero te pregunto. ¿Cómo están tu cuerpo y tu corazón ahora?"
+    ],
+    [
+     "Cuando se queda callado tras quitarle un juguete",
+     "¿No te molestó eso? Si no te gusta, puedes decir \"Es mío\"."
+    ],
+    [
+     "Cuando sigue jugando sin decir que se hizo daño",
+     "Aquí está rojo. Si algo te duele, díselo siempre a Mamá, ¿vale?"
+    ],
+    [
+     "Cuando no capta el ambiente a su alrededor",
+     "¿Miramos la cara de tu hermanito? ¿Cómo crees que se siente?"
+    ]
+   ]
+  },
+  "F": {
+   "tags": [
+    "Rico en emociones",
+    "Lo cuenta primero",
+    "Las emociones le duran"
+   ],
+   "sum": "Muestra la alegría y el enfado con intensidad y claridad. Quiere compartir lo que lleva dentro.",
+   "det": "Los niños con mucho de Expresivo tienen el volumen emocional alto. Los padres los leen con facilidad, pero razonar no funciona mientras la emoción está al máximo. Primero nombra la emoción y habla cuando se calme. Ayuda acordar de antemano formas seguras de sacar las emociones grandes, como patear el suelo o abrazar un cojín.",
+   "st": "No esconde lo que siente, así que es fácil de leer y muy cariñoso.",
+   "wa": "En momentos de mucha emoción, necesita tiempo y una forma de calmarse.",
+   "say": "Estás muy, muy disgustado. Cuando termines de llorar, hablamos juntos.",
+   "no": "Deja de llorar. No es para tanto.",
+   "ph": "muestra sus emociones con intensidad y claridad",
+   "says": [
+    [
+     "Al llorar fuerte o enfadarse",
+     "Estás muy, muy disgustado. Cuando termines de llorar, hablamos juntos."
+    ],
+    [
+     "Al ponerse ruidoso por la emoción",
+     "¡Qué emocionado estás! Aquí habla bajito, por favor."
+    ],
+    [
+     "A punto de lanzar algo por enfado",
+     "Está bien enfadarse. En vez de lanzar, pisoteemos fuerte."
+    ],
+    [
+     "Cuando el disgusto dura mucho",
+     "Todavía queda un poco de ese sentimiento. Mamá se queda a tu lado."
+    ]
+   ]
+  },
+  "T": {
+   "tags": [
+    "Sereno",
+    "Piensa por dentro",
+    "Se calma rápido"
+   ],
+   "sum": "No muestra mucho lo que siente y lo procesa por dentro. Vuelve pronto a ser el de siempre.",
+   "det": "Los niños con mucho de Sereno no muestran mucho sus altibajos, así que es fácil verlos simplemente como niños fáciles. No es que no sientan; es que lo muestran menos. En lugar de \"¿Estás bien?\", pregunta en concreto, como \"¿Qué tal lo de antes?\", y abre otras formas de expresarse, como dibujar o jugar.",
+   "st": "Sereno y sin dejarse arrastrar por las emociones, transmite estabilidad a los demás.",
+   "wa": "Es fácil pasar por alto lo que siente por dentro, así que haz preguntas concretas.",
+   "say": "No hace falta que lo digas. ¿Me lo enseñas con un dibujo?",
+   "no": "Eres tan fácil que nunca tengo que preocuparme por ti.",
+   "ph": "procesa sus emociones con calma por dentro",
+   "says": [
+    [
+     "Cuando parece disgustado pero no dice nada",
+     "No hace falta que lo digas. ¿Me lo enseñas con un dibujo?"
+    ],
+    [
+     "Cuando solo responde \"Estoy bien\"",
+     "Dices que estás bien, pero Mamá tiene curiosidad. ¿Me cuentas un poquito?"
+    ],
+    [
+     "Cuando reacciona poco incluso ante algo alegre",
+     "¡Sonreíste un poquito! Me alegra ver que te gusta."
+    ],
+    [
+     "Cuando intenta aguantarlo solo",
+     "No tienes que aguantarlo solo. Si es difícil, aprieta la mano de Mamá."
+    ]
+   ]
+  },
+  "J": {
+   "tags": [
+    "Regular",
+    "Necesita aviso",
+    "Le encanta el orden"
+   ],
+   "sum": "Se siente a gusto con rutinas y un orden fijo. Colabora bien cuando se le avisa antes.",
+   "det": "Los niños con mucho de Rítmico se sienten seguros cuando saben qué viene después. Los cambios repentinos les afectan mucho, pero un aviso de 5 minutos y un horario diario evitan muchos conflictos. Los días en que la rutina se rompe, como viajes o eventos, mantén al menos estables el sueño y las comidas.",
+   "st": "Crea buenos hábitos y cumple bien promesas y normas.",
+   "wa": "Le cuestan los cambios repentinos, así que avísale antes.",
+   "say": "Cuando la aguja larga llegue al 6, recogemos. Después, a la bañera.",
+   "no": "¡Para ahora mismo!",
+   "ph": "y se siente a gusto con una rutina previsible",
+   "says": [
+    [
+     "Al tener que dejar de jugar y recoger",
+     "Cuando la aguja larga llegue al 6, recogemos. Después, a la bañera."
+    ],
+    [
+     "Cuando los planes cambian de repente",
+     "Hoy cambió el orden. A cambio, te prometo que iremos mañana."
+    ],
+    [
+     "Disgustado porque no es como siempre",
+     "Querías hacerlo como siempre. Probemos así solo esta vez."
+    ],
+    [
+     "Antes de ir a un sitio desconocido",
+     "Hoy primero subimos al coche, vamos al médico y luego volvemos a casa."
+    ]
+   ]
+  },
+  "P": {
+   "tags": [
+    "Flexible",
+    "Espontáneo",
+    "Lleva bien los cambios"
+   ],
+   "sum": "Se mueve según el momento. Se adapta con facilidad aunque cambien los planes.",
+   "det": "Los niños con mucho de Libre llevan bien los cambios y duermen y juegan bien en cualquier sitio. En cambio, hábitos como dormir y comer a horas fijas no se forman solos. En lugar de fijar cada rutina, asegura solo una o dos esenciales, como el orden antes de dormir, y dale opciones dentro de ellas; lo aceptará bien.",
+   "st": "Flexible ante los cambios y disfruta de situaciones nuevas.",
+   "wa": "El adulto necesita fijar una o dos rutinas esenciales.",
+   "say": "¿Lavarte los dientes o leer un cuento, qué quieres hacer primero?",
+   "no": "¿Por qué siempre haces lo que te da la gana?",
+   "ph": "y se deja llevar por el momento",
+   "says": [
+    [
+     "Al retrasar la hora de prepararse para dormir",
+     "¿Lavarte los dientes o leer un cuento, qué quieres hacer primero?"
+    ],
+    [
+     "Tan metido en el juego que no puede pasar a otra cosa",
+     "Es divertido, ¿verdad? Apilemos solo cinco bloques más y vamos."
+    ],
+    [
+     "Juguetes tirados por todas partes",
+     "¿Guardamos primero los coches o los muñecos? Tú decides."
+    ],
+    [
+     "Cuando por la mañana se hace tarde",
+     "Zapatos puestos antes de que acabe esta canción. ¡Preparados, ya!"
+    ]
+   ]
+  }
+ },
+ "nick": {
+  "ESFJ": "Cálido líder de expedición",
+  "ESFP": "Fuego artificial chispeante",
+  "ESTJ": "Pequeño detective cuidadoso",
+  "ESTP": "Aventurero de mirada aguda",
+  "ENFJ": "Valiente líder del desfile",
+  "ENFP": "Torbellino feliz",
+  "ENTJ": "Pequeño capitán constante",
+  "ENTP": "Pionero sin miedo",
+  "ISFJ": "Pequeño jardinero amable",
+  "ISFP": "Artista de corazón tierno",
+  "ISTJ": "Pequeño sabio sereno",
+  "ISTP": "Detective silencioso",
+  "INFJ": "Cuentacuentos bondadoso",
+  "INFP": "Soñador despreocupado",
+  "INTJ": "Pequeño artesano constante",
+  "INTP": "Nube viajera"
+ },
+ "opt": [
+  "Nada",
+  "Poco",
+  "Algo",
+  "Bastante",
+  "Mucho"
+ ],
+ "items": [
+  {
+   "id": "A0-0",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Se pone a explorar enseguida, incluso en un lugar donde nunca ha estado.",
+   "r": 0,
+   "ex": "En un parque de bolas o en casa de un familiar por primera vez, se separa de ti para mirar solo"
+  },
+  {
+   "id": "A1-0",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Prefiere el juego activo a estar sentado.",
+   "r": 0,
+   "ex": "Incluso durante el cuento, se levanta a caminar o mueve el cuerpo"
+  },
+  {
+   "id": "A2-0",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Se acerca a hablar o jugar con niños que acaba de conocer.",
+   "r": 0,
+   "ex": "En el parque, le dice \"¡Vamos a jugar!\" a un niño desconocido o juega a su lado"
+  },
+  {
+   "id": "B0-0",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Le molestan pequeñas texturas como etiquetas de ropa o costuras de calcetines.",
+   "r": 0,
+   "ex": "Te pide cortar etiquetas o solo quiere ponerse cierta ropa"
+  },
+  {
+   "id": "B1-0",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Nota rápido cuando se mueven cosas en casa.",
+   "r": 0,
+   "ex": "Cuando cambia un mueble o aparece algo nuevo, pregunta \"¿Qué es esto?\" nada más entrar"
+  },
+  {
+   "id": "B2-0",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Se disgusta o se preocupa con facilidad, incluso por cosas pequeñas.",
+   "r": 0,
+   "ex": "Llora cuando un dibujo no sale bien o se rompe una galleta"
+  },
+  {
+   "id": "C0-0",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Muestra la alegría con todo el cuerpo, gritando o saltando.",
+   "r": 0,
+   "ex": "Grita \"¡Hala!\" y da saltos al recibir un regalo"
+  },
+  {
+   "id": "C1-0",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Cuenta lo que pasó o cómo se siente sin que se lo pregunten.",
+   "r": 0,
+   "ex": "Al volver de la guardería, dice \"Hoy un amigo me empujó\" sin que se lo pregunten"
+  },
+  {
+   "id": "C2-0",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Le cuesta calmarse una vez que llora o se enfada.",
+   "r": 0,
+   "ex": "El llanto dura más de 10 minutos o cuesta mucho consolarlo"
+  },
+  {
+   "id": "D0-0",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Le entra sueño y hambre más o menos a la misma hora cada día.",
+   "r": 0,
+   "ex": "Puedes adivinar la siesta y la merienda sin mirar el reloj"
+  },
+  {
+   "id": "D1-0",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Acepta mucho mejor dejar de jugar si se le avisa antes.",
+   "r": 0,
+   "ex": "Protesta menos si le dices \"Nos vamos a casa en 5 minutos\""
+  },
+  {
+   "id": "D2-0",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Quiere las cosas en su sitio de siempre o hechas en un orden fijo.",
+   "r": 0,
+   "ex": "Siempre deja los zapatos en el mismo sitio y no le gusta que cambie el orden antes de dormir"
+  },
+  {
+   "id": "G1-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Lo intenta varias veces aunque algo no salga.",
+   "r": 0,
+   "ex": "Vuelve a montar la torre de bloques cuando se cae"
+  },
+  {
+   "id": "G2-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Quiere vestirse o recoger por sí mismo.",
+   "r": 0,
+   "ex": "Dice \"¡Yo solo!\" e intenta ponerse los zapatos sin ayuda"
+  },
+  {
+   "id": "G3-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Va a consolar a un amigo o familiar que llora.",
+   "r": 0,
+   "ex": "Le lleva un pañuelo o un juguete a un hermano o amigo que llora"
+  },
+  {
+   "id": "A0-1",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Toca un juguete o juego nuevo antes de escuchar cómo funciona.",
+   "r": 0,
+   "ex": "Aprieta los botones en cuanto se abre la caja de un juguete nuevo"
+  },
+  {
+   "id": "A1-1",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "A menudo corre o trepa, incluso dentro de casa.",
+   "r": 0,
+   "ex": "Salta del sofá o se sube a las sillas y la mesa"
+  },
+  {
+   "id": "A2-1",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Se esconde detrás de sus padres o duda cuando un adulto desconocido le habla.",
+   "r": 1,
+   "ex": "Se esconde sin responder cuando un vecino en el ascensor le pregunta \"¿Cuántos años tienes?\""
+  },
+  {
+   "id": "B0-1",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Se asusta o le molestan los ruidos fuertes y las luces brillantes.",
+   "r": 0,
+   "ex": "Se tapa los oídos o llora con la aspiradora, el secador de manos o los fuegos artificiales"
+  },
+  {
+   "id": "B1-1",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Capta enseguida cuando cambia la cara o la voz de sus padres.",
+   "r": 0,
+   "ex": "Pregunta \"Mamá, ¿estás enfadada?\" cuando sus padres están cansados o molestos"
+  },
+  {
+   "id": "B2-1",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Se levanta enseguida tras caerse o equivocarse.",
+   "r": 1,
+   "ex": "Se cae jugando, se sacude y sigue jugando"
+  },
+  {
+   "id": "C0-1",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Cuando se enfada o disgusta, lo muestra tanto que todos alrededor se enteran.",
+   "r": 0,
+   "ex": "Llora fuerte o se tira al suelo cuando no consigue lo que quiere en la tienda"
+  },
+  {
+   "id": "C1-1",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "No cuenta las cosas que le disgustan si no se le pregunta.",
+   "r": 1,
+   "ex": "Te enteras de una pelea con un amigo solo por el profesor"
+  },
+  {
+   "id": "C2-1",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Cambia rápido de atención a otra cosa aunque esté disgustado.",
+   "r": 1,
+   "ex": "Deja de llorar pronto si le enseñas su juguete favorito"
+  },
+  {
+   "id": "D0-1",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Se duerme a horas muy distintas de un día a otro.",
+   "r": 1,
+   "ex": "Unos días se duerme a las 8 y otros después de las 10"
+  },
+  {
+   "id": "D1-1",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Se adapta con facilidad aunque los planes cambien de repente.",
+   "r": 1,
+   "ex": "Te acompaña sin protestar cuando vais a la tienda en lugar de al parque previsto"
+  },
+  {
+   "id": "D2-1",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Intenta corregirte con \"Así no es\" cuando cambian las reglas de un juego o una promesa.",
+   "r": 0,
+   "ex": "Dice \"No, hay que hacerlo así\" cuando cambia el orden de lectura o las reglas del juego"
+  },
+  {
+   "id": "G1-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Intenta terminar los juegos o manualidades que empieza.",
+   "r": 0,
+   "ex": "Solo se levanta después de terminar el puzle o el dibujo"
+  },
+  {
+   "id": "G2-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Dice con claridad lo que quiere hacer.",
+   "r": 0,
+   "ex": "Elige: \"Me pongo este\", \"Este no, ese\""
+  },
+  {
+   "id": "G3-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Comparte juguetes o comida.",
+   "r": 0,
+   "ex": "Ofrece una galleta mientras come: \"¿Quieres una?\""
+  },
+  {
+   "id": "A0-2",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Solo se une a una actividad nueva después de observar un rato.",
+   "r": 1,
+   "ex": "En una clase de prueba, mira a los demás niños unos minutos antes de unirse"
+  },
+  {
+   "id": "A1-2",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Disfruta mucho tiempo de juegos tranquilos como libros o puzles.",
+   "r": 1,
+   "ex": "Se pasa más de 20 minutos dibujando o haciendo puzles"
+  },
+  {
+   "id": "A2-2",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Se anima más en sitios donde se reúne mucha gente.",
+   "r": 0,
+   "ex": "Está más animado de lo normal en cumpleaños o reuniones familiares"
+  },
+  {
+   "id": "B0-2",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Nota incluso pequeñas diferencias en el sabor o la textura de la comida.",
+   "r": 0,
+   "ex": "Se niega a comer cuando cambia la marca habitual de leche o de un plato"
+  },
+  {
+   "id": "B1-2",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Sigue con lo que hace aunque haya ruido o caos.",
+   "r": 1,
+   "ex": "Sigue jugando aunque esté la tele puesta o un hermano llorando"
+  },
+  {
+   "id": "B2-2",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Recuerda mucho tiempo escenas o cuentos que le dieron miedo y vuelve a sacarlos.",
+   "r": 0,
+   "ex": "A la hora de dormir saca una escena de miedo de hace días"
+  },
+  {
+   "id": "C0-2",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "No muestra mucho por fuera, ya esté de buen o mal humor.",
+   "r": 1,
+   "ex": "Solo sonríe en silencio incluso al recibir un regalo que le encanta"
+  },
+  {
+   "id": "C1-2",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "A menudo pide que lo abraces o que te quedes con él.",
+   "r": 0,
+   "ex": "Viene a por abrazos muchas veces al día o dice \"Quédate a mi lado\""
+  },
+  {
+   "id": "C2-2",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Sigue emocionado mucho rato después de algo divertido y le cuesta calmarse.",
+   "r": 0,
+   "ex": "Tras un día en el parque de atracciones, está tan activado que se duerme tarde"
+  },
+  {
+   "id": "D0-2",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Se descoloca cuando cambia la rutina habitual.",
+   "r": 0,
+   "ex": "Está más quejoso o irritable los días con otra rutina, como viajes o fiestas"
+  },
+  {
+   "id": "D1-2",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Quiere saber el orden de antemano: \"¿Y después qué hacemos?\"",
+   "r": 0,
+   "ex": "Pregunta por la mañana: \"¿Adónde vamos hoy? ¿Y después?\""
+  },
+  {
+   "id": "D2-2",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Cambia de juego según se le ocurren ideas.",
+   "r": 1,
+   "ex": "Pasa de repente de jugar a las casitas a los médicos y a los coches"
+  },
+  {
+   "id": "G1-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Dice rápido \"No puedo\" y lo deja si algo parece difícil.",
+   "r": 1,
+   "ex": "Si un botón no entra a la primera, dice enseguida \"Mamá, hazlo tú\""
+  },
+  {
+   "id": "G2-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Quiere que los adultos le hagan incluso cosas pequeñas.",
+   "r": 1,
+   "ex": "Pide ayuda para usar la cuchara o ponerse los calcetines aunque sabe hacerlo"
+  },
+  {
+   "id": "G3-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Le cuesta mucho esperar su turno.",
+   "r": 1,
+   "ex": "Empuja al niño de delante o se cuela en el tobogán"
+  },
+  {
+   "id": "A0-3",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Busca juegos nuevos más que los conocidos.",
+   "r": 0,
+   "ex": "Elige un juguete que nunca ha visto antes que sus bloques de siempre"
+  },
+  {
+   "id": "A1-3",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Parece que le queda energía incluso después de jugar todo el día.",
+   "r": 0,
+   "ex": "Vuelve a correr por casa incluso después de 2 horas en el parque"
+  },
+  {
+   "id": "A2-3",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Le cuesta sentirse cómodo con amigos nuevos.",
+   "r": 1,
+   "ex": "Solo menciona los nombres de sus amigos a la semana o dos de empezar el curso"
+  },
+  {
+   "id": "B0-3",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "No le importa mucho mojarse la ropa o ensuciarse las manos.",
+   "r": 1,
+   "ex": "Sigue jugando con la ropa mojada después de jugar con agua"
+  },
+  {
+   "id": "B1-3",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Reacciona incluso a sonidos u olores pequeños: \"¿Qué es eso?\"",
+   "r": 0,
+   "ex": "Es el primero en notar una sirena lejana o el olor de la comida"
+  },
+  {
+   "id": "B2-3",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Le dura mucho que le regañen o le corrijan.",
+   "r": 0,
+   "ex": "Por la noche vuelve a sacar la regañina de la mañana o sigue cabizbajo"
+  },
+  {
+   "id": "C0-3",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Ríe o llora muy fuerte.",
+   "r": 0,
+   "ex": "Ríe o llora tan fuerte que se oye desde otra habitación"
+  },
+  {
+   "id": "C1-3",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Enseña lo que hizo y espera tu reacción.",
+   "r": 0,
+   "ex": "Hace un dibujo y lo enseña una y otra vez: \"¡Mira esto!\""
+  },
+  {
+   "id": "C2-3",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Aunque se le suban las emociones, vuelve a ser el de siempre en un momento.",
+   "r": 1,
+   "ex": "Enfadado un minuto y, 1 o 2 minutos después, jugando como si nada"
+  },
+  {
+   "id": "D0-3",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Come cantidades muy distintas de un día a otro.",
+   "r": 1,
+   "ex": "Ayer se comió el plato entero y hoy solo unas cucharadas"
+  },
+  {
+   "id": "D1-3",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Le cuesta parar a mitad de algo y pasar a otra cosa.",
+   "r": 0,
+   "ex": "Protesta mucho cuando lo llamas a comer mientras construye con bloques"
+  },
+  {
+   "id": "D2-3",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Le gusta ordenar los juguetes por tipo o ponerlos en fila.",
+   "r": 0,
+   "ex": "Pone los coches en fila por colores o agrupa los bloques por forma"
+  },
+  {
+   "id": "G1-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Se concentra mucho tiempo en lo que le gusta.",
+   "r": 0,
+   "ex": "Pasa más de 30 minutos con sus bloques o dibujos favoritos"
+  },
+  {
+   "id": "G2-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Tras un error, muestra una actitud de \"puedo intentarlo otra vez\".",
+   "r": 0,
+   "ex": "Derrama agua y, en lugar de llorar, intenta secarla o vuelve a servir"
+  },
+  {
+   "id": "G3-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Intenta parar cuando le dicen que a alguien no le gusta lo que hace.",
+   "r": 0,
+   "ex": "Deja de molestar cuando le dicen \"Tu hermano dice que le duele\""
+  },
+  {
+   "id": "G1-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Vuelve a lo que estaba haciendo aunque le interrumpan.",
+   "r": 0,
+   "ex": "Vuelve a la manualidad después de comer"
+  },
+  {
+   "id": "G2-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Se siente orgulloso de lo que consigue por sí mismo.",
+   "r": 0,
+   "ex": "Se viste solo y presume: \"¡Lo hice yo solito!\""
+  },
+  {
+   "id": "G3-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Acepta las ideas de un amigo al jugar juntos.",
+   "r": 0,
+   "ex": "Acepta \"Esta vez jugamos a lo que tú quieras\""
+  },
+  {
+   "id": "G1-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Pasa a otra cosa en cuanto se aburre un poco.",
+   "r": 1,
+   "ex": "Saca otro juguete tras menos de 5 minutos con un juego"
+  },
+  {
+   "id": "G2-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "No sabe decidir qué hacer por sí mismo y duda mucho rato.",
+   "r": 1,
+   "ex": "Tarda mucho en elegir la merienda o dice \"Mamá, elige tú\""
+  },
+  {
+   "id": "G3-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Deja un juego cuando las cosas no salen como quiere.",
+   "r": 1,
+   "ex": "Dice \"Ya no juego\" y se va tras perder o no conseguir el papel que quiere"
+  }
+ ]
+}

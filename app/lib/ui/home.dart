@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
 
   /// 순서 한 칸(처음 화면): 번호 + 할 일
   Widget stepCell(int n, String t, String d) => Expanded(
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
+      child: Padding(padding: const EdgeInsets.symmetric(horizontal: 3), child: Column(mainAxisSize: MainAxisSize.min, children: [
         Container(
             width: 30, height: 30,
             decoration: const BoxDecoration(color: kAccent, shape: BoxShape.circle),
@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
         const SizedBox(height: 4),
         FittedBox(fit: BoxFit.scaleDown, child: Text(t, maxLines: 1, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kFg))),
         FittedBox(fit: BoxFit.scaleDown, child: Text(d, maxLines: 1, style: const TextStyle(fontSize: 12, color: kMuted))),
-      ]));
+      ])));
 
   Widget header(String sub) => Row(children: [
         Image.asset('assets/img/mascot_child.webp', width: 40, height: 40),
@@ -110,7 +110,7 @@ class HomeView extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(tr('{0} / {1}문항 · 언제든 이어서 할 수 있어요', [n, C.items.length]), style: smallMuted),
                 ] else ...[
-                  FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: tr('{0}의 ', [store.nm])), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: tr('는?'))]), maxLines: 1, textAlign: TextAlign.center)),
+                  FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: tr('{0}의 ', [store.nm])), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: tr('는?', [store.nm]))]), maxLines: 1, textAlign: TextAlign.center)),
                   const SizedBox(height: 4),
                   FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [Tag(tr('무료')), const SizedBox(width: 6), Tag(tr('66문항')), const SizedBox(width: 6), Tag(tr('약 10분'))])),
                 ],

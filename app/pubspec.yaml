@@ -83,6 +83,10 @@ flutter:
         - asset: assets/fonts/Gaegu-Regular.ttf
         - asset: assets/fonts/Gaegu-Bold.ttf
           weight: 700
+    # 스페인어·베트남어 제목: 개구 글꼴에 없는 악센트·성조 글자가 있어 손글씨 라틴 글꼴로 바꾼다
+    - family: PatrickHand
+      fonts:
+        - asset: assets/fonts/PatrickHand-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

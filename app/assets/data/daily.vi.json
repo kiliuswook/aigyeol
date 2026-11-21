@@ -1,0 +1,1064 @@
+{
+ "missions": {
+  "E": [
+   {
+    "k": "Trò chuyện",
+    "t": "Hỏi con: \"Con kể Mẹ nghe một việc hôm nay con thử lần đầu nhé?\"",
+    "w": "Trẻ thích khám phá được sống lại cả ngày khi kể về điều mới đã thử."
+   },
+   {
+    "k": "Khen",
+    "t": "Bắt lấy khoảnh khắc con thử điều mới và nói: \"Con dám thử trước, giỏi lắm.\"",
+    "w": "Khen trái tim dũng cảm hơn là kết quả giúp nó lớn thành can đảm chứ không phải liều lĩnh."
+   },
+   {
+    "k": "Làm",
+    "t": "Chơi một trò vận động mạnh cùng con 15 phút trước khi ngủ.",
+    "w": "Những ngày con dùng hết năng lượng, buổi tối sẽ êm hơn nhiều."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Thay vì \"Ngồi yên!\", hãy thử \"Đếm đến mười rồi mới động nhé\".",
+    "w": "Nói cho con biết khi nào được động hiệu quả hơn bảo con dừng lại."
+   },
+   {
+    "k": "Làm",
+    "t": "Trước khi ra ngoài, thống nhất đúng một quy tắc. Ví dụ: \"Qua đường thì nắm tay\".",
+    "w": "Một quy tắc là điều con nhớ được và giữ được."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Hỏi con hôm nay gặp ai vui nhất.",
+    "w": "Diễn đạt khả năng kết nối của con thành lời giúp ký ức về các mối quan hệ sâu hơn."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi một dòng về khoảnh khắc con vận động vui nhất.",
+    "w": "Biết hoạt động nào khơi dậy năng lượng của con giúp lên kế hoạch cuối tuần dễ hơn."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con chịu đứng yên dù chỉ một lát khi phải chờ, hãy nói ngay: \"Cảm ơn con đã chờ.\"",
+    "w": "Với đứa trẻ muốn vận động, chờ đợi là nỗ lực lớn. Ghi nhận ngay giúp con lặp lại."
+   }
+  ],
+  "I": [
+   {
+    "k": "Trò chuyện",
+    "t": "Chờ đợi và nói: \"Con cứ nhìn từ từ. Khi nào sẵn sàng thì nói Mẹ nhé.\"",
+    "w": "Trẻ thích quan sát sẽ tự lại gần khi đã có thời gian nhìn."
+   },
+   {
+    "k": "Khen",
+    "t": "Tìm điều con lặng lẽ nhận ra và nói: \"Con thấy rồi à! Mắt con tinh thật.\"",
+    "w": "Gọi sự tinh ý là điểm mạnh giúp con tự tin hơn."
+   },
+   {
+    "k": "Làm",
+    "t": "Hôm nay dành 10 phút chơi một trò yên tĩnh chỉ hai mẹ con (vẽ, xếp khối).",
+    "w": "Con mở lòng nhất trong thời gian riêng tư yên bình."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Đừng giục \"Chào đi!\" với người lớn mới gặp; nói với con vẫy tay là được.",
+    "w": "Bị giục khiến con co lại. Chấp nhận lời chào nhỏ giúp lần sau dễ hơn."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Cuối ngày, hỏi con: \"Hôm nay lúc nào con thấy thoải mái nhất?\"",
+    "w": "Nhớ lại khoảnh khắc thoải mái giúp con khép lại ngày trong an tâm."
+   },
+   {
+    "k": "Làm",
+    "t": "Nếu ngày mai đi đâu đó, cho con xem ảnh hoặc bản đồ trước.",
+    "w": "Nơi đã xem trước bớt lạ lẫm, nên bước đầu tiên dễ hơn."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi một dòng về trò chơi con tập trung một mình lâu nhất.",
+    "w": "Biết con tập trung sâu vào đâu giúp nuôi dưỡng sức mạnh đó."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con thử điều mới dù chỉ một chút, hãy nói: \"Con nhìn rồi thử, giỏi quá!\"",
+    "w": "Ghi nhận lần thử sau khi quan sát giúp lần thử tiếp theo đến sớm hơn."
+   }
+  ],
+  "S": [
+   {
+    "k": "Khen",
+    "t": "Khi con nhận ra thay đổi nhỏ, hãy nói: \"Con nhận ra à! Con tinh tế thật.\"",
+    "w": "Nghe \"tinh tế\" thay vì \"khó tính\" giúp con tin vào cảm nhận của mình."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Khi con khó chịu, gọi tên cảm giác: \"Quần áo ngứa ngứa, khó chịu nhỉ.\"",
+    "w": "Gọi tên cảm giác dạy con dùng lời thay vì mè nheo."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Thay vì \"Có gì đâu, sao làm quá lên?\", hãy thử \"Cái đó làm con khó chịu à?\"",
+    "w": "Khi sự khó chịu được thừa nhận, con lại bình tĩnh nhanh hơn."
+   },
+   {
+    "k": "Làm",
+    "t": "Nếu đã đến nơi ồn ào, buổi tối dành 15 phút nghỉ yên tĩnh.",
+    "w": "Sau những ngày đầy cảm giác, con cần thời gian thả lỏng."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi một dòng về âm thanh, quần áo hay món ăn nào làm con khó chịu hôm nay.",
+    "w": "Biết những khó chịu lặp lại giúp bạn tránh hoặc chuẩn bị trước."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Hỏi con: \"Hôm nay tâm trạng con mấy điểm, từ 1 đến 5?\"",
+    "w": "Diễn đạt cảm xúc dao động bằng con số là luyện cách xử lý cảm xúc."
+   },
+   {
+    "k": "Làm",
+    "t": "Nếu có việc sắp thay đổi, hôm nay hãy nói trước với con một lần.",
+    "w": "Trẻ nhạy với thay đổi sẽ ít giật mình hơn khi biết trước."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con tự bình tĩnh sau khi buồn, hãy nói: \"Con đã tự dỗ mình rồi.\"",
+    "w": "Ghi nhận việc con bình tĩnh lại giúp lần sau con hồi phục nhanh hơn."
+   }
+  ],
+  "N": [
+   {
+    "k": "Khen",
+    "t": "Nếu con thích nghi nhanh với thay đổi, hãy nói: \"Ở đâu con cũng ổn, giỏi quá!\"",
+    "w": "Gọi sự thoải mái là điểm mạnh nuôi dưỡng sự kiên cường nhẹ nhàng."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Thay vì \"Hôm nay con thấy thế nào?\", hỏi: \"Hôm nay có một điều vui và một điều không vui nào?\"",
+    "w": "Trẻ thoải mái hay gạt đi bằng \"Bình thường\", nên câu hỏi cụ thể mới khơi được lòng thật."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Tìm khoảnh khắc con nói ổn nhưng có thể thật ra đã khó khăn.",
+    "w": "Để không bỏ sót tín hiệu nhỏ từ đứa trẻ ít bộc lộ."
+   },
+   {
+    "k": "Làm",
+    "t": "Hôm nay cùng thử một món ăn hay trò chơi mới do con chọn.",
+    "w": "Giúp con phát huy khả năng đón nhận trải nghiệm mới."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Dù con có vẻ không bận tâm, đừng dừng ở \"Con ổn mà, đúng không?\"; hãy hỏi thêm lần nữa.",
+    "w": "Ngay cả trẻ trông ổn cũng thấy được yêu khi được hỏi về cảm xúc."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Cùng nói về việc bạn sẽ cảm thấy thế nào khi buồn.",
+    "w": "Luyện đọc cảm xúc người khác để con không vô cảm với cảm xúc."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con không buồn lâu vì lỗi nhỏ, hãy nói: \"Mẹ thích cách con thử lại.\"",
+    "w": "Lời này ghi nhận khả năng hồi phục nhanh của con."
+   },
+   {
+    "k": "Làm",
+    "t": "Trước khi ngủ, cùng nhớ lại hôm nay qua ba cảnh.",
+    "w": "Nhìn lại một ngày là luyện nhận biết cảm xúc."
+   }
+  ],
+  "F": [
+   {
+    "k": "Trò chuyện",
+    "t": "Khi con rất vui hay rất buồn, gọi tên nó: \"Con vui lắm nhỉ!\", \"Con buồn lắm nhỉ.\"",
+    "w": "Trẻ giàu biểu cảm tự bình tĩnh khi cảm xúc được gọi tên."
+   },
+   {
+    "k": "Khen",
+    "t": "Khi con nói cảm xúc bằng lời, hãy nói: \"Cảm ơn con đã nói bằng lời.\"",
+    "w": "Ghi nhận lời nói thay cho khóc hay la hét."
+   },
+   {
+    "k": "Làm",
+    "t": "Hôm nay có ba lần ôm: buổi sáng, sau khi đi học về và trước khi ngủ.",
+    "w": "Trẻ giàu biểu cảm tìm được nhiều an tâm từ tình cảm qua cơ thể."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Khi con khóc to, thay vì \"Nín đi\", hãy thử \"Khóc xong mình nói chuyện. Mẹ ở đây.\"",
+    "w": "Chờ đợi khi cảm xúc tuôn ra giúp con lắng xuống sớm hơn."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Hỏi con: \"Con diễn lại khoảnh khắc vui nhất hôm nay được không?\"",
+    "w": "Cuộc trò chuyện vui với đứa trẻ thích nói bằng cơ thể và nét mặt."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi một dòng về lúc cảm xúc của con dao động mạnh nhất hôm nay và lý do.",
+    "w": "Biết điều gì khơi cảm xúc lớn giúp bạn chuẩn bị trước."
+   },
+   {
+    "k": "Làm",
+    "t": "Dùng thẻ cảm xúc hoặc vẽ khuôn mặt để cùng chọn tâm trạng hôm nay.",
+    "w": "Càng biết nhiều từ chỉ cảm xúc, con càng diễn đạt chính xác."
+   },
+   {
+    "k": "Khen",
+    "t": "Bắt lấy khoảnh khắc con chăm sóc bạn hay em và nói: \"Con có trái tim ấm áp.\"",
+    "w": "Lời này nuôi dưỡng điểm mạnh chia sẻ cảm xúc của con."
+   }
+  ],
+  "T": [
+   {
+    "k": "Trò chuyện",
+    "t": "Thay vì \"Bây giờ con thấy thế nào?\", hỏi: \"Lúc đó con đã nghĩ gì?\"",
+    "w": "Trẻ điềm tĩnh dễ mở lòng với câu hỏi về suy nghĩ hơn là cảm xúc."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con bình tĩnh giải thích tình huống, hãy nói: \"Con kể từng bước nên Mẹ hiểu hết.\"",
+    "w": "Lời này gọi sự điềm tĩnh là điểm mạnh."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Đừng hỏi \"Con không vui à?\" khi con phản ứng nhỏ; hãy chờ niềm vui theo cách của con.",
+    "w": "Trẻ điềm tĩnh thường đã vui đủ ở bên trong."
+   },
+   {
+    "k": "Làm",
+    "t": "Ngồi cạnh nhau cùng làm một việc và trò chuyện (xếp khối, ghép hình, vẽ).",
+    "w": "Con mở lòng hơn khi làm cùng nhau cạnh bên hơn là nói chuyện đối diện."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi lại hành động con thể hiện tình cảm không cần lời (đưa đồ, ngồi cạnh).",
+    "w": "Để nhận ra tình cảm con thể hiện bằng hành động thay vì lời nói."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Đọc truyện tranh xong, hỏi: \"Con nghĩ sao nhân vật chính lại làm vậy?\"",
+    "w": "Nghĩ về cảm xúc nhân vật là luyện diễn đạt cảm xúc."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con lặng lẽ vượt qua chuyện buồn, hãy ghi nhận: \"Chắc là khó lắm. Con chịu đựng giỏi lắm.\"",
+    "w": "Khi cả cảm xúc không nói ra cũng được nhận thấy, con học được rằng chia sẻ là ổn."
+   },
+   {
+    "k": "Làm",
+    "t": "Hôm nay hỏi lựa chọn của con một lần và làm theo.",
+    "w": "Được tôn trọng suy nghĩ là chìa khóa để con mở lòng."
+   }
+  ],
+  "J": [
+   {
+    "k": "Khen",
+    "t": "Nếu con tự làm việc theo thứ tự, hãy nói: \"Con làm từng bước gọn gàng quá!\"",
+    "w": "Gọi khả năng trật tự của trẻ nề nếp là điểm mạnh."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "5 phút trước khi chuyển hoạt động, nói trước: \"5 phút nữa mình dọn dẹp nhé.\"",
+    "w": "Báo trước giúp con dễ chấp nhận việc chuyển đổi hơn nhiều."
+   },
+   {
+    "k": "Làm",
+    "t": "Cùng con làm bảng tranh thứ tự trước khi ngủ và dán lên.",
+    "w": "Thứ tự nhìn thấy được giúp giảm giằng co mỗi tối."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Khi con buồn vì kế hoạch thay đổi, thay vì \"Có gì to tát đâu?\", hãy nói \"Kế hoạch đổi nên con buồn nhỉ.\"",
+    "w": "Với trẻ nề nếp, kế hoạch thay đổi thật sự là chuyện lớn."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi một dòng về khung giờ trong ngày con thoải mái nhất.",
+    "w": "Biết nhịp thoải mái của con giúp bạn xếp việc quan trọng vào giờ đó."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Trước khi ngủ, nói trước kế hoạch ngày mai thành ba việc.",
+    "w": "Hình dung trước một ngày giúp buổi sáng nhẹ nhàng hơn."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con tự dọn dẹp, hãy nói: \"Cảm ơn con đã dọn. Nhà gọn gàng quá!\"",
+    "w": "Giúp con cảm thấy hành động của mình giúp ích cho gia đình."
+   },
+   {
+    "k": "Làm",
+    "t": "Hôm nay báo trước một niềm vui nhỏ ngoài kế hoạch (như đổi đường đi dạo) rồi làm.",
+    "w": "Thay đổi nhỏ được báo trước là cách luyện linh hoạt nhẹ nhàng."
+   }
+  ],
+  "P": [
+   {
+    "k": "Khen",
+    "t": "Nếu con chơi theo cách sáng tạo, hãy nói: \"Sao con nghĩ ra được? Vui quá!\"",
+    "w": "Gọi sự sáng tạo của trẻ tự do là điểm mạnh."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Thay vì \"Nhanh lên!\", đưa hai lựa chọn: \"Con làm cái này hay cái kia?\"",
+    "w": "Khi tự chọn, con sẽ động mà không cần giục."
+   },
+   {
+    "k": "Làm",
+    "t": "Biến dọn dẹp thành trò chơi, như \"thi cất khối trước khi Mẹ đếm đến 10\".",
+    "w": "Biến quy tắc thành trò chơi giúp trẻ tự do vui vẻ tham gia."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Khi con muốn làm nhiều việc, hỏi: \"Mình chọn một việc làm trước nhé?\"",
+    "w": "Luyện chọn một việc giúp tăng khả năng tập trung."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi lại trò chơi hay luật chơi con tự nghĩ ra hôm nay.",
+    "w": "Biết suy nghĩ tự do của con đi về đâu giúp chọn đồ chơi phù hợp."
+   },
+   {
+    "k": "Làm",
+    "t": "Hôm nay dành 30 phút chơi theo cách con quyết định.",
+    "w": "Có thời gian tự do quyết định, con sẽ theo nếp sinh hoạt tốt hơn."
+   },
+   {
+    "k": "Khen",
+    "t": "Nếu con làm xong việc không muốn làm, hãy nói: \"Con đã làm đến cùng!\"",
+    "w": "Ghi nhận việc hoàn thành giúp sự kiên trì lớn lên."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Cho con chọn một kế hoạch ngày mai: \"Mai đi công viên hay thư viện?\"",
+    "w": "Kế hoạch tự đặt ra, con sẽ giữ tốt hơn."
+   }
+  ],
+  "X": [
+   {
+    "k": "Trò chuyện",
+    "t": "Hỏi con: \"Hôm nay điều gì vui nhất?\"",
+    "w": "Câu hỏi ngắn về một ngày tạo thói quen trò chuyện."
+   },
+   {
+    "k": "Khen",
+    "t": "Tìm một việc hôm nay con tự làm và khen thật cụ thể.",
+    "w": "Nói rõ con làm tốt điều gì sẽ nhớ lâu hơn \"Giỏi lắm\"."
+   },
+   {
+    "k": "Làm",
+    "t": "10 phút trước khi ngủ, bỏ điện thoại xuống và chơi trò con chọn.",
+    "w": "Dù ngắn, thời gian ở bên trọn vẹn mang lại cho con cảm giác an toàn lớn nhất."
+   },
+   {
+    "k": "Kiềm chế",
+    "t": "Hôm nay nói \"Nhanh lên!\" ít đi một lần.",
+    "w": "Bớt giục giã giúp cả con và bố mẹ đỡ mệt."
+   },
+   {
+    "k": "Quan sát",
+    "t": "Ghi một dòng về khoảnh khắc con cười vui nhất.",
+    "w": "Những ghi chép nhỏ cộng lại giúp bạn hiểu con hơn."
+   },
+   {
+    "k": "Trò chuyện",
+    "t": "Thay vì \"Mẹ yêu con\", hãy thử \"Có con ở đây, Mẹ hạnh phúc lắm.\"",
+    "w": "Lời vui mừng vì chính sự hiện diện của con xây dựng lòng tự trọng."
+   }
+  ]
+ },
+ "situations": [
+  {
+   "id": "s00",
+   "cat": "Sinh hoạt",
+   "t": "Không muốn dậy buổi sáng",
+   "p": "Buổi sáng là lần chuyển đổi đầu tiên trong ngày; càng giục càng chậm.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Đến giờ dậy rồi. Tiếp theo là rửa mặt, rồi ăn sáng.\"",
+     "do": "Tối hôm trước thống nhất thứ tự buổi sáng, rồi làm từng bước theo bảng tranh.",
+     "no": "\"Vẫn chưa dậy à?!\""
+    },
+    "P": {
+     "say": "\"Gấu bông dậy trước hay con dậy trước?\"",
+     "do": "Biến việc thức dậy thành trò chơi, cho con chọn một trong hai bộ đồ.",
+     "no": "\"Mẹ phải nói bao nhiêu lần nữa?\""
+    }
+   }
+  },
+  {
+   "id": "s01",
+   "cat": "Sinh hoạt",
+   "t": "Không chịu ăn",
+   "p": "Không khí bữa ăn được nhớ lâu hơn lượng con ăn.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"Con không thích cảm giác món này nhỉ. Nếm một miếng thôi, không thích thì nói Mẹ.\"",
+     "do": "Đặt một chút món mới cạnh món quen, và thử nấu với kết cấu khác.",
+     "no": "\"Kén ăn sẽ không cao được.\""
+    },
+    "N": {
+     "say": "\"Khi nào đói mình ăn tiếp. Ngồi ở bàn 20 phút thôi nhé.\"",
+     "do": "Cố định giờ ăn và đừng để đồ ăn vặt làm con no.",
+     "no": "\"Ăn hết mới được đứng dậy.\""
+    }
+   }
+  },
+  {
+   "id": "s02",
+   "cat": "Sinh hoạt",
+   "t": "Không muốn đi ngủ",
+   "p": "Nếp 30 phút trước khi ngủ quyết định giấc ngủ.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Đánh răng, một cuốn sách, tắt đèn. Giờ đến lượt đọc sách.\"",
+     "do": "Giữ cùng một thứ tự mỗi ngày, nếu thay đổi thì nói trước từ ban ngày.",
+     "no": "\"Đi ngủ ngay!\""
+    },
+    "P": {
+     "say": "\"Con chọn sách tối nay nhé? Một trong hai cuốn này.\"",
+     "do": "Giữ thứ tự trước khi ngủ, nhưng cho con một lựa chọn trong đó.",
+     "no": "\"Không ngủ là quái vật đến đấy.\""
+    }
+   }
+  },
+  {
+   "id": "s03",
+   "cat": "Sinh hoạt",
+   "t": "Khi bảo con dừng xem video",
+   "p": "Lời báo trước quan trọng hơn khoảnh khắc tắt.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Mình đã nói xem hết tập này thì tắt, đúng không? Hết tập mình cùng tắt nhé?\"",
+     "do": "Thống nhất số tập trước khi xem, và nhắc lại 5 phút trước khi hết.",
+     "no": "Tắt phụt một cái"
+    },
+    "P": {
+     "say": "\"Tắt xong mình chơi gì? Chọn xếp khối hay vẽ nhé.\"",
+     "do": "Định trước việc vui sau đó giúp chuyển đổi dễ hơn.",
+     "no": "\"Con nghiện video rồi.\""
+    }
+   }
+  },
+  {
+   "id": "s04",
+   "cat": "Sinh hoạt",
+   "t": "Không chịu dọn dẹp",
+   "p": "Dọn dẹp là việc làm cùng nhau cho đến khi thành thói quen.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Khối vào hộp xanh, búp bê vào giỏ. Con cất về chỗ cũ được không?\"",
+     "do": "Định chỗ cho từng đồ vật và đánh dấu bằng nhãn dán hình.",
+     "no": "\"Suốt ngày bày bừa.\""
+    },
+    "P": {
+     "say": "\"Thi nhé! Ai cất được nhiều hơn trước khi hết bài hát!\"",
+     "do": "Biến dọn dẹp thành cuộc thi hay bài hát, chưa xong cũng cùng nhau hoàn tất.",
+     "no": "\"Không dọn là Mẹ vứt hết đấy.\""
+    }
+   }
+  },
+  {
+   "id": "s05",
+   "cat": "Sinh hoạt",
+   "t": "Ghét tắm rửa, đánh răng",
+   "p": "Trước hết xem lý do là cảm giác hay chỉ là ngại.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"Con không thích nước chạm vào mặt nhỉ. Hôm nay mình dùng khăn lau nhé?\"",
+     "do": "Cho con chọn nhiệt độ nước, lông bàn chải và vị kem đánh răng.",
+     "no": "\"Có thế mà cũng không chịu được à?\""
+    },
+    "N": {
+     "say": "\"Đánh đến khi hết bài hát đánh răng nhé!\"",
+     "do": "Cho con thấy khi nào kết thúc bằng bài hát hoặc đồng hồ cát.",
+     "no": "\"Răng sâu hết bây giờ.\""
+    }
+   }
+  },
+  {
+   "id": "s06",
+   "cat": "Cảm xúc",
+   "t": "Ăn vạ ở siêu thị",
+   "p": "Khi ăn vạ, an toàn và bình tĩnh quan trọng hơn thuyết phục.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Con rất muốn cái đó. Mẹ hiểu con muốn. Hôm nay mình không mua.\"",
+     "do": "Đưa con đến chỗ yên tĩnh và ở cạnh đến khi cảm xúc lắng xuống.",
+     "no": "\"Còn khóc à? Không đi Mẹ bỏ con ở đây đấy.\""
+    },
+    "T": {
+     "say": "\"Con nói Mẹ nghe sao con muốn nhé? Mình chụp ảnh lại và ghi vào danh sách quà sinh nhật.\"",
+     "do": "Hỏi lý do và cùng thống nhất cách thay thế (như ghi vào danh sách).",
+     "no": "\"Đừng bướng nữa.\""
+    }
+   }
+  },
+  {
+   "id": "s07",
+   "cat": "Cảm xúc",
+   "t": "Khóc to hoặc nổi giận",
+   "p": "Thay vì làm cảm xúc dừng lại, hãy ở bên đến khi nó qua.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Con giận lắm nhỉ. Khóc xong Mẹ ôm con thật chặt.\"",
+     "do": "Chỉ giữ an toàn và nói ít. Nói về chuyện đã xảy ra khi con bình tĩnh.",
+     "no": "\"Mẹ không thích đứa trẻ hay khóc.\""
+    },
+    "T": {
+     "say": "\"Con đang giận. Muốn ở một mình một lát cũng được.\"",
+     "do": "Cho con thời gian tự sắp xếp, bình tĩnh rồi hỏi con đã nghĩ gì.",
+     "no": "\"Không nói thì sao Mẹ biết!\""
+    }
+   }
+  },
+  {
+   "id": "s08",
+   "cat": "Cảm xúc",
+   "t": "Buồn vì thua",
+   "p": "Thua là cơ hội nuôi dưỡng sức mạnh thử lại.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Con muốn thắng mà thua nên buồn nhỉ. Buồn là đương nhiên.\"",
+     "do": "Để con nói hết nỗi buồn, rồi hỏi con có muốn chơi thêm ván nữa không.",
+     "no": "\"Có thế mà cũng khóc?\""
+    },
+    "T": {
+     "say": "\"Lần sau làm sao để thắng nhỉ?\"",
+     "do": "Cùng tìm lý do thua, lập kế hoạch và thử lại.",
+     "no": "\"Con vốn kém mà.\""
+    }
+   }
+  },
+  {
+   "id": "s09",
+   "cat": "Cảm xúc",
+   "t": "Sợ hãi (bóng tối, tiếng động, động vật)",
+   "p": "Nỗi sợ không phải để vượt qua một mình mà để cùng đối mặt.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"Tiếng đó làm con sợ. Mẹ ở ngay bên con.\"",
+     "do": "Cùng chọn đồ vật giúp con an tâm như đèn ngủ nhỏ hay thú bông yêu thích.",
+     "no": "\"Có gì mà sợ.\""
+    },
+    "N": {
+     "say": "\"Mình cùng đi xem cái gì đáng sợ thế nhé?\"",
+     "do": "Cùng nhìn thứ con sợ và giải thích đó là gì.",
+     "no": "\"Đồ nhát gan.\""
+    }
+   }
+  },
+  {
+   "id": "s10",
+   "cat": "Xã hội",
+   "t": "Cãi nhau với bạn",
+   "p": "Lắng nghe cảm xúc của con trước khi phân xử ai đúng ai sai.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Bạn làm con buồn lắm nhỉ. Con kể Mẹ nghe chuyện gì xảy ra nhé?\"",
+     "do": "Nghe hết cảm xúc của con, rồi cùng đoán xem bạn cảm thấy thế nào.",
+     "no": "\"Con gây sự trước đúng không?\""
+    },
+    "T": {
+     "say": "\"Con kể lại từ đầu chuyện gì xảy ra nhé?\"",
+     "do": "Cho con sắp xếp lại sự việc, và cùng tập câu có thể nói lần sau.",
+     "no": "\"Chơi cho ngoan vào.\""
+    }
+   }
+  },
+  {
+   "id": "s11",
+   "cat": "Xã hội",
+   "t": "Anh chị em cãi nhau",
+   "p": "Đừng đứng về một bên, hãy nghe cảm xúc của từng đứa riêng.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Hai con đều muốn chơi nhỉ. Mình hẹn giờ, mỗi đứa 5 phút lần lượt nhé.\"",
+     "do": "Tách riêng đứa ra tay trước một lát cho bình tĩnh, rồi định thứ tự lượt.",
+     "no": "\"Con là anh mà, nhường em đi.\""
+    },
+    "I": {
+     "say": "\"Con buồn mà không nói ra được nhỉ. Giờ nói với Mẹ nhé.\"",
+     "do": "Cho đứa ít nói cơ hội nói trước, rồi chuyển lời con cho anh chị em.",
+     "no": "\"Con cũng thế thôi.\""
+    }
+   }
+  },
+  {
+   "id": "s12",
+   "cat": "Xã hội",
+   "t": "Không chào người lớn lạ",
+   "p": "Lời chào được học qua tấm gương, không phải ép buộc.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Chào xong mình đi sân chơi nhé!\"",
+     "do": "Gắn lời chào với việc vui sau đó, làm được thì khen to.",
+     "no": "\"Không chào là trẻ hư.\""
+    },
+    "I": {
+     "say": "\"Vẫy tay thôi cũng được. Mẹ chào trước nhé.\"",
+     "do": "Bố mẹ chào trước, để con bắt đầu từ gật đầu hay vẫy tay.",
+     "no": "\"Sao con nhút nhát thế?\""
+    }
+   }
+  },
+  {
+   "id": "s13",
+   "cat": "Xã hội",
+   "t": "Nói không muốn đi nhà trẻ, mẫu giáo",
+   "p": "Mấu chốt là giây phút chia tay ngắn gọn và rõ ràng.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Mình định xem hôm nay con chơi gì với bạn nhé?\"",
+     "do": "Cho con nghĩ về hoạt động vui, và chia tay ngắn gọn, vui vẻ.",
+     "no": "\"Không đi là bị mắng đấy.\""
+    },
+    "I": {
+     "say": "\"Tan học Mẹ nhất định đến đón. Ăn xong bữa phụ là mình gặp nhau.\"",
+     "do": "Nói cho con biết khi nào gặp lại theo lịch sinh hoạt, và cho con mang một món đồ an tâm nhỏ.",
+     "no": "Lén đi mất"
+    }
+   }
+  },
+  {
+   "id": "s14",
+   "cat": "Xã hội",
+   "t": "Không chịu chia sẻ",
+   "p": "Trẻ được tôn trọng đồ của mình sẽ biết chia sẻ hơn.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Chơi xong con cho bạn mượn nhé? Mấy phút nữa thì đưa?\"",
+     "do": "Để con quyết định khi nào đưa, và dùng hẹn giờ giữ lời hứa.",
+     "no": "\"Trẻ ngoan thì phải chia sẻ.\""
+    },
+    "P": {
+     "say": "\"Có cách nào để cùng chơi không nhỉ?\"",
+     "do": "Để con tự nghĩ ra luật mới để chơi cùng nhau.",
+     "no": "\"Đồ ích kỷ.\""
+    }
+   }
+  },
+  {
+   "id": "s15",
+   "cat": "Xã hội",
+   "t": "Đánh bạn",
+   "p": "Dứt khoát dừng hành vi, và lắng nghe cảm xúc riêng.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Không được đánh. Con giận lắm nhỉ. Khi giận mình dậm chân nhé.\"",
+     "do": "Tách hai bạn ra trước, bình tĩnh rồi cùng định cách khác để thể hiện cơn giận.",
+     "no": "\"Phải bị đánh mới hiểu.\""
+    },
+    "T": {
+     "say": "\"Không được đánh. Con nói Mẹ nghe sao con làm vậy nhé?\"",
+     "do": "Nghe lý do, và tập một câu ngắn để dùng trong tình huống tương tự.",
+     "no": "Chỉ lặp lại \"Sao con làm thế!\""
+    }
+   }
+  },
+  {
+   "id": "s16",
+   "cat": "Thay đổi",
+   "t": "Không muốn đi bệnh viện",
+   "p": "Biết trước sẽ làm nỗi sợ nhỏ đi.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"Mai mình đi khám bác sĩ. Bác sĩ sẽ dùng ống nghe để nghe tim con thình thịch.\"",
+     "do": "Hôm trước chơi trò bác sĩ để tập trước, chỗ nào có thể đau thì nói ngắn gọn và thật lòng.",
+     "no": "\"Không đau tí nào đâu.\" (nói dối)"
+    },
+    "N": {
+     "say": "\"Khám xong con muốn làm gì?\"",
+     "do": "Đến hôm đó nói ngắn gọn, và cùng quyết định việc sẽ làm sau khi khám.",
+     "no": "\"Không nghe lời là bị tiêm đấy.\""
+    }
+   }
+  },
+  {
+   "id": "s17",
+   "cat": "Thay đổi",
+   "t": "Làm quen lớp mới, trường mới",
+   "p": "Mỗi đứa trẻ thích nghi với tốc độ riêng. Đừng so sánh.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Nhiệm vụ của con: nhớ tên một bạn mới nhé!\"",
+     "do": "Biến điều mới thành cuộc phiêu lưu, và nghe con kể chuyện khi về.",
+     "no": "\"Lần này ngoan vào đấy.\""
+    },
+    "I": {
+     "say": "\"Lúc đầu lạ cũng không sao. Từ từ con sẽ quen.\"",
+     "do": "Cho con xem trước ảnh trường và cô giáo, tuần đầu đón con sớm.",
+     "no": "\"Các bạn khác đều quen rồi.\""
+    }
+   }
+  },
+  {
+   "id": "s18",
+   "cat": "Thay đổi",
+   "t": "Kế hoạch đi chơi thay đổi",
+   "p": "Giải thích ngắn gọn lý do thay đổi và cùng chọn phương án thay thế.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Trời mưa nên không đi sân chơi được. Thay vào đó mình chọn thư viện hay khu vui chơi trong nhà nhé?\"",
+     "do": "Vẽ lại kế hoạch đã đổi thành thứ tự mới.",
+     "no": "\"Có gì to tát đâu.\""
+    },
+    "P": {
+     "say": "\"Trời mưa, vậy mình đi phiêu lưu mới nhé! Cắm trại trong nhà thì sao?\"",
+     "do": "Biến thay đổi thành cơ hội cho trò chơi mới.",
+     "no": "\"Vốn dĩ là thế.\""
+    }
+   }
+  },
+  {
+   "id": "s19",
+   "cat": "Thay đổi",
+   "t": "Khi có em bé",
+   "p": "Giữ thời gian riêng để con lớn không cảm thấy bị bỏ rơi.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Mẹ vẫn yêu con nhiều lắm. Hôm nay chỉ hai mẹ con mình chơi nhé.\"",
+     "do": "Mỗi ngày dành 10 phút chỉ cho con lớn, thể hiện tình yêu bằng lời và cái ôm.",
+     "no": "\"Con là chị rồi, tự làm đi.\""
+    },
+    "T": {
+     "say": "\"Khi đặt tên cho em, Mẹ muốn nghe ý của con.\"",
+     "do": "Hỏi ý kiến con lớn và giao cho con một việc nhỏ.",
+     "no": "Chỉ lặp lại \"Trông em đi\""
+    }
+   }
+  },
+  {
+   "id": "s20",
+   "cat": "Thói quen",
+   "t": "Nói dối",
+   "p": "Thay vì trách phạt lời nói dối, cho con trải nghiệm rằng nói thật cũng không sao.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"Con sợ bị mắng nhỉ. Con nói thật thì mình cùng giải quyết.\"",
+     "do": "Hạ giọng và trước hết ghi nhận việc con đã nói thật.",
+     "no": "\"Đồ nói dối.\""
+    },
+    "N": {
+     "say": "\"Con nghĩ lại xem có thật là như vậy không nhé?\"",
+     "do": "Bình tĩnh kiểm tra sự việc, và hẹn trước điều gì sẽ xảy ra khi nói thật.",
+     "no": "\"Lại nói dối à?\""
+    }
+   }
+  },
+  {
+   "id": "s21",
+   "cat": "Thói quen",
+   "t": "Cứ nói \"Không!\", \"Không làm!\"",
+   "p": "Nói không là dấu hiệu suy nghĩ riêng của con đang lớn.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Bây giờ con không muốn làm nhỉ. Làm xong cái này rồi làm nhé?\"",
+     "do": "Đặt việc đó vào thứ tự sẽ giúp con dễ chấp nhận hơn.",
+     "no": "\"Nghe lời Mẹ!\""
+    },
+    "P": {
+     "say": "\"Cốc đỏ hay cốc xanh, con lấy cái nào?\"",
+     "do": "Cho con lựa chọn trong những việc phải làm.",
+     "no": "\"Không được cứ nói không.\""
+    }
+   }
+  },
+  {
+   "id": "s22",
+   "cat": "Thói quen",
+   "t": "Đòi tự làm",
+   "p": "Dù mất thời gian, trải nghiệm tự thử sẽ thành sức mạnh để lớn.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Con muốn tự thử nhỉ. Cần giúp thì gọi Mẹ.\"",
+     "do": "Đặt giới hạn an toàn, thất bại cũng cho con thời gian thử lại.",
+     "no": "\"Đưa đây, Mẹ làm cho.\""
+    },
+    "I": {
+     "say": "\"Từ từ cũng được. Làm xong cho Mẹ xem nhé.\"",
+     "do": "Đừng để lộ là đang theo dõi, và chờ đến cuối.",
+     "no": "\"Con chưa làm được đâu.\""
+    }
+   }
+  },
+  {
+   "id": "s23",
+   "cat": "Thói quen",
+   "t": "Không tập trung, cứ chuyển hết cái này sang cái khác",
+   "p": "Ở tuổi này thời gian tập trung vốn ngắn. Bắt đầu từ việc làm xong những việc ngắn.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Làm xong cái này mình ra ngoài chạy nhé!\"",
+     "do": "Xen kẽ thời gian vận động giữa các hoạt động ngắn.",
+     "no": "\"Ngồi yên một lát đi.\""
+    },
+    "I": {
+     "say": "\"Cái này lần sau làm tiếp được. Mình đánh dấu chỗ nhé.\"",
+     "do": "Nếu con muốn làm xong việc đang làm, hãy cho đủ thời gian.",
+     "no": "\"Vẫn còn làm cái đó à?\""
+    }
+   }
+  }
+ ],
+ "notice": {
+  "J": [
+   {
+    "when": "3 ngày trước",
+    "t": "Đánh dấu trên lịch và cùng đếm: \"Còn ba đêm nữa là đến ___.\""
+   },
+   {
+    "when": "Tối hôm trước",
+    "t": "Kể ngày mai thành ba bước. Ví dụ: \"Ăn sáng, mặc quần áo, rồi ___.\""
+   },
+   {
+    "when": "Sáng hôm đó",
+    "t": "Nói cho con giờ đi và giờ về."
+   }
+  ],
+  "P": [
+   {
+    "when": "Tối hôm trước",
+    "t": "Hỏi: \"Ngày mai đi ___ con mong nhất điều gì?\" và để con chọn một việc muốn làm."
+   },
+   {
+    "when": "Sáng hôm đó",
+    "t": "Nói điều đáng mong trước, rồi để con chọn một món mang theo."
+   }
+  ],
+  "S": [
+   {
+    "when": "3 ngày trước",
+    "t": "Cho con xem ảnh nơi sẽ đến và nói trước về âm thanh, con người, mùi ở đó."
+   },
+   {
+    "when": "Tối hôm trước",
+    "t": "Cùng chuẩn bị quần áo thoải mái và món đồ an tâm (thú bông, khăn tay)."
+   }
+  ],
+  "N": [
+   {
+    "when": "Tối hôm trước",
+    "t": "Thống nhất trước một quy tắc sẽ giữ ở đó."
+   }
+  ],
+  "E": [
+   {
+    "when": "Tối hôm trước",
+    "t": "Định một việc sẽ thử ở đó, và cùng thống nhất một quy tắc an toàn."
+   }
+  ],
+  "I": [
+   {
+    "when": "3 ngày trước",
+    "t": "Nói trước con sẽ gặp ai, và lúc đầu chỉ nhìn cũng được."
+   },
+   {
+    "when": "Sáng hôm đó",
+    "t": "Hứa rằng khi đến nơi con sẽ có chút thời gian nhìn quanh."
+   }
+  ]
+ },
+ "plans": [
+  "Đi sân chơi",
+  "Đi dạo công viên",
+  "Khu vui chơi trong nhà",
+  "Cùng đọc sách",
+  "Cùng nấu ăn",
+  "Xem phim",
+  "Mua quà",
+  "Thăm bà",
+  "Đi du lịch",
+  "Đi khám bệnh"
+ ],
+ "sib": {
+  "axes": {
+   "A": {
+    "hh": {
+     "good": "Cả hai đều lao vào trò mới trước, nên ở cùng nhau không bao giờ chán.",
+     "clash": "Cả hai đều muốn đi trước, nên hay tranh lượt và chỗ.",
+     "tip": "Định trước luật \"ai đi trước\" (oẳn tù tì, lần lượt).",
+     "play": [
+      "Đuổi bắt, trốn tìm",
+      "Làm đường vượt chướng ngại ở sân chơi"
+     ],
+     "sit": "s11"
+    },
+    "ll": {
+     "good": "Cả hai thích quan sát bình tĩnh, nên ngồi cạnh nhau chơi lâu rất dễ chịu.",
+     "clash": "Cả hai đều ngập ngừng ở nơi mới, nên bắt đầu trải nghiệm mới cần thời gian.",
+     "tip": "Cho xem ảnh nơi mới trước, để hai đứa cùng bước bước đầu tiên.",
+     "play": [
+      "Cùng xếp khối, LEGO",
+      "Ngồi cạnh nhau đọc truyện tranh"
+     ],
+     "sit": "s17"
+    },
+    "mix": {
+     "good": "Trẻ khám phá mở đường, trẻ quan sát nhìn kỹ; hai đứa mở rộng thế giới cho nhau.",
+     "clash": "Khi trẻ khám phá kéo đi, trẻ quan sát có thể thấy bị đẩy sang bên.",
+     "tip": "Nói với trẻ quan sát \"Sẵn sàng thì đến\", và dạy trẻ khám phá cách chờ.",
+     "play": [
+      "Truy tìm kho báu (một đứa giấu, một đứa tìm)",
+      "Đóng vai (thuyền trưởng và người xem bản đồ)"
+     ],
+     "sit": "s11"
+    }
+   },
+   "B": {
+    "hh": {
+     "good": "Cả hai đều nhận ra thay đổi nhỏ, nên nhanh hiểu tâm trạng của nhau.",
+     "clash": "Những ngày ồn ào hay mệt, cả hai đều nhạy cảm và cãi nhau to hơn.",
+     "tip": "Sau khi đến nơi đông người, cho cả hai thời gian nghỉ yên tĩnh.",
+     "play": [
+      "Chơi cảm giác yên tĩnh (đất nặn, cát)",
+      "Trò đoán âm thanh"
+     ],
+     "sit": "s07"
+    },
+    "ll": {
+     "good": "Cả hai đều thoải mái, ít bị lay động nên hòa hợp.",
+     "clash": "Cả hai đều nói ổn rồi cho qua, nên bố mẹ dễ bỏ sót chuyện buồn.",
+     "tip": "Trước khi ngủ, hỏi riêng từng đứa: \"Hôm nay có điều gì con không thích không?\"",
+     "play": [
+      "Trò vận động (bóng chuyền bóng bay)",
+      "Cùng thử món ăn mới"
+     ],
+     "sit": "s10"
+    },
+    "mix": {
+     "good": "Trẻ thoải mái làm không khí nhẹ nhàng, trẻ nhạy cảm để ý chi tiết.",
+     "clash": "Lời trêu của trẻ thoải mái có thể thấy rất lớn với trẻ nhạy cảm.",
+     "tip": "Giải thích sự khác nhau trong cảm nhận: \"Với con là đùa, nhưng em giật mình đấy.\"",
+     "play": [
+      "Cùng nấu ăn (trẻ nhạy cảm trang trí, trẻ thoải mái khuấy)",
+      "Đi dạo tìm âm thanh và mùi hương"
+     ],
+     "sit": "s11"
+    }
+   },
+   "C": {
+    "hh": {
+     "good": "Cả hai đều chia sẻ cảm xúc lớn, nên nhà bừng sáng khi cùng cười.",
+     "clash": "Cả hai đều có cảm xúc lớn, nên một đứa khóc là đứa kia dễ bùng nổ theo.",
+     "tip": "Dỗ từng đứa một, khi cảm xúc lắng xuống thì cùng nói chuyện.",
+     "play": [
+      "Bắt chước nét mặt cảm xúc",
+      "Hát và nhảy"
+     ],
+     "sit": "s07"
+    },
+    "ll": {
+     "good": "Cả hai đều điềm tĩnh, cãi nhau không to ra và chơi cùng nhau êm đềm.",
+     "clash": "Đều ít nói ra lòng mình, nên ấm ức có thể dồn lại.",
+     "tip": "Mở lòng bằng câu hỏi về suy nghĩ như \"Lúc đó con đã nghĩ gì?\"",
+     "play": [
+      "Ghép hình, cờ bàn",
+      "Cùng làm đồ thủ công (gấp giấy)"
+     ],
+     "sit": "s10"
+    },
+    "mix": {
+     "good": "Trẻ biểu cảm nói ra cảm xúc, trẻ điềm tĩnh đón nhận vững vàng; tạo nên cân bằng.",
+     "clash": "Trẻ biểu cảm buồn vì phản ứng nhỏ, trẻ điềm tĩnh bối rối trước cảm xúc lớn.",
+     "tip": "Giải thích cách thể hiện của nhau: \"Em vui ở trong lòng đấy\", \"Anh phải nói to ra mới thấy nhẹ lòng.\"",
+     "play": [
+      "Múa rối (một đứa lồng tiếng, một đứa lo sân khấu)",
+      "Cùng vẽ và kể chuyện"
+     ],
+     "sit": "s08"
+    }
+   },
+   "D": {
+    "hh": {
+     "good": "Cả hai đều thích trật tự và quy tắc, nên lịch sinh hoạt hằng ngày trôi chảy.",
+     "clash": "Cả hai đều khó chịu khi kế hoạch thay đổi, và có thể cãi nhau về luật.",
+     "tip": "Báo trước lịch thay đổi, và cùng đặt nội quy nhà bằng bảng tranh.",
+     "play": [
+      "Trò chơi theo lượt (cờ cá ngựa)",
+      "Cùng thi dọn dẹp"
+     ],
+     "sit": "s18"
+    },
+    "ll": {
+     "good": "Cả hai đều tự do, nên cùng nghĩ ra những trò chơi sáng tạo.",
+     "clash": "Cả hai đều trì hoãn dọn dẹp và kết thúc, nên cuối ngày bừa bộn.",
+     "tip": "Biến dọn dẹp thành trò chơi cho hai đứa (thi trong một bài hát).",
+     "play": [
+      "Chơi tưởng tượng (dựng lều bí mật bằng chăn)",
+      "Thử nghĩ ra luật chơi mới"
+     ],
+     "sit": "s04"
+    },
+    "mix": {
+     "good": "Trẻ nề nếp tạo trật tự, trẻ tự do thêm niềm vui; hai đứa học hỏi nhau.",
+     "clash": "Trẻ nề nếp dọn, trẻ tự do bày, nên hay va chạm.",
+     "tip": "Chia khu đồ chơi để mỗi đứa có khu riêng, luật khu chung thì ngắn gọn.",
+     "play": [
+      "Chơi đi chợ (một đứa viết danh sách, một đứa chọn đồ)",
+      "Xây thị trấn bằng khối (một đứa thiết kế, một đứa trang trí)"
+     ],
+     "sit": "s14"
+    }
+   }
+  },
+  "praise": {
+   "E": "\"Con đã thử trước. Dũng cảm quá!\"",
+   "I": "\"Con nhìn kỹ rồi mới làm. Cẩn thận quá!\"",
+   "S": "\"Con nhận ra à. Tinh tế quá!\"",
+   "N": "\"Con thử lại ngay. Vững vàng quá!\"",
+   "F": "\"Cảm ơn con đã nói cảm xúc bằng lời.\"",
+   "T": "\"Con kể từng bước nên Mẹ hiểu hết.\"",
+   "J": "\"Con làm theo thứ tự gọn gàng quá!\"",
+   "P": "\"Sao con nghĩ ra được? Vui quá!\""
+  },
+  "level": [
+   [
+    "Cặp đôi trái ngược",
+    "Cả bốn đều khác. Bù đắp cho nhau những gì còn thiếu."
+   ],
+   [
+    "Mỗi đứa một vẻ",
+    "Chỉ một điểm giống. Lớn lên nhờ học từ sự khác biệt."
+   ],
+   [
+    "Giống nhau một nửa",
+    "Hai giống, hai khác. Nhiều điều để chia sẻ và nhiều điều để học."
+   ],
+   [
+    "Anh em giống nhau",
+    "Ba điểm giống. Dễ hợp nhau, nhưng có thể va chạm vì cùng một chuyện."
+   ],
+   [
+    "Giống nhau như đúc",
+    "Cả bốn đều giống. Hợp nhau đến mức cũng tranh nhau cùng một thứ."
+   ]
+  ]
+ }
+}

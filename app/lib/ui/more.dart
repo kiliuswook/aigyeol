@@ -113,13 +113,13 @@ class MoreView extends StatelessWidget {
       foot: [
         Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 4),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [
             Image.asset('assets/img/wonderwheel.png', height: 34, errorBuilder: (_, _, _) => const SizedBox()),
             const SizedBox(width: 8),
             Text(tr('만든 사람'), style: TextStyle(fontSize: 12.5, color: kMuted)),
             const SizedBox(width: 6),
             Text(tr('원더휠 WonderWheel'), style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kFg)),
-          ]),
+          ])),
         ),
       ],
     );

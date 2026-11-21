@@ -1,0 +1,1064 @@
+{
+ "missions": {
+  "E": [
+   {
+    "k": "Talk",
+    "t": "Ask, \"Can you tell me one thing you tried for the first time today?\"",
+    "w": "Explorer kids enjoy their day all over again by talking about something new they tried."
+   },
+   {
+    "k": "Praise",
+    "t": "Catch the moment they tried something new and say, \"Your courage to try first is awesome.\"",
+    "w": "Pointing out the brave heart rather than the result helps it grow into courage, not recklessness."
+   },
+   {
+    "k": "Do",
+    "t": "Play a big, active game together for 15 minutes before bedtime.",
+    "w": "On days they use up their energy, evenings get much calmer."
+   },
+   {
+    "k": "Hold back",
+    "t": "Instead of \"Sit still!\", try \"Let's count to ten, then move.\"",
+    "w": "Telling them when they can move works better than telling them to stop."
+   },
+   {
+    "k": "Do",
+    "t": "Before heading out, agree on just one rule. For example: \"Hold hands when crossing the street.\"",
+    "w": "One rule is something they can remember and keep."
+   },
+   {
+    "k": "Talk",
+    "t": "Ask who was the most fun person they met today.",
+    "w": "Putting their people skills into words deepens their memories of relationships."
+   },
+   {
+    "k": "Notice",
+    "t": "Write one line about the moment your child moved most happily.",
+    "w": "Knowing which activities bring their energy to life makes weekend plans easier."
+   },
+   {
+    "k": "Praise",
+    "t": "If they held still even briefly when they had to wait, say right away, \"Thanks for waiting.\"",
+    "w": "For a child who wants to move, waiting is a big effort. Noticing it right away makes them try again."
+   }
+  ],
+  "I": [
+   {
+    "k": "Talk",
+    "t": "Wait and say, \"Take your time looking. Tell me when you're ready.\"",
+    "w": "Observer kids approach on their own once they've had time to look."
+   },
+   {
+    "k": "Praise",
+    "t": "Find something they quietly noticed and say, \"You saw that! You have great eyes.\"",
+    "w": "Naming their watchfulness as a strength builds confidence."
+   },
+   {
+    "k": "Do",
+    "t": "Today, spend 10 minutes on a quiet game just for the two of you (drawing, blocks).",
+    "w": "They open up most during calm one-on-one time."
+   },
+   {
+    "k": "Hold back",
+    "t": "Don't push \"Say hello!\" with adults they've just met; tell them a wave is fine.",
+    "w": "Pushing makes them shrink back. Accepting a small hello makes the next one easier."
+   },
+   {
+    "k": "Talk",
+    "t": "At the end of the day, ask, \"When did you feel most comfortable today?\"",
+    "w": "Remembering a comfortable moment helps them wrap up the day feeling safe."
+   },
+   {
+    "k": "Do",
+    "t": "If you're going somewhere tomorrow, show them photos or a map in advance.",
+    "w": "A place they've already seen feels less strange, so the first step comes easier."
+   },
+   {
+    "k": "Notice",
+    "t": "Write one line about the game they focused on alone the longest.",
+    "w": "Knowing where they focus deeply lets you nurture that strength."
+   },
+   {
+    "k": "Praise",
+    "t": "If they tried something new even a little, say, \"You watched and then tried it. Amazing!\"",
+    "w": "Recognizing a try that came after watching makes the next try come sooner."
+   }
+  ],
+  "S": [
+   {
+    "k": "Praise",
+    "t": "When they notice a small change, say, \"You noticed that! You're so perceptive.\"",
+    "w": "Hearing \"perceptive\" instead of \"oversensitive\" helps them trust their senses."
+   },
+   {
+    "k": "Talk",
+    "t": "When something bothers them, name the sensation: \"Those scratchy clothes didn't feel good.\"",
+    "w": "Naming feelings teaches them to use words instead of whining."
+   },
+   {
+    "k": "Hold back",
+    "t": "Instead of \"It's nothing, why the fuss?\", try \"That bothered you, didn't it?\"",
+    "w": "When their discomfort is acknowledged, they actually calm down faster."
+   },
+   {
+    "k": "Do",
+    "t": "If you went somewhere noisy, make 15 minutes of quiet rest time in the evening.",
+    "w": "After days full of sensations, they need time to unwind."
+   },
+   {
+    "k": "Notice",
+    "t": "Write one line about any sound, clothing or food that bothered them today.",
+    "w": "Knowing repeated discomforts lets you avoid or prepare for them."
+   },
+   {
+    "k": "Talk",
+    "t": "Ask, \"How was your heart today, from 1 to 5?\"",
+    "w": "Putting shaky feelings into numbers is practice in handling emotions."
+   },
+   {
+    "k": "Do",
+    "t": "If something is going to change, talk about it once today in advance.",
+    "w": "Kids who notice change are less startled when they know ahead of time."
+   },
+   {
+    "k": "Praise",
+    "t": "If they calmed themselves after being upset, say, \"You soothed yourself.\"",
+    "w": "Recognizing that they calmed down helps them bounce back faster next time."
+   }
+  ],
+  "N": [
+   {
+    "k": "Praise",
+    "t": "If they adapted quickly to a change, say, \"You do well anywhere. That's great.\"",
+    "w": "Naming easygoingness as a strength grows a relaxed kind of resilience."
+   },
+   {
+    "k": "Talk",
+    "t": "Instead of \"How did you feel today?\", ask, \"What's one good thing and one bad thing from today?\"",
+    "w": "Easygoing kids tend to brush things off with \"Fine,\" so specific questions bring out their real feelings."
+   },
+   {
+    "k": "Notice",
+    "t": "Look for a moment when they said they were fine but may actually have struggled.",
+    "w": "So you don't miss small signals from a child who shows less on the outside."
+   },
+   {
+    "k": "Do",
+    "t": "Today, try one new food or game that your child picks.",
+    "w": "Lets them fully use their knack for embracing new experiences."
+   },
+   {
+    "k": "Hold back",
+    "t": "Even if they seem unbothered, don't settle for \"You're fine, right?\"; ask once more.",
+    "w": "Even kids who look fine feel loved when you ask about their feelings."
+   },
+   {
+    "k": "Talk",
+    "t": "Talk together about how a friend might feel when they're upset.",
+    "w": "Practice reading others' feelings so they don't become numb to emotions."
+   },
+   {
+    "k": "Praise",
+    "t": "If they didn't stay upset over a small mistake, say, \"I liked how you tried again.\"",
+    "w": "These words recognize their quick bounce-back."
+   },
+   {
+    "k": "Do",
+    "t": "At bedtime, recall today together as three scenes.",
+    "w": "Looking back on the day is practice in noticing feelings."
+   }
+  ],
+  "F": [
+   {
+    "k": "Talk",
+    "t": "When they're very happy or upset, name it: \"You were so happy!\", \"You were really upset.\"",
+    "w": "Expressive kids calm themselves down when their feelings get a name."
+   },
+   {
+    "k": "Praise",
+    "t": "When they put feelings into words, say, \"Thanks for telling me with words.\"",
+    "w": "Practice recognizing words used instead of crying or yelling."
+   },
+   {
+    "k": "Do",
+    "t": "Make three hug times today: morning, after daycare, and before bed.",
+    "w": "Expressive kids find great security in physical affection."
+   },
+   {
+    "k": "Hold back",
+    "t": "When they cry hard, instead of \"Stop crying\", try \"Let's talk when you're done. I'm right here.\"",
+    "w": "Waiting while feelings pour out helps them settle sooner."
+   },
+   {
+    "k": "Talk",
+    "t": "Ask, \"Can you act out the most exciting moment of your day?\"",
+    "w": "A fun conversation for a child who loves talking with their body and face."
+   },
+   {
+    "k": "Notice",
+    "t": "Write one line about when your child's feelings moved the most today, and why.",
+    "w": "Knowing what triggers big feelings lets you prepare in advance."
+   },
+   {
+    "k": "Do",
+    "t": "Use feeling cards or draw faces to pick today's mood together.",
+    "w": "The more feeling words they know, the more precisely they can express themselves."
+   },
+   {
+    "k": "Praise",
+    "t": "Catch a moment they looked after a friend or sibling and say, \"You have a warm heart.\"",
+    "w": "These words grow their gift for sharing feelings."
+   }
+  ],
+  "T": [
+   {
+    "k": "Talk",
+    "t": "Instead of \"How do you feel now?\", ask, \"What were you thinking then?\"",
+    "w": "Calm kids open up more easily to questions about thoughts than feelings."
+   },
+   {
+    "k": "Praise",
+    "t": "If they explained a situation calmly, say, \"You told me step by step, so I understand.\"",
+    "w": "These words name calmness as a strength."
+   },
+   {
+    "k": "Hold back",
+    "t": "Don't ask \"Aren't you happy?\" when their reaction is small; wait for joy in their own way.",
+    "w": "Calm kids are often happy enough on the inside."
+   },
+   {
+    "k": "Do",
+    "t": "Sit side by side doing the same activity and chat (blocks, puzzles, drawing).",
+    "w": "They open up more during side-by-side activities than face-to-face talks."
+   },
+   {
+    "k": "Notice",
+    "t": "Note something they did to show their feelings without words (handing you something, sitting beside you).",
+    "w": "To notice the affection they show through actions instead of words."
+   },
+   {
+    "k": "Talk",
+    "t": "After reading a picture book, ask, \"Why do you think the main character did that?\"",
+    "w": "Thinking about a character's feelings is practice in expressing emotions."
+   },
+   {
+    "k": "Praise",
+    "t": "If they handled something upsetting quietly, recognize it: \"That must have been hard. You coped well.\"",
+    "w": "When even unspoken feelings are noticed, they learn it's okay to share."
+   },
+   {
+    "k": "Do",
+    "t": "Once today, ask for your child's choice and go along with it.",
+    "w": "Having their thoughts respected is the key to opening up."
+   }
+  ],
+  "J": [
+   {
+    "k": "Praise",
+    "t": "If they did something in order on their own, say, \"You did it step by step, just like that!\"",
+    "w": "Names the Rhythm child's gift for order as a strength."
+   },
+   {
+    "k": "Talk",
+    "t": "Five minutes before moving to the next activity, say, \"In 5 minutes we'll tidy up.\"",
+    "w": "A heads-up makes transitions much easier to accept."
+   },
+   {
+    "k": "Do",
+    "t": "Make a picture chart of the bedtime routine together and put it up.",
+    "w": "A visible routine cuts down nightly battles."
+   },
+   {
+    "k": "Hold back",
+    "t": "When they're upset about a change of plans, instead of \"What's the big deal?\", say, \"You're upset the plan changed.\"",
+    "w": "For a Rhythm child, a changed plan really is a big deal."
+   },
+   {
+    "k": "Notice",
+    "t": "Write one line about the time of day your child seemed most at ease.",
+    "w": "Knowing their comfortable rhythm lets you schedule important things then."
+   },
+   {
+    "k": "Talk",
+    "t": "Before bed, go over tomorrow's plan as three steps.",
+    "w": "Picturing the day ahead makes mornings smoother."
+   },
+   {
+    "k": "Praise",
+    "t": "If they tidied up on their own, say, \"Thanks for tidying up. The house looks so neat!\"",
+    "w": "Helps them feel their actions help the family."
+   },
+   {
+    "k": "Do",
+    "t": "Today, announce one small unplanned treat in advance (like a different walking route) and do it.",
+    "w": "Small, announced changes are gentle practice in flexibility."
+   }
+  ],
+  "P": [
+   {
+    "k": "Praise",
+    "t": "If they played in a clever way, say, \"How did you think of that? So fun!\"",
+    "w": "Names the Free child's creativity as a strength."
+   },
+   {
+    "k": "Hold back",
+    "t": "Instead of \"Hurry up!\", offer two choices: \"Want to do this or that?\"",
+    "w": "When they choose for themselves, they move without being rushed."
+   },
+   {
+    "k": "Do",
+    "t": "Turn tidying into a game, like \"a race to put blocks away before I count to 10.\"",
+    "w": "Turning rules into games gets Free kids happily on board."
+   },
+   {
+    "k": "Talk",
+    "t": "When they want to do many things, ask, \"Shall we pick just one thing to do first?\"",
+    "w": "Practicing picking one thing builds focus."
+   },
+   {
+    "k": "Notice",
+    "t": "Note any game or rule your child invented today.",
+    "w": "Knowing where their free thinking goes helps you pick good toys."
+   },
+   {
+    "k": "Do",
+    "t": "Today, let your child decide how you play for 30 minutes.",
+    "w": "With time to decide freely, they follow set routines better."
+   },
+   {
+    "k": "Praise",
+    "t": "If they finished something they didn't want to do, say, \"You made it to the end!\"",
+    "w": "Recognizing finishing grows persistence."
+   },
+   {
+    "k": "Talk",
+    "t": "Let them choose one of tomorrow's plans: \"Park or library tomorrow?\"",
+    "w": "They keep plans they made themselves better."
+   }
+  ],
+  "X": [
+   {
+    "k": "Talk",
+    "t": "Ask, \"What was the most fun thing today?\"",
+    "w": "A short question about the day builds a habit of talking."
+   },
+   {
+    "k": "Praise",
+    "t": "Find one thing your child did on their own today and praise it specifically.",
+    "w": "Naming what they did well sticks longer than \"Good job.\""
+   },
+   {
+    "k": "Do",
+    "t": "For 10 minutes before bed, put down your phone and play a game your child picks.",
+    "w": "Even short, fully present time gives a child the greatest sense of security."
+   },
+   {
+    "k": "Hold back",
+    "t": "Say \"Hurry up!\" one less time today.",
+    "w": "Less rushing makes the day less tiring for both child and parent."
+   },
+   {
+    "k": "Notice",
+    "t": "Write one line about the moment your child laughed the hardest.",
+    "w": "Small notes add up to knowing your child better."
+   },
+   {
+    "k": "Talk",
+    "t": "Instead of \"I love you\", try \"I'm so happy because you're here.\"",
+    "w": "Words that celebrate who they are build a child's self-esteem."
+   }
+  ]
+ },
+ "situations": [
+  {
+   "id": "s00",
+   "cat": "Daily life",
+   "t": "Doesn't want to get up in the morning",
+   "p": "Morning is the day's first transition; the more you push, the slower it goes.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Time to get up. Next is washing your face, then breakfast.\"",
+     "do": "Agree on the morning order the night before, and go through it step by step with a picture chart.",
+     "no": "\"Aren't you up yet?!\""
+    },
+    "P": {
+     "say": "\"Who will get up first, Teddy or you?\"",
+     "do": "Turn waking up into a game, and let them choose between two outfits.",
+     "no": "\"How many times do I have to tell you?\""
+    }
+   }
+  },
+  {
+   "id": "s01",
+   "cat": "Daily life",
+   "t": "Won't eat",
+   "p": "The mood at the table lasts longer than how much they eat.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"You didn't like how this food felt. Just taste one bite and tell me if you don't like it.\"",
+     "do": "Put a tiny bit of new food next to a familiar dish, and try cooking it with a different texture.",
+     "no": "\"Picky eaters don't grow tall.\""
+    },
+    "N": {
+     "say": "\"Let's eat again when you're hungry. Let's sit at the table for just 20 minutes.\"",
+     "do": "Set mealtimes and don't let snacks fill them up.",
+     "no": "\"You can't get up until you finish.\""
+    }
+   }
+  },
+  {
+   "id": "s02",
+   "cat": "Daily life",
+   "t": "Doesn't want to go to bed",
+   "p": "The flow of the last 30 minutes before sleep decides how sleep goes.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Brush teeth, one book, lights off. Now it's book time.\"",
+     "do": "Keep the same order every day, and if it changes, mention it during the day.",
+     "no": "\"Go to sleep right now!\""
+    },
+    "P": {
+     "say": "\"Want to pick tonight's book? One of these two.\"",
+     "do": "Keep the bedtime order, but give one choice within it.",
+     "no": "\"If you don't sleep, the monster will come.\""
+    }
+   }
+  },
+  {
+   "id": "s03",
+   "cat": "Daily life",
+   "t": "Told to stop watching videos",
+   "p": "The warning before turning it off matters more than the moment you turn it off.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"We said we'd stop after this episode, right? Want to turn it off together when it ends?\"",
+     "do": "Agree on how many episodes before watching, and remind them once more 5 minutes before the end.",
+     "no": "Suddenly switching it off"
+    },
+    "P": {
+     "say": "\"What shall we play after we turn it off? Choose blocks or drawing.\"",
+     "do": "Deciding something fun to do afterwards makes the switch easier.",
+     "no": "\"You're addicted to videos.\""
+    }
+   }
+  },
+  {
+   "id": "s04",
+   "cat": "Daily life",
+   "t": "Won't tidy up",
+   "p": "Tidying is something you do together until it becomes a habit.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"Blocks in the blue box, dolls in the basket. Can you put them back?\"",
+     "do": "Give every item a home and label it with picture stickers.",
+     "no": "\"All you ever do is make a mess.\""
+    },
+    "P": {
+     "say": "\"Race! Who can put away more before the song ends?\"",
+     "do": "Turn tidying into a race or song, and finish together even if they don't do it all.",
+     "no": "\"If you don't tidy up, I'm throwing it all away.\""
+    }
+   }
+  },
+  {
+   "id": "s05",
+   "cat": "Daily life",
+   "t": "Hates washing or brushing teeth",
+   "p": "First check whether the reason is the sensation or just not wanting to.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"You didn't like water on your face. Shall we use a towel today?\"",
+     "do": "Let them choose the water temperature, toothbrush bristles and toothpaste flavor.",
+     "no": "\"Can't you even put up with this?\""
+    },
+    "N": {
+     "say": "\"Let's brush until the toothbrush song ends!\"",
+     "do": "Show when it ends with a brushing song or sand timer.",
+     "no": "\"Your teeth will rot.\""
+    }
+   }
+  },
+  {
+   "id": "s06",
+   "cat": "Feelings",
+   "t": "Throwing a tantrum at the store",
+   "p": "During a tantrum, safety and calming come before persuading.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"You really want that. I understand you want it. We're not buying it today.\"",
+     "do": "Move somewhere quiet and stay close until the feelings settle.",
+     "no": "\"Stop crying or I'm leaving you here.\""
+    },
+    "T": {
+     "say": "\"Can you tell me why you want it? Let's take a photo and add it to your birthday list.\"",
+     "do": "Ask why, and agree on an alternative together (like adding it to a list).",
+     "no": "\"Stop being so stubborn.\""
+    }
+   }
+  },
+  {
+   "id": "s07",
+   "cat": "Feelings",
+   "t": "Crying hard or getting angry",
+   "p": "Rather than stopping the feeling, stay close while it passes.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"You're really angry. When you're done crying, I'll give you a big hug.\"",
+     "do": "Keep them safe and talk less. Talk about what happened after they calm down.",
+     "no": "\"I don't like kids who cry.\""
+    },
+    "T": {
+     "say": "\"You're angry. If you want some time alone, that's okay.\"",
+     "do": "Give them time to sort it out alone, then ask what they were thinking once calm.",
+     "no": "\"You have to tell me or I won't know!\""
+    }
+   }
+  },
+  {
+   "id": "s08",
+   "cat": "Feelings",
+   "t": "Upset about losing",
+   "p": "Losing is a chance to build the strength to try again.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"You wanted to win and you lost, so you're upset. Of course you are.\"",
+     "do": "Let them fully talk about being upset, then ask if they want to play another round.",
+     "no": "\"You're crying over that?\""
+    },
+    "T": {
+     "say": "\"What could we do to win next time?\"",
+     "do": "Figure out together why they lost, make a plan and try again.",
+     "no": "\"You're just not good at it.\""
+    }
+   }
+  },
+  {
+   "id": "s09",
+   "cat": "Feelings",
+   "t": "Scared (of the dark, noises, animals)",
+   "p": "Fear isn't something to just get over; it's something to handle together.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"That sound scared you. Mom will stay right beside you.\"",
+     "do": "Choose comfort items together, like a small night light or a favorite stuffed animal.",
+     "no": "\"What's there to be scared of?\""
+    },
+    "N": {
+     "say": "\"Shall we go and see what's scary together?\"",
+     "do": "Look at the scary thing together and explain what it is.",
+     "no": "\"What a scaredy-cat.\""
+    }
+   }
+  },
+  {
+   "id": "s10",
+   "cat": "Social",
+   "t": "Had a fight with a friend",
+   "p": "Listen to your child's feelings before deciding who was wrong.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Your friend really upset you. Can you tell me what happened?\"",
+     "do": "After hearing out all their feelings, try guessing the friend's feelings together.",
+     "no": "\"You started it, didn't you?\""
+    },
+    "T": {
+     "say": "\"Can you tell me what happened from the beginning?\"",
+     "do": "Have them put events in order, and practice together what they could say next time.",
+     "no": "\"Just play nicely.\""
+    }
+   }
+  },
+  {
+   "id": "s11",
+   "cat": "Social",
+   "t": "Siblings fighting",
+   "p": "Rather than taking sides, listen to each child's feelings separately.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"You both want it. Let's set a timer and take turns, 5 minutes each.\"",
+     "do": "Briefly separate the child who acts first physically, help them calm down, and set turns.",
+     "no": "\"You're older, so let them have it.\""
+    },
+    "I": {
+     "say": "\"You were upset but couldn't say it. Tell Mom now.\"",
+     "do": "Give the quieter child the first chance to speak, and pass their words on to the sibling.",
+     "no": "\"You're just as bad.\""
+    }
+   }
+  },
+  {
+   "id": "s12",
+   "cat": "Social",
+   "t": "Won't say hello to an unfamiliar adult",
+   "p": "Greetings are learned by example rather than forced.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Say hi, and then we'll go to the playground!\"",
+     "do": "Link the greeting to something fun afterwards, and praise them out loud.",
+     "no": "\"Kids who don't say hello are bad.\""
+    },
+    "I": {
+     "say": "\"Just waving is okay. Mom will say hello first.\"",
+     "do": "Greet first yourself, and let your child start with a nod or a wave.",
+     "no": "\"Why are you so shy?\""
+    }
+   }
+  },
+  {
+   "id": "s13",
+   "cat": "Social",
+   "t": "Says they won't go to daycare or preschool",
+   "p": "The key is making goodbyes short and clear.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Shall we decide what you'll play with your friends today?\"",
+     "do": "Get them thinking about fun activities, and keep goodbyes short and cheerful.",
+     "no": "\"You'll be in trouble if you don't go.\""
+    },
+    "I": {
+     "say": "\"Mom always comes to pick you up at the end. We'll meet after snack time.\"",
+     "do": "Tell them when you'll meet again in terms of their routine, and pack a small comfort item.",
+     "no": "Slipping away without saying goodbye"
+    }
+   }
+  },
+  {
+   "id": "s14",
+   "cat": "Social",
+   "t": "Won't share",
+   "p": "Children whose own things are respected share better.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"You'll lend it to your friend when you're done, right? In how many minutes?\"",
+     "do": "Let them decide when to share and keep the promise with a timer.",
+     "no": "\"Good kids share.\""
+    },
+    "P": {
+     "say": "\"Is there a way to play with it together?\"",
+     "do": "Let them invent a new rule for playing together.",
+     "no": "\"Greedy!\""
+    }
+   }
+  },
+  {
+   "id": "s15",
+   "cat": "Social",
+   "t": "Hit a friend",
+   "p": "Stop the behavior firmly, and listen to the feelings separately.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"No hitting. You're really angry. When you're angry, let's stomp our feet.\"",
+     "do": "Separate them first, and after calming down, agree on another way to show anger.",
+     "no": "\"You need to get hit to understand.\""
+    },
+    "T": {
+     "say": "\"No hitting. Can you tell me why you did it?\"",
+     "do": "Hear the reason, and practice a short phrase to use in the same situation.",
+     "no": "Just repeating \"Why did you do that?!\""
+    }
+   }
+  },
+  {
+   "id": "s16",
+   "cat": "Changes",
+   "t": "Doesn't want to go to the doctor",
+   "p": "Knowing in advance makes fear smaller.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"We're going to the doctor tomorrow. The doctor will listen to your heartbeat with a stethoscope.\"",
+     "do": "Play doctor the day before to rehearse the steps, and be brief and honest about what might hurt.",
+     "no": "\"It won't hurt at all.\" (a lie)"
+    },
+    "N": {
+     "say": "\"What do you want to do after the doctor?\"",
+     "do": "Tell them briefly on the day and decide together what to do afterwards.",
+     "no": "\"If you don't listen, you'll get a shot.\""
+    }
+   }
+  },
+  {
+   "id": "s17",
+   "cat": "Changes",
+   "t": "Adjusting to a new class or school",
+   "p": "Every child adjusts at their own pace. Don't compare.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Your mission: learn one new friend's name!\"",
+     "do": "Turn new things into adventures and listen to their stories afterwards.",
+     "no": "\"Behave yourself this time.\""
+    },
+    "I": {
+     "say": "\"It's okay if it feels strange at first. You can make friends slowly.\"",
+     "do": "Show photos of the building and teachers in advance, and pick them up early the first week.",
+     "no": "\"The other kids are doing just fine.\""
+    }
+   }
+  },
+  {
+   "id": "s18",
+   "cat": "Changes",
+   "t": "Trip or outing plans changed",
+   "p": "Briefly explain why it changed and choose an alternative together.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"It's raining, so no playground. Instead, want to pick between the library and an indoor playground?\"",
+     "do": "Redraw the changed plan as a new sequence.",
+     "no": "\"What's the big deal?\""
+    },
+    "P": {
+     "say": "\"It's raining, so let's have a new adventure! How about camping at home?\"",
+     "do": "Turn the change into a chance for a new game.",
+     "no": "\"That's just how it is.\""
+    }
+   }
+  },
+  {
+   "id": "s19",
+   "cat": "Changes",
+   "t": "A new baby sibling arrived",
+   "p": "Protect one-on-one time so the older child doesn't feel pushed aside.",
+   "ax": "C",
+   "by": {
+    "F": {
+     "say": "\"Mom still loves you so, so much. Today, let's play just the two of us.\"",
+     "do": "Set 10 minutes a day just for the older child and show love in words and hugs.",
+     "no": "\"You're the big sister now, do it yourself.\""
+    },
+    "T": {
+     "say": "\"I'd like to hear your ideas when we name the baby.\"",
+     "do": "Ask the older child's opinion and give them a small role.",
+     "no": "Just repeating \"Watch the baby.\""
+    }
+   }
+  },
+  {
+   "id": "s20",
+   "cat": "Habits",
+   "t": "Told a lie",
+   "p": "Instead of punishing the lie, give them the experience that telling the truth is safe.",
+   "ax": "B",
+   "by": {
+    "S": {
+     "say": "\"You were worried you'd get in trouble. If you tell me honestly, we'll fix it together.\"",
+     "do": "Lower your voice and first acknowledge that they told the truth.",
+     "no": "\"Liar.\""
+    },
+    "N": {
+     "say": "\"Want to think again about whether that really happened?\"",
+     "do": "Calmly check the facts, and agree on what happens when they tell the truth.",
+     "no": "\"Another lie, huh?\""
+    }
+   }
+  },
+  {
+   "id": "s21",
+   "cat": "Habits",
+   "t": "Keeps saying \"No!\" and \"I won't!\"",
+   "p": "Saying no is a sign their own thinking is growing.",
+   "ax": "D",
+   "by": {
+    "J": {
+     "say": "\"You don't want to do it now. How about after this?\"",
+     "do": "Putting it into the order of things makes it easier to accept.",
+     "no": "\"Listen to Mom!\""
+    },
+    "P": {
+     "say": "\"Red cup or blue cup, which one?\"",
+     "do": "Give choices within the things they have to do.",
+     "no": "\"You can't keep saying no.\""
+    }
+   }
+  },
+  {
+   "id": "s22",
+   "cat": "Habits",
+   "t": "Insists on doing it alone",
+   "p": "Trying things alone, even when it takes time, builds growing strength.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"You want to try it yourself. Call me if you need help.\"",
+     "do": "Set safe limits, and give them time to try again if they fail.",
+     "no": "\"Give it here, Mom will do it.\""
+    },
+    "I": {
+     "say": "\"Take your time. Show me when you're done.\"",
+     "do": "Don't make it obvious you're watching, and wait until the end.",
+     "no": "\"You can't do it yet.\""
+    }
+   }
+  },
+  {
+   "id": "s23",
+   "cat": "Habits",
+   "t": "Can't focus and jumps from thing to thing",
+   "p": "Attention spans at this age are short. Start with finishing short things.",
+   "ax": "A",
+   "by": {
+    "E": {
+     "say": "\"Let's finish just this, then go out and run!\"",
+     "do": "Add time for moving their body between short activities.",
+     "no": "\"Just sit still for once.\""
+    },
+    "I": {
+     "say": "\"You can continue this next time. Let's mark your spot.\"",
+     "do": "If they want to finish what they started, give them plenty of time.",
+     "no": "\"You're still doing that?\""
+    }
+   }
+  }
+ ],
+ "notice": {
+  "J": [
+   {
+    "when": "3 days before",
+    "t": "Mark it on the calendar and count together: \"Three more sleeps until ___.\""
+   },
+   {
+    "when": "The evening before",
+    "t": "Describe tomorrow in three steps. For example: \"Breakfast, get dressed, then ___.\""
+   },
+   {
+    "when": "That morning",
+    "t": "Tell them when you'll leave and when you'll come back."
+   }
+  ],
+  "P": [
+   {
+    "when": "The evening before",
+    "t": "Ask, \"What are you most excited about for tomorrow's ___?\" and let them pick one thing they want to do."
+   },
+   {
+    "when": "That morning",
+    "t": "Start with what's exciting, and let your child choose one thing to bring."
+   }
+  ],
+  "S": [
+   {
+    "when": "3 days before",
+    "t": "Show photos of the place and talk about what the sounds, people and smells might be like."
+   },
+   {
+    "when": "The evening before",
+    "t": "Pack comfortable clothes and a comfort item (stuffed animal, handkerchief) together."
+   }
+  ],
+  "N": [
+   {
+    "when": "The evening before",
+    "t": "Agree in advance on one rule to keep while you're there."
+   }
+  ],
+  "E": [
+   {
+    "when": "The evening before",
+    "t": "Decide on one thing to try there, and agree on one safety rule together."
+   }
+  ],
+  "I": [
+   {
+    "when": "3 days before",
+    "t": "Tell them in advance who they'll meet, and that it's fine to just watch at first."
+   },
+   {
+    "when": "That morning",
+    "t": "Promise that when you arrive, they'll have a moment to look around."
+   }
+  ]
+ },
+ "plans": [
+  "Go to the playground",
+  "Walk in the park",
+  "Indoor playground",
+  "Read books together",
+  "Cook together",
+  "Watch a movie",
+  "Shop for a present",
+  "Visit Grandma",
+  "Go on a trip",
+  "Doctor's visit"
+ ],
+ "sib": {
+  "axes": {
+   "A": {
+    "hh": {
+     "good": "Both dive into new games first, so there's never a dull moment together.",
+     "clash": "Both want to go first, so they often fight over turns and spots.",
+     "tip": "Set a \"who goes first\" rule in advance (rock-paper-scissors, taking turns).",
+     "play": [
+      "Tag and hide-and-seek",
+      "Build a playground obstacle course"
+     ],
+     "sit": "s11"
+    },
+    "ll": {
+     "good": "Both like to observe calmly, so sitting side by side and playing for a long time feels easy.",
+     "clash": "Both hesitate in new places, so it takes time to start new experiences.",
+     "tip": "Show new places in photos first, and let them take the first step together.",
+     "play": [
+      "Build blocks or LEGO together",
+      "Read picture books side by side"
+     ],
+     "sit": "s17"
+    },
+    "mix": {
+     "good": "The Explorer leads the way and the Observer looks closely, broadening each other.",
+     "clash": "When the Explorer drags the Observer along, the Observer may feel pushed aside.",
+     "tip": "Tell the Observer \"Come when you're ready,\" and teach the Explorer how to wait.",
+     "play": [
+      "Treasure hunt (one hides, one seeks)",
+      "Role play (captain and map reader)"
+     ],
+     "sit": "s11"
+    }
+   },
+   "B": {
+    "hh": {
+     "good": "Both notice small changes, so they quickly pick up on each other's moods.",
+     "clash": "On noisy or tiring days, both get sensitive and fights grow bigger.",
+     "tip": "After busy outings, give both of them quiet rest time.",
+     "play": [
+      "Quiet sensory play (clay, sand)",
+      "Guess-the-sound game"
+     ],
+     "sit": "s07"
+    },
+    "ll": {
+     "good": "Both are easygoing, so they get along without being rattled by much.",
+     "clash": "Both brush things off as fine, so parents can easily miss when they're upset.",
+     "tip": "At bedtime, ask each of them separately: \"What's one thing you didn't like today?\"",
+     "play": [
+      "Active games (balloon volleyball)",
+      "Taste a new food together"
+     ],
+     "sit": "s10"
+    },
+    "mix": {
+     "good": "The Easygoing child lightens the mood and the Sensitive child looks out for details.",
+     "clash": "The Easygoing child's teasing can feel big to the Sensitive child.",
+     "tip": "Explain the difference in how they feel: \"It was a joke to you, but your brother/sister got scared.\"",
+     "play": [
+      "Cook together (Sensitive decorates, Easygoing mixes)",
+      "Walk and look for sounds and smells"
+     ],
+     "sit": "s11"
+    }
+   },
+   "C": {
+    "hh": {
+     "good": "Both share feelings in a big way, so the house lights up when they laugh together.",
+     "clash": "Both have big feelings, so when one cries, the other easily erupts too.",
+     "tip": "Calm them one at a time, and talk together after feelings settle.",
+     "play": [
+      "Copy feeling faces",
+      "Sing and dance"
+     ],
+     "sit": "s07"
+    },
+    "ll": {
+     "good": "Both are calm, so arguments don't escalate and they play together peacefully.",
+     "clash": "They rarely put feelings into words, so hurt feelings can pile up.",
+     "tip": "Open their hearts with questions about thoughts, like \"What were you thinking then?\"",
+     "play": [
+      "Puzzles and board games",
+      "Make things together (origami)"
+     ],
+     "sit": "s10"
+    },
+    "mix": {
+     "good": "The Expressive child shares feelings and the Calm child receives them steadily, keeping a balance.",
+     "clash": "The Expressive child feels hurt by small reactions, and the Calm child gets flustered by big feelings.",
+     "tip": "Explain each other's way of expressing: \"Your sibling is happy on the inside,\" \"Your brother feels better when he says it out loud.\"",
+     "play": [
+      "Puppet show (one does voices, one runs the stage)",
+      "Draw together and make up a story"
+     ],
+     "sit": "s08"
+    }
+   },
+   "D": {
+    "hh": {
+     "good": "Both love order and rules, so the daily routine flows smoothly.",
+     "clash": "Both struggle when plans change, and they may argue over rules.",
+     "tip": "Announce schedule changes in advance, and set house rules together in a picture chart.",
+     "play": [
+      "Turn-based games (board games)",
+      "A tidy-up race together"
+     ],
+     "sit": "s18"
+    },
+    "ll": {
+     "good": "Both are free spirits, so they invent clever games together.",
+     "clash": "Both put off tidying and finishing, so the end of the day gets messy.",
+     "tip": "Turn tidying into a game for two (a one-song race).",
+     "play": [
+      "Pretend play (build a blanket fort)",
+      "Make up new game rules"
+     ],
+     "sit": "s04"
+    },
+    "mix": {
+     "good": "The Rhythm child brings order and the Free child adds fun, so they learn from each other.",
+     "clash": "The Rhythm child tidies and the Free child messes up, so they often clash.",
+     "tip": "Divide toy spaces so each has their own area, and keep shared-space rules short.",
+     "play": [
+      "Pretend grocery shopping (one makes the list, one picks)",
+      "Build a block town (one designs, one decorates)"
+     ],
+     "sit": "s14"
+    }
+   }
+  },
+  "praise": {
+   "E": "\"You tried it first. So brave!\"",
+   "I": "\"You looked carefully before doing it. So thorough!\"",
+   "S": "\"You noticed that. So perceptive!\"",
+   "N": "\"You tried again right away. So steady!\"",
+   "F": "\"Thanks for telling me how you feel with words.\"",
+   "T": "\"You explained it step by step, so I understand.\"",
+   "J": "\"You did it in order, just like that!\"",
+   "P": "\"How did you think of that? So fun!\""
+  },
+  "level": [
+   [
+    "Perfect opposites",
+    "All four are different. They fill in what the other lacks."
+   ],
+   [
+    "Different charms",
+    "Only one is alike. They grow by learning from their differences."
+   ],
+   [
+    "Half and half",
+    "Two are alike and two are different. Plenty to share and plenty to learn."
+   ],
+   [
+    "Look-alikes",
+    "Three are alike. They click easily, but can clash over the same things."
+   ],
+   [
+    "Peas in a pod",
+    "All four are the same. They click so well that they also fight over the same things."
+   ]
+  ]
+ }
+}

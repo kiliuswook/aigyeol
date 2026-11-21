@@ -129,7 +129,7 @@
  "66문항 답하기": "Answer 66 questions",
  "평소 모습 그대로": "Just as they usually are",
  "리포트 받기": "Get the report",
- "기질 · 성격 · 또래 평균": "Type · traits · peer average",
+ "기질 · 성격 · 또래 평균": "Type · traits · average",
  "시작하기": "Get started",
  "샘플 리포트 먼저 보기": "See a sample report first",
  "예시 아이 콩이의 리포트": "Report for Kongi, a sample child",
@@ -583,5 +583,6 @@
  "할아버지": "Grandpa",
  "기타 양육자": "Other caregiver",
  "카카오톡으로 보내기": "Send via KakaoTalk",
- "자세히 보기": "See details"
+ "자세히 보기": "See details",
+ "콩이": "Kongi"
 }

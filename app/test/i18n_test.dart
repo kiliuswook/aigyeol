@@ -1,4 +1,5 @@
 // 영어 화면 점검: 모든 탭을 돌며 넘침이 없는지, 화면에 한국어가 남지 않았는지 본다.
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,10 +24,10 @@ List<String> korean(WidgetTester t) => [
         if (_hangul.hasMatch((e.widget as RichText).text.toPlainText())) (e.widget as RichText).text.toPlainText(),
     ];
 
-Future<void> boot(WidgetTester t) async {
+Future<void> boot(WidgetTester t, String code) async {
   SharedPreferences.setMockInitialValues({});
   await t.runAsync(() async {
-    await setLang('en', () async => Future.wait([loadContent(), loadDaily()]));
+    await setLang(code, () async => Future.wait([loadContent(), loadDaily()]));
     await store.load();
     await daily.load();
   });
@@ -54,16 +55,17 @@ void main() {
     await setLang('ko', () async => Future.wait([loadContent(), loadDaily()]));
   });
 
-  testWidgets('영어: 첫 화면 · 아이 등록', (t) async {
-    await boot(t);
+  for (final code in kLangs.keys.where((c) => c != 'ko' && _ready(c))) {
+  testWidgets('$code: 첫 화면 · 아이 등록', (t) async {
+    await boot(t, code);
     await t.pumpWidget(const App());
     await check(t, 'home first');
-    await t.tap(find.text('Get started'));
+    await t.tap(find.text(tr('시작하기')));
     await check(t, 'setup');
   });
 
-  testWidgets('영어: 두 아이·두 양육자 결과로 모든 탭 (360x640)', (t) async {
-    await boot(t);
+  testWidgets('$code: 두 아이·두 양육자 결과로 모든 탭 (360x640)', (t) async {
+    await boot(t, code);
     store.setInfo(name: 'Kongi');
     for (final it in C.items) {
       store.answer(it, 5);
@@ -82,7 +84,7 @@ void main() {
     await check(t, 'home');
     tab.value = 1;
     await check(t, 'report');
-    for (final name in ['Temperament', 'Growing strengths', 'Caregiver comparison', 'Changes', 'Siblings']) {
+    for (final name in [tr('기질'), tr('자라는 힘'), tr('양육자 비교'), tr('달라진 점'), tr('형제')]) {
       if (find.text(name).evaluate().isEmpty) continue;
       await t.tap(find.text(name).first);
       await check(t, 'report $name');
@@ -105,4 +107,8 @@ void main() {
     tab.value = 2;
     await check(t, 'more');
   });
+  }
 }
+
+/// 번역 파일이 있는 언어만
+bool _ready(String c) => File('assets/i18n/$c.json').existsSync();

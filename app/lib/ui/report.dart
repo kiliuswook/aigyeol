@@ -48,12 +48,12 @@ class _ReportViewState extends State<ReportView> {
     }
     final r = score(cur.ans);
     Widget tabBtn(String id, String t) => Expanded(
-        flex: t.length + 2,
+        flex: _twoLine(t).split('\n').map((x) => x.length).reduce(max) + 2,
         child: GestureDetector(
             onTap: () => setState(() => rtab = id),
             child: NineBox(rtab == id ? nChipOn : nChip,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                child: Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text(t, maxLines: 1, style: disp(17, color: rtab == id ? kOnAccent : kMuted)))))));
+                child: Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text(_twoLine(t), maxLines: 2, textAlign: TextAlign.center, style: disp(_twoLine(t) == t ? 17 : 15, color: rtab == id ? kOnAccent : kMuted).copyWith(height: 1.1)))))));
     return Frame(
       top: col(gap: 8, [
         switcher(),
@@ -343,7 +343,7 @@ class _ReportViewState extends State<ReportView> {
           final x = r.gr[i];
           return col([
             eyebrow(tr('자라는 힘')),
-            Row(children: [Expanded(child: h2(x.g.n)), if (x.sc != null) Pill(lvName[x.lv!], 'g')]),
+            Row(children: [Expanded(child: h2(x.g.n)), if (x.sc != null) Flexible(child: Pill(lvName[x.lv!], 'g'))]),
             muted(x.g.d),
             if (x.sc == null)
               Note(Text(tr("'잘 모르겠다'로 답한 문항이 많아 판단하지 않았습니다.")))
@@ -415,7 +415,7 @@ class _ReportViewState extends State<ReportView> {
           eyebrow(tr('양육자 비교')),
           h2(tr('양육자마다 다르게 본 점')),
           muted(tr('같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다.')),
-          rich(tr("**비교할 양육자가 아직 없습니다.** 정밀검사를 마친 양육자가 두 명 이상이면 일치도, 다르게 본 이유, 함께 정할 약속까지 이곳에 정리됩니다. 지금 마친 사람: {0}.", [fin.isEmpty ? tr('없음') : fin.map((e) => e.key).join(', ')]), style: small),
+          rich(tr("**비교할 양육자가 아직 없습니다.** 정밀검사를 마친 양육자가 두 명 이상이면 일치도, 다르게 본 이유, 함께 정할 약속까지 이곳에 정리됩니다. 지금 마친 사람: {0}.", [fin.isEmpty ? tr('없음') : fin.map((e) => cg(e.key)).join(listSep)]), style: small),
           Tile(tr('이 휴대폰에서 다른 양육자 검사'), icon: 'i_heart', sub: tr('광고 1번 보고 무료'), onTap: () => addWho(context, invite: () => inviteCg(context))),
           Tile(tr('다른 휴대폰으로 초대 보내기'), icon: 'i_share', sub: tr('결과를 보내 주면 이곳에 합쳐집니다'), onTap: () => inviteCg(context)),
         ])
@@ -837,4 +837,14 @@ bool _jong(String n) {
   if (n.isEmpty) return false;
   final c = n.codeUnitAt(n.length - 1);
   return c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 != 0;
+}
+
+/// 탭 이름이 길면(영어·스페인어 등) 가운데 가까운 띄어쓰기에서 두 줄로 나눈다. 한 줄로 줄이면 글자가 너무 작아진다.
+String _twoLine(String t) {
+  if (isKo || t.length < 10 || !t.contains(' ')) return t;
+  var best = -1;
+  for (var i = 0; i < t.length; i++) {
+    if (t[i] == ' ' && (best < 0 || (i - t.length / 2).abs() < (best - t.length / 2).abs())) best = i;
+  }
+  return '${t.substring(0, best)}\n${t.substring(best + 1)}';
 }

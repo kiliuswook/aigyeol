@@ -108,7 +108,9 @@ class NineBox extends StatelessWidget {
 }
 
 // ---------- 글자 ----------
-TextStyle disp(double size, {Color? color, FontWeight w = FontWeight.w700}) => TextStyle(fontFamily: kDisplay, fontSize: size, fontWeight: w, color: color ?? kFg, height: 1.3);
+/// 제목 글꼴. 개구(Gaegu)에는 á·ñ·ơ 같은 글자가 없어 스페인어·베트남어는 Patrick Hand(OFL)로 쓴다.
+String get displayFont => const {'es', 'vi'}.contains(langCode) ? 'PatrickHand' : kDisplay;
+TextStyle disp(double size, {Color? color, FontWeight w = FontWeight.w700}) => TextStyle(fontFamily: displayFont, fontSize: size, fontWeight: w, color: color ?? kFg, height: 1.3);
 const small = TextStyle(fontSize: 13, height: 1.55, color: kFg);
 const smallMuted = TextStyle(fontSize: 13, height: 1.55, color: kMuted);
 const body = TextStyle(fontSize: 15, height: 1.65, color: kFg);
@@ -286,11 +288,22 @@ class Track extends StatelessWidget {
 }
 
 /// 축 막대: 왼쪽 낮은 쪽 이름, 막대, 오른쪽 높은 쪽 이름
-Widget axisBar(Ax a, int s, {bool thin = false}) => Row(children: [
-      SizedBox(width: 44, child: Text(a.lo, style: TextStyle(fontSize: 13, fontWeight: s < 50 ? FontWeight.w700 : FontWeight.w400, color: s < 50 ? kFg : kMuted))),
-      Expanded(child: Track(s, a.c, thin: thin, fill: true)),
-      SizedBox(width: 44, child: Text(a.hi, textAlign: TextAlign.right, style: TextStyle(fontSize: 13, fontWeight: s >= 50 ? FontWeight.w700 : FontWeight.w400, color: s >= 50 ? kFg : kMuted))),
+Widget axisBar(Ax a, int s, {bool thin = false}) {
+  final lo = Text(a.lo, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13, fontWeight: s < 50 ? FontWeight.w700 : FontWeight.w400, color: s < 50 ? kFg : kMuted));
+  final hi = Text(a.hi, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.right, style: TextStyle(fontSize: 13, fontWeight: s >= 50 ? FontWeight.w700 : FontWeight.w400, color: s >= 50 ? kFg : kMuted));
+  // 한국어는 막대 양옆에 두 글자 이름. 다른 언어는 이름이 길어 막대 위 양끝에 둔다.
+  if (!isKo) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Row(children: [Expanded(child: lo), const SizedBox(width: 8), Expanded(child: hi)]),
+      Track(s, a.c, thin: thin, fill: true),
     ]);
+  }
+  return Row(children: [
+    SizedBox(width: 44, child: lo),
+    Expanded(child: Track(s, a.c, thin: thin, fill: true)),
+    SizedBox(width: 44, child: hi),
+  ]);
+}
 
 Widget codeText(List<(String, Color)> letters, {double size = 54}) => Row(
     mainAxisSize: MainAxisSize.min,

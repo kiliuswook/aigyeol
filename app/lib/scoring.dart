@@ -151,4 +151,4 @@ GrowCmp compareGrow(Result r, Snap? p, String who, Ans ans) {
 }
 
 String optName(int? a) => a == null ? '-' : a == 0 ? tr('잘 모르겠다') : C.opt[a - 1];
-String oneLine(Result r) => tr('{0}입니다.', [r.ax.map((x) => C.poles[x.letter]!.ph).join(', ')]);
+String oneLine(Result r) => tr('{0}입니다.', [r.ax.map((x) => C.poles[x.letter]!.ph).join(listSep)]);

@@ -189,7 +189,11 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
             const SizedBox(height: 16),
             Center(child: eyebrow(tr('만 2~7세 · 부모가 답하는 기질검사'))),
             const SizedBox(height: 2),
-            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(44), children: [TextSpan(text: tr('내 아이의 ')), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk))])))),
+            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(44), children: () {
+              // 앱 이름에서 MBTI 만 색을 바꾼다. 언어마다 MBTI 의 자리가 달라(El MBTI de mi peque) 이름을 MBTI 앞뒤로 나눈다.
+              final p = tr('내 아이의 MBTI').split('MBTI');
+              return [TextSpan(text: p.first), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), if (p.length > 1) TextSpan(text: p.sublist(1).join('MBTI'))];
+            }())))),
             Center(child: Text(tr('우리 아이의 MBTI는 무엇일까요?'), style: disp(21, w: FontWeight.w400))),
             const SizedBox(height: 8),
             for (final (t, d) in [(tr('기질검사'), tr('타고난 성향 4축과 세부 기질 12가지')), (tr('성격검사'), tr('경험으로 자라는 끈기 · 스스로 힘 · 함께 힘'))])

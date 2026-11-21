@@ -1,0 +1,1049 @@
+{
+ "axes": [
+  {
+   "id": "A",
+   "H": "E",
+   "L": "I",
+   "hi": "Khám phá",
+   "lo": "Quan sát",
+   "q": "Khi gặp điều mới",
+   "c": "--c1",
+   "subs": [
+    {
+     "n": "Tiếp cận điều mới",
+     "lo": "Quan sát trước",
+     "hi": "Lao vào ngay"
+    },
+    {
+     "n": "Năng lượng vận động",
+     "lo": "Chơi yên tĩnh",
+     "hi": "Chơi năng động"
+    },
+    {
+     "n": "Tiếp cận mọi người",
+     "lo": "Làm quen chậm",
+     "hi": "Chủ động bắt chuyện"
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "H": "S",
+   "L": "N",
+   "hi": "Nhạy cảm",
+   "lo": "Thoải mái",
+   "q": "Mức độ cảm nhận",
+   "c": "--c2",
+   "subs": [
+    {
+     "n": "Nhạy cảm giác quan",
+     "lo": "Ít bị làm phiền",
+     "hi": "Dễ bị làm phiền"
+    },
+    {
+     "n": "Nhận ra thay đổi",
+     "lo": "Thường không để ý",
+     "hi": "Nhận ra nhanh"
+    },
+    {
+     "n": "Dư âm cảm xúc",
+     "lo": "Cho qua nhanh",
+     "hi": "Để bụng lâu"
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "H": "F",
+   "L": "T",
+   "hi": "Biểu cảm",
+   "lo": "Điềm tĩnh",
+   "q": "Cách thể hiện cảm xúc",
+   "c": "--c3",
+   "subs": [
+    {
+     "n": "Độ lớn cảm xúc",
+     "lo": "Thể hiện nhỏ",
+     "hi": "Thể hiện lớn"
+    },
+    {
+     "n": "Chia sẻ cảm xúc",
+     "lo": "Giữ trong lòng",
+     "hi": "Kể trước"
+    },
+    {
+     "n": "Dư âm cảm xúc",
+     "lo": "Bình tĩnh nhanh",
+     "hi": "Kéo dài lâu"
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "H": "J",
+   "L": "P",
+   "hi": "Nề nếp",
+   "lo": "Tự do",
+   "q": "Cách sống một ngày",
+   "c": "--c4",
+   "subs": [
+    {
+     "n": "Nhịp sinh hoạt",
+     "lo": "Mỗi ngày mỗi khác",
+     "hi": "Đều đặn"
+    },
+    {
+     "n": "Chuyển đổi và báo trước",
+     "lo": "Chuyển ngay được",
+     "hi": "Cần báo trước"
+    },
+    {
+     "n": "Trật tự và ngăn nắp",
+     "lo": "Tùy hứng",
+     "hi": "Theo quy tắc"
+    }
+   ]
+  }
+ ],
+ "grows": [
+  {
+   "id": "G1",
+   "n": "Kiên trì",
+   "d": "Sức mạnh thử lại khi gặp khó",
+   "lv": [
+    [
+     "Có xu hướng bỏ cuộc nhanh khi gặp khó.",
+     "Điều này tự nhiên ở độ tuổi này. Hãy khen việc thử lại hơn là kết quả, và bắt đầu từ những bước dễ mà con có thể làm được. \"Mình thử thêm một lần nữa nhé?\" hiệu quả hơn \"Làm cho xong đi\"."
+    ],
+    [
+     "Kiên trì với việc mình thích, nhưng cần giúp với việc khó.",
+     "Chia nhỏ việc để con trải nghiệm \"chỉ một lần nữa thôi\". Nghỉ một chút rồi quay lại cũng là kiên trì."
+    ],
+    [
+     "Có nền tảng vững vàng để thử lại và làm đến cùng, dù khó.",
+     "Tập trung sâu có thể khiến con khó dừng giữa chừng. Để con không kiệt sức vì cầu toàn, hãy nói \"Thế này là được rồi\"."
+    ]
+   ],
+   "count": 6
+  },
+  {
+   "id": "G2",
+   "n": "Tự lập",
+   "d": "Sức mạnh tự quyết định và tự làm",
+   "lv": [
+    [
+     "Vẫn cần người lớn giúp và quyết định nhiều.",
+     "Hãy chờ chỉ 10 giây trước khi làm thay con. Mọi thứ thay đổi khi con tích lũy trải nghiệm tự hoàn thành những việc nhỏ như đi một chiếc tất."
+    ],
+    [
+     "Tự làm việc quen thuộc, nhưng tìm người lớn khi gặp việc mới.",
+     "Bắt đầu bằng những lựa chọn nhỏ như chọn một trong hai. Điều quan trọng là người lớn không thay đổi lựa chọn của con."
+    ],
+    [
+     "Có nền tảng vững vàng để tự quyết định và tự làm.",
+     "Mở rộng lựa chọn cho con, nhưng giữ rõ quy tắc an toàn. Khi câu \"Con tự làm!\" dẫn đến giằng co, cách dễ nhất là cho thêm thời gian."
+    ]
+   ],
+   "count": 6
+  },
+  {
+   "id": "G3",
+   "n": "Hòa đồng",
+   "d": "Sức mạnh hiểu cảm xúc người khác và hợp tác",
+   "lv": [
+    [
+     "Mong muốn của bản thân vẫn được đặt lên trước.",
+     "Điều này thường gặp ở trẻ nhỏ. Hãy diễn đạt nét mặt thành lời như \"Bạn trông buồn kìa\", và tập lần lượt ngắn qua trò chơi."
+    ],
+    [
+     "Biết chia sẻ và chờ khi vui, nhưng khó khi thật sự muốn điều gì.",
+     "Trò chơi thấy rõ lượt như xếp khối lần lượt hay cờ bàn rất hiệu quả. Hãy ghi nhận ngay lúc con đã chờ."
+    ],
+    [
+     "Có nền tảng vững vàng để hiểu cảm xúc người khác và hòa hợp.",
+     "Để con không đánh mất cảm xúc của mình vì luôn nhường, hãy tập cả cách nói \"Không\" và \"Con cũng muốn đến lượt\"."
+    ]
+   ],
+   "count": 6
+  }
+ ],
+ "poles": {
+  "E": {
+   "tags": [
+    "Thử trước",
+    "Tràn năng lượng",
+    "Thích mọi người"
+   ],
+   "sum": "Hành động trước khi gặp nơi chốn, trò chơi và người mới. Học bằng cách lao vào với cả cơ thể.",
+   "det": "Trẻ có nhiều chất Khám phá xem điều mới là cơ hội chứ không phải mối đe dọa. Con học bằng cách làm hơn là nghe giải thích, và cần nhiều thời gian vận động mỗi ngày. Vì đôi khi con hành động trước khi nhìn, quy tắc an toàn hiệu quả nhất khi ngắn, rõ và thống nhất trước.",
+   "st": "Thích nghi nhanh với nơi mới và thích thử thách.",
+   "wa": "Cần tập dừng lại nhìn trước khi hành động.",
+   "say": "Con muốn thử trước à! Mình thống nhất đúng một quy tắc rồi đi nhé.",
+   "no": "Con không ngồi yên được à?!",
+   "ph": "lao vào điều mới trước tiên",
+   "says": [
+    [
+     "Khi đến một sân chơi mới",
+     "Con muốn thử trước à! Mình thống nhất đúng một quy tắc rồi đi nhé."
+    ],
+    [
+     "Khi định trèo lên chỗ trông nguy hiểm",
+     "Con muốn trèo lên à! Nắm tay Mẹ và mình đi đến đây thôi nhé."
+    ],
+    [
+     "Ở nơi phải chờ yên lặng",
+     "Người con đang muốn cựa quậy đúng không? Mình đếm đến mười rồi ra ngoài chạy nhé."
+    ],
+    [
+     "Khi bất ngờ đến gần một bạn chưa quen",
+     "Con muốn chơi cùng bạn à! Mình hỏi trước nhé: \"Chơi với tớ không?\""
+    ]
+   ]
+  },
+  "I": {
+   "tags": [
+    "Cẩn thận",
+    "Tinh ý",
+    "Học sâu"
+   ],
+   "sum": "Quan sát kỹ và hành động khi đã sẵn sàng. Khi đã thoải mái, con sẽ dấn thân sâu.",
+   "det": "Trẻ có nhiều chất Quan sát thu thập thông tin trước khi gặp tình huống mới. Đó không phải nhút nhát mà là cách con tự kiểm tra an toàn. Thúc giục khiến con rút lui, còn chờ đợi giúp con tự bước tới. Hãy đến nơi mới sớm một chút để con có thời gian nhìn quanh, và đừng ép con chào người mới gặp.",
+   "st": "Cẩn thận, ít mắc lỗi và tập trung sâu vào việc quen thuộc.",
+   "wa": "Cần khá nhiều thời gian để thích nghi với nơi mới.",
+   "say": "Nhìn trước cũng được. Khi nào muốn thử thì nói Mẹ nhé.",
+   "no": "Các bạn khác đều làm, sao con không làm?",
+   "ph": "quan sát kỹ trước khi hành động",
+   "says": [
+    [
+     "Khi lần đầu đến một nơi mới",
+     "Nhìn trước cũng được. Khi nào muốn thử thì nói Mẹ nhé."
+    ],
+    [
+     "Khi người lớn bảo con chào",
+     "Bây giờ vẫy tay thôi cũng được. Khi nào sẵn sàng thì con chào nhé."
+    ],
+    [
+     "Khi đứng nhìn các bạn chơi mà không tham gia",
+     "Con đang xem các bạn chơi à. Mình cùng lại gần một chút nhé?"
+    ],
+    [
+     "Trước khi bắt đầu hoạt động mới",
+     "Hôm nay mình sẽ làm việc này. Mình xem một lần trước rồi quyết định nhé."
+    ]
+   ]
+  },
+  "S": {
+   "tags": [
+    "Để ý nhiều",
+    "Nhạy giác quan",
+    "Trái tim mềm"
+   ],
+   "sum": "Cảm nhận được khác biệt nhỏ về âm thanh, xúc giác và bầu không khí. Vì thế cũng dễ mệt.",
+   "det": "Trẻ có nhiều chất Nhạy cảm tiếp nhận cùng một kích thích lớn hơn và chi tiết hơn. Khó chịu với quần áo hay nơi ồn ào không phải là bướng mà là khó chịu thật. Sau những ngày nhiều kích thích, hãy dành thời gian nghỉ yên tĩnh. Khi lớn lên, sự nhạy cảm này trở thành nền tảng cho khả năng quan sát, đồng cảm và cảm thụ cái đẹp.",
+   "st": "Tinh ý và nhanh nhận ra cảm xúc người khác.",
+   "wa": "Dễ mệt ở nơi đông người nên cần thời gian nghỉ.",
+   "say": "Cái đó làm con khó chịu đúng không? Con kể Mẹ nghe cảm giác thế nào nhé?",
+   "no": "Có gì đâu, sao con làm quá lên thế?",
+   "ph": "nhận ra cả những thay đổi nhỏ",
+   "says": [
+    [
+     "Khi nói quần áo hay tất khó chịu",
+     "Cái đó làm con khó chịu đúng không? Con kể Mẹ nghe cảm giác thế nào nhé?"
+    ],
+    [
+     "Ở nơi ồn ào, đông người",
+     "Ồn quá phải không? Mình nghỉ ở chỗ yên tĩnh một lát nhé."
+    ],
+    [
+     "Khi giật mình hay khóc vì chuyện nhỏ",
+     "Con giật mình lắm nhỉ. Để Mẹ ôm con. Mình thở chậm nhé."
+    ],
+    [
+     "Khi không thích vị hay mùi của món ăn",
+     "Vị này mới với con. Chỉ một miếng thôi, không thích thì để lại cũng được."
+    ]
+   ]
+  },
+  "N": {
+   "tags": [
+    "Thoải mái",
+    "Khó lay chuyển",
+    "Hồi phục nhanh"
+   ],
+   "sum": "Ít bị ảnh hưởng bởi kích thích hay thay đổi. Ngã là đứng dậy ngay.",
+   "det": "Trẻ có nhiều chất Thoải mái có ngưỡng khó chịu cao nên hợp với hầu hết mọi nơi. Nhưng con ít nói ra dù khó chịu hay đau, nên người lớn dễ bỏ sót. Con cũng có thể không nhận ra thay đổi tinh tế trên nét mặt người khác, nên việc diễn đạt cảm xúc thành lời sẽ giúp ích.",
+   "st": "Vững vàng trước thay đổi và hồi phục nhanh sau căng thẳng.",
+   "wa": "Hiếm khi nói ra sự khó chịu, nên người lớn cần hỏi trước.",
+   "say": "Trông con ổn, nhưng Mẹ hỏi nhé. Cơ thể và trái tim con lúc này thế nào?",
+   "no": "Con thì chẳng bao giờ quan tâm gì cả.",
+   "ph": "không dễ bị lay động",
+   "says": [
+    [
+     "Khi trông vẫn ổn sau khi ngã",
+     "Trông con ổn, nhưng Mẹ hỏi nhé. Cơ thể và trái tim con lúc này thế nào?"
+    ],
+    [
+     "Khi im lặng sau khi bị bạn giành đồ chơi",
+     "Vừa rồi con không buồn sao? Nếu không thích, con có thể nói \"Cái đó của tớ\"."
+    ],
+    [
+     "Khi cứ chơi tiếp mà không nói mình bị đau",
+     "Chỗ này đỏ rồi. Nếu đau ở đâu thì luôn nói với Mẹ nhé?"
+    ],
+    [
+     "Khi không nắm bắt được không khí xung quanh",
+     "Mình nhìn mặt em nhé? Con nghĩ em đang cảm thấy thế nào?"
+    ]
+   ]
+  },
+  "F": {
+   "tags": [
+    "Giàu cảm xúc",
+    "Kể trước",
+    "Cảm xúc kéo dài"
+   ],
+   "sum": "Thể hiện niềm vui và nỗi buồn rõ ràng, mạnh mẽ. Muốn chia sẻ những gì trong lòng.",
+   "det": "Trẻ có nhiều chất Biểu cảm có \"âm lượng\" cảm xúc lớn. Bố mẹ dễ đọc được con, nhưng lý lẽ không có tác dụng khi cảm xúc đang dâng cao. Trước hết hãy gọi tên cảm xúc, rồi nói chuyện khi con đã bình tĩnh. Thống nhất trước những cách an toàn để xả cảm xúc lớn, như dậm chân hay ôm gối, sẽ rất hữu ích.",
+   "st": "Không giấu cảm xúc nên dễ hiểu và rất tình cảm.",
+   "wa": "Khi cảm xúc dâng cao, cần thời gian và cách để bình tĩnh lại.",
+   "say": "Con buồn lắm, buồn lắm. Khóc xong rồi mình cùng nói chuyện nhé.",
+   "no": "Nín đi. Có gì đâu mà khóc.",
+   "ph": "thể hiện cảm xúc rõ ràng, mạnh mẽ",
+   "says": [
+    [
+     "Khi khóc to hoặc nổi giận",
+     "Con buồn lắm, buồn lắm. Khóc xong rồi mình cùng nói chuyện nhé."
+    ],
+    [
+     "Khi phấn khích quá mà ồn ào",
+     "Con vui quá nhỉ! Ở đây mình nói nhỏ thôi nhé."
+    ],
+    [
+     "Khi sắp ném đồ vì giận",
+     "Giận cũng được. Thay vì ném, mình dậm chân thật mạnh nhé."
+    ],
+    [
+     "Khi nỗi buồn kéo dài",
+     "Vẫn còn một chút cảm giác đó nhỉ. Mẹ sẽ ở ngay bên con."
+    ]
+   ]
+  },
+  "T": {
+   "tags": [
+    "Điềm tĩnh",
+    "Nghĩ trong lòng",
+    "Bình tĩnh nhanh"
+   ],
+   "sum": "Không thể hiện cảm xúc nhiều và xử lý bên trong. Nhanh trở lại như bình thường.",
+   "det": "Trẻ có nhiều chất Điềm tĩnh ít bộc lộ thăng trầm nên dễ bị xem là đứa trẻ dễ nuôi. Không phải con không cảm nhận, chỉ là thể hiện ít hơn. Thay vì hỏi \"Con ổn không?\", hãy hỏi cụ thể như \"Chuyện lúc nãy thế nào?\", và mở ra cách thể hiện khác như vẽ hay chơi.",
+   "st": "Bình tĩnh, không bị cảm xúc cuốn đi, mang lại sự vững vàng cho người khác.",
+   "wa": "Dễ bỏ sót cảm xúc bên trong, nên hãy hỏi những câu cụ thể.",
+   "say": "Không cần nói ra đâu. Con vẽ cho Mẹ xem được không?",
+   "no": "Con dễ nuôi thế, Mẹ chẳng phải lo gì.",
+   "ph": "xử lý cảm xúc bình tĩnh bên trong",
+   "says": [
+    [
+     "Khi trông buồn mà không nói gì",
+     "Không cần nói ra đâu. Con vẽ cho Mẹ xem được không?"
+    ],
+    [
+     "Khi chỉ trả lời \"Con ổn\"",
+     "Con nói con ổn, nhưng Mẹ tò mò lắm. Kể Mẹ nghe một chút nhé?"
+    ],
+    [
+     "Khi ít phản ứng cả với chuyện vui",
+     "Con cười một chút kìa! Mẹ vui vì thấy con thích."
+    ],
+    [
+     "Khi cố chịu đựng một mình",
+     "Con không cần chịu một mình đâu. Nếu khó quá, nắm chặt tay Mẹ nhé."
+    ]
+   ]
+  },
+  "J": {
+   "tags": [
+    "Đều đặn",
+    "Cần báo trước",
+    "Thích trật tự"
+   ],
+   "sum": "Thấy yên tâm với nếp sinh hoạt và thứ tự cố định. Hợp tác tốt khi được báo trước.",
+   "det": "Trẻ có nhiều chất Nề nếp thấy an tâm khi biết điều gì sắp đến. Thay đổi đột ngột làm con dao động nhiều, nhưng chỉ cần báo trước 5 phút và có lịch trong ngày là tránh được nhiều xung đột. Vào những ngày nếp sinh hoạt bị xáo trộn như đi chơi xa hay có sự kiện, hãy giữ ổn định ít nhất là giờ ngủ và giờ ăn.",
+   "st": "Tạo thói quen tốt và giữ lời hứa, quy tắc tốt.",
+   "wa": "Khó khăn với thay đổi đột ngột, nên hãy báo trước.",
+   "say": "Khi kim dài chỉ số 6, mình dọn dẹp nhé. Sau đó là giờ tắm.",
+   "no": "Dừng lại ngay!",
+   "ph": "và thấy yên tâm với nếp sinh hoạt có thể đoán trước",
+   "says": [
+    [
+     "Khi phải dừng chơi và dọn dẹp",
+     "Khi kim dài chỉ số 6, mình dọn dẹp nhé. Sau đó là giờ tắm."
+    ],
+    [
+     "Khi kế hoạch thay đổi đột ngột",
+     "Hôm nay thứ tự thay đổi rồi. Bù lại, Mẹ hứa ngày mai mình sẽ đi."
+    ],
+    [
+     "Buồn vì không giống như mọi khi",
+     "Con muốn làm như mọi khi. Chỉ lần này thôi mình thử cách này nhé."
+    ],
+    [
+     "Trước khi đến nơi lạ",
+     "Hôm nay mình lên xe trước, đi khám bác sĩ, rồi về nhà nhé."
+    ]
+   ]
+  },
+  "P": {
+   "tags": [
+    "Linh hoạt",
+    "Ngẫu hứng",
+    "Thích ứng tốt với thay đổi"
+   ],
+   "sum": "Hành động theo nhịp của lúc đó. Dễ dàng theo kịp dù kế hoạch thay đổi.",
+   "det": "Trẻ có nhiều chất Tự do thích ứng tốt với thay đổi, ngủ và chơi ngon ở bất cứ đâu. Ngược lại, thói quen như ngủ và ăn đúng giờ không tự hình thành. Thay vì cố định mọi nếp, hãy giữ chắc một hai điều thiết yếu như thứ tự trước khi ngủ, và cho con lựa chọn trong đó; con sẽ dễ chấp nhận.",
+   "st": "Linh hoạt trước thay đổi và thích tình huống mới.",
+   "wa": "Người lớn cần giữ cố định một hai nếp sinh hoạt thiết yếu.",
+   "say": "Đánh răng hay đọc sách, con muốn làm gì trước?",
+   "no": "Sao lúc nào con cũng làm theo ý mình thế?",
+   "ph": "và thuận theo dòng chảy",
+   "says": [
+    [
+     "Khi trì hoãn chuẩn bị đi ngủ",
+     "Đánh răng hay đọc sách, con muốn làm gì trước?"
+    ],
+    [
+     "Mải chơi đến mức không chuyển sang việc khác được",
+     "Vui lắm nhỉ? Mình xếp thêm năm khối nữa rồi đi nhé."
+    ],
+    [
+     "Đồ chơi bày khắp nơi",
+     "Cất ô tô trước hay búp bê trước? Con chọn đi."
+    ],
+    [
+     "Khi buổi sáng bị muộn",
+     "Đi giày xong trước khi bài hát này hết nhé. Chuẩn bị, bắt đầu!"
+    ]
+   ]
+  }
+ },
+ "nick": {
+  "ESFJ": "Trưởng đoàn ấm áp",
+  "ESFP": "Pháo hoa lấp lánh",
+  "ESTJ": "Thám tử nhỏ cẩn thận",
+  "ESTP": "Nhà thám hiểm tinh mắt",
+  "ENFJ": "Người dẫn đầu dũng cảm",
+  "ENFP": "Cơn lốc vui vẻ",
+  "ENTJ": "Thuyền trưởng nhỏ vững vàng",
+  "ENTP": "Người tiên phong gan dạ",
+  "ISFJ": "Người làm vườn nhỏ dịu dàng",
+  "ISFP": "Nghệ sĩ trái tim mềm",
+  "ISTJ": "Học giả nhỏ điềm tĩnh",
+  "ISTP": "Thám tử lặng lẽ",
+  "INFJ": "Người kể chuyện tốt bụng",
+  "INFP": "Kẻ mộng mơ thong thả",
+  "INTJ": "Thợ thủ công nhỏ chăm chỉ",
+  "INTP": "Đám mây lang thang"
+ },
+ "opt": [
+  "Hoàn toàn không",
+  "Không hẳn",
+  "Bình thường",
+  "Khá đúng",
+  "Rất đúng"
+ ],
+ "items": [
+  {
+   "id": "A0-0",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Nhanh chóng đi loanh quanh khám phá dù ở nơi chưa từng đến.",
+   "r": 0,
+   "ex": "Lần đầu đến khu vui chơi trong nhà hay nhà họ hàng, rời bạn để tự đi xem xung quanh"
+  },
+  {
+   "id": "A1-0",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Thích chơi vận động hơn ngồi yên.",
+   "r": 0,
+   "ex": "Ngay cả lúc nghe kể chuyện, cũng đứng dậy đi lại hoặc cựa quậy"
+  },
+  {
+   "id": "A2-0",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Đến gần trò chuyện hoặc chơi với bạn mới gặp.",
+   "r": 0,
+   "ex": "Ở sân chơi, nói \"Chơi với tớ nhé!\" với bạn chưa quen hoặc chơi bên cạnh"
+  },
+  {
+   "id": "B0-0",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Khó chịu với những chất liệu nhỏ như nhãn áo hay đường may tất.",
+   "r": 0,
+   "ex": "Nhờ cắt nhãn áo hoặc chỉ muốn mặc vài bộ nhất định"
+  },
+  {
+   "id": "B1-0",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Nhanh nhận ra khi đồ đạc trong nhà bị dời chỗ.",
+   "r": 0,
+   "ex": "Khi đồ đạc thay đổi hoặc có món mới, vừa vào đã hỏi \"Cái gì đây?\""
+  },
+  {
+   "id": "B2-0",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Dễ buồn hoặc lo lắng, kể cả vì chuyện nhỏ.",
+   "r": 0,
+   "ex": "Khóc khi bức vẽ không như ý hoặc bánh quy bị vỡ"
+  },
+  {
+   "id": "C0-0",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Thể hiện niềm vui bằng cả cơ thể, reo lên hoặc nhảy cẫng.",
+   "r": 0,
+   "ex": "Reo \"Oa!\" và nhảy tưng tưng khi được quà"
+  },
+  {
+   "id": "C1-0",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Kể chuyện đã xảy ra hoặc cảm xúc của mình mà không cần hỏi.",
+   "r": 0,
+   "ex": "Trên đường từ nhà trẻ về, tự kể \"Hôm nay bạn đẩy con\""
+  },
+  {
+   "id": "C2-0",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Khó bình tĩnh lại khi đã khóc hoặc nổi giận.",
+   "r": 0,
+   "ex": "Khóc kéo dài hơn 10 phút hoặc dỗ rất lâu"
+  },
+  {
+   "id": "D0-0",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Buồn ngủ và đói vào khoảng cùng giờ mỗi ngày.",
+   "r": 0,
+   "ex": "Có thể đoán giờ ngủ trưa và giờ ăn nhẹ mà không cần nhìn đồng hồ"
+  },
+  {
+   "id": "D1-0",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Chấp nhận dừng chơi dễ hơn nhiều khi được báo trước.",
+   "r": 0,
+   "ex": "Ít mè nheo hơn nếu bạn nói \"5 phút nữa mình về nhé\""
+  },
+  {
+   "id": "D2-0",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Muốn đồ đạc ở đúng chỗ quen hoặc làm theo thứ tự cố định.",
+   "r": 0,
+   "ex": "Luôn để giày cùng một chỗ và không thích thứ tự trước khi ngủ thay đổi"
+  },
+  {
+   "id": "G1-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Thử lại nhiều lần dù việc không thành.",
+   "r": 0,
+   "ex": "Xếp lại tháp khối sau khi bị đổ"
+  },
+  {
+   "id": "G2-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Muốn tự mặc quần áo hoặc tự dọn dẹp.",
+   "r": 0,
+   "ex": "Nói \"Con tự làm!\" và cố tự đi giày"
+  },
+  {
+   "id": "G3-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Đến an ủi bạn bè hay người nhà đang khóc.",
+   "r": 0,
+   "ex": "Mang khăn giấy hoặc đồ chơi cho anh chị em hay bạn đang khóc"
+  },
+  {
+   "id": "A0-1",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Chạm vào đồ chơi hay trò chơi mới trước khi nghe cách chơi.",
+   "r": 0,
+   "ex": "Bấm nút ngay khi hộp đồ chơi mới vừa mở"
+  },
+  {
+   "id": "A1-1",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Hay chạy nhảy hoặc leo trèo, kể cả trong nhà.",
+   "r": 0,
+   "ex": "Nhảy từ sofa xuống hoặc trèo lên ghế, lên bàn"
+  },
+  {
+   "id": "A2-1",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Nấp sau bố mẹ hoặc ngập ngừng khi người lớn lạ bắt chuyện.",
+   "r": 1,
+   "ex": "Nấp đi không trả lời khi hàng xóm trong thang máy hỏi \"Con mấy tuổi rồi?\""
+  },
+  {
+   "id": "B0-1",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Giật mình hoặc khó chịu với tiếng ồn lớn và ánh sáng chói.",
+   "r": 0,
+   "ex": "Bịt tai hoặc khóc khi nghe máy hút bụi, máy sấy tay hay pháo hoa"
+  },
+  {
+   "id": "B1-1",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Nhận ra ngay khi nét mặt hay giọng nói của bố mẹ thay đổi.",
+   "r": 0,
+   "ex": "Hỏi \"Mẹ giận à?\" khi bố mẹ mệt hoặc khó chịu"
+  },
+  {
+   "id": "B2-1",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Đứng dậy ngay sau khi ngã hoặc mắc lỗi.",
+   "r": 1,
+   "ex": "Ngã khi đang chơi, phủi đi rồi chơi tiếp"
+  },
+  {
+   "id": "C0-1",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Khi giận hay buồn, thể hiện mạnh đến mức mọi người xung quanh đều biết.",
+   "r": 0,
+   "ex": "Khóc to hoặc nằm lăn ra đất khi không được thứ mình muốn ở cửa hàng"
+  },
+  {
+   "id": "C1-1",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Không kể chuyện buồn nếu không được hỏi.",
+   "r": 1,
+   "ex": "Bạn chỉ biết chuyện con cãi nhau với bạn qua cô giáo"
+  },
+  {
+   "id": "C2-1",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Nhanh chuyển sự chú ý sang việc khác dù đang buồn.",
+   "r": 1,
+   "ex": "Nín khóc ngay khi được cho xem món đồ chơi yêu thích"
+  },
+  {
+   "id": "D0-1",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Giờ ngủ rất khác nhau giữa các ngày.",
+   "r": 1,
+   "ex": "Có hôm ngủ lúc 8 giờ, có hôm sau 10 giờ"
+  },
+  {
+   "id": "D1-1",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Dễ dàng theo cùng dù kế hoạch đột ngột thay đổi.",
+   "r": 1,
+   "ex": "Đi theo không phàn nàn khi bạn đến cửa hàng thay vì sân chơi như dự định"
+  },
+  {
+   "id": "D2-1",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Cố sửa lại \"Không phải thế\" khi luật chơi hay lời hứa thay đổi.",
+   "r": 0,
+   "ex": "Nói \"Không, phải làm thế này\" khi thứ tự đọc sách hay luật chơi thay đổi"
+  },
+  {
+   "id": "G1-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Cố làm xong trò chơi hay đồ thủ công đã bắt đầu.",
+   "r": 0,
+   "ex": "Chỉ đứng dậy sau khi xếp xong tranh ghép hay tô màu xong"
+  },
+  {
+   "id": "G2-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Nói rõ điều mình muốn làm.",
+   "r": 0,
+   "ex": "Tự chọn: \"Con mặc cái này\", \"Không phải cái này, cái kia cơ\""
+  },
+  {
+   "id": "G3-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Chia sẻ đồ chơi hoặc đồ ăn.",
+   "r": 0,
+   "ex": "Đang ăn bánh thì đưa: \"Ăn không?\""
+  },
+  {
+   "id": "A0-2",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Chỉ tham gia hoạt động mới sau khi quan sát một lúc.",
+   "r": 1,
+   "ex": "Ở buổi học thử, nhìn các bạn khác vài phút rồi mới tham gia"
+  },
+  {
+   "id": "A1-2",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Thích chơi yên tĩnh như đọc sách hay xếp hình trong thời gian dài.",
+   "r": 1,
+   "ex": "Ngồi vẽ hoặc xếp hình hơn 20 phút"
+  },
+  {
+   "id": "A2-2",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Hào hứng hơn ở nơi đông người tụ tập.",
+   "r": 0,
+   "ex": "Sôi nổi hơn thường lệ ở tiệc sinh nhật hay họp mặt gia đình"
+  },
+  {
+   "id": "B0-2",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Nhận ra cả khác biệt nhỏ về vị hay kết cấu món ăn.",
+   "r": 0,
+   "ex": "Không chịu ăn khi nhãn hiệu sữa hay món ăn quen thay đổi"
+  },
+  {
+   "id": "B1-2",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Vẫn làm tiếp việc của mình dù ồn ào hay lộn xộn.",
+   "r": 1,
+   "ex": "Vẫn chơi tiếp dù TV đang bật hay em đang khóc"
+  },
+  {
+   "id": "B2-2",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Nhớ lâu cảnh hay câu chuyện đáng sợ và nhắc lại.",
+   "r": 0,
+   "ex": "Nhắc lại cảnh đáng sợ từ mấy hôm trước lúc đi ngủ"
+  },
+  {
+   "id": "C0-2",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Không thể hiện nhiều ra ngoài, dù vui hay không vui.",
+   "r": 1,
+   "ex": "Chỉ mỉm cười lặng lẽ dù được món quà rất thích"
+  },
+  {
+   "id": "C1-2",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Thường đòi ôm hoặc đòi bạn ở bên.",
+   "r": 0,
+   "ex": "Đòi ôm nhiều lần trong ngày hoặc nói \"Ở cạnh con đi\""
+  },
+  {
+   "id": "C2-2",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Phấn khích kéo dài sau chuyện vui và khó lắng xuống.",
+   "r": 0,
+   "ex": "Sau một ngày ở công viên giải trí, hưng phấn đến khuya mới ngủ"
+  },
+  {
+   "id": "D0-2",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Khó chịu khi nếp sinh hoạt quen thuộc thay đổi.",
+   "r": 0,
+   "ex": "Mè nheo hoặc cáu kỉnh hơn vào những ngày khác nếp như đi chơi xa hay ngày lễ"
+  },
+  {
+   "id": "D1-2",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Muốn biết trước thứ tự: \"Sau đó mình làm gì?\"",
+   "r": 0,
+   "ex": "Buổi sáng hỏi: \"Hôm nay mình đi đâu? Rồi sau đó?\""
+  },
+  {
+   "id": "D2-2",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Đổi trò chơi mỗi khi nảy ra ý mới.",
+   "r": 1,
+   "ex": "Đột ngột chuyển từ chơi đồ hàng sang bác sĩ rồi sang ô tô"
+  },
+  {
+   "id": "G1-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Nhanh chóng nói \"Con không làm được\" và bỏ cuộc nếu thấy khó.",
+   "r": 1,
+   "ex": "Cài khuy một lần không được là nói ngay \"Mẹ làm cho con\""
+  },
+  {
+   "id": "G2-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Muốn người lớn làm giúp cả những việc nhỏ.",
+   "r": 1,
+   "ex": "Nhờ giúp cầm thìa hay đi tất dù tự làm được"
+  },
+  {
+   "id": "G3-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Rất khó chờ đến lượt.",
+   "r": 1,
+   "ex": "Đẩy bạn phía trước hoặc chen hàng ở cầu trượt"
+  },
+  {
+   "id": "A0-3",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Tìm trò chơi mới hơn là trò quen thuộc.",
+   "r": 0,
+   "ex": "Chọn món đồ chơi chưa từng thấy thay vì bộ khối quen thuộc"
+  },
+  {
+   "id": "A1-3",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Có vẻ vẫn còn năng lượng dù đã chơi cả ngày.",
+   "r": 0,
+   "ex": "Về nhà vẫn chạy nhảy dù đã chơi 2 tiếng ở sân chơi"
+  },
+  {
+   "id": "A2-3",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Cần thời gian để thoải mái với bạn mới.",
+   "r": 1,
+   "ex": "Chỉ nhắc tên bạn sau một hai tuần vào lớp mới"
+  },
+  {
+   "id": "B0-3",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Không bận tâm nhiều khi quần áo ướt hay tay bẩn.",
+   "r": 1,
+   "ex": "Chơi nước xong vẫn mặc đồ ướt chơi tiếp"
+  },
+  {
+   "id": "B1-3",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Phản ứng cả với âm thanh hay mùi nhỏ: \"Cái gì thế?\"",
+   "r": 0,
+   "ex": "Là người đầu tiên nhận ra tiếng còi xa hay mùi đồ ăn"
+  },
+  {
+   "id": "B2-3",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Để bụng lâu khi bị mắng hay bị nhắc nhở.",
+   "r": 0,
+   "ex": "Buổi tối lại nhắc chuyện bị mắng lúc sáng, hoặc vẫn ủ rũ"
+  },
+  {
+   "id": "C0-3",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Cười hoặc khóc rất to.",
+   "r": 0,
+   "ex": "Cười hay khóc to đến mức phòng bên cũng nghe thấy"
+  },
+  {
+   "id": "C1-3",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Khoe thứ mình làm và chờ phản ứng của bạn.",
+   "r": 0,
+   "ex": "Vẽ xong rồi khoe đi khoe lại: \"Xem này!\""
+  },
+  {
+   "id": "C2-3",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Dù cảm xúc dâng lên, chỉ một lát là trở lại như thường.",
+   "r": 1,
+   "ex": "Vừa giận xong, 1-2 phút sau đã chơi như không có gì"
+  },
+  {
+   "id": "D0-3",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Lượng ăn rất khác nhau giữa các ngày.",
+   "r": 1,
+   "ex": "Hôm qua ăn hết cả bát, hôm nay chỉ vài thìa"
+  },
+  {
+   "id": "D1-3",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Khó dừng giữa chừng để chuyển sang việc khác.",
+   "r": 0,
+   "ex": "Phản đối dữ dội khi được gọi đi ăn lúc đang xếp khối"
+  },
+  {
+   "id": "D2-3",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Thích phân loại đồ chơi theo loại hoặc xếp thành hàng.",
+   "r": 0,
+   "ex": "Xếp ô tô theo màu hoặc gom khối theo hình dạng"
+  },
+  {
+   "id": "G1-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Tập trung lâu vào hoạt động mình thích.",
+   "r": 0,
+   "ex": "Chơi khối hay vẽ yêu thích hơn 30 phút"
+  },
+  {
+   "id": "G2-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Sau khi mắc lỗi, có thái độ \"làm lại là được\".",
+   "r": 0,
+   "ex": "Làm đổ nước, thay vì khóc thì cố lau hoặc rót lại"
+  },
+  {
+   "id": "G3-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Cố dừng lại khi được bảo người khác không thích việc mình làm.",
+   "r": 0,
+   "ex": "Thôi trêu khi được bảo \"Em nói em đau đấy\""
+  },
+  {
+   "id": "G1-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Quay lại việc đang làm dù bị gián đoạn.",
+   "r": 0,
+   "ex": "Ăn xong lại quay về làm đồ thủ công"
+  },
+  {
+   "id": "G2-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Tự hào về việc mình tự làm được.",
+   "r": 0,
+   "ex": "Tự mặc quần áo rồi khoe: \"Con tự làm hết đấy!\""
+  },
+  {
+   "id": "G3-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Chấp nhận ý tưởng của bạn khi chơi cùng.",
+   "r": 0,
+   "ex": "Đồng ý \"Lần này chơi trò cậu thích nhé\""
+  },
+  {
+   "id": "G1-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Chuyển sang việc khác ngay khi thấy hơi chán.",
+   "r": 1,
+   "ex": "Chơi một trò chưa đến 5 phút đã lấy đồ chơi khác ra"
+  },
+  {
+   "id": "G2-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Không tự quyết được làm gì và do dự rất lâu.",
+   "r": 1,
+   "ex": "Chọn đồ ăn vặt rất lâu hoặc nói \"Mẹ chọn đi\""
+  },
+  {
+   "id": "G3-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Bỏ cuộc chơi khi mọi thứ không như ý.",
+   "r": 1,
+   "ex": "Thua hoặc không được vai mình muốn là nói \"Không chơi nữa\" rồi bỏ đi"
+  }
+ ]
+}

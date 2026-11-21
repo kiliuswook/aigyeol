@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// 지원 언어: 코드 → 그 언어로 쓴 이름. 한국어가 원문.
-const kLangs = {'ko': '한국어', 'en': 'English'};
+const kLangs = {'ko': '한국어', 'en': 'English', 'ja': '日本語', 'zh': '中文(简体)', 'es': 'Español', 'vi': 'Tiếng Việt'};
 
 /// 기기 언어가 지원 목록에 없을 때 쓰는 언어(해외 사용자 기본)
 const kFallbackLang = 'en';
@@ -107,3 +107,6 @@ String ageTx(String a) {
   if (m == null) return a;
   return m[2] == null ? tr('만 {0}세', [m[1]]) : tr('만 {0}세 {1}개월', [m[1], m[2]]);
 }
+
+/// 문장 안에서 항목을 잇는 쉼표(일본어·중국어는 '、')
+String get listSep => const {'ja': '、', 'zh': '、'}[_cur] ?? ', ';

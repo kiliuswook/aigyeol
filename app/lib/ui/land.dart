@@ -72,7 +72,7 @@ class _LandScreenState extends State<LandScreen> {
           Center(child: mascot(c, size: 120)),
           Center(child: Text(c, style: disp(48))),
           Center(child: h1(C.nick[c]!)),
-          Text(tr('{0}입니다.', [c.split('').map((x) => C.poles[x]!.ph).join(', ')]), textAlign: TextAlign.center, style: smallMuted),
+          Text(tr('{0}입니다.', [c.split('').map((x) => C.poles[x]!.ph).join(listSep)]), textAlign: TextAlign.center, style: smallMuted),
         ]),
         Cta([
           h2(tr('우리 아이는 어떤 네 글자일까요?'), color: kBg),
