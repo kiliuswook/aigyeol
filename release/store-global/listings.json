@@ -70,12 +70,12 @@
  },
  "_appstore_description": "App Store description = play.<같은 언어>.fullDescription (en-US←en-US, ja←ja-JP, zh-Hans←zh-CN, es-ES/es-MX←es-ES, vi←vi)",
  "releaseNotes": {
-  "ko-KR": "이제 6개 언어로 쓸 수 있어요: 한국어·English·日本語·中文(简体)·Español·Tiếng Việt. 휴대폰 언어를 따르고, 더보기 > 언어에서 바꿀 수 있어요.",
-  "en-US": "Now available in 6 languages: English, Korean, Japanese, Chinese (Simplified), Spanish and Vietnamese. The app follows your phone language, and you can change it under More > Language.",
-  "ja-JP": "6言語に対応しました:日本語・英語・韓国語・中国語(簡体字)・スペイン語・ベトナム語。スマホの言語に合わせて表示され、「その他 > 言語」で変更できます。",
-  "zh-CN": "现已支持6种语言:中文(简体)、英语、韩语、日语、西班牙语、越南语。默认跟随手机语言，可在\"更多 > 语言\"中更改。",
-  "es-ES": "Ahora en 6 idiomas: español, inglés, coreano, japonés, chino (simplificado) y vietnamita. La app usa el idioma del móvil y puedes cambiarlo en Más > Idioma.",
-  "es-419": "Ahora en 6 idiomas: español, inglés, coreano, japonés, chino (simplificado) y vietnamita. La app usa el idioma del teléfono y puedes cambiarlo en Más > Idioma.",
-  "vi": "Nay đã có 6 ngôn ngữ: tiếng Việt, tiếng Anh, tiếng Hàn, tiếng Nhật, tiếng Trung (giản thể) và tiếng Tây Ban Nha. Ứng dụng theo ngôn ngữ điện thoại, có thể đổi trong Thêm > Ngôn ngữ."
+  "ko-KR": "공유하기가 좋아졌어요. 가족을 초대하면 같은 아이의 결과가 두 휴대폰에 자동으로 합쳐지고, 결과 카드를 그림으로 공유할 수 있어요.",
+  "en-US": "Sharing is better. Invite family and results for the same child sync across both phones automatically, and you can now share your result card as an image.",
+  "ja-JP": "シェア機能が良くなりました。家族を招待すると同じ子の結果が2台のスマホに自動でまとまり、結果カードを画像でシェアできます。",
+  "zh-CN": "分享功能升级：邀请家人后，同一个孩子的结果会在两台手机间自动合并，还可以把结果卡片作为图片分享。",
+  "es-ES": "Compartir es más fácil: invita a tu familia y los resultados del mismo niño se sincronizan solos entre los dos móviles. También puedes compartir la tarjeta de resultados como imagen.",
+  "es-419": "Compartir es más fácil: invita a tu familia y los resultados del mismo niño se sincronizan solos entre los dos teléfonos. También puedes compartir la tarjeta de resultados como imagen.",
+  "vi": "Chia sẻ tốt hơn: mời gia đình và kết quả của cùng một bé sẽ tự động đồng bộ giữa hai điện thoại. Bạn cũng có thể chia sẻ thẻ kết quả dưới dạng hình ảnh."
  }
 }
