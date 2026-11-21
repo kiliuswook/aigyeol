@@ -1,4 +1,4 @@
-﻿# 내 아이의 MBTI · 전체 기획서
+# 내 아이의 MBTI · 전체 기획서
 
 - 최종 수정일: 2026-11-20
 - 버전: 웹 시제품(별도 버전 번호 없음, `main` 브랜치 = 배포본)
@@ -147,3 +147,4 @@
 - [자체 도메인](systems/domain.md): 도메인 바꾸는 도구, DNS, 카카오 도메인 등록
 - [인트로](systems/intro.md): 원더휠 CI 영상 스플래시, 터치해서 시작하는 타이틀 화면
 - [iOS 출시](systems/ios-release.md): 번들 ID·프로파일, Codemagic 빌드, TestFlight 상태
+- [구글 플레이 배포](systems/play-deploy.md): GitHub Actions 키 없는 배포(Workload Identity Federation), 설정 값, 쓰는 법

@@ -1,0 +1,94 @@
+# 구글 플레이 배포(키 파일 없음, Workload Identity Federation). 설명: docs/systems/play-deploy.md
+# Actions 탭 > Play deploy > Run workflow. main 브랜치에서만 GCP 인증이 된다(공급자 조건).
+name: Play deploy
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'check = 인증·트랙 읽기만 / validate = 빌드·업로드 검증 후 버림 / upload = 빌드·업로드·출시(검토로 전송)'
+        type: choice
+        options: [check, validate, upload]
+        default: check
+      track:
+        description: '트랙 (beta = 공개 테스트, internal, alpha, production)'
+        type: choice
+        options: [beta, internal, alpha, production]
+        default: beta
+      notes:
+        description: '출시 노트 JSON (releaseNotes 키 또는 {언어: 글}), 비우면 없음'
+        default: 'release/store-global/listings.json'
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: play-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: GCP 인증 (play-publisher 대리)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/352867707269/locations/global/workloadIdentityPools/github/providers/github-actions
+          service_account: play-publisher@key-hope-514901-c5.iam.gserviceaccount.com
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install google-auth requests
+
+      - name: 확인만
+        if: inputs.mode == 'check'
+        run: python tools/play_deploy.py check
+
+      - uses: actions/setup-java@v4
+        if: inputs.mode != 'check'
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        if: inputs.mode != 'check'
+        with:
+          flutter-version: 3.41.2
+          channel: stable
+          cache: true
+
+      - name: 업로드 키
+        if: inputs.mode != 'check'
+        env:
+          KS: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          SP: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KP: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KA: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          echo "$KS" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=%s\nstoreFile=%s\n' "$SP" "$KP" "$KA" "$RUNNER_TEMP/upload.jks" > app/android/key.properties
+
+      - name: AAB 빌드
+        if: inputs.mode != 'check'
+        working-directory: app
+        run: |
+          flutter pub get
+          flutter build appbundle --release || test -f build/app/outputs/bundle/release/app-release.aab
+          V=$(grep '^version:' pubspec.yaml | sed 's/version: //')
+          cp build/app/outputs/bundle/release/app-release.aab "build/app/outputs/bundle/release/childmbti-$V.aab"
+          echo "APP_VERSION=$V" >> "$GITHUB_ENV"
+
+      - name: 플레이 업로드
+        if: inputs.mode != 'check'
+        run: >
+          python tools/play_deploy.py upload "app/build/app/outputs/bundle/release/childmbti-$APP_VERSION.aab"
+          --track ${{ inputs.track }} --name "$APP_VERSION"
+          ${{ inputs.notes != '' && format('--notes {0}', inputs.notes) || '' }}
+          ${{ inputs.mode == 'validate' && '--validate' || '' }}
+
+      - name: 키 지우기
+        if: always()
+        run: rm -f app/android/key.properties "$RUNNER_TEMP/upload.jks"
