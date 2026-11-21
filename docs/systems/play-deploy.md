@@ -39,7 +39,15 @@ GitHub > kiliuswook/aigyeol > Actions > **Play deploy** > Run workflow (브랜�
 - 등록정보·스크린샷·국가는 이 워크플로가 하지 않는다(`release/store-global/play_global.py`, 국가는 콘솔).
 - PC 에서도 `python tools/play_deploy.py check|upload` 가 된다(그때는 gcloud 대리 인증).
 
+## 확인 기록 (2026-11-21)
+
+- check(run 44882607730): 키·로그인 없이 인증, 트랙 읽기 성공(beta 1.2.0 (6)).
+- validate(run 44882751973): Flutter 3.41.2 로 AAB 빌드·업로드 키 서명(59.9MB) → 플레이 업로드 요청까지 감. "Version code 6 has already been used" 로 거절(정상: 이미 낸 버전). 새 versionCode 로 올리면 그대로 통과한다.
+- Secrets 를 PowerShell 파이프로 넣으면 끝에 줄바꿈이 붙어 base64 풀기가 깨진다 → `gh secret set NAME --body <값>` 으로 넣는다(워크플로도 줄바꿈·공백을 지우고 푼다).
+
 ## PC 재인증 줄이기 (원더 손)
+
+2026-11-21 원더가 "재인증 필요 없음"으로 바꿈.
 
 워크스페이스 관리 콘솔(admin.google.com) > 보안 > 액세스 및 데이터 관리 > **Google Cloud 세션 제어** > 재인증 정책: "재인증 필요 없음"(또는 주기를 길게) → 저장.
 조직 보안 설정이라 Claude 가 바꾸지 않는다. 바꾼 뒤 `gcloud auth login contact@wonderwheel.co.kr` 을 한 번 더 하면 된다.
