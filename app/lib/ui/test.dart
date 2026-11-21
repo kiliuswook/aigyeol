@@ -1,5 +1,6 @@
 // 한 문항씩 답하기: 한 화면에 문항과 선택지가 모두 보인다. 고르면 짧은 선택 연출(약 0.4초) 뒤 다음 문항.
 // 다시 검사할 때는 선택지 옆에 지난번 내 답과 다른 양육자의 답을 보여 준다.
+import '../i18n.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../content.dart';
@@ -58,11 +59,11 @@ class _TestScreenState extends State<TestScreen> with SingleTickerProviderStateM
     }
   }
 
-  void help() => popup(context, title: '답하기 애매할 때', (c, set) => [
-        Text("'보통이다'는 그럴 때도 있고 아닐 때도 있다는 뜻입니다. 예시와 꼭 같지 않아도 비슷한 모습이면 됩니다.", style: small),
-        Text("떠오르는 장면이 없으면 '잘 모르겠다'를 골라 주세요. 그 문항은 점수에 넣지 않고 비슷한 다른 문항으로 판단합니다.", style: small),
-        if (re) Text('다시 검사 중에는 선택지 옆에 지난번 나(${store.cur.prev!.date})와 다른 양육자가 고른 답이 보입니다. 지난 답에 맞추지 말고 요즘 모습대로 골라 주세요.', style: small),
-        Btn('확인', () => Navigator.of(c).pop(), kind: BtnKind.ghost),
+  void help() => popup(context, title: tr('답하기 애매할 때'), (c, set) => [
+        Text(tr("'보통이다'는 그럴 때도 있고 아닐 때도 있다는 뜻입니다. 예시와 꼭 같지 않아도 비슷한 모습이면 됩니다."), style: small),
+        Text(tr("떠오르는 장면이 없으면 '잘 모르겠다'를 골라 주세요. 그 문항은 점수에 넣지 않고 비슷한 다른 문항으로 판단합니다."), style: small),
+        if (re) Text(tr('다시 검사 중에는 선택지 옆에 지난번 나({0})와 다른 양육자가 고른 답이 보입니다. 지난 답에 맞추지 말고 요즘 모습대로 골라 주세요.', [store.cur.prev!.date]), style: small),
+        Btn(tr('확인'), () => Navigator.of(c).pop(), kind: BtnKind.ghost),
       ]);
 
   @override
@@ -70,7 +71,7 @@ class _TestScreenState extends State<TestScreen> with SingleTickerProviderStateM
     final it = list[i], n = list.length, cur = store.cur, kid = store.kid;
     final others = re ? kid.cgs.where((e) => e.key != kid.who && e.value.ans[it.id] != null).toList() : <MapEntry<String, Rec>>[];
     List<String> marks(int k) => [
-          if (re && cur.prev!.ans![it.id] == k) '지난번 나',
+          if (re && cur.prev!.ans![it.id] == k) tr('지난번 나'),
           for (final o in others) if (o.value.ans[it.id] == k) o.key,
         ];
     Widget opt(int k, String label) {
@@ -124,18 +125,18 @@ class _TestScreenState extends State<TestScreen> with SingleTickerProviderStateM
                 key: ValueKey(it.id),
                 align: Alignment.center,
                 col([
-                  muted('${re ? '다시 검사 · ' : ''}최근 한 달간 ${store.nm}의 모습 · ${kid.who} 답함'),
+                  muted(tr('{0}최근 한 달간 {1}의 모습 · {2} 답함', [re ? tr('다시 검사 · ') : '', store.nm, cg(kid.who)])),
                   Text(it.t, style: disp(25, w: FontWeight.w700)),
-                  Note(rich('**예** ${it.ex}', style: small)),
+                  Note(rich(tr('**예** {0}', [it.ex]), style: small)),
                 ], gap: 12)),
           ),
           foot: [
             for (var k = 1; k <= 5; k++) opt(k, C.opt[k - 1]),
-            opt(0, '잘 모르겠다'),
+            opt(0, tr('잘 모르겠다')),
             Row(children: [
-              linkBtn('← 이전 문항', i == 0 || _picked != null ? () {} : () => setState(() => i--)),
+              linkBtn(tr('← 이전 문항'), i == 0 || _picked != null ? () {} : () => setState(() => i--)),
               const Spacer(),
-              linkBtn('답하기 애매할 때', help),
+              linkBtn(tr('답하기 애매할 때'), help),
             ]),
           ],
         ),

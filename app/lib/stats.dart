@@ -3,6 +3,7 @@
 //       지표 19개가 모두 나온 검사만 평균에 더한다('잘 모르겠다'가 많아 판단하지 않은 지표가 있으면 평균에서는 뺀다).
 //       results/{id} 에는 검사 한 건의 점수(이름·계정 없이 나이·성별·점수만)를 남긴다. 규칙은 저장소 firestore.rules.
 // 로그인 없이도 되도록 Firestore REST 로 읽고 쓴다(앱·웹 같은 길).
+import 'i18n.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'content.dart';
@@ -54,7 +55,7 @@ String? bucketOf(Kid k, String date) {
 /// 'y5_M' → '만 5세 남자아이'
 String bucketLabel(String b) {
   final m = RegExp(r'^y(\d+)_([MF])$').firstMatch(b);
-  return m == null ? '' : '만 ${m[1]}세 ${m[2] == 'M' ? '남자아이' : '여자아이'}';
+  return m == null ? '' : tr('만 {0}세 {1}', [m[1], m[2] == 'M' ? tr('남자아이') : tr('여자아이')]);
 }
 
 typedef Avg = ({double avg, int n});

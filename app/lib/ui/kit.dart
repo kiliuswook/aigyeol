@@ -1,4 +1,5 @@
 // 손그림(색연필) UI 조각. 웹 CSS 의 border-image(9조각 늘이기)를 같은 비율로 그린다.
+import '../i18n.dart';
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/scheduler.dart';
@@ -201,7 +202,7 @@ class KakaoBtn extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: onTap,
-          child: SizedBox(height: 52, child: Center(child: Text(label, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF191600))))),
+          child: SizedBox(height: 52, child: Center(child: Text(tr(label), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF191600))))),
         ),
       );
 }
@@ -249,7 +250,7 @@ class Pill extends StatelessWidget {
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Image.asset('assets/ui/dot_$c.webp', width: 12, height: 12),
         const SizedBox(width: 6),
-        Text(label, style: const TextStyle(fontSize: 13, color: kFg, fontWeight: FontWeight.w500)),
+        Flexible(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, color: kFg, fontWeight: FontWeight.w500))),
       ]));
 }
 
@@ -528,7 +529,7 @@ class _MoreBtnState extends State<MoreBtn> with SingleTickerProviderStateMixin {
             child: NineBox(nChipOn,
                 padding: const EdgeInsets.fromLTRB(14, 8, 10, 8),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text(widget.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kOnAccent)),
+                  Text(tr(widget.label), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kOnAccent)),
                   const SizedBox(width: 4),
                   Image.asset('assets/ui/i_arrow_r.webp', width: 16, height: 16),
                 ])),

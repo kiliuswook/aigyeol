@@ -1,3 +1,4 @@
+import 'i18n.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
@@ -23,6 +24,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initKakao();
   // 첫 화면에 꼭 필요한 것(문항·손그림 테두리·이 폰 기록)만 기다리고 바로 화면을 띄운다
+  // 언어(저장된 선택, 없으면 기기 언어)를 먼저 정해야 문항·오늘 탭 문구를 그 언어로 읽는다
+  await loadLang();
   await Future.wait([loadContent(), loadDaily(), preloadUi(), store.load(), daily.load()]);
   runApp(const App());
   // 로그인·동기화(Firebase)는 화면을 띄운 뒤에 연다. 기다리면 앱을 켤 때 빈 화면이 그만큼 길어진다.
@@ -62,13 +65,14 @@ final tab = ValueNotifier<int>(0);
 class App extends StatelessWidget {
   const App({super.key});
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        title: '내 아이의 MBTI',
+  Widget build(BuildContext context) => ValueListenableBuilder(valueListenable: lang, builder: (_, l, _) => MaterialApp(
+        key: ValueKey(l),
+        title: tr('내 아이의 MBTI'),
         debugShowCheckedModeBanner: false,
         navigatorObservers: [AdRouteObserver()],
-        // 날짜·시각 고르기 창을 한국어로
-        locale: const Locale('ko'),
-        supportedLocales: const [Locale('ko'), Locale('en')],
+        // 날짜·시각 고르기 창도 앱 언어로
+        locale: Locale(l),
+        supportedLocales: [for (final c in kLangs.keys) Locale(c)],
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: kAccent, surface: kBg),
@@ -83,7 +87,7 @@ class App extends StatelessWidget {
           }),
         ),
         home: ValueListenableBuilder(valueListenable: introDone, builder: (_, done, _) => AnimatedSwitcher(duration: const Duration(milliseconds: 350), child: done ? const Shell() : const Intro())),
-      );
+      ));
 }
 
 class Shell extends StatelessWidget {
@@ -109,7 +113,7 @@ class Shell extends StatelessWidget {
               child: SafeArea(
                 top: false,
                 child: Row(children: [
-                  for (final (k, label, icon) in const [(0, '홈', 'i_home'), (3, '오늘', 'i_chat'), (1, '리포트', 'i_doc'), (2, '더보기', 'i_star')])
+                  for (final (k, label, icon) in [(0, tr('홈'), 'i_home'), (3, tr('오늘'), 'i_chat'), (1, tr('리포트'), 'i_doc'), (2, tr('더보기'), 'i_star')])
                     Expanded(
                       child: InkWell(
                         onTap: () => tab.value = k,

@@ -1,5 +1,6 @@
 // 메일 인증 로그인과 기기 사이 동기화(Firebase). 로그인은 선택: 안 해도 이 폰에서는 다 쓸 수 있다.
 // 서버 자료: users/{uid} 문서 하나 {json: 앱 기록(Store.toJson) 문자열, at: 저장 시각}. 보안 규칙은 저장소 firestore.rules.
+import 'i18n.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -73,7 +74,7 @@ class Sync extends ChangeNotifier {
   Future<String?> checkVerified() => _run(() async {
     await user!.reload();
     user = _auth.currentUser;
-    if (!verified) throw '아직 인증되지 않았어요. 메일함(스팸함 포함)에서 인증 링크를 눌러 주세요.';
+    if (!verified) throw tr('아직 인증되지 않았어요. 메일함(스팸함 포함)에서 인증 링크를 눌러 주세요.');
     await user!.getIdToken(true); // 규칙이 인증 여부를 보도록 토큰 새로 받기
     await pull();
   });
@@ -155,20 +156,20 @@ class Sync extends ChangeNotifier {
     if (e is String) return e;
     if (e is FirebaseAuthException) {
       return switch (e.code) {
-        'invalid-email' => '메일 주소 형식이 맞지 않아요.',
-        'email-already-in-use' => '이미 가입한 메일이에요. 로그인해 주세요.',
-        'weak-password' => '비밀번호를 6자 이상으로 해 주세요.',
-        'user-not-found' || 'wrong-password' || 'invalid-credential' => '메일 또는 비밀번호가 맞지 않아요.',
-        'too-many-requests' => '시도가 너무 많아요. 잠시 뒤에 다시 해 주세요.',
-        'network-request-failed' => '인터넷 연결을 확인해 주세요.',
-        'requires-recent-login' => '보안을 위해 다시 로그인한 뒤 해 주세요.',
-        _ => '문제가 생겼어요(${e.code}).',
+        'invalid-email' => tr('메일 주소 형식이 맞지 않아요.'),
+        'email-already-in-use' => tr('이미 가입한 메일이에요. 로그인해 주세요.'),
+        'weak-password' => tr('비밀번호를 6자 이상으로 해 주세요.'),
+        'user-not-found' || 'wrong-password' || 'invalid-credential' => tr('메일 또는 비밀번호가 맞지 않아요.'),
+        'too-many-requests' => tr('시도가 너무 많아요. 잠시 뒤에 다시 해 주세요.'),
+        'network-request-failed' => tr('인터넷 연결을 확인해 주세요.'),
+        'requires-recent-login' => tr('보안을 위해 다시 로그인한 뒤 해 주세요.'),
+        _ => tr('문제가 생겼어요({0}).', [e.code]),
       };
     }
     if (e is FirebaseException) {
-      return e.code == 'unavailable' ? '인터넷 연결을 확인해 주세요.' : '동기화에 문제가 생겼어요(${e.code}).';
+      return e.code == 'unavailable' ? tr('인터넷 연결을 확인해 주세요.') : tr('동기화에 문제가 생겼어요({0}).', [e.code]);
     }
-    return '문제가 생겼어요.';
+    return tr('문제가 생겼어요.');
   }
 }
 

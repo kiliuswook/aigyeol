@@ -1,4 +1,5 @@
 // 앱 상태: 자녀, 양육자별 기록, 결제 기록. 웹(index.html)과 같은 규칙이지만 바꿔 끼우기 없이 아이마다 기록을 그대로 둔다.
+import 'i18n.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class Kid {
   bool get firstDone => buys.isNotEmpty || ext != null;
   double get nextPrice => firstDone ? Price.more : Price.first;
   String firstBuyId() => buys.isNotEmpty ? buys.first.id : '${ext?['o'] ?? ''}';
-  String label(int i) => name.isNotEmpty ? name : '아이 ${i + 1}';
+  String label(int i) => name.isNotEmpty ? name : tr('아이 {0}', [i + 1]);
   bool get isBlank => name.isEmpty && recs.values.every((r) => !r.hasAny) && buys.isEmpty;
 
   /// 고를 수 있는 양육자 이름(기본 목록 + 기록이 있는 사람)
@@ -140,7 +141,7 @@ class Store extends ChangeNotifier {
   Kid? demo;
   Kid get kid => demo ?? kids.firstWhere((k) => k.id == kidId, orElse: () => kids.first);
   Rec get cur => kid.cur;
-  String get nm => kid.name.isNotEmpty ? kid.name : '우리 아이';
+  String get nm => kid.name.isNotEmpty ? kid.name : tr('우리 아이');
 
   Future<void> load() async {
     _sp = await SharedPreferences.getInstance();

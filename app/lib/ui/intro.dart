@@ -1,4 +1,5 @@
 // 앱을 켤 때: 원더휠 스플래시 → 타이틀 화면(화면을 터치하면 시작) → 홈
+import '../i18n.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -167,7 +168,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
             child: IgnorePointer(
               child: FadeTransition(
                 opacity: CurvedAnimation(parent: _blink, curve: Curves.easeInOut),
-                child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10), child: Text('화면을 터치하면 시작해요', style: disp(24, color: kAccentInk))),
+                child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10), child: Text(tr('화면을 터치하면 시작해요'), style: disp(24, color: kAccentInk))),
               ),
             ),
           ),
@@ -181,17 +182,17 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                 borderRadius: BorderRadius.circular(22),
                 child: Stack(fit: StackFit.expand, children: [
                   Image.asset('assets/img/key_home.webp', fit: BoxFit.cover, alignment: const Alignment(0, .38)),
-                  Positioned(left: 14, top: 14, child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), child: Text('오늘도 말랑하게, 우리 아이 이야기', style: disp(17)))),
+                  Positioned(left: 14, top: 14, child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), child: Text(tr('오늘도 말랑하게, 우리 아이 이야기'), style: disp(17)))),
                 ]),
               ),
             ),
             const SizedBox(height: 16),
-            Center(child: eyebrow('만 2~7세 · 부모가 답하는 기질검사')),
+            Center(child: eyebrow(tr('만 2~7세 · 부모가 답하는 기질검사'))),
             const SizedBox(height: 2),
-            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(44), children: const [TextSpan(text: '내 아이의 '), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk))])))),
-            Center(child: Text('우리 아이의 MBTI는 무엇일까요?', style: disp(21, w: FontWeight.w400))),
+            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(44), children: [TextSpan(text: tr('내 아이의 ')), TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk))])))),
+            Center(child: Text(tr('우리 아이의 MBTI는 무엇일까요?'), style: disp(21, w: FontWeight.w400))),
             const SizedBox(height: 8),
-            for (final (t, d) in const [('기질검사', '타고난 성향 4축과 세부 기질 12가지'), ('성격검사', '경험으로 자라는 끈기 · 스스로 힘 · 함께 힘')])
+            for (final (t, d) in [(tr('기질검사'), tr('타고난 성향 4축과 세부 기질 12가지')), (tr('성격검사'), tr('경험으로 자라는 끈기 · 스스로 힘 · 함께 힘'))])
               Padding(
                 padding: const EdgeInsets.only(top: 3),
                 child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -201,7 +202,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                 ]),
               ),
             const SizedBox(height: 6),
-            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text('전문기관 수준의 정밀 리포트 · 66문항 · 약 10분 · 광고 보고 무료', maxLines: 1, style: smallMuted))),
+            Center(child: FittedBox(fit: BoxFit.scaleDown, child: Text(tr('전문기관 수준의 정밀 리포트 · 66문항 · 약 10분 · 광고 보고 무료'), maxLines: 1, style: smallMuted))),
             const SizedBox(height: 18),
           ]),
         );

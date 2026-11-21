@@ -73,6 +73,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/
+    - assets/i18n/
     - assets/ui/
     - assets/img/
     - assets/video/

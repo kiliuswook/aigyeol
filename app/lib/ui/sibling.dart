@@ -1,6 +1,7 @@
 // 형제 궁합 리포트(리포트의 '형제' 탭): 검사를 마친 두 아이의 4축을 견주어
 // 궁합 이름, 축별 같음·다름, 함께할 놀이, 자주 부딪히는 상황(상황 카드로), 아이마다 다른 칭찬을 보여 준다.
 // 문장은 assets/data/daily.json 의 sib(축마다 hh·ll·mix 3묶음 = 12묶음으로 256조합). AI 호출 없음.
+import '../i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../content.dart';
@@ -42,11 +43,11 @@ Map<String, Widget> sibTab(BuildContext context, void Function(String) open, Hub
     final wait = [if (ra == null) meN, for (final o in others) if (o.r == null) _nm(o.k, o.i)];
     return hub(open, const [''], [
       col([
-        eyebrow('형제 궁합'),
-        h2('우리 집 아이들, 얼마나 닮았을까?'),
-        muted('두 아이 모두 정밀검사를 마치면 닮은 점과 다른 점, 함께하면 좋은 놀이, 자주 부딪히는 상황과 대처, 아이마다 다르게 칭찬하는 법을 보여 드려요.'),
-        rich('**아직 검사가 남은 아이:** ${wait.join(', ')}', style: small),
-        if (others.isEmpty) muted('홈에서 \'+ 아이 추가\'로 형제·자매를 등록해 주세요.'),
+        eyebrow(tr('형제 궁합')),
+        h2(tr('우리 집 아이들, 얼마나 닮았을까?')),
+        muted(tr('두 아이 모두 정밀검사를 마치면 닮은 점과 다른 점, 함께하면 좋은 놀이, 자주 부딪히는 상황과 대처, 아이마다 다르게 칭찬하는 법을 보여 드려요.')),
+        rich(tr('**아직 검사가 남은 아이:** {0}', [wait.join(', ')]), style: small),
+        if (others.isEmpty) muted(tr('홈에서 \'+ 아이 추가\'로 형제·자매를 등록해 주세요.')),
       ])
     ]);
   }
@@ -69,7 +70,7 @@ Map<String, Widget> sibTab(BuildContext context, void Function(String) open, Hub
         child: Row(children: [
           SizedBox(width: 66, child: Text('${x.a.hi}·${x.a.lo}', style: const TextStyle(fontSize: 13, color: kMuted))),
           Expanded(child: Text(poleName(x.la), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: x.a.color))),
-          SizedBox(width: 40, child: Text(x.key == 'mix' ? '다름' : '같음', textAlign: TextAlign.center, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: x.key == 'mix' ? kColors['c1'] : kColors['c2']))),
+          SizedBox(width: 40, child: Text(x.key == 'mix' ? tr('다름') : tr('같음'), textAlign: TextAlign.center, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: x.key == 'mix' ? kColors['c1'] : kColors['c2']))),
           Expanded(child: Text(poleName(x.lb), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: x.a.color))),
         ]),
       );
@@ -87,8 +88,8 @@ Map<String, Widget> sibTab(BuildContext context, void Function(String) open, Hub
 
   // 휴대폰 공유 창(카카오톡 포함)으로 글+앱 주소
   void share() => SharePlus.instance.share(ShareParams(
-      subject: '내 아이의 MBTI · 형제 궁합',
-      text: '$meN ${ra.code} ${C.nick[ra.code]} × $bN ${rb.code} ${C.nick[rb.code]}\n우리 집은 "${lv[0]}"! ${lv[1]}\n우리 아이들 MBTI 궁합 보기 $kSite'));
+      subject: tr('내 아이의 MBTI · 형제 궁합'),
+      text: tr('{0} {1} {2} × {3} {4} {5}\n우리 집은 "{6}"! {7}\n우리 아이들 MBTI 궁합 보기 {8}', [meN, ra.code, C.nick[ra.code], bN, rb.code, C.nick[rb.code], lv[0], lv[1], kSite])));
 
   final root = col([
     if (ready.length > 1)
@@ -101,45 +102,45 @@ Map<String, Widget> sibTab(BuildContext context, void Function(String) open, Hub
     Center(child: Text(lv[0], style: disp(28, color: kAccentInk))),
     Text(lv[1], textAlign: TextAlign.center, style: small),
     NineBox(nSoft, padding: const EdgeInsets.fromLTRB(12, 8, 12, 8), child: Column(mainAxisSize: MainAxisSize.min, children: [for (final x in cmp) axRow(x)])),
-    if (_over(me) || _over(kb)) muted('검사는 만 2~7세 기준이에요. 만 8세 이상 아이의 결과는 참고로만 봐 주세요.'),
+    if (_over(me) || _over(kb)) muted(tr('검사는 만 2~7세 기준이에요. 만 8세 이상 아이의 결과는 참고로만 봐 주세요.')),
   ], gap: 8);
 
   final pGood = col([
-    eyebrow('잘 맞는 점'),
+    eyebrow(tr('잘 맞는 점')),
     for (final x in cmp)
       rich('**${x.a.hi}·${x.a.lo}** ${x.t.good}', style: small),
-    eyebrow('함께하면 좋은 놀이'),
+    eyebrow(tr('함께하면 좋은 놀이')),
     for (final p in plays) Row(children: [Image.asset('assets/ui/i_star.webp', width: 18, height: 18), const SizedBox(width: 8), Expanded(child: Text(p, style: body))]),
   ], gap: 8);
 
   final pClash = col([
-    eyebrow('자주 부딪히는 상황'),
+    eyebrow(tr('자주 부딪히는 상황')),
     for (final x in clashes)
       NineBox(nSoft,
           padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
           child: col([
-            Text('${x.a.hi}·${x.a.lo} · ${x.key == 'mix' ? '서로 달라서' : '둘이 같아서'}', style: disp(18)),
+            Text('${x.a.hi}·${x.a.lo} · ${x.key == 'mix' ? tr('서로 달라서') : tr('둘이 같아서')}', style: disp(18)),
             Text(x.t.clash, style: small),
-            Text.rich(TextSpan(style: small, children: [const TextSpan(text: '이렇게 해 보세요  ', style: TextStyle(fontWeight: FontWeight.w700, color: kAccentInk)), TextSpan(text: x.t.tip)])),
+            Text.rich(TextSpan(style: small, children: [TextSpan(text: tr('이렇게 해 보세요  '), style: TextStyle(fontWeight: FontWeight.w700, color: kAccentInk)), TextSpan(text: x.t.tip)])),
           ], gap: 4)),
-    eyebrow('이럴 땐 상황 카드'),
+    eyebrow(tr('이럴 땐 상황 카드')),
     for (final id in sits)
       Tile(D.situations.firstWhere((s) => s.id == id).t, icon: 'i_chat', onTap: () => sitPopup(context, me, D.situations.firstWhere((s) => s.id == id))),
   ], gap: 8);
 
   final pPraise = col([
-    eyebrow('아이마다 다르게 칭찬하기'),
-    muted('같은 일을 해도 아이마다 와닿는 말이 달라요. 둘을 견주는 말 대신 각자의 방식을 알아봐 주세요.'),
+    eyebrow(tr('아이마다 다르게 칭찬하기')),
+    muted(tr('같은 일을 해도 아이마다 와닿는 말이 달라요. 둘을 견주는 말 대신 각자의 방식을 알아봐 주세요.')),
     for (final x in cmp)
       NineBox(x.key == 'mix' ? nPink : nSoft,
           padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
           child: col([
-            Text('${x.a.hi}·${x.a.lo}${x.key == 'mix' ? ' · 서로 달라요' : ' · 같아요'}', style: disp(18)),
-            Text.rich(TextSpan(style: small, children: [TextSpan(text: '$meN에게  ', style: const TextStyle(fontWeight: FontWeight.w700)), TextSpan(text: D.sib.praise[x.la])])),
-            if (x.key == 'mix') Text.rich(TextSpan(style: small, children: [TextSpan(text: '$bN에게  ', style: const TextStyle(fontWeight: FontWeight.w700)), TextSpan(text: D.sib.praise[x.lb])])),
+            Text('${x.a.hi}·${x.a.lo}${x.key == 'mix' ? tr(' · 서로 달라요') : tr(' · 같아요')}', style: disp(18)),
+            Text.rich(TextSpan(style: small, children: [TextSpan(text: tr('{0}에게  ', [meN]), style: const TextStyle(fontWeight: FontWeight.w700)), TextSpan(text: D.sib.praise[x.la])])),
+            if (x.key == 'mix') Text.rich(TextSpan(style: small, children: [TextSpan(text: tr('{0}에게  ', [bN]), style: const TextStyle(fontWeight: FontWeight.w700)), TextSpan(text: D.sib.praise[x.lb])])),
           ], gap: 4)),
-    Btn('형제 궁합 공유하기', share, kind: BtnKind.dark),
+    Btn(tr('형제 궁합 공유하기'), share, kind: BtnKind.dark),
   ], gap: 8);
 
-  return hub(open, const ['', '잘 맞는 점과 함께할 놀이', '자주 부딪히는 상황', '아이마다 다르게 칭찬하기'], [root, pGood, pClash, pPraise]);
+  return hub(open, ['', tr('잘 맞는 점과 함께할 놀이'), tr('자주 부딪히는 상황'), tr('아이마다 다르게 칭찬하기')], [root, pGood, pClash, pPraise]);
 }

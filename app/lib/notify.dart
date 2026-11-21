@@ -1,5 +1,6 @@
 // 이 휴대폰 안의 예약 알림(서버 없음): 아침 오늘의 미션, 저녁 실천 확인, 약속·일정 미리 알려주기.
 // 사용자가 오늘 탭에서 알림을 켠 때만 예약한다. 웹은 알림 없음.
+import 'i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -52,8 +53,8 @@ class Notify {
     }
   }
 
-  static const _details = NotificationDetails(
-    android: AndroidNotificationDetails('daily', '오늘의 미션·약속', channelDescription: '아이에게 해 볼 오늘의 한마디와 약속·일정 알림', importance: Importance.defaultImportance, priority: Priority.defaultPriority),
+  static final _details = NotificationDetails(
+    android: AndroidNotificationDetails('daily', tr('오늘의 미션·약속'), channelDescription: tr('아이에게 해 볼 오늘의 한마디와 약속·일정 알림'), importance: Importance.defaultImportance, priority: Priority.defaultPriority),
     iOS: DarwinNotificationDetails(),
   );
 
@@ -74,21 +75,21 @@ class Notify {
       }
 
       final k = store.kids.firstWhere((x) => x.id == store.kidId, orElse: () => store.kids.first);
-      final nm = k.name.isNotEmpty ? k.name : '우리 아이';
+      final nm = k.name.isNotEmpty ? k.name : tr('우리 아이');
       // 약속·일정: 하루 전, 1시간 전(시각을 안 정했으면 하루 전 오후 8시, 당일 오전 9시)
       if (daily.planAlarm) {
         for (final kid in store.kids) {
-          final kn = kid.name.isNotEmpty ? kid.name : '우리 아이';
+          final kn = kid.name.isNotEmpty ? kid.name : tr('우리 아이');
           for (final p in daily.plansOf(kid).where((p) => !p.done)) {
-            final word = p.pr ? '약속' : '일정';
+            final word = p.pr ? tr('약속') : tr('일정');
             if (p.tm.isNotEmpty) {
               final hm = p.tm.split(':').map(int.parse).toList();
               final t = p.date.add(Duration(hours: hm[0], minutes: hm[1]));
-              await at(t.subtract(const Duration(days: 1)), '내일 ${p.tm} $kn와 ${p.t}', '$word을 미리 이야기해 주면 아이가 덜 놀라요');
-              await at(t.subtract(const Duration(hours: 1)), '1시간 뒤 $kn와 ${p.t}', p.pr ? '약속을 지키면 스티커를 받아요' : '잘 다녀오세요');
+              await at(t.subtract(const Duration(days: 1)), tr('내일 {0} {1}와 {2}', [p.tm, kn, p.t]), tr('{0}을 미리 이야기해 주면 아이가 덜 놀라요', [word]));
+              await at(t.subtract(const Duration(hours: 1)), tr('1시간 뒤 {0}와 {1}', [kn, p.t]), p.pr ? tr('약속을 지키면 스티커를 받아요') : tr('잘 다녀오세요'));
             } else {
-              await at(p.date.subtract(const Duration(hours: 4)), '내일은 $kn와 ${p.t}', '$word을 미리 이야기해 주면 아이가 덜 놀라요');
-              await at(p.date.add(const Duration(hours: 9)), '오늘 $kn와 ${p.t}', p.pr ? '약속을 지키면 스티커를 받아요' : '잘 다녀오세요');
+              await at(p.date.subtract(const Duration(hours: 4)), tr('내일은 {0}와 {1}', [kn, p.t]), tr('{0}을 미리 이야기해 주면 아이가 덜 놀라요', [word]));
+              await at(p.date.add(const Duration(hours: 9)), tr('오늘 {0}와 {1}', [kn, p.t]), p.pr ? tr('약속을 지키면 스티커를 받아요') : tr('잘 다녀오세요'));
             }
           }
         }
@@ -97,8 +98,8 @@ class Notify {
       for (var i = 0; i < 8; i++) {
         final d = missionDay.add(Duration(days: i));
         final m = daily.mission(k, d).$2;
-        if (daily.alarm) await at(d.add(const Duration(hours: kMissionHour)), '오늘 $nm에게 해 볼 한 가지', m.t);
-        if (daily.eve && !(daily.peek(k, d)?.done ?? false)) await at(d.add(const Duration(minutes: DailyStore.pm)), '오늘 미션 해 보셨나요?', '해 봤다면 스티커를 붙여 보세요');
+        if (daily.alarm) await at(d.add(const Duration(hours: kMissionHour)), tr('오늘 {0}에게 해 볼 한 가지', [nm]), m.t);
+        if (daily.eve && !(daily.peek(k, d)?.done ?? false)) await at(d.add(const Duration(minutes: DailyStore.pm)), tr('오늘 미션 해 보셨나요?'), tr('해 봤다면 스티커를 붙여 보세요'));
       }
     } catch (_) {}
   }

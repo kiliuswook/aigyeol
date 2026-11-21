@@ -1,4 +1,5 @@
 // 공유(휴대폰 공유 창), 개인정보처리방침 열기, 받은 링크 읽기
+import '../i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,19 +19,19 @@ Future<void> openPrivacy() => launchUrl(Uri.parse('${kSite}privacy.html'), mode:
   switch (kind) {
     case 'result':
       final code = score(store.cur.ans).code;
-      return ("우리 아이는 $code '${C.nick[code]}'", '만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', Store.typeUrl(code));
+      return (tr("우리 아이는 {0} '{1}'", [code, C.nick[code]]), tr('만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.'), Store.typeUrl(code));
     case 'invite':
-      return ('${ga(k.who)} $nm 기질검사에 초대했어요', '$role의 눈으로 본 $nm는 어떤 아이일까요? 따로 답하고 결과를 나란히 비교해요.', store.inviteUrl(role));
+      return (tr('{0} {1} 기질검사에 초대했어요', [ga(cg(k.who)), nm]), tr('{0}의 눈으로 본 {1}는 어떤 아이일까요? 따로 답하고 결과를 나란히 비교해요.', [cg(role), nm]), store.inviteUrl(role));
     case 'back':
-      return ('${ga(k.who)} $nm 검사 결과를 보냈어요', "${k.inv?['from'] ?? '가족'}의 휴대폰에서 열면 '양육자 비교'에 합쳐집니다.", store.backUrl());
+      return (tr('{0} {1} 검사 결과를 보냈어요', [ga(cg(k.who)), nm]), tr("{0}의 휴대폰에서 열면 '양육자 비교'에 합쳐집니다.", [cg(k.inv?['from'] ?? '가족')]), store.backUrl());
     default:
-      return ('내 아이의 MBTI · 영유아 기질검사', '부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?', Store.appUrl);
+      return (tr('내 아이의 MBTI · 영유아 기질검사'), tr('부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?'), Store.appUrl);
   }
 }
 
 /// 받침이 있으면 '이', 없으면 '가'
 String ga(String w) {
-  if (w.isEmpty) return w;
+  if (w.isEmpty || !isKo) return w;
   final c = w.codeUnitAt(w.length - 1);
   return w + ((c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 != 0) ? '이' : '가');
 }
@@ -53,10 +54,10 @@ void initKakao() => kk.KakaoSdk.init(nativeAppKey: kKakaoNativeKey, javaScriptAp
 
 /// 공유 카드 버튼 글자
 String _btnTitle(String kind) => switch (kind) {
-      'invite' => '검사하러 가기',
-      'back' => '결과 합치기',
-      'result' => '우리 아이도 검사하기',
-      _ => '앱 보러 가기',
+      'invite' => tr('검사하러 가기'),
+      'back' => tr('결과 합치기'),
+      'result' => tr('우리 아이도 검사하기'),
+      _ => tr('앱 보러 가기'),
     };
 
 /// 카카오톡으로 보낸다.
@@ -91,7 +92,7 @@ Future<void> doKakao(BuildContext ctx, String kind, {String role = ''}) async {
     } catch (_) {}
   }
   if (ok) return;
-  if (ctx.mounted) toast(ctx, '카카오톡을 열 수 없어 공유 창으로 보냅니다.');
+  if (ctx.mounted) toast(ctx, tr('카카오톡을 열 수 없어 공유 창으로 보냅니다.'));
   if (ctx.mounted) await doShare(ctx, kind, role: role);
 }
 

@@ -1,4 +1,5 @@
 // 화면 사이 이동: 검사 시작(보상형 광고 → 검사), 다시 검사하기, 리포트로 가기
+import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../scoring.dart';
@@ -49,9 +50,9 @@ class SampleScreen extends StatelessWidget {
                 child: NineBox(nSoft,
                     padding: const EdgeInsets.fromLTRB(12, 4, 2, 4),
                     child: Row(children: [
-                      const Tag('샘플'),
+                      Tag(tr('샘플')),
                       const SizedBox(width: 8),
-                      const Expanded(child: Text('예시 아이 콩이의 리포트예요.', style: small)),
+                      Expanded(child: Text(tr('예시 아이 콩이의 리포트예요.'), style: small)),
                       InkWell(
                         key: const Key('sample-close'),
                         borderRadius: BorderRadius.circular(22),
@@ -67,7 +68,7 @@ class SampleScreen extends StatelessWidget {
                 ReportView())),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 480), child: SizedBox(width: double.infinity, child: Btn('샘플 닫고 내 아이 검사하기', () => Navigator.of(context).pop(), kind: BtnKind.dark))),
+              child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 480), child: SizedBox(width: double.infinity, child: Btn(tr('샘플 닫고 내 아이 검사하기'), () => Navigator.of(context).pop(), kind: BtnKind.dark))),
             ),
           ]),
         ),

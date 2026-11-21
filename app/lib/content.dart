@@ -1,6 +1,7 @@
 // 문항·유형 풀이 데이터. assets/data/content.json 은 웹(index.html)의 AX, GR, P, NICK, OPT, EXS 에서 뽑았다.
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'i18n.dart';
 
 class Sub {
   final String n, lo, hi;
@@ -72,7 +73,7 @@ class Content {
 }
 
 late Content C;
-Future<void> loadContent() async => C = Content.fromString(await rootBundle.loadString('assets/data/content.json'));
+Future<void> loadContent() async => C = Content.fromString(await loadLocalized('assets/data/content.json'));
 
 const kColors = {
   'c1': Color(0xFFDD7356),

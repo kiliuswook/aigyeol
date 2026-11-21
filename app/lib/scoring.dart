@@ -1,4 +1,5 @@
 // 채점과 비교. 웹(index.html)의 score, snapshot, compareGrow, CMP 와 같은 규칙.
+import 'i18n.dart';
 import 'content.dart';
 
 typedef Ans = Map<String, int>; // 문항 id → 1~5, 0 은 '잘 모르겠다'
@@ -23,7 +24,7 @@ class AxScore {
   AxScore(this.a, this.subs, this.sc) : d = (sc - 50).abs();
   String get letter => sc >= 50 ? a.h : a.l;
   String get pole => sc >= 50 ? a.hi : a.lo;
-  String get clar => d >= 20 ? '뚜렷함' : d >= 8 ? '약간' : '균형에 가까움';
+  String get clar => d >= 20 ? tr('뚜렷함') : d >= 8 ? tr('약간') : tr('균형에 가까움');
 }
 
 class GrScore {
@@ -67,7 +68,7 @@ Result score(Ans ans) {
   final dm = mean(diffs);
   final raw = ans.values.where((x) => x > 0).toList();
   final flat = raw.length > 20 && raw.toSet().length == 1;
-  final cons = dm == null ? null : flat ? '낮음' : dm < 0.9 ? '높음' : dm < 1.5 ? '보통' : '낮음';
+  final cons = dm == null ? null : flat ? tr('낮음') : dm < 0.9 ? tr('높음') : dm < 1.5 ? tr('보통') : tr('낮음');
   return Result(ax, gr, cons, ans.values.where((x) => x == 0).length);
 }
 
@@ -142,12 +143,12 @@ GrowCmp compareGrow(Result r, Snap? p, String who, Ans ans) {
       () {
         final id = x.g.id, half = x.g.count * Cmp.unkHalf, ps = p.gr![id];
         final pb = (p.unk![id] ?? 0) >= half || ps == null, cb = cu[id]! >= half || x.sc == null;
-        if (pb || cb) return GrowCmpRow(x, skip: pb && cb ? '이전과 이번 검사 모두' : pb ? '이전 검사' : '이번 검사');
+        if (pb || cb) return GrowCmpRow(x, skip: pb && cb ? tr('이전과 이번 검사 모두') : pb ? tr('이전 검사') : tr('이번 검사'));
         final d = x.sc! - ps;
         return GrowCmpRow(x, ps: ps, v: d.abs() < Cmp.same ? 0 : d > 0 ? 1 : 2);
       }()
   ]);
 }
 
-String optName(int? a) => a == null ? '-' : a == 0 ? '잘 모르겠다' : C.opt[a - 1];
-String oneLine(Result r) => '${r.ax.map((x) => C.poles[x.letter]!.ph).join(', ')}입니다.';
+String optName(int? a) => a == null ? '-' : a == 0 ? tr('잘 모르겠다') : C.opt[a - 1];
+String oneLine(Result r) => tr('{0}입니다.', [r.ax.map((x) => C.poles[x.letter]!.ph).join(', ')]);

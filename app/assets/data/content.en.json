@@ -1,0 +1,1049 @@
+{
+ "axes": [
+  {
+   "id": "A",
+   "H": "E",
+   "L": "I",
+   "hi": "Explorer",
+   "lo": "Observer",
+   "q": "Facing something new",
+   "c": "--c1",
+   "subs": [
+    {
+     "n": "Approaching new things",
+     "lo": "Watches first",
+     "hi": "Jumps right in"
+    },
+    {
+     "n": "Activity energy",
+     "lo": "Quiet play",
+     "hi": "Active play"
+    },
+    {
+     "n": "Approaching people",
+     "lo": "Warms up slowly",
+     "hi": "Goes up first"
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "H": "S",
+   "L": "N",
+   "hi": "Sensitive",
+   "lo": "Easygoing",
+   "q": "How strongly they feel things",
+   "c": "--c2",
+   "subs": [
+    {
+     "n": "Sensory sensitivity",
+     "lo": "Not easily bothered",
+     "hi": "Easily bothered"
+    },
+    {
+     "n": "Noticing changes",
+     "lo": "Tends to miss them",
+     "hi": "Notices quickly"
+    },
+    {
+     "n": "Emotional ripples",
+     "lo": "Shakes it off",
+     "hi": "Holds on to it"
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "H": "F",
+   "L": "T",
+   "hi": "Expressive",
+   "lo": "Calm",
+   "q": "How they show feelings",
+   "c": "--c3",
+   "subs": [
+    {
+     "n": "Size of emotions",
+     "lo": "Shows them small",
+     "hi": "Shows them big"
+    },
+    {
+     "n": "Sharing feelings",
+     "lo": "Keeps them inside",
+     "hi": "Talks first"
+    },
+    {
+     "n": "Emotional afterglow",
+     "lo": "Settles quickly",
+     "hi": "Lingers long"
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "H": "J",
+   "L": "P",
+   "hi": "Rhythm",
+   "lo": "Free",
+   "q": "How they run their day",
+   "c": "--c4",
+   "subs": [
+    {
+     "n": "Daily rhythm",
+     "lo": "Different every day",
+     "hi": "Regular"
+    },
+    {
+     "n": "Transitions & warnings",
+     "lo": "Switches right away",
+     "hi": "Needs a heads-up"
+    },
+    {
+     "n": "Order & tidiness",
+     "lo": "Whatever comes",
+     "hi": "By the rules"
+    }
+   ]
+  }
+ ],
+ "grows": [
+  {
+   "id": "G1",
+   "n": "Persistence",
+   "d": "The strength to try again when it's hard",
+   "lv": [
+    [
+     "Tends to give up quickly when things get hard.",
+     "This is natural at this age. Praise the act of trying again rather than the result, and start with easy steps your child can succeed at. \"Shall we try just once more?\" works better than \"Finish it.\""
+    ],
+    [
+     "Sticks with things they love, but needs help with hard ones.",
+     "Break tasks into small steps so your child experiences \"just one more.\" Taking a break and coming back is persistence too."
+    ],
+    [
+     "Has solid strength to try again and see things through, even when it's hard.",
+     "Deep focus can make stopping midway hard. So they don't wear themselves out chasing perfection, let them know \"This is good enough.\""
+    ]
+   ],
+   "count": 6
+  },
+  {
+   "id": "G2",
+   "n": "Independence",
+   "d": "The strength to decide and do things on their own",
+   "lv": [
+    [
+     "Still needs a lot of help and decisions from adults.",
+     "Wait just 10 seconds before doing it for them. Things change as they build up experiences of finishing tiny tasks, like one sock, on their own."
+    ],
+    [
+     "Does familiar things alone, but looks for an adult with new things.",
+     "Start with small choices, like picking one of two. It's important that adults don't change what they chose."
+    ],
+    [
+     "Has solid strength to decide and do things on their own.",
+     "Widen their choices, but keep safety rules clear. When a strong \"I'll do it!\" leads to a tug-of-war, the easiest fix is simply allowing more time."
+    ]
+   ],
+   "count": 6
+  },
+  {
+   "id": "G3",
+   "n": "Getting Along",
+   "d": "The strength to read others' feelings and work together",
+   "lv": [
+    [
+     "Their own wants still come first.",
+     "This is common at young ages. Put faces into words, like \"Your friend looks sad,\" and practice short turn-taking through play."
+    ],
+    [
+     "Shares and waits well in a good mood, but finds it hard when they really want something.",
+     "Games where turns are visible, like taking turns stacking blocks or board games, work well. Notice the moment they waited, right away."
+    ],
+    [
+     "Has solid strength to read others' feelings and get along together.",
+     "So they don't lose sight of their own feelings by always giving in, also practice saying \"No\" and \"I want a turn too.\""
+    ]
+   ],
+   "count": 6
+  }
+ ],
+ "poles": {
+  "E": {
+   "tags": [
+    "Tries first",
+    "Full of energy",
+    "Loves people"
+   ],
+   "sum": "Moves first in front of new places, games and people. A child who learns by diving in with their whole body.",
+   "det": "Children high in Explorer see new things as chances rather than threats. They learn by doing rather than listening to explanations, and they need plenty of time to use their bodies each day. Because they sometimes move before they look, safety rules work best when they are short, clear and set in advance.",
+   "st": "Adapts quickly to new settings and enjoys challenges.",
+   "wa": "Needs practice stopping to look before moving.",
+   "say": "You want to try it first! Let's agree on just one rule and go.",
+   "no": "Can't you just sit still?!",
+   "ph": "jumps into new things first",
+   "says": [
+    [
+     "Arriving at a new playground",
+     "You want to try it first! Let's agree on just one rule and go."
+    ],
+    [
+     "Trying to climb somewhere that looks risky",
+     "You wanted to climb up! Hold Mom's hand and let's go just this far."
+    ],
+    [
+     "Somewhere they have to wait quietly",
+     "Your body feels wiggly, right? Let's count to ten, then go out and run."
+    ],
+    [
+     "Suddenly walking up to a child they've never met",
+     "You want to play together! Let's ask first: \"Want to play?\""
+    ]
+   ]
+  },
+  "I": {
+   "tags": [
+    "Careful",
+    "Watchful",
+    "Learns deeply"
+   ],
+   "sum": "Watches carefully and moves once ready. Once comfortable, they dive in deeply.",
+   "det": "Children high in Observer gather information first in new situations. This isn't shyness; it's their own safety check. Rushing makes them pull back, while waiting lets them step forward on their own. Arrive a little early at new places to give them time to look around, and don't force them to greet people they've just met.",
+   "st": "Careful, makes few mistakes and focuses deeply on familiar things.",
+   "wa": "Needs plenty of time to adjust to new settings.",
+   "say": "It's okay to just watch first. Tell me when you want to try.",
+   "no": "All the other kids are doing it, why won't you?",
+   "ph": "watches carefully before moving",
+   "says": [
+    [
+     "Going somewhere new for the first time",
+     "It's okay to just watch first. Tell me when you want to try."
+    ],
+    [
+     "When an adult tells them to say hello",
+     "Just waving is fine for now. You can say hi when you're ready."
+    ],
+    [
+     "Watching other kids play without joining in",
+     "You're watching how they play. Shall we go a little closer together?"
+    ],
+    [
+     "Before starting a new activity",
+     "Today we're going to do this. Let's watch once first, then decide."
+    ]
+   ]
+  },
+  "S": {
+   "tags": [
+    "Notices a lot",
+    "Sensory-sensitive",
+    "Tender-hearted"
+   ],
+   "sum": "Feels small differences in sound, touch and mood. That also means they tire easily.",
+   "det": "Children high in Sensitive take in the same stimulation bigger and in more detail. Struggling with how clothes feel or with noisy places isn't stubbornness; it's real discomfort. After busy days, build in quiet rest time. As they grow, this sensitivity becomes the base for observation, empathy and an eye for beauty.",
+   "st": "Observant and quick to notice how others feel.",
+   "wa": "Tires quickly in busy places, so needs time to rest.",
+   "say": "That felt uncomfortable, didn't it? Can you tell me what it feels like?",
+   "no": "It's nothing, why are you making a fuss?",
+   "ph": "notices even small changes",
+   "says": [
+    [
+     "Saying clothes or socks feel uncomfortable",
+     "That felt uncomfortable, didn't it? Can you tell me what it feels like?"
+    ],
+    [
+     "In noisy, crowded places",
+     "That was too loud, wasn't it? Let's rest somewhere quiet for a bit."
+    ],
+    [
+     "Getting very startled or crying over small things",
+     "That really surprised you. Let Mom hug you. Let's breathe slowly."
+    ],
+    [
+     "Disliking a food's taste or smell",
+     "This taste is new to you. Just one bite, and you can leave the rest if you don't like it."
+    ]
+   ]
+  },
+  "N": {
+   "tags": [
+    "Laid-back",
+    "Hard to rattle",
+    "Bounces back fast"
+   ],
+   "sum": "Isn't shaken much by most stimulation or change. Gets right back up after a fall.",
+   "det": "Children high in Easygoing have a high threshold for discomfort, so they do well almost anywhere. But they say little even when uncomfortable or hurt, so adults can easily miss it. They may also miss subtle changes in other people's faces, so putting feelings into words helps.",
+   "st": "Stays steady when things change and recovers quickly from stress.",
+   "wa": "Rarely voices discomfort, so adults need to ask first.",
+   "say": "You look okay, but let me ask. How do your body and heart feel right now?",
+   "no": "You never care about anything anyway.",
+   "ph": "isn't easily shaken",
+   "says": [
+    [
+     "Seeming fine after a fall",
+     "You look okay, but let me ask. How do your body and heart feel right now?"
+    ],
+    [
+     "Staying quiet after a friend grabs their toy",
+     "Didn't that upset you just now? If you don't like it, you can say \"That's mine.\""
+    ],
+    [
+     "Playing on without mentioning they're hurt",
+     "It's red here. If something hurts, always tell Mom, okay?"
+    ],
+    [
+     "Not picking up on the mood around them",
+     "Shall we look at your little sibling's face? How do you think they feel?"
+    ]
+   ]
+  },
+  "F": {
+   "tags": [
+    "Rich in feelings",
+    "Talks first",
+    "Feelings linger"
+   ],
+   "sum": "Shows joy and upset big and clearly. Wants to share what's in their heart.",
+   "det": "Children high in Expressive have high emotional volume. Parents can read them easily, but reasoning doesn't work while feelings are running high. First name the feeling, then talk once things calm down. It helps to agree in advance on safe ways to let big feelings out, like stomping or hugging a pillow.",
+   "st": "Doesn't hide feelings, so they're easy to read and full of affection.",
+   "wa": "Needs time and a way to calm down in big emotional moments.",
+   "say": "You're really, really upset. When you're done crying, let's talk together.",
+   "no": "Stop crying. It's nothing to cry about.",
+   "ph": "shows feelings big and clearly",
+   "says": [
+    [
+     "Crying loudly or getting angry",
+     "You're really, really upset. When you're done crying, let's talk together."
+    ],
+    [
+     "Getting loud from excitement",
+     "You're so excited! Please use a small voice here."
+    ],
+    [
+     "About to throw something in anger",
+     "It's okay to be angry. Instead of throwing, let's stomp our feet."
+    ],
+    [
+     "When upset feelings last a long time",
+     "Some of that feeling is still there. Mom will stay right beside you."
+    ]
+   ]
+  },
+  "T": {
+   "tags": [
+    "Calm",
+    "Thinks inside",
+    "Settles quickly"
+   ],
+   "sum": "Doesn't show feelings in a big way and handles them inside. Returns to their usual self quickly.",
+   "det": "Children high in Calm don't show their ups and downs much, so they're easily seen as simply easy babies. It's not that they don't feel; they just show less. Instead of \"Are you okay?\", ask specifically, like \"How was that thing earlier?\", and open up other ways to express feelings, such as drawing or play.",
+   "st": "Calm and not swept away by feelings, bringing a sense of steadiness to others.",
+   "wa": "Their inner feelings are easy to miss, so ask specific questions.",
+   "say": "You don't have to say it. Could you show me with a drawing instead?",
+   "no": "You're so easy, I never have to worry about you.",
+   "ph": "handles feelings calmly inside",
+   "says": [
+    [
+     "Looking upset but not saying anything",
+     "You don't have to say it. Could you show me with a drawing instead?"
+    ],
+    [
+     "Only answering \"I'm fine\"",
+     "You said you're fine, but Mom is curious. Can you tell me a little?"
+    ],
+    [
+     "Showing little reaction even to happy things",
+     "You smiled a little! I'm happy I can see you like it."
+    ],
+    [
+     "Trying to hold it in alone",
+     "You don't have to hold it in alone. If it's hard, squeeze Mom's hand."
+    ]
+   ]
+  },
+  "J": {
+   "tags": [
+    "Regular",
+    "Needs a heads-up",
+    "Loves order"
+   ],
+   "sum": "Feels at ease within set routines and order. Follows along well when told in advance.",
+   "det": "Children high in Rhythm feel secure when they know what's coming next. Sudden changes shake them a lot, but a 5-minute warning and a daily schedule alone can prevent many conflicts. On days when routines break, like trips or events, at least keep sleep and mealtimes steady.",
+   "st": "Builds good habits and keeps promises and rules well.",
+   "wa": "Struggles with sudden changes, so tell them in advance.",
+   "say": "When the long hand gets to 6, we'll tidy up. After that, it's bath time.",
+   "no": "Stop it right now!",
+   "ph": "and feels at ease with a predictable routine",
+   "says": [
+    [
+     "Needing to end play and tidy up",
+     "When the long hand gets to 6, we'll tidy up. After that, it's bath time."
+    ],
+    [
+     "When plans suddenly change",
+     "The order changed today. Instead, I promise we'll go tomorrow."
+    ],
+    [
+     "Upset because it's not the usual way",
+     "You wanted to do it the usual way. Let's try it this way just this once."
+    ],
+    [
+     "Before going somewhere unfamiliar",
+     "Today we'll get in the car first, go to the doctor, and then come home."
+    ]
+   ]
+  },
+  "P": {
+   "tags": [
+    "Flexible",
+    "Spontaneous",
+    "Handles change well"
+   ],
+   "sum": "Moves with the flow of the moment. Keeps up easily even when plans change.",
+   "det": "Children high in Free handle change well and sleep and play well anywhere. On the other hand, habits like sleeping and eating at set times don't form on their own. Rather than fixing every routine, lock in just one or two essentials, like the bedtime order, and give choices within them; they'll accept it well.",
+   "st": "Flexible with change and enjoys new situations.",
+   "wa": "Adults need to fix one or two essential routines.",
+   "say": "Brushing teeth or reading a book, which do you want to do first?",
+   "no": "Why do you always do whatever you want?",
+   "ph": "and goes with the flow",
+   "says": [
+    [
+     "Putting off getting ready for bed",
+     "Brushing teeth or reading a book, which do you want to do first?"
+    ],
+    [
+     "So into play they can't move on",
+     "It's fun, right? Let's stack just five more blocks, then go."
+    ],
+    [
+     "Toys scattered everywhere",
+     "Should the cars go in first, or the dolls? You decide."
+    ],
+    [
+     "Running late in the morning",
+     "Shoes on before this song ends. Ready, go!"
+    ]
+   ]
+  }
+ },
+ "nick": {
+  "ESFJ": "Warm Expedition Leader",
+  "ESFP": "Sparkling Firework",
+  "ESTJ": "Careful Little Detective",
+  "ESTP": "Sharp-Eyed Adventurer",
+  "ENFJ": "Brave Parade Leader",
+  "ENFP": "Happy Whirlwind",
+  "ENTJ": "Steady Little Captain",
+  "ENTP": "Fearless Pioneer",
+  "ISFJ": "Gentle Little Gardener",
+  "ISFP": "Soft-Hearted Artist",
+  "ISTJ": "Calm Little Scholar",
+  "ISTP": "Quiet Detective",
+  "INFJ": "Kind Storyteller",
+  "INFP": "Easygoing Dreamer",
+  "INTJ": "Steady Little Craftsman",
+  "INTP": "Drifting Cloud Walker"
+ },
+ "opt": [
+  "Not at all",
+  "Not really",
+  "Somewhat",
+  "Mostly yes",
+  "Very much"
+ ],
+ "items": [
+  {
+   "id": "A0-0",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Quickly wanders around and explores even in a place they've never been.",
+   "r": 0,
+   "ex": "At an indoor playground or a relative's home for the first time, leaves your side to look around alone"
+  },
+  {
+   "id": "A1-0",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Prefers active play to sitting still.",
+   "r": 0,
+   "ex": "Even during story time, gets up to walk around or moves their body"
+  },
+  {
+   "id": "A2-0",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Goes up to children they've just met to talk or play.",
+   "r": 0,
+   "ex": "At the playground, says \"Let's play!\" to a child they've never seen, or plays next to them"
+  },
+  {
+   "id": "B0-0",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Is bothered by small textures like clothing tags or sock seams.",
+   "r": 0,
+   "ex": "Asks you to cut off tags or only wants to wear certain clothes"
+  },
+  {
+   "id": "B1-0",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Notices quickly when things at home are moved.",
+   "r": 0,
+   "ex": "When furniture moves or something new appears, asks \"What's this?\" as soon as they come in"
+  },
+  {
+   "id": "B2-0",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Gets upset or worried easily, even over small things.",
+   "r": 0,
+   "ex": "Cries when a drawing doesn't turn out right or a cracker breaks"
+  },
+  {
+   "id": "C0-0",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Shows joy with the whole body, shouting or jumping up and down.",
+   "r": 0,
+   "ex": "Shouts \"Wow!\" and bounces around when getting a present"
+  },
+  {
+   "id": "C1-0",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Talks about what happened or how they feel without being asked.",
+   "r": 0,
+   "ex": "On the way home from daycare, says \"A friend pushed me today\" without being asked"
+  },
+  {
+   "id": "C2-0",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Takes a while to calm down once crying or angry.",
+   "r": 0,
+   "ex": "Crying goes on for over 10 minutes or takes a long time to soothe"
+  },
+  {
+   "id": "D0-0",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Gets sleepy and hungry at about the same times every day.",
+   "r": 0,
+   "ex": "You can guess nap time and snack time without looking at a clock"
+  },
+  {
+   "id": "D1-0",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Accepts ending play much better when warned in advance.",
+   "r": 0,
+   "ex": "Fusses less if you say \"We're going home in 5 minutes\""
+  },
+  {
+   "id": "D2-0",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Wants things in their usual spot or done in a set order.",
+   "r": 0,
+   "ex": "Always puts shoes in the same place and dislikes it when the bedtime order changes"
+  },
+  {
+   "id": "G1-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Tries again several times even when something isn't working.",
+   "r": 0,
+   "ex": "Rebuilds a block tower after it falls"
+  },
+  {
+   "id": "G2-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Wants to dress themselves or tidy up on their own.",
+   "r": 0,
+   "ex": "Says \"I'll do it!\" and tries to put on shoes alone"
+  },
+  {
+   "id": "G3-0",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Goes over to comfort a friend or family member who is crying.",
+   "r": 0,
+   "ex": "Brings a tissue or toy to a crying sibling or friend"
+  },
+  {
+   "id": "A0-1",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Touches a new toy or game before hearing how it works.",
+   "r": 0,
+   "ex": "Presses the buttons as soon as a new toy box is opened"
+  },
+  {
+   "id": "A1-1",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Often runs or climbs, even indoors.",
+   "r": 0,
+   "ex": "Jumps off the sofa or climbs onto chairs and the table"
+  },
+  {
+   "id": "A2-1",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Hides behind a parent or hesitates when an unfamiliar adult talks to them.",
+   "r": 1,
+   "ex": "Hides without answering when a neighbor in the elevator asks \"How old are you?\""
+  },
+  {
+   "id": "B0-1",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Is startled by or dislikes loud sounds and bright lights.",
+   "r": 0,
+   "ex": "Covers ears or cries at the vacuum, hand dryer or fireworks"
+  },
+  {
+   "id": "B1-1",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Picks up right away when a parent's face or voice changes.",
+   "r": 0,
+   "ex": "Asks \"Mom, are you mad?\" when a parent is tired or upset"
+  },
+  {
+   "id": "B2-1",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Gets right back up after falling or making a mistake.",
+   "r": 1,
+   "ex": "Falls while playing, brushes it off and keeps playing"
+  },
+  {
+   "id": "C0-1",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "When angry or upset, shows it so big that everyone around knows.",
+   "r": 0,
+   "ex": "Cries loudly or lies on the floor when they can't get what they want at the store"
+  },
+  {
+   "id": "C1-1",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Doesn't mention upsetting things unless asked.",
+   "r": 1,
+   "ex": "You only find out about a fight with a friend from the teacher"
+  },
+  {
+   "id": "C2-1",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Quickly shifts attention to something else even when upset.",
+   "r": 1,
+   "ex": "Stops crying soon when shown a favorite toy"
+  },
+  {
+   "id": "D0-1",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Falls asleep at very different times from day to day.",
+   "r": 1,
+   "ex": "Some days asleep at 8, other days after 10"
+  },
+  {
+   "id": "D1-1",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Goes along easily even when plans suddenly change.",
+   "r": 1,
+   "ex": "Comes along without fuss when you go to the store instead of the planned playground"
+  },
+  {
+   "id": "D2-1",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Tries to correct you with \"That's not right\" when game rules or promises change.",
+   "r": 0,
+   "ex": "Says \"No, you have to do it like this\" when the reading order or game rules change"
+  },
+  {
+   "id": "G1-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Tries to finish games or crafts they've started.",
+   "r": 0,
+   "ex": "Only gets up after finishing a puzzle or coloring"
+  },
+  {
+   "id": "G2-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Says clearly what they want to do.",
+   "r": 0,
+   "ex": "Chooses: \"I'll wear this one,\" \"Not this, that\""
+  },
+  {
+   "id": "G3-1",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Shares toys or snacks.",
+   "r": 0,
+   "ex": "Offers a cracker while eating: \"Want one?\""
+  },
+  {
+   "id": "A0-2",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Only joins a new activity after watching for a while.",
+   "r": 1,
+   "ex": "At a trial class, watches the other kids for a few minutes before joining in"
+  },
+  {
+   "id": "A1-2",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Enjoys quiet play like books or puzzles for a long time.",
+   "r": 1,
+   "ex": "Sits drawing or doing puzzles for over 20 minutes"
+  },
+  {
+   "id": "A2-2",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Gets more excited in places where many people gather.",
+   "r": 0,
+   "ex": "Livelier than usual at birthday parties or family gatherings"
+  },
+  {
+   "id": "B0-2",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Notices even small differences in how food tastes or feels.",
+   "r": 0,
+   "ex": "Refuses to eat when the usual milk or side dish brand changes"
+  },
+  {
+   "id": "B1-2",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Carries on with what they're doing even when it's noisy or chaotic.",
+   "r": 1,
+   "ex": "Keeps playing even with the TV on or a sibling crying"
+  },
+  {
+   "id": "B2-2",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Remembers scary scenes or stories for a long time and brings them up again.",
+   "r": 0,
+   "ex": "Brings up a scary scene from days ago at bedtime"
+  },
+  {
+   "id": "C0-2",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Doesn't show much on the outside, whether in a good or bad mood.",
+   "r": 1,
+   "ex": "Just smiles quietly even when getting a gift they love"
+  },
+  {
+   "id": "C1-2",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Often asks to be hugged or for you to stay with them.",
+   "r": 0,
+   "ex": "Comes for hugs many times a day or says \"Stay next to me\""
+  },
+  {
+   "id": "C2-2",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Stays excited for a long time after something fun and is hard to settle.",
+   "r": 0,
+   "ex": "Too wound up to fall asleep until late after a day at an amusement park"
+  },
+  {
+   "id": "D0-2",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Gets out of sorts when the usual routine changes.",
+   "r": 0,
+   "ex": "Fussier or crankier on days with a different routine, like trips or holidays"
+  },
+  {
+   "id": "D1-2",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Wants to know the order in advance: \"What are we doing next?\"",
+   "r": 0,
+   "ex": "Asks in the morning, \"Where are we going today? And after that?\""
+  },
+  {
+   "id": "D2-2",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Switches games as ideas pop into their head.",
+   "r": 1,
+   "ex": "Suddenly switches from playing house to doctor to cars"
+  },
+  {
+   "id": "G1-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Quickly says \"I can't\" and quits if something looks hard.",
+   "r": 1,
+   "ex": "If a button doesn't go in once, immediately says \"Mom, do it for me\""
+  },
+  {
+   "id": "G2-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Wants adults to do even small things for them.",
+   "r": 1,
+   "ex": "Asks for help with using a spoon or putting on socks even though they can do it"
+  },
+  {
+   "id": "G3-2",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Finds waiting for a turn very hard.",
+   "r": 1,
+   "ex": "Pushes the child in front or cuts in line at the slide"
+  },
+  {
+   "id": "A0-3",
+   "ax": "A",
+   "sub": 0,
+   "gr": null,
+   "t": "Seeks new games more than familiar ones.",
+   "r": 0,
+   "ex": "Picks a toy they've never seen before their usual blocks"
+  },
+  {
+   "id": "A1-3",
+   "ax": "A",
+   "sub": 1,
+   "gr": null,
+   "t": "Seems to have energy left even after playing all day.",
+   "r": 0,
+   "ex": "Runs around at home again even after 2 hours at the playground"
+  },
+  {
+   "id": "A2-3",
+   "ax": "A",
+   "sub": 2,
+   "gr": null,
+   "t": "Takes time to feel comfortable with new friends.",
+   "r": 1,
+   "ex": "Only mentions friends' names a week or two into a new term"
+  },
+  {
+   "id": "B0-3",
+   "ax": "B",
+   "sub": 0,
+   "gr": null,
+   "t": "Doesn't mind much when clothes get wet or hands get dirty.",
+   "r": 1,
+   "ex": "Keeps playing in wet clothes after water play"
+  },
+  {
+   "id": "B1-3",
+   "ax": "B",
+   "sub": 1,
+   "gr": null,
+   "t": "Reacts to even small sounds or smells: \"What's that?\"",
+   "r": 0,
+   "ex": "Is the first to notice a distant siren or the smell of food"
+  },
+  {
+   "id": "B2-3",
+   "ax": "B",
+   "sub": 2,
+   "gr": null,
+   "t": "Holds on to being scolded or corrected for a long time.",
+   "r": 0,
+   "ex": "Brings up a morning scolding again in the evening, or stays glum"
+  },
+  {
+   "id": "C0-3",
+   "ax": "C",
+   "sub": 0,
+   "gr": null,
+   "t": "Laughs or cries loudly.",
+   "r": 0,
+   "ex": "Laughs or cries loud enough to be heard from another room"
+  },
+  {
+   "id": "C1-3",
+   "ax": "C",
+   "sub": 1,
+   "gr": null,
+   "t": "Shows things they made or did and waits for your reaction.",
+   "r": 0,
+   "ex": "Draws a picture and shows it again and again: \"Look at this!\""
+  },
+  {
+   "id": "C2-3",
+   "ax": "C",
+   "sub": 2,
+   "gr": null,
+   "t": "Even when feelings rise, returns to their usual self in a moment.",
+   "r": 1,
+   "ex": "Angry one minute, playing as if nothing happened 1 to 2 minutes later"
+  },
+  {
+   "id": "D0-3",
+   "ax": "D",
+   "sub": 0,
+   "gr": null,
+   "t": "Eats very different amounts from day to day.",
+   "r": 1,
+   "ex": "Ate a whole bowl yesterday, only a few spoonfuls today"
+  },
+  {
+   "id": "D1-3",
+   "ax": "D",
+   "sub": 1,
+   "gr": null,
+   "t": "Finds it hard to stop in the middle of something and move on.",
+   "r": 0,
+   "ex": "Strongly objects when called to eat while building blocks"
+  },
+  {
+   "id": "D2-3",
+   "ax": "D",
+   "sub": 2,
+   "gr": null,
+   "t": "Likes sorting toys by type or lining them up.",
+   "r": 0,
+   "ex": "Lines up cars by color or groups blocks by shape"
+  },
+  {
+   "id": "G1-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Focuses for a long time on activities they enjoy.",
+   "r": 0,
+   "ex": "Spends over 30 minutes on favorite blocks or drawing"
+  },
+  {
+   "id": "G2-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Shows a \"I can just try again\" attitude after mistakes.",
+   "r": 0,
+   "ex": "Spills water and, instead of crying, tries to wipe it up or pours again"
+  },
+  {
+   "id": "G3-3",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Tries to stop when told someone doesn't like what they're doing.",
+   "r": 0,
+   "ex": "Stops teasing when told \"Your sibling says it hurts\""
+  },
+  {
+   "id": "G1-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Returns to what they were doing even after being interrupted.",
+   "r": 0,
+   "ex": "Goes back to a craft after finishing a meal"
+  },
+  {
+   "id": "G2-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Feels proud of things they managed on their own.",
+   "r": 0,
+   "ex": "Dresses alone and boasts, \"I did it all by myself!\""
+  },
+  {
+   "id": "G3-4",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Accepts a friend's ideas when playing together.",
+   "r": 0,
+   "ex": "Goes along with \"This time let's play what you want\""
+  },
+  {
+   "id": "G1-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G1",
+   "t": "Moves on to something else as soon as it gets a little boring.",
+   "r": 1,
+   "ex": "Pulls out another toy after less than 5 minutes on one game"
+  },
+  {
+   "id": "G2-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G2",
+   "t": "Can't decide what to do on their own and hesitates a long time.",
+   "r": 1,
+   "ex": "Can't pick a snack for a long time, or says \"Mom, you choose\""
+  },
+  {
+   "id": "G3-5",
+   "ax": null,
+   "sub": null,
+   "gr": "G3",
+   "t": "Quits a game when things don't go their way.",
+   "r": 1,
+   "ex": "Says \"I'm not playing\" and leaves after losing or not getting the role they want"
+  }
+ ]
+}

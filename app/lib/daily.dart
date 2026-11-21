@@ -1,10 +1,10 @@
 // 오늘 탭의 데이터: 부모 칭찬 스티커 미션, 아이와의 약속·일정, 상황 카드. 설명은 docs/systems/today.md
 // 문장은 모두 assets/data/daily.json 에 미리 써 둔 것이다(AI 호출 없음).
 // 기록은 이 휴대폰에만 둔다(SharedPreferences 'childmbti_daily'). 계정 동기화에는 아직 넣지 않았다.
+import 'i18n.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'content.dart';
 import 'notify.dart';
@@ -66,7 +66,7 @@ class Daily {
 }
 
 late Daily D;
-Future<void> loadDaily() async => D = Daily(jsonDecode(await rootBundle.loadString('assets/data/daily.json')));
+Future<void> loadDaily() async => D = Daily(jsonDecode(await loadLocalized('assets/data/daily.json')));
 
 /// 아이의 유형: 지금 양육자의 검사가 끝났으면 그것, 아니면 검사를 마친 다른 양육자의 것. 아무도 안 했으면 null.
 Result? kidResult(Kid k) {
@@ -80,8 +80,8 @@ Result? kidResult(Kid k) {
 /// 극 글자 → 이름(탐험형 …)
 String poleName(String l) {
   for (final a in C.axes) {
-    if (a.h == l) return '${a.hi}형';
-    if (a.l == l) return '${a.lo}형';
+    if (a.h == l) return tr('{0}형', [a.hi]);
+    if (a.l == l) return tr('{0}형', [a.lo]);
   }
   return '';
 }
@@ -307,7 +307,7 @@ class DailyStore extends ChangeNotifier {
   List<(String, Notice)> notices(Kid k) {
     final r = kidResult(k);
     final ls = r == null ? ['J'] : [for (final x in r.ax) if (D.notice.containsKey(x.letter)) x.letter];
-    const order = ['3일 전', '전날 저녁', '당일 아침'];
+    final order = [tr('3일 전'), tr('전날 저녁'), tr('당일 아침')];
     final out = [for (final l in ls) for (final n in D.notice[l]!) (l, n)];
     out.sort((a, b) => order.indexOf(a.$2.when).compareTo(order.indexOf(b.$2.when)));
     return out;
@@ -319,5 +319,5 @@ final daily = DailyStore();
 /// 시각(분) → '오전 9:00'
 String hm(int m) {
   final h = m ~/ 60, mi = m % 60;
-  return '${h < 12 ? '오전' : '오후'} ${h % 12 == 0 ? 12 : h % 12}:${mi.toString().padLeft(2, '0')}';
+  return '${h < 12 ? tr('오전') : tr('오후')} ${h % 12 == 0 ? 12 : h % 12}:${mi.toString().padLeft(2, '0')}';
 }
