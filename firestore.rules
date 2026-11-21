@@ -39,6 +39,21 @@ service cloud.firestore {
         && request.resource.data.sc is map && request.resource.data.sc.size() <= 19
         && request.resource.data.at == request.time;
     }
+    // 가족 연결(공동 양육자 초대, app/lib/fam.dart): fam/{코드} 문서 하나에 아이 정보와 양육자별 결과.
+    // 로그인 없이 쓴다. 코드(10자리, 0·O·1·I 제외 32글자)를 아는 사람만 그 문서를 읽고 고칠 수 있고, 목록 보기·지우기는 막는다.
+    function famOk(d) {
+      return d.keys().hasOnly(['k', 'n', 'a', 'b', 's', 'f', 'p', 'at', 'recs'])
+        && d.k is string && d.k.size() > 0 && d.k.size() < 60
+        && (!('n' in d) || (d.n is string && d.n.size() < 60))
+        && (!('f' in d) || (d.f is string && d.f.size() < 40))
+        && d.recs is map && d.recs.size() <= 12;
+    }
+    match /fam/{code} {
+      allow get: if code.matches('^[A-HJ-NP-Z2-9]{10}$');
+      allow create: if code.matches('^[A-HJ-NP-Z2-9]{10}$') && famOk(request.resource.data);
+      allow update: if famOk(request.resource.data) && request.resource.data.k == resource.data.k
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['recs', 'n', 'a', 'b', 's']);
+    }
     match /{document=**} {
       allow read, write: if false;
     }

@@ -20,6 +20,8 @@ import 'ui/more.dart';
 import 'ui/today.dart';
 import 'ui/sibling.dart' show sibOther;
 import 'ui/links.dart' show initKakao;
+import 'deeplink.dart';
+import 'fam.dart';
 import 'upgrade.dart';
 
 Future<void> main() async {
@@ -32,7 +34,11 @@ Future<void> main() async {
   runApp(const App());
   // 로그인·동기화(Firebase)는 화면을 띄운 뒤에 연다. 기다리면 앱을 켤 때 빈 화면이 그만큼 길어진다.
   // 웹(미리 보기)은 Firebase 웹 설정이 없어 로그인·동기화를 켜지 않는다
-  if (!kIsWeb) unawaited(sync.init());
+  // 가족 연결(fam.dart)도 Firebase 가 열린 뒤에: 다른 휴대폰의 양육자 결과 받기, 바뀐 결과 올리기
+  if (!kIsWeb) unawaited(sync.init().then((_) => fam.pull(force: true)));
+  store.addListener(fam.schedule);
+  // 받은 링크(이미 설치된 앱 열기)와 설치 뒤 처음 켤 때의 플레이 설치 정보
+  unawaited(deepLinks.init());
   // 예전에 마친 검사 중 아직 통계에 넣지 않은 것을 보낸다
   unawaited(stats.submitPending());
   // 광고 동의(유럽 등)와 AdMob 초기화는 스플래시 영상이 끝난 뒤(intro.dart toTitle)에 한다.
@@ -44,6 +50,7 @@ Future<void> main() async {
   // 미션은 매일 오전 9시에 바뀐다: 켜 둔 동안 9시가 지나면, 그리고 앱을 다시 열 때마다 새 미션으로
   daily.startClock();
   AppLifecycleListener(onResume: () {
+    unawaited(fam.pull());
     daily.refresh();
     daily.startClock();
   });
@@ -66,6 +73,7 @@ Future<void> main() async {
   checkUpdate();
   // 평가 요청: 검사를 마친 리포트를 볼 때(조건은 upgrade.dart)
   tab.addListener(() {
+    if (tab.value == 1) unawaited(fam.pull());
     if (tab.value == 1 && store.cur.paid && fullDone(store.cur.ans)) unawaited(upgrade.onReportSeen());
   });
 }

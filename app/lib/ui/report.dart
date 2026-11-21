@@ -177,7 +177,11 @@ class _ReportViewState extends State<ReportView> {
       ], gap: 14),
       'next': col([
         h2(tr('이제 무엇을 할까요?')),
-        Tile(kid.inv != null ? tr('{0}에게 결과 보내기', [kid.inv!['from'] ?? tr('가족')]) : tr('결과 카드 공유하기'), icon: 'i_share', sub: tr('유형과 별명만 보냅니다'), onTap: () => openShare(context, kid.inv != null ? tr('결과 보내기') : tr('결과 공유'))),
+        // 가족 연결 코드로 이어진 아이는 결과가 저절로 합쳐지므로 결과 카드 공유만
+        if (kid.inv != null && kid.fam.isEmpty)
+          Tile(tr('{0}에게 결과 보내기', [kid.inv!['from'] ?? tr('가족')]), icon: 'i_share', sub: tr('유형과 별명만 보냅니다'), onTap: () => openShare(context, tr('결과 보내기')))
+        else
+          Tile(tr('결과 카드 공유하기'), icon: 'i_share', sub: tr('결과 화면을 그림으로 보냅니다'), onTap: () => openShare(context, tr('결과 공유'))),
         Tile(tr('다른 양육자도 검사하기'), icon: 'i_heart', sub: tr('서로 다르게 본 점을 비교해요'), onTap: () => addWho(context, invite: () => inviteCg(context))),
         Tile(tr('다시 검사하기'), icon: 'i_retry', sub: tr('시간이 지나 달라진 점을 봅니다'), onTap: () => startRetest(context)),
       ]),
@@ -417,7 +421,7 @@ class _ReportViewState extends State<ReportView> {
           muted(tr('같은 아이도 함께 지내는 시간과 장면이 달라 다르게 보일 수 있습니다.')),
           rich(tr("**비교할 양육자가 아직 없습니다.** 정밀검사를 마친 양육자가 두 명 이상이면 일치도, 다르게 본 이유, 함께 정할 약속까지 이곳에 정리됩니다. 지금 마친 사람: {0}.", [fin.isEmpty ? tr('없음') : fin.map((e) => cg(e.key)).join(listSep)]), style: small),
           Tile(tr('이 휴대폰에서 다른 양육자 검사'), icon: 'i_heart', sub: tr('광고 1번 보고 무료'), onTap: () => addWho(context, invite: () => inviteCg(context))),
-          Tile(tr('다른 휴대폰으로 초대 보내기'), icon: 'i_share', sub: tr('결과를 보내 주면 이곳에 합쳐집니다'), onTap: () => inviteCg(context)),
+          Tile(tr('다른 휴대폰으로 초대 보내기'), icon: 'i_share', sub: tr('검사를 마치면 이곳에 저절로 합쳐집니다'), onTap: () => inviteCg(context)),
         ])
       ]);
     }

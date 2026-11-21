@@ -965,10 +965,10 @@ const demoTools=()=>`<details><summary class="small muted">시제품 확인용 �
 
 /* ---------- 공유 ---------- */
 // kakaoKey: 카카오 개발자 콘솔의 JavaScript 키. 비어 있으면 휴대폰 공유 창(navigator.share), 그것도 없으면 링크 복사로 대신한다.
-// store: 구글 플레이 주소(출시 뒤 채움). 비어 있으면 '앱 받기' 대신 웹 검사로 보낸다.
+// store: 앱 받기 연결 페이지(go/, 기기에 맞는 스토어로 보냄). 결과 공유·앱 추천 링크가 이곳으로 간다. 초대·결과 보내기는 웹 기록끼리라 웹 주소 그대로.
 // SITE: 공유·초대·결과 링크에 쓰는 앱 주소. 자체 도메인으로 바꿀 때는 직접 고치지 말고 tools/set_domain.py 를 쓴다(og 태그, CNAME 까지 함께 바꿈).
 const SITE='https://childmbti.wonderwheel.co.kr/';
-const SHARE={kakaoKey:'7f384e7c7f27f5981b1e8dd43f5953ff', web:SITE, store:'', img:SITE+'assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
+const SHARE={kakaoKey:'7f384e7c7f27f5981b1e8dd43f5953ff', web:SITE, store:SITE+'go/', img:SITE+'assets/og.png', sdk:'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js'};
 const b64e=o=> btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const b64d=s=>{ try{ s=s.replace(/-/g,'+').replace(/_/g,'/'); return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))); }catch(e){ return null; } };
 // 문항 답을 66글자로: 문항 순서대로 0~5, 답 없음은 '-'
@@ -982,14 +982,14 @@ function kakaoReady(){ if(!SHARE.kakaoKey) return Promise.resolve(false); if(kak
     s.onload=()=>{ try{ Kakao.init(SHARE.kakaoKey); ok(true); }catch(e){ ok(false); } }; s.onerror=()=>ok(false); document.head.appendChild(s); }); }
 let invRole='';
 function msg(kind){ const r= done(ITEMS)? score() : null;
-  if(kind==='result'&&r) return {title:`우리 아이는 ${r.code} '${NICK[r.code]}'`, text:'만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', url:SHARE.web+'#t='+r.code, btn:'우리 아이도 검사하기', img:SHARE.web+'assets/share/'+r.code+'.png'};
+  if(kind==='result'&&r) return {title:`우리 아이는 ${r.code} '${NICK[r.code]}'`, text:'만 2~7세 아이 기질을 MBTI처럼 네 글자로. 우리 아이 MBTI도 알아보세요.', url:(SHARE.store||SHARE.web)+'#t='+r.code, btn:'우리 아이도 검사하기', img:SHARE.web+'assets/share/'+r.code+'.png'};
   if(kind==='invite'){ const w=invRole||CGL.find(n=>n!==st.who);
     return {title:`${ga(st.who)} ${nm()} 기질검사에 초대했어요`, text:`${w}의 눈으로 본 ${nm()}는 어떤 아이일까요? 따로 답하고 결과를 나란히 비교해요.`, btn:'검사하러 가기',
      url:SHARE.web+'#i='+b64e({k:st.key,n:st.name,a:st.age,f:st.who,w,p:firstDone()?1:0,o:firstBuy()})}; }
   if(kind==='back'){ const to=st.inv&&st.inv.from||'가족';
     return {title:`${ga(st.who)} ${nm()} 검사 결과를 보냈어요`, text:`${to}의 휴대폰에서 열면 '양육자 비교'에 합쳐집니다.`, btn:'결과 합쳐 보기',
      url:SHARE.web+'#c='+b64e({k:st.key,n:st.name,a:st.age,w:st.who,d:st.date,x:encA(st.ans)})}; }
-  return {title:'내 아이의 MBTI · 영유아 기질검사', text:'부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?', url:SHARE.web+'#r=app', btn:SHARE.store?'앱 받기':'검사해 보기'}; }
+  return {title:'내 아이의 MBTI · 영유아 기질검사', text:'부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?', url:(SHARE.store||SHARE.web)+'#r=app', btn:SHARE.store?'앱 받기':'검사해 보기'}; }
 let toastT=0;
 function toast(t){ let el=$('#toast'); if(!el){ el=document.createElement('div'); el.id='toast'; el.setAttribute('role','status'); document.body.appendChild(el); }
   el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),2600); }
@@ -1032,7 +1032,7 @@ function readLanding(){ const h=location.hash.slice(1), q=new URLSearchParams(/^
   else if(NICK[q.get('t')]) L={kind:'type',code:q.get('t')};
   else if(q.get('r')) L={kind:'app'};
   if(L){ land=L; history.replaceState(null,'',location.pathname+'#land'); } }
-const appCTA=()=> SHARE.store? `<a class="btn" href="${SHARE.store}">구글 플레이에서 앱 받기</a><button class="btn ghost" data-go="home">웹에서 먼저 해 보기</button>`
+const appCTA=()=> SHARE.store? `<a class="btn" href="${SHARE.store}#r=app">앱 받기</a><button class="btn ghost" data-go="home">웹에서 먼저 해 보기</button>`
   : `<button class="btn" data-go="home">우리 아이 검사하기</button><p class="small muted">앱은 곧 구글 플레이에 나옵니다. 지금은 웹에서 바로 검사할 수 있습니다.</p>`;
 V.land=()=>{ const L=land; if(!L) return V.home();
  if(L.kind==='inv'){ const d=L.d, n=d.n||'우리 아이', roles=[...new Set([d.w,...CGL])].filter(x=>x&&x!==d.f); const w=roles.includes(invRole)?invRole:roles[0]; invRole=w;

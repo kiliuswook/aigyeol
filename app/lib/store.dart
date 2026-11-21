@@ -16,6 +16,10 @@ class Price {
 
 /// 공유·초대·결과 링크에 쓰는 앱 웹 주소(웹 index.html 의 SITE 와 같게)
 const kSite = 'https://childmbti.wonderwheel.co.kr/';
+
+/// 공유 링크가 가는 곳: 기기에 맞는 스토어(안드로이드 구글 플레이, 아이폰 앱스토어)로 바로 보내는 연결 페이지(저장소 go/index.html).
+/// 안드로이드는 앱이 있으면 앱을 열고, 없으면 플레이로 가며 링크 값을 설치 정보로 넘긴다(deeplink.dart).
+const kGo = '${kSite}go/';
 const kCgl = ['엄마', '아빠', '할머니', '할아버지', '기타 양육자'];
 
 /// 이름을 직접 적는 양육자 칸. 적은 이름(예: 이모)이 그대로 양육자 이름이 된다(통계에서는 '기타 양육자'로 묶는다).
@@ -70,14 +74,15 @@ class Buy {
 
 /// 아이 한 명. key: 기기 사이에서 같은 아이를 알아보는 무작위 값(초대·결과 링크에 실림).
 /// ext: 다른 휴대폰에서 첫 검사를 결제한 아이(초대로 받은 아이) {o: 첫 결제 번호, from}. inv: 받은 초대 {from}
+/// fam: 가족 연결 코드(서버 fam/{코드}). 같은 코드를 가진 휴대폰끼리 이 아이의 양육자별 결과가 자동으로 오간다(fam.dart).
 class Kid {
   /// age: '만 5세' 같은 글(링크·예전 기록용). birth: 태어난 해와 달 'YYYY-MM'. birth 가 있으면 age 는 거기서 계산한다.
   /// sex: 'M' 남자아이, 'F' 여자아이, '' 아직 안 넣음(또래 평균을 고르는 데만 쓴다)
-  String id, key, name, age, who, birth, sex;
+  String id, key, name, age, who, birth, sex, fam;
   Map<String, Rec> recs;
   List<Buy> buys;
   Map<String, dynamic>? ext, inv;
-  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.sex = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
+  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.sex = '', this.fam = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
       : id = id ?? 'k${rid()}', key = key ?? rid(), recs = recs ?? {}, buys = buys ?? [] {
     if (ageOf(birth).$1.isNotEmpty) age = ageOf(birth).$1;
   }
@@ -101,12 +106,12 @@ class Kid {
       ];
 
   Map<String, dynamic> toJson() => {
-        'id': id, 'key': key, 'name': name, 'age': age, if (birth.isNotEmpty) 'birth': birth, if (sex.isNotEmpty) 'sex': sex, 'who': who,
+        'id': id, 'key': key, 'name': name, 'age': age, if (birth.isNotEmpty) 'birth': birth, if (sex.isNotEmpty) 'sex': sex, if (fam.isNotEmpty) 'fam': fam, 'who': who,
         'recs': {for (final e in recs.entries) if (e.value.hasAny || e.key == who) e.key: e.value.toJson()},
         'buys': [for (final b in buys) b.toJson()], if (ext != null) 'ext': ext, if (inv != null) 'inv': inv,
       };
   factory Kid.fromJson(dynamic j) => Kid(
-        id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', birth: '${j['birth'] ?? ''}', sex: j['sex'] == 'M' || j['sex'] == 'F' ? j['sex'] : '', who: '${j['who'] ?? '엄마'}',
+        id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', birth: '${j['birth'] ?? ''}', sex: j['sex'] == 'M' || j['sex'] == 'F' ? j['sex'] : '', fam: '${j['fam'] ?? ''}', who: '${j['who'] ?? '엄마'}',
         recs: {for (final e in ((j['recs'] ?? {}) as Map).entries) '${e.key}': Rec.fromJson(e.value)},
         buys: [for (final b in (j['buys'] ?? []) as List) Buy.fromJson(b)],
         ext: (j['ext'] as Map?)?.cast<String, dynamic>(), inv: (j['inv'] as Map?)?.cast<String, dynamic>(),
@@ -214,6 +219,7 @@ class Store extends ChangeNotifier {
       if (l.age.isEmpty) l.age = r.age;
       if (l.birth.isEmpty) l.birth = r.birth;
       if (l.sex.isEmpty) l.sex = r.sex;
+      if (l.fam.isEmpty) l.fam = r.fam;
       l.ext ??= r.ext;
       l.inv ??= r.inv;
       final ids = {for (final b in l.buys) b.id};
@@ -398,10 +404,12 @@ class Store extends ChangeNotifier {
           if ('012345'.contains(s[i])) C.items[i].id: int.parse(s[i])
       };
 
-  String inviteUrl(String role) => '$kSite#i=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, if (kid.birth.isNotEmpty) 'b': kid.birth, if (kid.sex.isNotEmpty) 's': kid.sex, 'f': kid.who, 'w': role, 'p': kid.firstDone ? 1 : 0, 'o': kid.firstBuyId()})}';
-  String backUrl() => '$kSite#c=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, 'w': kid.who, 'd': cur.date, 'x': encA(cur.ans)})}';
-  static String typeUrl(String code) => '$kSite#t=$code';
-  static const appUrl = '$kSite#r=app';
+  String inviteUrl(String role) => '$kGo#i=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, if (kid.birth.isNotEmpty) 'b': kid.birth, if (kid.sex.isNotEmpty) 's': kid.sex, 'f': kid.who, 'w': role, 'p': kid.firstDone ? 1 : 0, 'o': kid.firstBuyId()})}';
+  String backUrl() => '$kGo#c=${b64e({'k': kid.key, 'n': kid.name, 'a': kid.age, 'w': kid.who, 'd': cur.date, 'x': encA(cur.ans)})}';
+  static String typeUrl(String code) => '$kGo#t=$code';
+  static const appUrl = '$kGo#r=app';
+  /// 가족 연결 코드 초대. w: 초대한 사람이 고른 상대 역할(받는 화면에서 먼저 골라 둠)
+  static String famUrl(String code, String role) => '$kGo#f=$code&w=${Uri.encodeComponent(role)}';
 
   /// 초대 받기: 같은 아이(key)가 있으면 그 아이로, 없으면 새 아이로. 고른 역할로 검사를 시작할 수 있게 한다.
   void joinInvite(Map d, String role) {
@@ -423,6 +431,25 @@ class Store extends ChangeNotifier {
     kid.inv = {'from': '${d['f'] ?? ''}', 'at': DateTime.now().millisecondsSinceEpoch};
     kid.who = role;
     save();
+  }
+
+  /// 가족 연결 코드로 초대 받기(fam.dart 가 서버에서 읽은 초대 [d]). 초대 링크와 같지만 아이에 코드를 붙여
+  /// 이 뒤로는 양쪽 휴대폰의 결과가 서버를 거쳐 자동으로 합쳐진다.
+  void joinFam(String code, Map d, String role) {
+    joinInvite(d, role);
+    kid.fam = code;
+    kid.inv = {...?kid.inv, 'fam': code};
+    save();
+  }
+
+  /// 가족 연결로 받은 다른 휴대폰의 양육자 결과를 넣는다. 이 휴대폰에서 직접 답한 같은 이름의 기록은 덮지 않는다.
+  /// 바뀐 것이 있으면 true.
+  bool putFamRec(Kid k, String who, Rec o) {
+    final mine = k.recs[who];
+    if (mine != null && mine.hasAny && !mine.recv) return false;
+    if (mine != null && mine.recv && mine.t >= o.t) return false;
+    k.recs[who] = o;
+    return true;
   }
 
   /// 결과 받기: 같은 아이의 그 양육자 결과로 합친다.

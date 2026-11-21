@@ -2,6 +2,7 @@
 import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../content.dart';
+import '../fam.dart';
 import '../main.dart';
 import '../scoring.dart';
 import '../store.dart';
@@ -18,12 +19,61 @@ class LandScreen extends StatefulWidget {
 
 class _LandScreenState extends State<LandScreen> {
   String role = '';
+  /// 가족 연결 코드로 읽은 초대(fam). null 이면 읽는 중, {} 이면 못 읽음.
+  Map? famD;
+
+  @override
+  void initState() {
+    super.initState();
+    final l = widget.l;
+    if (l.kind == 'fam') {
+      role = l.role ?? '';
+      _readFam();
+    }
+  }
+
+  Future<void> _readFam() async {
+    // Firebase 가 막 켜지는 중이면 잠시 기다린다(설치 뒤 처음 켤 때)
+    for (var i = 0; i < 10 && !fam.ready; i++) {
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+    final d = await fam.read(widget.l.code!);
+    if (mounted) setState(() => famD = d ?? {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    final l = widget.l, d = l.d ?? {};
+    final l = widget.l, d = l.kind == 'fam' ? (famD ?? {}) : (l.d ?? {});
     List<Widget> body;
-    if (l.kind == 'inv') {
+    final mine = l.kind == 'fam' ? store.kids.where((k) => k.fam == l.code).firstOrNull : null;
+    if (l.kind == 'fam' && mine != null) {
+      body = [
+        PaperCard([
+          eyebrow(tr('초대장')),
+          h2(tr('이미 이 휴대폰에 연결된 아이예요')),
+          muted(tr("다른 휴대폰의 결과는 리포트의 '양육자 비교'에 저절로 합쳐집니다.")),
+          Btn(tr('리포트 보기'), () {
+            store.setKid(mine.id);
+            tab.value = 1;
+            Navigator.of(context).pop();
+          }),
+        ])
+      ];
+    } else if (l.kind == 'fam' && famD == null) {
+      body = [const Center(child: Padding(padding: EdgeInsets.all(40), child: CircularProgressIndicator()))];
+    } else if (l.kind == 'fam' && d['k'] == null) {
+      body = [
+        PaperCard([
+          eyebrow(tr('초대장')),
+          h2(tr('초대 정보를 찾지 못했어요')),
+          muted(tr('초대 코드 {0}를 확인해 주세요. 인터넷 연결이 없으면 연결된 뒤 다시 열어 주세요.', [Fam.show(l.code!)])),
+          Btn(tr('다시 시도'), () {
+            setState(() => famD = null);
+            _readFam();
+          }),
+        ])
+      ];
+    } else if (l.kind == 'inv' || l.kind == 'fam') {
       final n = '${d['n'] ?? ''}'.isEmpty ? tr('우리 아이') : '${d['n']}', f = '${d['f'] ?? tr('가족')}';
       final roles = {'${d['w'] ?? ''}', ...kCgl}.where((x) => x.isNotEmpty && x != f).toList();
       if (!roles.contains(role)) role = roles.first;
@@ -40,11 +90,13 @@ class _LandScreenState extends State<LandScreen> {
             Text(tr('광고 1번 보고 검사'), style: smallMuted),
           ]),
           Btn(tr('검사 시작하기'), () {
-            store.joinInvite(d, role);
+            l.kind == 'fam' ? store.joinFam(l.code!, d, role) : store.joinInvite(d, role);
             Navigator.of(context).pop();
             startFull(context);
           }),
-          muted(tr('다 마치면 결과를 {0}에게 보내는 버튼이 나옵니다.', [cg(f)])),
+          muted(l.kind == 'fam'
+              ? tr("다 마치면 결과가 {0}의 앱 '양육자 비교'에 저절로 합쳐지고, {0}의 결과도 이 휴대폰에서 볼 수 있어요.", [cg(f)])
+              : tr('다 마치면 결과를 {0}에게 보내는 버튼이 나옵니다.', [cg(f)])),
         ])
       ];
     } else if (l.kind == 'res') {

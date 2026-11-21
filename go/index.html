@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#FBF5EA">
+<meta name="robots" content="noindex">
+<title>내 아이의 MBTI</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="내 아이의 MBTI · 영유아 기질검사">
+<meta property="og:description" content="부모가 답하는 만 2~7세 기질검사. 우리 아이는 어떤 네 글자일까요?">
+<meta property="og:image" content="https://childmbti.wonderwheel.co.kr/assets/og.png">
+<link rel="icon" href="../assets/icon_180.png">
+<!--
+  공유 링크 연결 페이지. 설명 docs/systems/share-links.md
+  앱의 공유 링크는 모두 이곳(https://childmbti.wonderwheel.co.kr/go/#값)으로 온다. 웹 검사로 보내지 않고 기기에 맞는 스토어로 바로 보낸다.
+  - 안드로이드: 앱이 있으면 앱을 열고(childmbti://open?값), 없으면 구글 플레이로. 플레이 주소의 referrer 에 값을 실어
+    설치 뒤 처음 켤 때 앱이 초대를 이어 간다(app/lib/deeplink.dart).
+  - 아이폰: 앱스토어로. 앱스토어는 설치 정보를 넘겨주지 않아 초대는 초대 코드를 복사해 두고 앱에서 넣는다.
+    IOS_LIVE 가 false 인 동안(앱스토어 출시 전)은 스토어 주소가 열리지 않으므로 웹 검사를 대신 안내한다.
+  - PC: 두 스토어 버튼과 초대 코드.
+  값: f=가족 연결 코드(&w=역할), t=유형(결과 공유), r=app(앱 추천), i=·c=(예전 초대·결과 링크)
+-->
+<style>
+:root{--bg:#FBF5EA;--card:#FFFDF8;--fg:#2B3550;--muted:#7A7F8F;--accent:#F2A57E;--line:#E7DCCB}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;line-height:1.6}
+main{max-width:420px;margin:0 auto;padding:32px 16px 40px;text-align:center}
+.mascot{width:120px;height:120px;object-fit:contain}
+h1{font-size:22px;margin:10px 0 6px}
+p{margin:6px 0;color:var(--muted);font-size:15px}
+.code{display:inline-block;margin:14px 0 4px;padding:10px 18px;border:2px dashed var(--line);border-radius:14px;background:var(--card);font-size:26px;font-weight:700;letter-spacing:3px;color:var(--fg)}
+.btn{display:block;width:100%;margin:10px 0 0;padding:14px 16px;border-radius:14px;border:0;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;font-family:inherit}
+.dark{background:var(--fg);color:#fff}
+.ghost{background:var(--card);color:var(--fg);border:2px solid var(--line)}
+.small{font-size:13px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <img class="mascot" src="../assets/mascot_child.webp" alt="">
+  <h1 id="title"></h1>
+  <p id="desc"></p>
+  <div id="codeBox" hidden><div class="code" id="code"></div><p class="small" id="codeHelp"></p></div>
+  <div id="btns"></div>
+  <p class="small" id="note"></p>
+</main>
+<script>
+(function(){
+  var PKG='kr.co.wonderwheel.childmbti';
+  var IOS_STORE='https://apps.apple.com/app/id6836670196';
+  var IOS_LIVE=false; // 앱스토어 정식 출시 뒤 true 로 바꾼다
+  var SITE='https://childmbti.wonderwheel.co.kr/';
+
+  var L={
+    ko:{t:'내 아이의 MBTI',d:'부모가 답하는 만 2~7세 기질검사',inv:'가족이 아이 기질검사에 초대했어요',invD:'앱을 설치하면 같은 아이의 검사로 바로 이어집니다.',play:'구글 플레이에서 받기',ios:'앱스토어에서 받기',iosCopy:'초대 코드 복사하고 앱스토어로',open:'앱이 이미 있어요 · 앱 열기',codeHelp:'앱을 연 뒤 더보기의 \'초대 코드 입력\'에 넣어 주세요.',copied:'초대 코드를 복사했어요.',web:'웹에서 바로 검사하기',iosSoon:'아이폰 앱은 곧 앱스토어에 나옵니다. 그동안은 웹에서 검사할 수 있어요.',wait:'스토어로 이동하는 중…'},
+    en:{t:"My Child's MBTI",d:'A temperament test for ages 2–7, answered by parents',inv:'Your family invited you to a temperament test',invD:"Install the app to continue with the same child's test.",play:'Get it on Google Play',ios:'Download on the App Store',iosCopy:'Copy invite code & open App Store',open:'I already have the app · Open',codeHelp:"Open the app and enter it under More > 'Enter invite code'.",copied:'Invite code copied.',web:'Take the test on the web',iosSoon:'The iPhone app is coming to the App Store soon. Meanwhile you can take the test on the web.',wait:'Opening the store…'},
+    ja:{t:'わが子のMBTI',d:'保護者が答える2〜7歳の気質診断',inv:'家族から気質診断に招待されました',invD:'アプリを入れると同じ子の診断にそのまま進めます。',play:'Google Play で入手',ios:'App Store で入手',iosCopy:'招待コードをコピーして App Store へ',open:'アプリを持っています・開く',codeHelp:'アプリを開き、その他の「招待コード入力」に入れてください。',copied:'招待コードをコピーしました。',web:'Webで診断する',iosSoon:'iPhoneアプリはまもなく App Store に登場します。それまではWebで診断できます。',wait:'ストアへ移動しています…'},
+    zh:{t:'我家孩子的MBTI',d:'由父母作答的2~7岁气质测评',inv:'家人邀请你参加孩子的气质测评',invD:'安装应用后即可继续同一个孩子的测评。',play:'在 Google Play 下载',ios:'在 App Store 下载',iosCopy:'复制邀请码并前往 App Store',open:'已安装应用 · 打开',codeHelp:'打开应用后，在“更多”的“输入邀请码”中填写。',copied:'已复制邀请码。',web:'在网页上测评',iosSoon:'iPhone 应用即将上架 App Store。在此之前可以在网页上测评。',wait:'正在前往应用商店…'},
+    es:{t:'El MBTI de mi peque',d:'Test de temperamento de 2 a 7 años, respondido por los padres',inv:'Tu familia te invitó a un test de temperamento',invD:'Instala la app para seguir con el test del mismo niño.',play:'Disponible en Google Play',ios:'Descargar en App Store',iosCopy:'Copiar código e ir a App Store',open:'Ya tengo la app · Abrir',codeHelp:"Abre la app e introdúcelo en Más > 'Introducir código'.",copied:'Código copiado.',web:'Hacer el test en la web',iosSoon:'La app de iPhone llegará pronto a App Store. Mientras tanto puedes hacer el test en la web.',wait:'Abriendo la tienda…'},
+    vi:{t:'MBTI của con tôi',d:'Bài kiểm tra khí chất cho trẻ 2–7 tuổi do cha mẹ trả lời',inv:'Gia đình đã mời bạn làm bài kiểm tra khí chất',invD:'Cài ứng dụng để tiếp tục bài kiểm tra của cùng bé.',play:'Tải trên Google Play',ios:'Tải trên App Store',iosCopy:'Sao chép mã mời và mở App Store',open:'Đã có ứng dụng · Mở',codeHelp:"Mở ứng dụng và nhập ở Thêm > 'Nhập mã mời'.",copied:'Đã sao chép mã mời.',web:'Làm bài trên web',iosSoon:'Ứng dụng iPhone sắp có trên App Store. Trong lúc chờ, bạn có thể làm bài trên web.',wait:'Đang mở cửa hàng…'}
+  };
+  var lang=((navigator.language||'ko').slice(0,2)).toLowerCase();
+  var T=L[lang]||L.en; document.documentElement.lang=L[lang]?lang:'en';
+
+  var h=location.hash.replace(/^#/,'');
+  var q={}; h.split('&').forEach(function(kv){var i=kv.indexOf('=');if(i>0)q[kv.slice(0,i)]=kv.slice(i+1);});
+  var code=/^[A-HJ-NP-Z2-9]{10}$/.test(q.f||'')?q.f:'';
+  var invite=!!(code||q.i);
+  var ua=navigator.userAgent||'';
+  var android=/Android/i.test(ua), ios=/iPhone|iPad|iPod/i.test(ua)||(/Macintosh/.test(ua)&&'ontouchend' in document);
+  var play='https://play.google.com/store/apps/details?id='+PKG+(h?'&referrer='+encodeURIComponent(h):'');
+  var appUrl='childmbti://open'+(h?'?'+h:'');
+  var webUrl=SITE+(h&&!code?'#'+h:'');
+  var showCode=code?code.slice(0,5)+'-'+code.slice(5):'';
+
+  var $=function(id){return document.getElementById(id)};
+  $('title').textContent=invite?T.inv:T.t;
+  $('desc').textContent=invite?T.invD:T.d;
+  document.title=T.t;
+  if(code){ $('code').textContent=showCode; $('codeHelp').textContent=T.codeHelp; $('codeBox').hidden=false; }
+
+  function btn(label,cls,href,onclick){var a=document.createElement('a');a.className='btn '+cls;a.textContent=label;a.href=href||'#';if(onclick)a.onclick=onclick;$('btns').appendChild(a);return a;}
+  function copyCode(){ if(!code) return; var t=T.inv+' · '+showCode;
+    try{ navigator.clipboard.writeText(t); }catch(e){ var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy')}catch(_){}x.remove(); } }
+
+  if(android){
+    var intent='intent://open'+(h?'?'+h:'')+'#Intent;scheme=childmbti;package='+PKG+';S.browser_fallback_url='+encodeURIComponent(play)+';end';
+    btn(T.play,'dark',play);
+    btn(T.open,'ghost',intent);
+    $('note').textContent=T.wait;
+    // 앱이 있으면 앱이 열리고, 없으면 구글 플레이(설치 정보에 링크 값)로 간다
+    location.replace(intent);
+    setTimeout(function(){ $('note').textContent=''; },2500);
+  } else if(ios){
+    if(IOS_LIVE){
+      if(invite){
+        btn(code?T.iosCopy:T.ios,'dark',IOS_STORE,function(){copyCode();});
+        btn(T.open,'ghost',appUrl);
+      } else {
+        btn(T.ios,'dark',IOS_STORE);
+        $('note').textContent=T.wait;
+        location.replace(IOS_STORE);
+      }
+    } else {
+      $('note').textContent=T.iosSoon;
+      btn(T.open,'ghost',appUrl);
+      if(!code) btn(T.web,'dark',webUrl);
+    }
+  } else {
+    btn(T.play,'dark',play);
+    if(IOS_LIVE) btn(T.ios,'ghost',IOS_STORE);
+    if(!code) btn(T.web,'ghost',webUrl);
+  }
+})();
+</script>
+</body>
+</html>

@@ -78,6 +78,7 @@ class MoreView extends StatelessWidget {
         Row(children: [
           for (var i = 0; i < sh.length; i++) ...[if (i > 0) const SizedBox(width: 6), cell(sh[i])],
         ]),
+        Tile(tr('초대 코드 입력'), icon: 'i_send', sub: tr('가족에게 받은 초대를 이어서 검사해요'), onTap: () => enterCode(context)),
         eyebrow(tr('내 정보')),
         ListenableBuilder(
             listenable: sync,

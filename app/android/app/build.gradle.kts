@@ -66,4 +66,6 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // 플레이 설치 정보(초대 링크로 설치한 사람의 초대 이어 가기, MainActivity.kt)
+    implementation("com.android.installreferrer:installreferrer:2.2")
 }

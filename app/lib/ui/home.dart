@@ -8,7 +8,7 @@ import '../scoring.dart';
 import '../store.dart';
 import 'flow.dart';
 import 'kit.dart';
-import 'share.dart' show inviteCg, openShare;
+import 'share.dart' show enterCode, inviteCg, openShare;
 import 'report.dart' show eun;
 import 'setup.dart';
 
@@ -165,6 +165,8 @@ class HomeView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Tile(tr('샘플 리포트 먼저 보기'), icon: 'i_doc', sub: tr('예시 아이 콩이의 리포트'), onTap: () => showSample(context)),
+          const SizedBox(height: 6),
+          Tile(tr('가족에게 초대받았어요'), icon: 'i_send', sub: tr('초대 코드를 넣고 같은 아이로 이어서 검사'), onTap: () => enterCode(context)),
         ]),
       );
 }
