@@ -9,6 +9,7 @@ import 'content.dart';
 import 'daily.dart';
 import 'notify.dart';
 import 'stats.dart';
+import 'scoring.dart';
 import 'store.dart';
 import 'sync.dart';
 import 'ui/kit.dart';
@@ -19,6 +20,7 @@ import 'ui/more.dart';
 import 'ui/today.dart';
 import 'ui/sibling.dart' show sibOther;
 import 'ui/links.dart' show initKakao;
+import 'upgrade.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +58,16 @@ Future<void> main() async {
   askOnce();
   // 아래 메뉴를 옮기는 것도 페이지 전환으로 센다
   tab.addListener(ads.onPageChange);
+  // 스토어 새 버전 확인(안드로이드는 뒤에서 받아 두기, iOS 는 업데이트 창): 인트로가 끝난 뒤 한 번
+  void checkUpdate() {
+    if (introDone.value) unawaited(Future.delayed(const Duration(seconds: 3), upgrade.check));
+  }
+  introDone.addListener(checkUpdate);
+  checkUpdate();
+  // 평가 요청: 검사를 마친 리포트를 볼 때(조건은 upgrade.dart)
+  tab.addListener(() {
+    if (tab.value == 1 && store.cur.paid && fullDone(store.cur.ans)) unawaited(upgrade.onReportSeen());
+  });
 }
 
 /// 아래 메뉴: 0 홈, 1 리포트, 2 더보기(가족 초대·공유, 계정, 안내), 3 오늘(미션·약속·상황 카드).
@@ -69,6 +81,8 @@ class App extends StatelessWidget {
         key: ValueKey(l),
         title: tr('내 아이의 MBTI'),
         debugShowCheckedModeBanner: false,
+        navigatorKey: navKey,
+        scaffoldMessengerKey: messengerKey,
         navigatorObservers: [AdRouteObserver()],
         // 날짜·시각 고르기 창도 앱 언어로
         locale: Locale(l),

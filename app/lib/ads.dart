@@ -39,6 +39,7 @@ class Ads {
   DateTime? _openLoadedAt;
   bool _openLoading = false;
   bool _showing = false;
+  bool get showing => _showing;
   // 앱을 켠 뒤 3분이 지나야 첫 앱 오프닝 광고가 나온다
   DateTime _lastFull = DateTime.now();
 

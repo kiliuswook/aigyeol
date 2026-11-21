@@ -13,6 +13,7 @@ import '../daily.dart';
 import '../content.dart';
 import '../notify.dart';
 import 'pay.dart';
+import '../upgrade.dart';
 
 /// 언어 고르기. 처음에는 휴대폰 언어를 따른다.
 Future<void> langPopup(BuildContext context) => popup(context, title: langCode == 'en' ? 'Language' : '${tr('언어')} · Language', (c, set) => [
@@ -103,6 +104,7 @@ class MoreView extends StatelessWidget {
             builder: (context, s) => s.data == true
                 ? Tile(tr('광고 개인정보 설정'), icon: 'i_lock', sub: tr('맞춤 광고 동의 바꾸기'), onTap: ads.showPrivacyOptions)
                 : const SizedBox.shrink()),
+        Tile(tr('앱 평가하기'), icon: 'i_star', sub: tr('별점과 한 줄 후기가 큰 힘이 돼요'), onTap: upgrade.openStore),
         Tile(tr('{0}의 기록 지우기', [store.nm]), icon: 'i_close', sub: tr('이 휴대폰에서 이 아이의 기록 초기화'), onTap: () => reset(context)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 4),
