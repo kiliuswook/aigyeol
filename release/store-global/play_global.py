@@ -34,7 +34,7 @@ def show():
                                          [n['language'] for n in r.get('releaseNotes', [])]) for r in t.get('releases', [])])
         for tr in ('beta', 'production'):
             r = s.get(f'{b}/countryAvailability/{tr}')
-            j = r.json() if r.ok else r.text[:200]
+            j = r.json() if r.ok and r.text.strip() else f'{r.status_code} {r.text[:200]}'
             if isinstance(j, dict):
                 print('countries', tr, 'restOfWorld=', j.get('restOfWorld'), len(j.get('countries', [])), 'countries')
             else:
