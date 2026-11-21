@@ -68,7 +68,7 @@ jobs:
           KP: ${{ secrets.ANDROID_KEY_PASSWORD }}
           KA: ${{ secrets.ANDROID_KEY_ALIAS }}
         run: |
-          echo "$KS" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          printf '%s' "$KS" | tr -d '\r\n ' | base64 -d > "$RUNNER_TEMP/upload.jks"
           printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=%s\nstoreFile=%s\n' "$SP" "$KP" "$KA" "$RUNNER_TEMP/upload.jks" > app/android/key.properties
 
       - name: AAB 빌드
