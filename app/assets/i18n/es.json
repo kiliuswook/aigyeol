@@ -618,5 +618,9 @@
  "초대 코드를 넣고 같은 아이로 이어서 검사": "Introduce el código para hacer el test del mismo niño",
  "받은 사람은 링크를 눌러 앱을 설치하면 {0}의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사하고, 다 마치면 결과가 이 휴대폰의 '양육자 비교'에 저절로 합쳐집니다.": "Al tocar el enlace e instalar la app, irá directo al test de {0}. Es gratis viendo 1 anuncio y, al terminar, sus resultados se añaden solos a 'Comparar cuidadores' en este teléfono.",
  "복사한 글에서 초대 코드를 찾지 못했어요.": "No encontramos un código de invitación en el texto copiado.",
- "다시 시도": "Reintentar"
+ "다시 시도": "Reintentar",
+ "초대 코드": "Código de invitación",
+ "코드 복사": "Copiar código",
+ "인터넷에 연결되면 초대 코드를 만들 수 있어요.": "Podrás crear un código de invitación cuando tengas conexión.",
+ "초대 코드를 복사했습니다.": "Código de invitación copiado."
 }

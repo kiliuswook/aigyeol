@@ -1,6 +1,6 @@
 // 공유하기: 스토어 연결 링크, 가족 연결 코드, 결과 화면 그림 공유
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/fam.dart';
@@ -82,6 +82,31 @@ void main() {
     await t.runAsync(() async => png = await capture(key, pixelRatio: 2));
     expect(png, isNotNull);
     expect(png!.length, greaterThan(1000));
+    expect(t.takeException(), isNull);
+  });
+
+  testWidgets('양육자 초대 창: 초대 코드가 보이고 코드 복사 버튼으로 복사된다 (360x640)', (t) async {
+    await t.binding.setSurfaceSize(const Size(360, 640));
+    store.kids = [Kid(name: '하늘', fam: 'KQ7MZP3XWA')];
+    store.kidId = store.kids.first.id;
+    String? copied;
+    t.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (c) async {
+      if (c.method == 'Clipboard.setData') copied = (c.arguments as Map)['text'];
+      return null;
+    });
+    late BuildContext ctx;
+    await t.pumpWidget(MaterialApp(home: Builder(builder: (c) {
+      ctx = c;
+      return const Scaffold();
+    })));
+    inviteCg(ctx);
+    await t.pumpAndSettle();
+    expect(find.text('KQ7MZ-P3XWA'), findsOneWidget);
+    await t.ensureVisible(find.text('코드 복사'));
+    await t.tap(find.text('코드 복사'));
+    await t.pumpAndSettle();
+    expect(copied, 'KQ7MZ-P3XWA');
+    expect(find.text('초대 코드를 복사했습니다.'), findsOneWidget);
     expect(t.takeException(), isNull);
   });
 }

@@ -618,5 +618,9 @@
  "초대 코드를 넣고 같은 아이로 이어서 검사": "Nhập mã mời để làm bài cho cùng một bé",
  "받은 사람은 링크를 눌러 앱을 설치하면 {0}의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사하고, 다 마치면 결과가 이 휴대폰의 '양육자 비교'에 저절로 합쳐집니다.": "Khi bấm liên kết và cài ứng dụng, họ sẽ vào thẳng bài kiểm tra của {0}. Miễn phí sau 1 quảng cáo, và khi xong, kết quả sẽ tự động được gộp vào 'So sánh người chăm sóc' trên điện thoại này.",
  "복사한 글에서 초대 코드를 찾지 못했어요.": "Không tìm thấy mã mời trong văn bản đã sao chép.",
- "다시 시도": "Thử lại"
+ "다시 시도": "Thử lại",
+ "초대 코드": "Mã mời",
+ "코드 복사": "Sao chép mã",
+ "인터넷에 연결되면 초대 코드를 만들 수 있어요.": "Bạn có thể tạo mã mời khi có kết nối mạng.",
+ "초대 코드를 복사했습니다.": "Đã sao chép mã mời."
 }

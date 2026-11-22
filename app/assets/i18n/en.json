@@ -618,5 +618,9 @@
  "초대 코드를 넣고 같은 아이로 이어서 검사": "Enter the invite code to test the same child",
  "받은 사람은 링크를 눌러 앱을 설치하면 {0}의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사하고, 다 마치면 결과가 이 휴대폰의 '양육자 비교'에 저절로 합쳐집니다.": "When they tap the link and install the app, they'll go straight to {0}'s test. It's free after one ad, and when they finish, their results are added to 'Caregiver comparison' on this phone automatically.",
  "복사한 글에서 초대 코드를 찾지 못했어요.": "Couldn't find an invite code in the copied text.",
- "다시 시도": "Try again"
+ "다시 시도": "Try again",
+ "초대 코드": "Invite code",
+ "코드 복사": "Copy code",
+ "인터넷에 연결되면 초대 코드를 만들 수 있어요.": "You can create an invite code once you're online.",
+ "초대 코드를 복사했습니다.": "Invite code copied."
 }

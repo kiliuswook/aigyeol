@@ -86,7 +86,20 @@ Future<void> inviteCg(BuildContext context) {
   final kid = store.kid, nm = store.nm;
   final roles = kCgl.where((n) => n != kid.who).toList();
   var role = roles.first;
-  return popup(context, title: tr('다른 휴대폰에서 {0} 검사하게 초대', [nm]), (c, set) => [
+  // 초대 코드: 창을 열면 바로 받아 와(없으면 서버에 만듦) 보여 주고, 코드만 따로 복사할 수 있게 한다
+  var code = kid.fam, asked = false;
+  Future<String?> getCode(BuildContext c, StateSetter set) async {
+    final v = await fam.ensure(kid);
+    if (v != null && c.mounted) set(() => code = v);
+    return v;
+  }
+
+  return popup(context, title: tr('다른 휴대폰에서 {0} 검사하게 초대', [nm]), (c, set) {
+    if (!asked) {
+      asked = true;
+      if (code.isEmpty) getCode(c, set);
+    }
+    return [
         muted(tr('누구를 초대하나요?')),
         chips([
           for (final n in roles.where((n) => n != kOtherCg)) ChipBtn(cg(n), on: role == n, onTap: () => set(() => role = n)),
@@ -97,13 +110,34 @@ Future<void> inviteCg(BuildContext context) {
           }),
         ]),
         const ShareActions().buttons(c, 'invite', role: () => role, code: () async {
-          final code = await fam.ensure(kid);
-          if (code == null && c.mounted) toast(c, tr('인터넷 연결이 없어 예전 방식 링크로 보냅니다. 결과는 링크로 주고받아요.'));
-          return code;
+          final v = await getCode(c, set);
+          if (v == null && c.mounted) toast(c, tr('인터넷 연결이 없어 예전 방식 링크로 보냅니다. 결과는 링크로 주고받아요.'));
+          return v;
         }),
+        // 초대 코드와 복사 버튼: 받는 사람이 앱의 '초대 코드 입력'에 넣는 값
+        NineBox(nSoft,
+            padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
+            child: Row(children: [
+              Expanded(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+                Text(tr('초대 코드'), style: smallMuted),
+                FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text(code.isEmpty ? '·····-·····' : Fam.show(code), key: const Key('fam-code'), maxLines: 1, style: disp(24).copyWith(letterSpacing: 1.5))),
+              ])),
+              const SizedBox(width: 8),
+              SizedBox(
+                  width: 112,
+                  child: Btn(tr('코드 복사'), () async {
+                    final v = code.isNotEmpty ? code : await getCode(c, set);
+                    if (!c.mounted) return;
+                    if (v == null) return toast(c, tr('인터넷에 연결되면 초대 코드를 만들 수 있어요.'));
+                    await Clipboard.setData(ClipboardData(text: Fam.show(v)));
+                    if (c.mounted) toast(c, tr('초대 코드를 복사했습니다.'));
+                  }, kind: BtnKind.ghost, dense: true)),
+            ])),
         muted(tr("받은 사람은 링크를 눌러 앱을 설치하면 {0}의 검사로 바로 들어갑니다. 광고 1번 보고 무료로 검사하고, 다 마치면 결과가 이 휴대폰의 '양육자 비교'에 저절로 합쳐집니다.", [nm])),
         muted(tr('아이폰은 앱을 설치한 뒤 초대 문구의 초대 코드를 더보기의 \'초대 코드 입력\'에 넣으면 이어집니다. 아이 이름·연령이 함께 가니 믿을 수 있는 가족에게만 보내 주세요.')),
-      ]);
+      ];
+  });
 }
 
 /// 초대 코드 입력: 아이폰처럼 설치 정보로 초대가 이어지지 않을 때. 초대 문구 전체를 붙여 넣어도 코드를 찾는다.
