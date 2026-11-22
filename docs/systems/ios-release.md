@@ -1,7 +1,7 @@
 # iOS 출시 (App Store · TestFlight)
 
-- 최종 수정일: 2026-11-21
-- 버전: 1.2.1 (pubspec `1.2.1+8`, iOS 빌드 번호는 Codemagic 7)
+- 최종 수정일: 2026-11-22
+- 버전: 1.2.1 (pubspec `1.2.1+9`, iOS 빌드 번호는 Codemagic 8)
 
 ## 지금 상태
 
@@ -14,6 +14,14 @@
 | 빌드 | Codemagic 워크플로 `ios-testflight` (저장소 루트 `codemagic.yaml`, `working_directory: app`) |
 | 최소 iOS | 15.0 (`project.pbxproj`) |
 | TestFlight | 1.0.1 (1), 1.0.2 (2), 1.0.2 (3, 영상 스플래시·커밋 632db1b). 내부 그룹 '내부 테스트'(모든 빌드 자동, 팀 계정 contact@)에 셋 다. 외부 그룹 '외부 테스트'(kilius@naver.com)에 1.0.1 (1)·1.0.2 (3), 둘 다 2026-11-19 베타 심사 제출(WAITING_FOR_BETA_REVIEW). 통과하면 초대 메일이 간다. 1.1.0 (4, AdMob 광고·결제 제거, 커밋 6a40b49): 2026-11-20 외부 그룹 추가·베타 심사 제출  1.2.0 (6, 6개 언어·업데이트 알림·평가 권유, 커밋 c90d5a5): 2026-11-21 앱스토어 편집 중 버전 1.2.0 에 연결, 외부 그룹 추가·베타 심사 제출. 6개 언어 등록정보·아이폰 6.9" 스크린샷 입력(release/store-global/result.md) 1.2.1 (7, 공유하기 개선, 커밋 9071d79, Codemagic #7): 2026-11-21 외부 그룹 추가·테스트할 것 7개 언어·베타 심사 제출(WAITING_FOR_REVIEW). 앱스토어 편집 중 버전(1.2.0)·등록정보는 그대로 |
+
+## 정식 출시 1.2.1 (2026-11-22, 진행 중)
+
+- 원더 요청 "정식출시". Codemagic `ios-testflight` #8 (main 2ea919c) → **1.2.1 (8) VALID**.
+- 편집 중 버전 1.2.0 → **1.2.1** (API), 빌드 8 연결, 출시 방식 `AFTER_APPROVAL`(승인 후 자동 출시).
+- 이미 채워진 것: 심사 연락처, 연령 등급 4+, 가격 무료·175개 국가, 콘텐츠 권한, 수출 규정(`ITSAppUsesNonExemptEncryption=false`), 7개 언어 등록정보·스크린샷.
+- 심사 제출 시도(API `reviewSubmissionItems`) → 409 `App submission blocked: Cannot submit version due to unfulfilled compliance requirement.` 앱 정보에 걸린 규정 설문 2개: `SECURITYASF395E`, `AIGENERATEFD1DE`(AI 생성 콘텐츠). API 없음 → ASC 화면에서 채워야 함. 크롬 ASC 로그인이 풀려 원더 로그인 대기.
+- 빈 리뷰 제출 묶음 `daa52b3d-…` 가 READY_FOR_REVIEW 로 남아 있음(다음 제출 때 다시 씀).
 
 ## 빌드 방법
 
