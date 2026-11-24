@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // 또래 평균 공용 조각: 지표 옆 '평균' 버튼, 수집 중 안내
+=======
+// 또래 평균 공용 조각: 지표 옆 평균 버튼, 수집 중 안내
+>>>>>>> 8ea2963155658753feabef80b25c273a17addf95
 import 'package:flutter/material.dart';
 import '../i18n.dart';
 import 'kit.dart';

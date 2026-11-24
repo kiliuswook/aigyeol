@@ -211,12 +211,21 @@ class _ReportViewState extends State<ReportView> {
       }
       return [
         FutureBuilder(
+<<<<<<< HEAD
             future: stats.loadScoped(b),
             builder: (_, snap) {
               if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
               // 늘 전체 국가 평균(나라 고르기 없음)
               final all = snap.data?.m, a = all?[key], label = bucketLabel(b);
               if (all == null) return col([Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small)]);
+=======
+            future: stats.load(b),
+            builder: (_, snap) {
+              if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
+              // 평균은 언제나 모든 나라를 합친 값(나라별 묶음은 서버에 쌓아 두기만 한다)
+              final all = snap.data, a = all?[key], label = bucketLabel(b);
+              if (all == null) return Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small);
+>>>>>>> 8ea2963155658753feabef80b25c273a17addf95
               if (a == null || a.n < kStatMin) {
                 return col([
                   peerCollecting(label),

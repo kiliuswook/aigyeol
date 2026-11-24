@@ -298,11 +298,20 @@ class _DevScreenState extends State<DevScreen> {
 
   Widget peerPage(DevRec r, DevResult res) => FutureBuilder(
       // 성별을 모르면 같은 개월 구간 남녀 전체 평균으로 바로 보여 준다
+<<<<<<< HEAD
       future: devStats.loadFor(r.band, r.sex),
       builder: (_, snap) {
         if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
         final all = snap.data?.m;
         final label = (r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)])), n = all?['gm']?.n ?? 0;
+=======
+      future: devStats.loadScope(r.band, r.sex, '*'),
+      builder: (_, snap) {
+        if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
+        // 평균은 언제나 모든 나라를 합친 값
+        final all = snap.data?.m;
+        final label = r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)]), n = all?['gm']?.n ?? 0;
+>>>>>>> 8ea2963155658753feabef80b25c273a17addf95
         return col([
           eyebrow(tr('또래 평균')),
           h2(tr('{0} 평균과 비교', [label])),
