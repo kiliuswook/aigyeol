@@ -10,6 +10,7 @@ import 'flow.dart';
 import 'insight.dart';
 import '../stats.dart';
 import 'kit.dart';
+import 'peer.dart';
 import 'share.dart' show inviteCg, openShare;
 import 'setup.dart';
 import 'sibling.dart';
@@ -192,16 +193,12 @@ class _ReportViewState extends State<ReportView> {
   /// 예시 문장 속 '엄마'를 지금 답하는 양육자로 바꾼다(아빠·할머니·할아버지가 볼 때)
   String me(String t) => const ['아빠', '할머니', '할아버지'].contains(store.kid.who) ? t.replaceAll(tr('엄마'), cg(store.kid.who)) : t;
 
-  /// 지표 옆 작은 평균 아이콘. 누르면 같은 나이·성별 아이들의 평균을 보여 준다.
-  Widget avgBtn(String key, String name, int sc, String c, {String? lo, String? hi}) => InkWell(
-        key: Key('avg-$key'),
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => avgPopup(key, name, sc, c, lo: lo, hi: hi),
-        child: const Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1), child: Icon(Icons.bar_chart_rounded, size: 19, color: kAccentInk)),
-      );
+  /// 지표 옆 '평균' 버튼. 누르면 같은 나이·성별 아이들의 평균을 보여 준다.
+  Widget avgBtn(String key, String name, int sc, String c, {String? lo, String? hi}) => peerBtn(Key('avg-$key'), () => avgPopup(key, name, sc, c, lo: lo, hi: hi));
 
   void avgPopup(String key, String name, int sc, String c, {String? lo, String? hi}) {
     final kid = store.kid, nm = store.nm, b = bucketOf(kid, store.cur.date);
+    var scope = ''; // '' 자동, '*' 전체 국가, 'KR' 등 그 나라
     popup(context, title: tr('또래 평균 · {0}', [name]), (ctx, set) {
       if (b == null) {
         return [
@@ -215,15 +212,18 @@ class _ReportViewState extends State<ReportView> {
       }
       return [
         FutureBuilder(
-            future: stats.loadScoped(b),
+            key: ValueKey(scope),
+            future: loadPeerScope(scope, () => stats.loadScoped(b), stats.load, b),
             builder: (_, snap) {
               if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
-              // 같은 나라 검사가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균
+              // 처음엔 같은 나라 검사가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균. 칩으로 나라를 고를 수 있다.
               final all = snap.data?.m, a = all?[key], label = scopeLabel(snap.data?.cc, bucketLabel(b));
-              if (all == null) return Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small);
+              final pick = peerScopeChips(snap.data?.cc, (s) => set(() => scope = s));
+              if (all == null) return col([pick, Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small)]);
               if (a == null || a.n < kStatMin) {
                 return col([
-                  rich(tr('**{0} 평균 준비 중.** 검사 결과가 {1}건 이상 모이면 평균이 표시됩니다. 지금 {2}건이 모였습니다.', [label, kStatMin, a?.n ?? 0]), style: small),
+                  pick,
+                  peerCollecting(label),
                   Row(children: [SizedBox(width: 72, child: Text(nm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700))), Expanded(child: Track(sc, c, thin: true)), SizedBox(width: 36, child: Text('$sc', textAlign: TextAlign.right, style: disp(19)))]),
                 ]);
               }
@@ -239,13 +239,13 @@ class _ReportViewState extends State<ReportView> {
                     SizedBox(width: 36, child: Text('$v', textAlign: TextAlign.right, style: disp(19))),
                   ]);
               return col([
-                Align(alignment: Alignment.centerLeft, child: Tag(tr('{0} · {1}건', [label, a.n]))),
+                pick,
+                Align(alignment: Alignment.centerLeft, child: Tag(label)),
                 if (lo != null) Row(children: [const SizedBox(width: 72), Expanded(child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [muted(lo), muted(hi!)])), const SizedBox(width: 36)]),
                 line(nm, sc),
                 line(tr('또래 평균'), av, ring: true),
                 Text(diff, style: body.copyWith(fontWeight: FontWeight.w700)),
                 muted(lo != null ? tr('기질에는 좋고 나쁨이 없습니다. 평균과의 차이는 {0}의 개성입니다.', [nm]) : tr('자라는 힘은 나이가 들수록 높아집니다. 평균은 이 앱으로 검사한 같은 나이 아이들의 값입니다.')),
-                if (snap.data?.cc == null && countryOf() != null) muted(tr('같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.', [kCountryMin])),
               ]);
             }),
       ];

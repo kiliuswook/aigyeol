@@ -722,5 +722,9 @@
  "광고 1번을 끝까지 보면 체크가 열려요 · 결제 없음": "Watch one ad to the end to open the check · no payment",
  "{0} 아이들": "Children aged {0}",
  "전체 국가 · {0}": "All countries · {0}",
- "같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.": "Once {0} or more results from your country are in, this switches to your country's average."
+ "같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.": "Once {0} or more results from your country are in, this switches to your country's average.",
+ "평균": "Average",
+ "전체 국가": "All countries",
+ "**{0} 평균은 수집 중입니다.** 결과가 모이면 여기에 평균이 나타나요.": "**{0} average is being collected.** It will appear here once enough results come in.",
+ "{0} 또래 평균 {1}{2}{3}": "{0} peer average {1}{2}{3}"
 }

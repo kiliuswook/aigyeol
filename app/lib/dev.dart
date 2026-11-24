@@ -272,6 +272,13 @@ class DevStats {
   /// 구간·성별 평균: 나라 평균이 충분히 모였으면 나라 평균, 아니면 전체 국가 평균.
   Future<Scoped> loadFor(int band, String sex) => pickScoped((b) => _loadSex(b, sex), 'd$band');
 
+  /// 고른 범위('' 자동, '*' 전체 국가, 'KR' 등 그 나라)의 구간·성별 평균
+  Future<Scoped> loadScope(int band, String sex, String scope) async {
+    if (scope.isEmpty) return loadFor(band, sex);
+    final pre = scope == '*' ? 'd$band' : countryBucket(scope, 'd$band');
+    return (m: await _loadSex(pre, sex), cc: scope == '*' ? null : scope);
+  }
+
   /// [pre]('d30' 또는 'cKR_d30') 묶음의 성별 평균. 성별을 모르면 남녀 묶음을 합친 평균(건수로 가중).
   Future<Map<String, Avg>?> _loadSex(String pre, String sex) async {
     if (sex == 'M' || sex == 'F') return load('${pre}_$sex');
