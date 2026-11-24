@@ -328,8 +328,9 @@ class Store extends ChangeNotifier {
   // ---------- 성장 발달 체크 ----------
   /// 새 체크 시작(보상형 광고를 본 뒤). 지금 개월 수로 구간을 정한다. 하다 만 체크가 있으면 지우고 새로.
   DevRec? startDev() {
-    final mo = monthsOf(kid.birth), b = mo == null ? null : devBand(mo);
-    if (mo == null || b == null || (kid.sex != 'M' && kid.sex != 'F')) return null;
+    // 성별이 없어도 발달 문항은 같다(성별은 키·몸무게 백분위와 또래 평균 묶음에만 쓴다)
+    final mo = devMonths(kid.birth, kid.age).$1, b = mo == null ? null : devBand(mo);
+    if (mo == null || b == null) return null;
     kid.devs.removeWhere((r) => !r.done);
     final r = DevRec(date: today(), who: kid.who, sex: kid.sex, mo: mo, band: b)..touch();
     kid.devs.add(r);

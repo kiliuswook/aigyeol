@@ -97,7 +97,7 @@ class HomeView extends StatelessWidget {
   /// 성장 발달 한 줄(홈 카드용 짧은 글): 체크 중 / 판정 요약 + 키 / 아직
   String devLine(Kid k) {
     final last = k.devLast, open = k.devOpen;
-    if (open != null && open.band == devBand(monthsOf(k.birth) ?? -1)) return tr('체크 중 · {0}/{1}', [open.ans.length, open.items.length]);
+    if (open != null && open.band == devBand(devMonths(k.birth, k.age).$1 ?? -1)) return tr('체크 중 · {0}/{1}', [open.ans.length, open.items.length]);
     if (last == null) return tr('아직 체크 전 · 6개 영역 + 키·몸무게');
     final r = devScore(last), good = r.count('fast') + r.count('ok');
     return [tr('6개 중 {0}개 또래만큼', [good]), if (last.h != null) '${last.h}cm'].join(' · ');

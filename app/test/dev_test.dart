@@ -7,6 +7,14 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(loadDev);
 
+  test('개월 수: 태어난 해·달 그대로, 없으면 이미 있는 정보로 어림', () {
+    final n = DateTime(2026, 11, 24);
+    expect(devMonths('2024-05', '', n), (30, false));
+    expect(devMonths('2022-', '만 4세', n), (52, true)); // 해만 있으면 그해 7월로
+    expect(devMonths('', '만 5세', n), (66, true));
+    expect(devMonths('', '', n), (null, false));
+  });
+
   test('개월 구간: 4~95개월, 경계', () {
     expect(devBand(3), null);
     expect(devBand(4), 4);

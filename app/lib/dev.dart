@@ -84,6 +84,22 @@ int? monthsOf(String birth, [DateTime? now]) {
   return mo < 0 ? null : mo;
 }
 
+/// 발달 체크에 쓰는 개월 수: 태어난 해·달이 있으면 그대로, 없으면 이미 넣은 정보로 어림한다(다시 묻지 않는다).
+/// 태어난 해만 있으면 그해 가운데(7월), 나이만 있으면('만 5세') 그 나이의 가운데(N세 6개월). 어림이면 est = true.
+(int?, bool) devMonths(String birth, String age, [DateTime? now]) {
+  final exact = monthsOf(birth, now);
+  if (exact != null) return (exact, false);
+  final n = now ?? DateTime.now();
+  final y = int.tryParse(birth.split('-')[0]);
+  if (y != null && y > 1990) {
+    final mo = (n.year - y) * 12 + (n.month - 7);
+    return (mo < 0 ? 0 : mo, true);
+  }
+  final yrs = int.tryParse(RegExp(r'\d+').firstMatch(age)?.group(0) ?? '');
+  if (yrs != null) return (yrs * 12 + 6, true);
+  return (null, false);
+}
+
 /// 구간 [b]에서 묻는 문항: 영역마다 4개. 그 나이에 이미 해낼 무렵인 문항(기대 문항) 최근 3개 + 다음 단계 문항 1개.
 /// 다음 단계 문항이 없는 마지막 구간은 기대 문항 4개. 같은 구간이면 늘 같은 문항이라 평균을 낼 수 있다.
 List<DevItem> devItems(int b) => [for (final d in DV.domains) ...domainItems(d.id, b)];

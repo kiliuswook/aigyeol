@@ -24,7 +24,7 @@ void openDev(BuildContext ctx) {
 /// 홈 줄에 쓰는 지금 상태 한 줄
 String devStatus(Kid k) {
   final last = k.devLast, open = k.devOpen;
-  if (open != null && open.band == devBand(monthsOf(k.birth) ?? -1)) return tr('체크 중 · {0}/{1}', [open.ans.length, open.items.length]);
+  if (open != null && open.band == devBand(devMonths(k.birth, k.age).$1 ?? -1)) return tr('체크 중 · {0}/{1}', [open.ans.length, open.items.length]);
   if (last != null) {
     final r = devScore(last), good = r.count('fast') + r.count('ok');
     return tr('{0} · 6개 영역 중 {1}개 또래만큼', [last.date, good]);
@@ -96,8 +96,11 @@ class _DevScreenState extends State<DevScreen> {
 
   // ---------- 시작 ----------
   Widget intro() {
-    final kid = store.kid, nm = store.nm, mo = monthsOf(kid.birth), b = mo == null ? null : devBand(mo);
-    final needInfo = mo == null || (kid.sex != 'M' && kid.sex != 'F');
+    final kid = store.kid, nm = store.nm;
+    final (mo, est) = devMonths(kid.birth, kid.age);
+    final b = mo == null ? null : devBand(mo);
+    // 나이를 전혀 모를 때만 아이 정보를 묻는다. 태어난 달·성별이 빠져 있으면 어림하거나 건너뛰고, 아래에 작게 알려 준다.
+    final needInfo = mo == null, noSex = kid.sex != 'M' && kid.sex != 'F';
     final open = kid.devOpen, canResume = open != null && b != null && open.band == b;
     Widget line(String t, String d) => Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(padding: const EdgeInsets.only(top: 2), child: Image.asset('assets/ui/i_check.webp', width: 18, height: 18)),
@@ -106,7 +109,7 @@ class _DevScreenState extends State<DevScreen> {
         ]);
     final String msg;
     if (needInfo) {
-      msg = tr('개월 수와 성별에 맞춰 문항과 성장 기준을 고릅니다. {0}의 태어난 해와 달, 성별을 넣어 주세요.', [nm]);
+      msg = tr('개월 수에 맞춰 문항을 고릅니다. {0}의 태어난 해와 달을 넣어 주세요.', [nm]);
     } else if (b == null) {
       msg = mo < kDevMin ? tr('생후 4개월부터 체크할 수 있어요.') : tr('발달 체크는 생후 4개월부터 만 7세(95개월)까지의 아이를 위한 것이에요.');
     } else {
@@ -119,7 +122,7 @@ class _DevScreenState extends State<DevScreen> {
           col([
             Center(child: Image.asset('assets/img/mascot_child.webp', width: 84, height: 84)),
             col([
-              eyebrow([nm, if (kid.ageText.isNotEmpty) ageTx(kid.ageText), if (mo != null) tr('{0}개월', [mo]), sexTx(kid.sex)].where((x) => x.isNotEmpty).join(' · ')),
+              eyebrow([nm, if (kid.ageText.isNotEmpty) ageTx(kid.ageText), if (mo != null && !est) tr('{0}개월', [mo]), sexTx(kid.sex)].where((x) => x.isNotEmpty).join(' · ')),
               h1(tr('{0}, 잘 자라고 있을까요?', [nm])),
             ], gap: 4),
             if (msg.isNotEmpty)
@@ -131,6 +134,13 @@ class _DevScreenState extends State<DevScreen> {
                 line(tr('성별 성장 기준'), tr('키·몸무게를 같은 성별·개월 수 아이들과 비교(WHO 기준)')),
                 line(tr('또래 평균 비교'), tr('이 앱에서 체크한 같은 개월·성별 아이들의 평균')),
               ], gap: 9),
+            if (msg.isEmpty && (est || noSex))
+              GestureDetector(
+                onTap: () => editKid(context),
+                child: Text(
+                    [if (est) tr('태어난 달이 없어 {0}개월쯤으로 어림했어요.', [mo]), if (noSex) tr('성별이 없으면 키·몸무게 백분위와 또래 평균은 빠져요.'), tr('넣으면 더 정확해져요 ›')].join(' '),
+                    style: const TextStyle(fontSize: 12.5, color: kAccentInk)),
+              ),
             muted(tr('영유아 건강검진의 발달 선별처럼 부모가 관찰한 모습으로 봅니다. 진단이 아니며, 걱정되는 점은 소아청소년과에서 확인해 주세요.')),
           ], gap: 12)),
       foot: [
@@ -287,7 +297,14 @@ class _DevScreenState extends State<DevScreen> {
     ], gap: 10);
   }
 
-  Widget peerPage(DevRec r, DevResult res) => FutureBuilder(
+  Widget peerPage(DevRec r, DevResult res) => r.sex != 'M' && r.sex != 'F'
+      ? col([
+          eyebrow(tr('또래 평균')),
+          h2(tr('또래 평균')),
+          Text(tr('또래 평균은 같은 개월 수·성별 아이들과 비교해요. 아이 정보에 성별을 넣으면 다음 체크부터 볼 수 있어요.'), style: small),
+          Center(child: linkBtn(tr('아이 정보 넣기'), () => editKid(context))),
+        ], gap: 10)
+      : FutureBuilder(
       future: devStats.load(devBucket(r)),
       builder: (_, snap) {
         if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));

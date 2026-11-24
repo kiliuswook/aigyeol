@@ -414,8 +414,10 @@ void main() {
       await t.tap(find.byKey(const Key('home-dev-0')));
       expect(tab.value, 4);
       await t.pumpAndSettle();
-      // 성별이 없으면 아이 정보부터
-      expect(find.text('아이 정보 넣기'), findsOneWidget);
+      // 이미 넣은 아이 정보로 바로 시작한다(성별이 없어도 다시 묻지 않고 작게 안내만)
+      expect(find.text('아이 정보 넣기'), findsNothing);
+      expect(find.text('광고 보고 무료로 발달 체크 시작'), findsOneWidget);
+      expect(find.textContaining('성별이 없으면'), findsOneWidget);
       store.setInfo(sex: 'F');
       await t.pumpAndSettle();
       expect(find.textContaining('30~32개월'), findsWidgets);
