@@ -39,6 +39,45 @@ service cloud.firestore {
         && request.resource.data.sc is map && request.resource.data.sc.size() <= 19
         && request.resource.data.at == request.time;
     }
+    // 성장 발달 체크 또래 평균(app/lib/dev.dart): dstats/d<개월 구간 시작>_<M|F> 에 체크 건수 n, 영역 6개 점수 합(s*),
+    // 키를 넣은 건수 hn·키 합 hs(mm), 몸무게를 넣은 건수 wn·몸무게 합 ws(100g). 쓰기는 '체크 한 건 더하기'만 된다.
+    function dkeys() {
+      return ['n', 'sgm', 'sfm', 'scg', 'sln', 'ssc', 'ssh', 'hn', 'hs', 'wn', 'ws'];
+    }
+    function dv(d, k) {
+      return k in d ? d[k] : 0;
+    }
+    function dadd(d, o, k, mx) {
+      return dv(d, k) - dv(o, k) >= 0 && dv(d, k) - dv(o, k) <= mx;
+    }
+    function dgrow(d, o) {
+      return ((dv(d, 'hn') == dv(o, 'hn') && dv(d, 'hs') == dv(o, 'hs')) || (dv(d, 'hn') == dv(o, 'hn') + 1 && dv(d, 'hs') - dv(o, 'hs') >= 400 && dv(d, 'hs') - dv(o, 'hs') <= 1600))
+        && ((dv(d, 'wn') == dv(o, 'wn') && dv(d, 'ws') == dv(o, 'ws')) || (dv(d, 'wn') == dv(o, 'wn') + 1 && dv(d, 'ws') - dv(o, 'ws') >= 20 && dv(d, 'ws') - dv(o, 'ws') <= 600));
+    }
+    function dok(d, o) {
+      return d.keys().hasOnly(dkeys()) && d.n == dv(o, 'n') + 1
+        && dadd(d, o, 'sgm', 100) && dadd(d, o, 'sfm', 100) && dadd(d, o, 'scg', 100) && dadd(d, o, 'sln', 100) && dadd(d, o, 'ssc', 100) && dadd(d, o, 'ssh', 100)
+        && dgrow(d, o);
+    }
+    match /dstats/{b} {
+      allow read: if true;
+      allow create: if b.matches('^d([0-9]|[1-8][0-9])_[MF]$') && dok(request.resource.data, {});
+      allow update: if dok(request.resource.data, resource.data);
+    }
+    // 발달 체크 한 건(이름·계정 없음): 구간, 개월 수, 답한 사람 역할, 영역 점수, 문항 답, 해내던 것을 못 하게 된 적, 키(mm)·몸무게(100g).
+    // 만들기만 되고 앱에서는 읽지 못한다(나중에 문항별 규준 만들기용).
+    match /dresults/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['b', 'mo', 'who', 'sc', 'a', 'rg', 'h', 'w', 'at'])
+        && request.resource.data.b is string && request.resource.data.b.matches('^d([0-9]|[1-8][0-9])_[MF]$')
+        && request.resource.data.mo is int && request.resource.data.mo >= 4 && request.resource.data.mo < 96
+        && request.resource.data.who is string && request.resource.data.who.size() < 20
+        && request.resource.data.sc is map && request.resource.data.sc.size() <= 6
+        && request.resource.data.a is map && request.resource.data.a.size() <= 30
+        && request.resource.data.rg is int
+        && (!('h' in request.resource.data) || (request.resource.data.h is int && request.resource.data.h >= 400 && request.resource.data.h <= 1600))
+        && (!('w' in request.resource.data) || (request.resource.data.w is int && request.resource.data.w >= 20 && request.resource.data.w <= 600))
+        && request.resource.data.at == request.time;
+    }
     // 가족 연결(공동 양육자 초대, app/lib/fam.dart): fam/{코드} 문서 하나에 아이 정보와 양육자별 결과.
     // 로그인 없이 쓴다. 코드(10자리, 0·O·1·I 제외 32글자)를 아는 사람만 그 문서를 읽고 고칠 수 있고, 목록 보기·지우기는 막는다.
     function famOk(d) {

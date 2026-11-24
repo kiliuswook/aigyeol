@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'ads.dart';
 import 'content.dart';
 import 'daily.dart';
+import 'dev.dart';
 import 'notify.dart';
 import 'stats.dart';
 import 'scoring.dart';
@@ -30,7 +31,7 @@ Future<void> main() async {
   // 첫 화면에 꼭 필요한 것(문항·손그림 테두리·이 폰 기록)만 기다리고 바로 화면을 띄운다
   // 언어(저장된 선택, 없으면 기기 언어)를 먼저 정해야 문항·오늘 탭 문구를 그 언어로 읽는다
   await loadLang();
-  await Future.wait([loadContent(), loadDaily(), preloadUi(), store.load(), daily.load()]);
+  await Future.wait([loadContent(), loadDaily(), loadDev(), preloadUi(), store.load(), daily.load()]);
   runApp(const App());
   // 로그인·동기화(Firebase)는 화면을 띄운 뒤에 연다. 기다리면 앱을 켤 때 빈 화면이 그만큼 길어진다.
   // 웹(미리 보기)은 Firebase 웹 설정이 없어 로그인·동기화를 켜지 않는다
@@ -41,6 +42,7 @@ Future<void> main() async {
   unawaited(deepLinks.init());
   // 예전에 마친 검사 중 아직 통계에 넣지 않은 것을 보낸다
   unawaited(stats.submitPending());
+  unawaited(devStats.submitPending());
   // 광고 동의(유럽 등)와 AdMob 초기화는 스플래시 영상이 끝난 뒤(intro.dart toTitle)에 한다.
   // 영상과 겹치면 광고 SDK 준비 때문에 영상이 끊긴다.
   // 인트로를 건너뛴 경우에도 광고는 준비한다(이미 준비 중이면 그대로)

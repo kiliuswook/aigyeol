@@ -10,6 +10,7 @@ import 'kit.dart';
 import 'share.dart';
 import 'today.dart' show alarmPopup;
 import '../daily.dart';
+import '../dev.dart';
 import '../content.dart';
 import '../notify.dart';
 import 'pay.dart';
@@ -26,7 +27,7 @@ Future<void> langPopup(BuildContext context) => popup(context, title: langCode =
 Future<void> _pick(BuildContext c, String code) async {
   Navigator.of(c).pop();
   await setLang(code, () async {
-    await Future.wait([loadContent(), loadDaily()]);
+    await Future.wait([loadContent(), loadDaily(), loadDev()]);
   });
   // 알림 문구도 새 언어로 다시 건다
   await notify.reschedule();

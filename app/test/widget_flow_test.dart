@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/daily.dart';
+import 'package:childmbti/dev.dart';
 import 'package:childmbti/notify.dart';
 import 'package:childmbti/main.dart';
 import 'package:childmbti/scoring.dart';
@@ -26,6 +27,7 @@ Future<void> boot(WidgetTester t, Size size, {bool intro = false}) async {
   await t.runAsync(() async {
     await loadContent();
     await loadDaily();
+    await loadDev();
     await store.load();
     await daily.load();
   });
@@ -41,6 +43,11 @@ Future<void> boot(WidgetTester t, Size size, {bool intro = false}) async {
   stats.client = MockClient((q) async {
     if (q.method == 'POST') sent.add(q.body);
     return http.Response(q.method == 'POST' ? '{}' : '{"fields":{"n":{"integerValue":"$statN"},"sA":{"integerValue":"150"},"sG1":{"integerValue":"300"}}}', 200);
+  });
+  devStats.clear();
+  devStats.client = MockClient((q) async {
+    if (q.method == 'POST') sent.add(q.body);
+    return http.Response(q.method == 'POST' ? '{}' : '{"fields":{"n":{"integerValue":"$statN"},"sgm":{"integerValue":"${statN * 70}"},"hn":{"integerValue":"$statN"},"hs":{"integerValue":"${statN * 950}"}}}', 200);
   });
   tab.value = 0;
   introDone.value = !intro;
@@ -392,4 +399,90 @@ void main() {
       await t.pumpAndSettle();
     }
   });
+
+  // 성장 발달 체크: 개월 수·성별에 맞는 24문항, 키·몸무게 성장 기준, 또래 평균, 기록
+  for (final size in const [Size(360, 640), Size(390, 844)]) {
+    testWidgets('발달 체크: 아이 정보 → 광고 → 키·몸무게 → 24문항 → 결과 (${size.width.round()}x${size.height.round()})', (t) async {
+      await boot(t, size);
+      final now = DateTime.now(), b = DateTime(now.year, now.month - 30);
+      store.setInfo(name: '콩이', birth: '${b.year}-${b.month.toString().padLeft(2, '0')}');
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const Key('home-dev')));
+      await t.pumpAndSettle();
+      // 성별이 없으면 아이 정보부터
+      expect(find.text('아이 정보 넣기'), findsOneWidget);
+      store.setInfo(sex: 'F');
+      await t.pumpAndSettle();
+      expect(find.textContaining('30~32개월'), findsWidgets);
+      await t.tap(find.text('광고 보고 무료로 발달 체크 시작'));
+      await t.pumpAndSettle();
+      await t.enterText(find.byType(TextField).at(0), '91.5');
+      await t.enterText(find.byType(TextField).at(1), '13.2');
+      await t.tap(find.text('다음'));
+      await t.pumpAndSettle();
+      final r = store.kid.devOpen!;
+      expect(r.mo, 30);
+      expect(r.band, 30);
+      expect(r.h, 91.5);
+      expect(r.items.length, 24);
+      for (var k = 0; k < 24; k++) {
+        await t.tap(find.byKey(Key('dev-opt-${k < 4 ? 1 : 3}')));
+        await t.pump(const Duration(milliseconds: 300));
+        await t.pumpAndSettle();
+      }
+      expect(find.text('있어요'), findsOneWidget);
+      await t.tap(find.text('없어요'));
+      await t.pump(const Duration(milliseconds: 300));
+      await t.pumpAndSettle();
+      final last = store.kid.devLast!;
+      expect(last.done, true);
+      final res = devScore(last);
+      expect(res.ds.first.lv, 'red'); // 대근육 1점씩
+      expect(res.ds[1].lv, isNot('red'));
+      await t.runAsync(() => devStats.submitPending());
+      expect(last.st, true);
+      expect(sent.any((x) => x.contains('dstats/d30_F')), true);
+      expect(find.textContaining('전문가와 함께 살펴보기'), findsOneWidget);
+      // 영역 상세 → 성장 → 또래 평균 → 지난 기록
+      for (final k in ['dev-d0', 'dev-d5']) {
+        await t.tap(find.byKey(Key(k)));
+        await t.pumpAndSettle();
+        expect(find.text('이렇게 놀아 주세요'), findsOneWidget);
+        await t.tap(find.byKey(const Key('back')));
+        await t.pumpAndSettle();
+      }
+      await t.tap(find.text('키 · 몸무게'));
+      await t.pumpAndSettle();
+      expect(find.textContaining('백분위'), findsWidgets);
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+      statN = 3;
+      await t.tap(find.text('또래 평균'));
+      await t.pumpAndSettle();
+      expect(find.textContaining('평균 준비 중'), findsOneWidget);
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+      devStats.clear();
+      statN = 8;
+      await t.tap(find.text('또래 평균'));
+      await t.pumpAndSettle();
+      expect(find.textContaining('또래 평균 (8명)'), findsOneWidget);
+      expect(find.textContaining('키 또래 평균 95.0cm'), findsOneWidget);
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+      await t.tap(find.text('지난 기록'));
+      await t.pumpAndSettle();
+      expect(find.textContaining('발달 체크 1번'), findsOneWidget);
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+      // 다시 체크하기는 시작 화면으로, 저장·불러오기 뒤에도 기록이 남는다
+      await t.tap(find.text('다시 체크하기'));
+      await t.pumpAndSettle();
+      expect(find.text('광고 보고 무료로 발달 체크 시작'), findsOneWidget);
+      final j = store.toJson();
+      store.fromJson(j);
+      expect(store.kid.devs.length, 1);
+      expect(store.kid.devs.first.ans.length, 24);
+    });
+  }
 }

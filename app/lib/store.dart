@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'content.dart';
+import 'dev.dart';
 import 'scoring.dart';
 
 /// 예전 검사별 결제 가격(2026-11-20 부터 결제 대신 보상형 광고, ads.dart). 지난 기록(buys)을 읽을 때만 남겨 둔다.
@@ -81,9 +82,11 @@ class Kid {
   String id, key, name, age, who, birth, sex, fam;
   Map<String, Rec> recs;
   List<Buy> buys;
+  /// 성장 발달 체크 기록(오래된 것부터). dev.dart
+  List<DevRec> devs;
   Map<String, dynamic>? ext, inv;
-  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.sex = '', this.fam = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, this.ext, this.inv})
-      : id = id ?? 'k${rid()}', key = key ?? rid(), recs = recs ?? {}, buys = buys ?? [] {
+  Kid({String? id, String? key, this.name = '', this.age = '', this.birth = '', this.sex = '', this.fam = '', this.who = '엄마', Map<String, Rec>? recs, List<Buy>? buys, List<DevRec>? devs, this.ext, this.inv})
+      : id = id ?? 'k${rid()}', key = key ?? rid(), recs = recs ?? {}, buys = buys ?? [], devs = devs ?? [] {
     if (ageOf(birth).$1.isNotEmpty) age = ageOf(birth).$1;
   }
 
@@ -94,7 +97,11 @@ class Kid {
   double get nextPrice => firstDone ? Price.more : Price.first;
   String firstBuyId() => buys.isNotEmpty ? buys.first.id : '${ext?['o'] ?? ''}';
   String label(int i) => name.isNotEmpty ? name : tr('아이 {0}', [i + 1]);
-  bool get isBlank => name.isEmpty && recs.values.every((r) => !r.hasAny) && buys.isEmpty;
+  bool get isBlank => name.isEmpty && recs.values.every((r) => !r.hasAny) && buys.isEmpty && devs.isEmpty;
+
+  /// 마지막으로 끝낸 발달 체크, 하다 만 체크
+  DevRec? get devLast => devs.where((r) => r.done).lastOrNull;
+  DevRec? get devOpen => devs.where((r) => !r.done).lastOrNull;
 
   /// 고를 수 있는 양육자 이름(기본 목록 + 기록이 있는 사람)
   List<String> get names => {...kCgl, who, ...recs.keys}.toList();
@@ -108,12 +115,13 @@ class Kid {
   Map<String, dynamic> toJson() => {
         'id': id, 'key': key, 'name': name, 'age': age, if (birth.isNotEmpty) 'birth': birth, if (sex.isNotEmpty) 'sex': sex, if (fam.isNotEmpty) 'fam': fam, 'who': who,
         'recs': {for (final e in recs.entries) if (e.value.hasAny || e.key == who) e.key: e.value.toJson()},
-        'buys': [for (final b in buys) b.toJson()], if (ext != null) 'ext': ext, if (inv != null) 'inv': inv,
+        'buys': [for (final b in buys) b.toJson()], if (devs.isNotEmpty) 'devs': [for (final r in devs) r.toJson()], if (ext != null) 'ext': ext, if (inv != null) 'inv': inv,
       };
   factory Kid.fromJson(dynamic j) => Kid(
         id: j['id'], key: j['key'], name: '${j['name'] ?? ''}', age: '${j['age'] ?? ''}', birth: '${j['birth'] ?? ''}', sex: j['sex'] == 'M' || j['sex'] == 'F' ? j['sex'] : '', fam: '${j['fam'] ?? ''}', who: '${j['who'] ?? '엄마'}',
         recs: {for (final e in ((j['recs'] ?? {}) as Map).entries) '${e.key}': Rec.fromJson(e.value)},
         buys: [for (final b in (j['buys'] ?? []) as List) Buy.fromJson(b)],
+        devs: [for (final r in (j['devs'] ?? []) as List) DevRec.fromJson(r)],
         ext: (j['ext'] as Map?)?.cast<String, dynamic>(), inv: (j['inv'] as Map?)?.cast<String, dynamic>(),
       );
 
@@ -225,6 +233,7 @@ class Store extends ChangeNotifier {
       final ids = {for (final b in l.buys) b.id};
       l.buys.addAll(r.buys.where((b) => !ids.contains(b.id)));
       l.buys.sort((a, b) => a.t.compareTo(b.t));
+      l.devs = mergeDevs(l.devs, r.devs);
       for (final e in r.recs.entries) {
         final mine = l.recs[e.key], o = e.value;
         if (mine == null || !mine.hasAny) {
@@ -316,7 +325,46 @@ class Store extends ChangeNotifier {
     save();
   }
 
+  // ---------- 성장 발달 체크 ----------
+  /// 새 체크 시작(보상형 광고를 본 뒤). 지금 개월 수로 구간을 정한다. 하다 만 체크가 있으면 지우고 새로.
+  DevRec? startDev() {
+    final mo = monthsOf(kid.birth), b = mo == null ? null : devBand(mo);
+    if (mo == null || b == null || (kid.sex != 'M' && kid.sex != 'F')) return null;
+    kid.devs.removeWhere((r) => !r.done);
+    final r = DevRec(date: today(), who: kid.who, sex: kid.sex, mo: mo, band: b)..touch();
+    kid.devs.add(r);
+    save();
+    return r;
+  }
+
+  void devAnswer(DevRec r, String id, int a) {
+    r.ans[id] = a;
+    r.touch();
+    save();
+  }
+
+  void devRegress(DevRec r, int v) {
+    r.rg = v;
+    r.date = today();
+    r.touch();
+    save();
+  }
+
+  /// 키·몸무게 넣기(빈 값은 지움). 이미 통계에 보낸 체크는 평균을 다시 세지 않는다.
+  void devGrowth(DevRec r, double? h, double? w) {
+    r.h = h;
+    r.w = w;
+    r.touch();
+    save();
+  }
+
+  void devDelete(DevRec r) {
+    kid.devs.remove(r);
+    save();
+  }
+
   void resetKid() {
+    kid.devs = [];
     kid.recs = {};
     kid.buys = [];
     kid.ext = null;

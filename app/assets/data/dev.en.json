@@ -1,0 +1,923 @@
+{
+ "domains": [
+  {
+   "id": "gm",
+   "n": "Gross motor",
+   "d": "Whole-body strength: sitting, walking, running, balance",
+   "tips": [
+    [
+     "Give short, frequent tummy time a few times a day.",
+     "Put toys just out of reach to encourage rolling and crawling."
+    ],
+    [
+     "Play moving games daily, like climbing over cushion hills or following a ball.",
+     "Practice stairs one step at a time, holding hands, as a game."
+    ],
+    [
+     "Turn standing on one foot and hopping into a \"who lasts longest\" game.",
+     "Let them run and play over an hour a day on playgrounds and tricycles."
+    ],
+    [
+     "Games that need rhythm and balance are great: catch, jump rope, bikes.",
+     "Build balance by walking along a line or making a hopping path."
+    ]
+   ]
+  },
+  {
+   "id": "fm",
+   "n": "Fine motor",
+   "d": "Hand and finger skills: picking up, stacking, drawing, cutting",
+   "tips": [
+    [
+     "Hand them easy-to-grip rattles and cloth toys.",
+     "Let them pick up small snacks, staying close so they don't choke."
+    ],
+    [
+     "Stack blocks, put things in and out of boxes, and peel stickers together.",
+     "Let them scribble freely with chunky crayons."
+    ],
+    [
+     "Squishing clay, stringing beads and tearing paper build hand strength.",
+     "Try cutting paper strips with child scissors."
+    ],
+    [
+     "Cutting along lines, paper folding and coloring train fingertips.",
+     "Everyday games like buttoning or moving beans with chopsticks help too."
+    ]
+   ]
+  },
+  {
+   "id": "cg",
+   "n": "Cognitive",
+   "d": "Seeing and thinking: finding, matching, counting, comparing",
+   "tips": [
+    [
+     "Play peekaboo to show how things disappear and come back.",
+     "Shake a sounding toy in different spots and let them find it."
+    ],
+    [
+     "Play \"where is it?\" hide-and-find and picture matching.",
+     "Join pretend play like feeding a doll."
+    ],
+    [
+     "Count \"one, two, three\" together when sharing snacks.",
+     "Sorting toys by size, color or shape is a great tidy-up game."
+    ],
+    [
+     "Talk about yesterday, today and tomorrow with a calendar; count with board games.",
+     "Guessing \"why do you think?\" together builds thinking."
+    ]
+   ]
+  },
+  {
+   "id": "ln",
+   "n": "Language",
+   "d": "Understanding and talking: babbling, words, sentences, stories",
+   "tips": [
+    [
+     "Copy their sounds, then wait and talk to them again.",
+     "Narrate your day in short words like a sportscaster."
+    ],
+    [
+     "Add one word to theirs and say it back (\"water\" → \"water, please\").",
+     "Ask names in picture books and let them point."
+    ],
+    [
+     "Answer their \"why?\" briefly, then ask \"what do you think?\"",
+     "Take time to tell today's events in order."
+    ],
+    [
+     "Play word games like word chains and riddles.",
+     "After reading, talk about characters' feelings and reasons."
+    ]
+   ]
+  },
+  {
+   "id": "sc",
+   "n": "Social",
+   "d": "Getting along with people: eye contact, copying, turns, playing together",
+   "tips": [
+    [
+     "Eye contact, smiles and talk are the best play.",
+     "Try back-and-forth games like peekaboo and pat-a-cake."
+    ],
+    [
+     "Look at what they point to and name it.",
+     "Create frequent chances to play near other kids."
+    ],
+    [
+     "Practice waiting with turn-taking games (dice, slides).",
+     "In pretend play, ask \"how might the customer feel?\""
+    ],
+    [
+     "Show first that it's okay to lose in rule games.",
+     "After a fight with a friend, find \"what could you say?\" together."
+    ]
+   ]
+  },
+  {
+   "id": "sh",
+   "n": "Self-care",
+   "d": "Doing things alone: eating, dressing, washing, toileting",
+   "tips": [
+    [
+     "Let them touch and pick up food at mealtimes.",
+     "While changing or dressing, ask \"shall we put your arm in?\""
+    ],
+    [
+     "Let them use a spoon and cup themselves, spills are okay.",
+     "Start with easy-to-remove socks and shoes."
+    ],
+    [
+     "Picture cards of the morning routine make it easier to do alone.",
+     "Practice buttoning with big-button clothes."
+    ],
+    [
+     "Build a habit of packing the next day's things together.",
+     "Praise chopstick use and washing alone generously."
+    ]
+   ]
+  }
+ ],
+ "opt": [
+  "Not yet",
+  "Sometimes, or with help",
+  "Mostly",
+  "Does it well"
+ ],
+ "lv": {
+  "fast": [
+   "Ahead",
+   "Does what is expected at this age well and is already trying the next step.",
+   "Ahead"
+  ],
+  "ok": [
+   "On track",
+   "Does most of what is expected at this age.",
+   "On track"
+  ],
+  "watch": [
+   "Keep an eye on it",
+   "Some skills are still shaky. Practice through play and check again in a month or two.",
+   "Watch"
+  ],
+  "red": [
+   "Check with a professional",
+   "Many things expected at this age are still hard. We recommend a developmental consultation at a pediatric checkup or with a pediatrician.",
+   "See a pro"
+  ]
+ },
+ "rg": "Have they stopped doing something they used to do?",
+ "rgEx": "e.g. stopped using words they used to say, went back to crawling after walking",
+ "items": [
+  {
+   "id": "gm01",
+   "d": "gm",
+   "m": 2,
+   "t": "Lifts head briefly when placed on tummy",
+   "ex": "Lifts chin off the floor for a few seconds while on tummy"
+  },
+  {
+   "id": "gm02",
+   "d": "gm",
+   "m": 4,
+   "t": "Pushes up on arms and lifts chest while on tummy",
+   "ex": "Leans on elbows or hands and looks ahead"
+  },
+  {
+   "id": "gm03",
+   "d": "gm",
+   "m": 6,
+   "t": "Rolls over on their own",
+   "ex": "From back to tummy, or tummy to back"
+  },
+  {
+   "id": "gm04",
+   "d": "gm",
+   "m": 8,
+   "t": "Sits without support",
+   "ex": "Sits and plays for a moment without hands on the floor"
+  },
+  {
+   "id": "gm05",
+   "d": "gm",
+   "m": 10,
+   "t": "Pulls up to stand holding furniture",
+   "ex": "Pulls up using the sofa or a table"
+  },
+  {
+   "id": "gm06",
+   "d": "gm",
+   "m": 12,
+   "t": "Walks sideways holding furniture (\"cruising\")",
+   "ex": "Moves along the sofa holding on"
+  },
+  {
+   "id": "gm07",
+   "d": "gm",
+   "m": 15,
+   "t": "Takes a few steps alone",
+   "ex": "Three or four steps without holding on"
+  },
+  {
+   "id": "gm08",
+   "d": "gm",
+   "m": 18,
+   "t": "Walks across the room without falling",
+   "ex": "Can stop or change direction while walking"
+  },
+  {
+   "id": "gm09",
+   "d": "gm",
+   "m": 21,
+   "t": "Climbs stairs holding a hand or rail",
+   "ex": "Bringing both feet to each step is fine"
+  },
+  {
+   "id": "gm10",
+   "d": "gm",
+   "m": 24,
+   "t": "Runs without falling",
+   "ex": "Runs faster than a toddle at the playground"
+  },
+  {
+   "id": "gm11",
+   "d": "gm",
+   "m": 27,
+   "t": "Kicks a ball forward",
+   "ex": "Kicks a still ball so it rolls ahead"
+  },
+  {
+   "id": "gm12",
+   "d": "gm",
+   "m": 30,
+   "t": "Jumps in place with both feet",
+   "ex": "Both feet leave the floor together"
+  },
+  {
+   "id": "gm13",
+   "d": "gm",
+   "m": 36,
+   "t": "Climbs stairs alternating feet",
+   "ex": "One foot per step; holding the rail is fine"
+  },
+  {
+   "id": "gm14",
+   "d": "gm",
+   "m": 42,
+   "t": "Pedals a tricycle forward",
+   "ex": "Moves forward by pedaling without a push"
+  },
+  {
+   "id": "gm15",
+   "d": "gm",
+   "m": 48,
+   "t": "Stands on one foot for 2–3 seconds",
+   "ex": "Lifts one foot and keeps balance briefly"
+  },
+  {
+   "id": "gm16",
+   "d": "gm",
+   "m": 54,
+   "t": "Hops on one foot three or four times",
+   "ex": "Hops in place or forward on one foot"
+  },
+  {
+   "id": "gm17",
+   "d": "gm",
+   "m": 60,
+   "t": "Catches a large ball with both hands",
+   "ex": "Catches a ball thrown from close, hugging it in"
+  },
+  {
+   "id": "gm18",
+   "d": "gm",
+   "m": 66,
+   "t": "Skips forward, alternating feet",
+   "ex": "Hops forward switching feet each time"
+  },
+  {
+   "id": "gm19",
+   "d": "gm",
+   "m": 72,
+   "t": "Stands on one foot for about 10 seconds",
+   "ex": "About the same on either foot"
+  },
+  {
+   "id": "gm20",
+   "d": "gm",
+   "m": 84,
+   "t": "Jumps rope two or three times in a row",
+   "ex": "Swings the rope and jumps over it in a row"
+  },
+  {
+   "id": "fm01",
+   "d": "fm",
+   "m": 3,
+   "t": "Brings hands together or to mouth",
+   "ex": "Looks at or sucks hands while lying down"
+  },
+  {
+   "id": "fm02",
+   "d": "fm",
+   "m": 4,
+   "t": "Holds and shakes a toy placed in hand",
+   "ex": "Grips a rattle briefly and moves it"
+  },
+  {
+   "id": "fm03",
+   "d": "fm",
+   "m": 6,
+   "t": "Reaches out and grabs a toy",
+   "ex": "Grabs a toy in front of them and pulls it in"
+  },
+  {
+   "id": "fm04",
+   "d": "fm",
+   "m": 8,
+   "t": "Passes an object from one hand to the other",
+   "ex": "Moves a block from one hand to the other"
+  },
+  {
+   "id": "fm05",
+   "d": "fm",
+   "m": 10,
+   "t": "Picks up small snacks with thumb and finger",
+   "ex": "Picks up puffs with fingertips"
+  },
+  {
+   "id": "fm06",
+   "d": "fm",
+   "m": 12,
+   "t": "Puts things into a container and takes them out",
+   "ex": "Puts blocks into a cup or box and takes them out"
+  },
+  {
+   "id": "fm07",
+   "d": "fm",
+   "m": 15,
+   "t": "Stacks two blocks",
+   "ex": "Puts one on top of another and it stays"
+  },
+  {
+   "id": "fm08",
+   "d": "fm",
+   "m": 18,
+   "t": "Scribbles with a crayon",
+   "ex": "Leaves lines or dots on paper"
+  },
+  {
+   "id": "fm09",
+   "d": "fm",
+   "m": 21,
+   "t": "Stacks about four blocks",
+   "ex": "About four high before it falls"
+  },
+  {
+   "id": "fm10",
+   "d": "fm",
+   "m": 24,
+   "t": "Turns book pages one at a time",
+   "ex": "Turns pages of a board book one by one"
+  },
+  {
+   "id": "fm11",
+   "d": "fm",
+   "m": 30,
+   "t": "Twists lids open",
+   "ex": "Opens twist caps on bottles or jars"
+  },
+  {
+   "id": "fm12",
+   "d": "fm",
+   "m": 36,
+   "t": "Copies a circle",
+   "ex": "A roughly closed circle is fine"
+  },
+  {
+   "id": "fm13",
+   "d": "fm",
+   "m": 42,
+   "t": "Snips paper with scissors",
+   "ex": "Cuts the edge of paper with child scissors"
+  },
+  {
+   "id": "fm14",
+   "d": "fm",
+   "m": 48,
+   "t": "Draws a person with head, body, arms or legs",
+   "ex": "Recognizable as a person even with a few parts"
+  },
+  {
+   "id": "fm15",
+   "d": "fm",
+   "m": 54,
+   "t": "Copies a square",
+   "ex": "A square shape with corners"
+  },
+  {
+   "id": "fm16",
+   "d": "fm",
+   "m": 60,
+   "t": "Cuts along a line with scissors",
+   "ex": "Without straying far from a thick line"
+  },
+  {
+   "id": "fm17",
+   "d": "fm",
+   "m": 66,
+   "t": "Copies a triangle",
+   "ex": "A triangle with three visible corners"
+  },
+  {
+   "id": "fm18",
+   "d": "fm",
+   "m": 72,
+   "t": "Colors mostly inside the lines",
+   "ex": "Fills in spaces in a coloring page"
+  },
+  {
+   "id": "fm19",
+   "d": "fm",
+   "m": 84,
+   "t": "Ties shoelaces or a bow",
+   "ex": "Makes loops and ties a knot"
+  },
+  {
+   "id": "cg01",
+   "d": "cg",
+   "m": 2,
+   "t": "Follows a moving face or object with eyes",
+   "ex": "Tracks a toy moving side to side"
+  },
+  {
+   "id": "cg02",
+   "d": "cg",
+   "m": 4,
+   "t": "Turns head toward a sound",
+   "ex": "Looks toward a rattle shaken beside them"
+  },
+  {
+   "id": "cg03",
+   "d": "cg",
+   "m": 6,
+   "t": "Looks for a dropped toy",
+   "ex": "Looks down to where it fell"
+  },
+  {
+   "id": "cg04",
+   "d": "cg",
+   "m": 9,
+   "t": "Finds a toy hidden under a cloth",
+   "ex": "Pulls the towel off when you cover it in front of them"
+  },
+  {
+   "id": "cg05",
+   "d": "cg",
+   "m": 12,
+   "t": "Tries to use things the right way",
+   "ex": "Brush to hair, cup to mouth"
+  },
+  {
+   "id": "cg06",
+   "d": "cg",
+   "m": 15,
+   "t": "Fits a circle piece into a shape board",
+   "ex": "Puts the piece into the matching hole"
+  },
+  {
+   "id": "cg07",
+   "d": "cg",
+   "m": 18,
+   "t": "Pretends to feed or put a doll to sleep",
+   "ex": "Holds a spoon to the doll's mouth"
+  },
+  {
+   "id": "cg08",
+   "d": "cg",
+   "m": 24,
+   "t": "Matches the same pictures or objects",
+   "ex": "Finds two identical picture cards"
+  },
+  {
+   "id": "cg09",
+   "d": "cg",
+   "m": 30,
+   "t": "Tells big from small",
+   "ex": "Hands you the big one when asked"
+  },
+  {
+   "id": "cg10",
+   "d": "cg",
+   "m": 36,
+   "t": "Counts out two when asked \"give me two\"",
+   "ex": "Snacks or blocks, the right number"
+  },
+  {
+   "id": "cg11",
+   "d": "cg",
+   "m": 42,
+   "t": "Names more than three colors correctly",
+   "ex": "Red, blue, yellow and so on"
+  },
+  {
+   "id": "cg12",
+   "d": "cg",
+   "m": 48,
+   "t": "Counts five objects accurately one by one",
+   "ex": "Points while counting \"one, two... five\""
+  },
+  {
+   "id": "cg13",
+   "d": "cg",
+   "m": 54,
+   "t": "Compares long/short and more/less in words",
+   "ex": "\"This one's longer,\" \"There's more here\""
+  },
+  {
+   "id": "cg14",
+   "d": "cg",
+   "m": 60,
+   "t": "Counts to 10 and reads a few numbers",
+   "ex": "Numbers on a calendar or in an elevator"
+  },
+  {
+   "id": "cg15",
+   "d": "cg",
+   "m": 66,
+   "t": "Tells yesterday, today and tomorrow apart",
+   "ex": "Uses them correctly, like \"Is there school tomorrow?\""
+  },
+  {
+   "id": "cg16",
+   "d": "cg",
+   "m": 72,
+   "t": "Does small additions with fingers or objects",
+   "ex": "\"3 candies plus 2 more?\""
+  },
+  {
+   "id": "cg17",
+   "d": "cg",
+   "m": 84,
+   "t": "Reads the hour on a clock",
+   "ex": "On-the-hour times like 3 o'clock"
+  },
+  {
+   "id": "ln01",
+   "d": "ln",
+   "m": 2,
+   "t": "Makes sounds like \"ah\" and \"oo\"",
+   "ex": "Coos when happy"
+  },
+  {
+   "id": "ln02",
+   "d": "ln",
+   "m": 4,
+   "t": "Laughs out loud",
+   "ex": "Giggles with sound"
+  },
+  {
+   "id": "ln03",
+   "d": "ln",
+   "m": 6,
+   "t": "Babbles back when talked to",
+   "ex": "Makes sounds when the adult pauses"
+  },
+  {
+   "id": "ln04",
+   "d": "ln",
+   "m": 9,
+   "t": "Repeats sounds like \"baba\" and \"dada\"",
+   "ex": "Babbling with consonants and vowels"
+  },
+  {
+   "id": "ln05",
+   "d": "ln",
+   "m": 12,
+   "t": "Says \"mama\" or \"dada\" with meaning",
+   "ex": "Says it while looking at that person"
+  },
+  {
+   "id": "ln06",
+   "d": "ln",
+   "m": 15,
+   "t": "Understands simple requests without gestures",
+   "ex": "Brings the ball when asked \"bring the ball\""
+  },
+  {
+   "id": "ln07",
+   "d": "ln",
+   "m": 18,
+   "t": "Says more than three meaningful words",
+   "ex": "Like \"milk,\" \"water,\" \"doggy\""
+  },
+  {
+   "id": "ln08",
+   "d": "ln",
+   "m": 21,
+   "t": "Points to a picture when you name it",
+   "ex": "Points when asked \"where's the puppy?\""
+  },
+  {
+   "id": "ln09",
+   "d": "ln",
+   "m": 24,
+   "t": "Puts two words together",
+   "ex": "Like \"more milk,\" \"daddy go\""
+  },
+  {
+   "id": "ln10",
+   "d": "ln",
+   "m": 30,
+   "t": "Uses more than 50 words",
+   "ex": "Names of things and people, action words"
+  },
+  {
+   "id": "ln11",
+   "d": "ln",
+   "m": 36,
+   "t": "Speaks in sentences of three or more words",
+   "ex": "Like \"I want this one\""
+  },
+  {
+   "id": "ln12",
+   "d": "ln",
+   "m": 42,
+   "t": "Asks \"why?\" and \"who?\" questions",
+   "ex": "Often asks about things they wonder about"
+  },
+  {
+   "id": "ln13",
+   "d": "ln",
+   "m": 48,
+   "t": "Tells what happened in order, briefly",
+   "ex": "\"We went to the playground and I met my friend\""
+  },
+  {
+   "id": "ln14",
+   "d": "ln",
+   "m": 54,
+   "t": "Adults meeting them for the first time understand most of their speech",
+   "ex": "Pronunciation is mostly clear"
+  },
+  {
+   "id": "ln15",
+   "d": "ln",
+   "m": 60,
+   "t": "Says opposites",
+   "ex": "The opposite of \"big\" is \"small\""
+  },
+  {
+   "id": "ln16",
+   "d": "ln",
+   "m": 66,
+   "t": "Gives reasons when asked \"why did they do that?\" about a story",
+   "ex": "A character's feelings or reasons"
+  },
+  {
+   "id": "ln17",
+   "d": "ln",
+   "m": 72,
+   "t": "Plays word games like word chains",
+   "ex": "Keeps going a few turns following the rule"
+  },
+  {
+   "id": "ln18",
+   "d": "ln",
+   "m": 84,
+   "t": "Reads easy words aloud",
+   "ex": "Short words in a picture book"
+  },
+  {
+   "id": "sc01",
+   "d": "sc",
+   "m": 2,
+   "t": "Smiles when you face them",
+   "ex": "Smiles back when you smile"
+  },
+  {
+   "id": "sc02",
+   "d": "sc",
+   "m": 4,
+   "t": "Smiles and makes more sounds when played with",
+   "ex": "Looks as if asking for more when play stops"
+  },
+  {
+   "id": "sc03",
+   "d": "sc",
+   "m": 6,
+   "t": "Recognizes and greets familiar people",
+   "ex": "Kicks and wiggles happily on seeing a caregiver"
+  },
+  {
+   "id": "sc04",
+   "d": "sc",
+   "m": 9,
+   "t": "Tells strangers from familiar people",
+   "ex": "May be shy with strangers"
+  },
+  {
+   "id": "sc05",
+   "d": "sc",
+   "m": 11,
+   "t": "Waves \"bye-bye\"",
+   "ex": "Waves when someone leaves"
+  },
+  {
+   "id": "sc06",
+   "d": "sc",
+   "m": 14,
+   "t": "Points to show you something",
+   "ex": "Points at a plane and looks at you"
+  },
+  {
+   "id": "sc07",
+   "d": "sc",
+   "m": 16,
+   "t": "Copies what adults do",
+   "ex": "Pretends to clean or talk on the phone"
+  },
+  {
+   "id": "sc08",
+   "d": "sc",
+   "m": 18,
+   "t": "Plays next to other children",
+   "ex": "Plays side by side, even if not together"
+  },
+  {
+   "id": "sc09",
+   "d": "sc",
+   "m": 24,
+   "t": "Looks or seems concerned when someone cries",
+   "ex": "May go over and pat them"
+  },
+  {
+   "id": "sc10",
+   "d": "sc",
+   "m": 30,
+   "t": "Takes turns with toys with another child",
+   "ex": "Even brief give-and-take"
+  },
+  {
+   "id": "sc11",
+   "d": "sc",
+   "m": 36,
+   "t": "Waits for a turn in play briefly",
+   "ex": "Waits for their turn on the slide"
+  },
+  {
+   "id": "sc12",
+   "d": "sc",
+   "m": 42,
+   "t": "Names a favorite friend and wants to play with them",
+   "ex": "\"I want to play with Sam\""
+  },
+  {
+   "id": "sc13",
+   "d": "sc",
+   "m": 48,
+   "t": "Plays pretend with roles",
+   "ex": "\"You're the customer, I'm the cook\""
+  },
+  {
+   "id": "sc14",
+   "d": "sc",
+   "m": 54,
+   "t": "Plays simple rule games with friends",
+   "ex": "Tag, hide-and-seek"
+  },
+  {
+   "id": "sc15",
+   "d": "sc",
+   "m": 60,
+   "t": "Comforts or helps an upset friend",
+   "ex": "\"Are you okay?\" to a friend who fell"
+  },
+  {
+   "id": "sc16",
+   "d": "sc",
+   "m": 72,
+   "t": "Keeps playing after losing without falling apart",
+   "ex": "Upset but soon joins again"
+  },
+  {
+   "id": "sc17",
+   "d": "sc",
+   "m": 84,
+   "t": "After an argument, talks it out or asks an adult for help",
+   "ex": "Uses words rather than hitting"
+  },
+  {
+   "id": "sh01",
+   "d": "sh",
+   "m": 4,
+   "t": "Signals hunger or discomfort with sounds or movements",
+   "ex": "Sends signals besides crying"
+  },
+  {
+   "id": "sh02",
+   "d": "sh",
+   "m": 6,
+   "t": "Opens mouth for food offered on a spoon",
+   "ex": "Opens up when the spoon comes"
+  },
+  {
+   "id": "sh03",
+   "d": "sh",
+   "m": 8,
+   "t": "Holds a snack and feeds themself",
+   "ex": "Picks it up and puts it in their mouth"
+  },
+  {
+   "id": "sh04",
+   "d": "sh",
+   "m": 12,
+   "t": "Drinks from a cup held with both hands",
+   "ex": "Some spilling is fine"
+  },
+  {
+   "id": "sh05",
+   "d": "sh",
+   "m": 15,
+   "t": "Helps by pushing an arm or leg out when dressing",
+   "ex": "Tries to put an arm into the sleeve"
+  },
+  {
+   "id": "sh06",
+   "d": "sh",
+   "m": 18,
+   "t": "Feeds themself with a spoon",
+   "ex": "Scoops and eats, even if spilling"
+  },
+  {
+   "id": "sh07",
+   "d": "sh",
+   "m": 24,
+   "t": "Takes off socks or shoes alone",
+   "ex": "Taking them off is enough"
+  },
+  {
+   "id": "sh08",
+   "d": "sh",
+   "m": 30,
+   "t": "Washes hands and dries them with a towel",
+   "ex": "Help turning on the tap is fine"
+  },
+  {
+   "id": "sh09",
+   "d": "sh",
+   "m": 36,
+   "t": "Says ahead of time they need the toilet during the day",
+   "ex": "Occasional accidents are fine"
+  },
+  {
+   "id": "sh10",
+   "d": "sh",
+   "m": 42,
+   "t": "Puts on pants or a T-shirt alone",
+   "ex": "Clothes without buttons or zippers"
+  },
+  {
+   "id": "sh11",
+   "d": "sh",
+   "m": 48,
+   "t": "Buttons large buttons alone",
+   "ex": "Big buttons on a coat or shirt"
+  },
+  {
+   "id": "sh12",
+   "d": "sh",
+   "m": 54,
+   "t": "Brushes teeth alone",
+   "ex": "An adult can finish up"
+  },
+  {
+   "id": "sh13",
+   "d": "sh",
+   "m": 60,
+   "t": "Uses the toilet alone, including wiping",
+   "ex": "Through flushing and handwashing"
+  },
+  {
+   "id": "sh14",
+   "d": "sh",
+   "m": 66,
+   "t": "Gets fully dressed alone, front and back right",
+   "ex": "Including socks and coat"
+  },
+  {
+   "id": "sh15",
+   "d": "sh",
+   "m": 72,
+   "t": "Eats with chopsticks (training ones count)",
+   "ex": "Picks up food and eats it"
+  },
+  {
+   "id": "sh16",
+   "d": "sh",
+   "m": 84,
+   "t": "Packs their own bag and things",
+   "ex": "Knows what to bring the next day and packs it"
+  }
+ ]
+}

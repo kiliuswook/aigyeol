@@ -1,0 +1,923 @@
+{
+ "domains": [
+  {
+   "id": "gm",
+   "n": "Motricidad gruesa",
+   "d": "Fuerza de todo el cuerpo: sentarse, caminar, correr, equilibrio",
+   "tips": [
+    [
+     "Ponlo boca abajo ratos cortos varias veces al día.",
+     "Deja juguetes casi a su alcance para animarlo a girar y gatear."
+    ],
+    [
+     "Juegos de moverse cada día: trepar cojines, seguir una pelota.",
+     "Practica las escaleras de la mano, escalón a escalón, como un juego."
+    ],
+    [
+     "Convierte estar en un pie y saltar en un juego de \"¿quién aguanta más?\".",
+     "Que juegue más de una hora al día en el parque y en triciclo."
+    ],
+    [
+     "Son ideales los juegos con ritmo y equilibrio: pasarse la pelota, comba, bici.",
+     "Camina sobre una línea o haz un camino de saltos a la pata coja."
+    ]
+   ]
+  },
+  {
+   "id": "fm",
+   "n": "Motricidad fina",
+   "d": "Manos y dedos: coger, apilar, dibujar, recortar",
+   "tips": [
+    [
+     "Dale sonajeros y juguetes de tela fáciles de agarrar.",
+     "Deja que coja trocitos de comida, vigilando que no se atragante."
+    ],
+    [
+     "Apilad bloques, meted y sacad cosas, despegad pegatinas juntos.",
+     "Deja que garabatee a gusto con ceras gruesas."
+    ],
+    [
+     "Plastilina, ensartar cuentas y rasgar papel dan fuerza a las manos.",
+     "Probad a cortar tiras de papel con tijeras infantiles."
+    ],
+    [
+     "Recortar por la línea, papiroflexia y colorear afinan los dedos.",
+     "Abrochar botones o pasar garbanzos con palillos también ayuda."
+    ]
+   ]
+  },
+  {
+   "id": "cg",
+   "n": "Cognición",
+   "d": "Observar y pensar: buscar, emparejar, contar, comparar",
+   "tips": [
+    [
+     "Juega al cucú para mostrar que las cosas desaparecen y vuelven.",
+     "Haz sonar un juguete en distintos sitios y deja que lo busque."
+    ],
+    [
+     "Jugad a \"¿dónde está?\" y a emparejar dibujos iguales.",
+     "Únete a sus juegos de imitar, como dar de comer a un muñeco."
+    ],
+    [
+     "Contad juntos \"uno, dos, tres\" al repartir la merienda.",
+     "Ordenar juguetes por tamaño, color o forma es un buen juego."
+    ],
+    [
+     "Hablad de ayer, hoy y mañana con un calendario; contad con juegos de mesa.",
+     "Adivinar juntos \"¿por qué será?\" desarrolla el pensamiento."
+    ]
+   ]
+  },
+  {
+   "id": "ln",
+   "n": "Lenguaje",
+   "d": "Entender y hablar: balbuceo, palabras, frases, relatos",
+   "tips": [
+    [
+     "Imita sus sonidos, espera y vuelve a hablarle.",
+     "Cuéntale el día con frases cortas, como un narrador."
+    ],
+    [
+     "Añade una palabra a la suya y devuélvesela (\"agua\" → \"agua, por favor\").",
+     "Pregunta nombres en los cuentos y deja que señale."
+    ],
+    [
+     "Responde brevemente a su \"¿por qué?\" y pregúntale \"¿tú qué crees?\".",
+     "Dedicad un rato a contar en orden lo que pasó hoy."
+    ],
+    [
+     "Jugad a encadenar palabras y a adivinanzas.",
+     "Tras leer, hablad de lo que sienten los personajes y por qué."
+    ]
+   ]
+  },
+  {
+   "id": "sc",
+   "n": "Social",
+   "d": "Relacionarse: mirar a los ojos, imitar, turnos, jugar juntos",
+   "tips": [
+    [
+     "Mirarle a los ojos, sonreír y hablarle es el mejor juego.",
+     "Probad juegos de ida y vuelta como el cucú o palmas."
+    ],
+    [
+     "Mira lo que señala y dile cómo se llama.",
+     "Dale a menudo ocasiones de jugar cerca de otros niños."
+    ],
+    [
+     "Practicad la espera con juegos por turnos (dados, tobogán).",
+     "En el juego de imitar, pregunta \"¿cómo se sentirá el cliente?\"."
+    ],
+    [
+     "Muestra primero tú que perder en un juego no pasa nada.",
+     "Tras una pelea, buscad juntos \"¿qué podrías decir?\"."
+    ]
+   ]
+  },
+  {
+   "id": "sh",
+   "n": "Autonomía",
+   "d": "Hacer solo: comer, vestirse, lavarse, ir al baño",
+   "tips": [
+    [
+     "Deja que toque y coja la comida con las manos.",
+     "Al cambiarlo o vestirlo, pregúntale \"¿metemos el brazo?\"."
+    ],
+    [
+     "Que use solo la cuchara y el vaso, aunque derrame.",
+     "Empieza por quitarse calcetines y zapatos fáciles."
+    ],
+    [
+     "Tarjetas con la rutina de la mañana le ayudan a hacerlo solo.",
+     "Practicad con ropa de botones grandes."
+    ],
+    [
+     "Cread el hábito de preparar juntos las cosas del día siguiente.",
+     "Elogia mucho cuando use palillos o se lave solo."
+    ]
+   ]
+  }
+ ],
+ "opt": [
+  "Todavía no",
+  "A veces o con ayuda",
+  "Casi siempre",
+  "Lo hace bien"
+ ],
+ "lv": {
+  "fast": [
+   "Va adelantado",
+   "Hace bien lo esperado para su edad y ya prueba el siguiente paso.",
+   "Adelantado"
+  ],
+  "ok": [
+   "Acorde a su edad",
+   "Hace casi todo lo esperado para su edad.",
+   "Acorde"
+  ],
+  "watch": [
+   "A observar",
+   "Algunas cosas aún le cuestan. Practicad jugando y volved a revisarlo en uno o dos meses.",
+   "Observar"
+  ],
+  "red": [
+   "Consultar a un profesional",
+   "Muchas cosas esperadas para su edad aún le cuestan. Recomendamos consultar el desarrollo en la revisión infantil o con el pediatra.",
+   "Consultar"
+  ]
+ },
+ "rg": "¿Ha dejado de hacer algo que antes hacía?",
+ "rgEx": "Ej.: dejó de usar palabras que decía, volvió a gatear después de caminar",
+ "items": [
+  {
+   "id": "gm01",
+   "d": "gm",
+   "m": 2,
+   "t": "Levanta la cabeza un momento boca abajo",
+   "ex": "Boca abajo, separa la barbilla del suelo unos segundos"
+  },
+  {
+   "id": "gm02",
+   "d": "gm",
+   "m": 4,
+   "t": "Boca abajo, se apoya en los brazos y levanta el pecho",
+   "ex": "Se apoya en codos o manos y mira al frente"
+  },
+  {
+   "id": "gm03",
+   "d": "gm",
+   "m": 6,
+   "t": "Se da la vuelta solo",
+   "ex": "De boca arriba a boca abajo, o al revés"
+  },
+  {
+   "id": "gm04",
+   "d": "gm",
+   "m": 8,
+   "t": "Se sienta sin apoyo",
+   "ex": "Juega sentado un rato sin apoyar las manos"
+  },
+  {
+   "id": "gm05",
+   "d": "gm",
+   "m": 10,
+   "t": "Se pone de pie agarrado a los muebles",
+   "ex": "Se impulsa agarrándose al sofá o la mesa"
+  },
+  {
+   "id": "gm06",
+   "d": "gm",
+   "m": 12,
+   "t": "Camina de lado agarrado a los muebles",
+   "ex": "Se desplaza de lado sujeto al sofá"
+  },
+  {
+   "id": "gm07",
+   "d": "gm",
+   "m": 15,
+   "t": "Da unos pasos solo",
+   "ex": "Tres o cuatro pasos sin agarrarse ni caerse"
+  },
+  {
+   "id": "gm08",
+   "d": "gm",
+   "m": 18,
+   "t": "Cruza la habitación caminando sin caerse",
+   "ex": "Puede parar o girar mientras camina"
+  },
+  {
+   "id": "gm09",
+   "d": "gm",
+   "m": 21,
+   "t": "Sube escaleras de la mano o agarrado a la barandilla",
+   "ex": "Juntar los dos pies en cada escalón está bien"
+  },
+  {
+   "id": "gm10",
+   "d": "gm",
+   "m": 24,
+   "t": "Corre sin caerse",
+   "ex": "Corre más rápido que a pasitos en el parque"
+  },
+  {
+   "id": "gm11",
+   "d": "gm",
+   "m": 27,
+   "t": "Patea un balón hacia delante",
+   "ex": "Patea un balón quieto para que ruede"
+  },
+  {
+   "id": "gm12",
+   "d": "gm",
+   "m": 30,
+   "t": "Salta en el sitio con los dos pies",
+   "ex": "Los dos pies despegan a la vez"
+  },
+  {
+   "id": "gm13",
+   "d": "gm",
+   "m": 36,
+   "t": "Sube escaleras alternando los pies",
+   "ex": "Un pie por escalón; puede agarrarse"
+  },
+  {
+   "id": "gm14",
+   "d": "gm",
+   "m": 42,
+   "t": "Pedalea un triciclo hacia delante",
+   "ex": "Avanza pedaleando sin que lo empujen"
+  },
+  {
+   "id": "gm15",
+   "d": "gm",
+   "m": 48,
+   "t": "Se sostiene en un pie 2–3 segundos",
+   "ex": "Levanta un pie y mantiene el equilibrio un momento"
+  },
+  {
+   "id": "gm16",
+   "d": "gm",
+   "m": 54,
+   "t": "Salta a la pata coja tres o cuatro veces",
+   "ex": "En el sitio o hacia delante"
+  },
+  {
+   "id": "gm17",
+   "d": "gm",
+   "m": 60,
+   "t": "Atrapa con las dos manos una pelota grande",
+   "ex": "Atrapa como abrazando una pelota lanzada de cerca"
+  },
+  {
+   "id": "gm18",
+   "d": "gm",
+   "m": 66,
+   "t": "Avanza dando saltitos alternando los pies",
+   "ex": "Salta cambiando de pie cada vez"
+  },
+  {
+   "id": "gm19",
+   "d": "gm",
+   "m": 72,
+   "t": "Se sostiene en un pie casi 10 segundos",
+   "ex": "Con cualquiera de los dos pies"
+  },
+  {
+   "id": "gm20",
+   "d": "gm",
+   "m": 84,
+   "t": "Salta a la cuerda dos o tres veces seguidas",
+   "ex": "Gira la cuerda y salta seguido"
+  },
+  {
+   "id": "fm01",
+   "d": "fm",
+   "m": 3,
+   "t": "Junta las manos o se las lleva a la boca",
+   "ex": "Acostado, se mira o se chupa las manos"
+  },
+  {
+   "id": "fm02",
+   "d": "fm",
+   "m": 4,
+   "t": "Agarra y sacude un juguete que le pones en la mano",
+   "ex": "Sujeta un sonajero un momento y lo mueve"
+  },
+  {
+   "id": "fm03",
+   "d": "fm",
+   "m": 6,
+   "t": "Estira la mano y agarra un juguete",
+   "ex": "Agarra el juguete que tiene delante y lo acerca"
+  },
+  {
+   "id": "fm04",
+   "d": "fm",
+   "m": 8,
+   "t": "Pasa un objeto de una mano a la otra",
+   "ex": "Un bloque de esta mano a aquella"
+  },
+  {
+   "id": "fm05",
+   "d": "fm",
+   "m": 10,
+   "t": "Coge comida pequeña con el pulgar y el índice",
+   "ex": "Toma trocitos con la punta de los dedos"
+  },
+  {
+   "id": "fm06",
+   "d": "fm",
+   "m": 12,
+   "t": "Mete cosas en un recipiente y las saca",
+   "ex": "Mete bloques en un vaso o caja y los saca"
+  },
+  {
+   "id": "fm07",
+   "d": "fm",
+   "m": 15,
+   "t": "Apila dos bloques",
+   "ex": "Pone uno encima de otro y se sostiene"
+  },
+  {
+   "id": "fm08",
+   "d": "fm",
+   "m": 18,
+   "t": "Garabatea con una cera",
+   "ex": "Deja rayas o puntos en el papel"
+  },
+  {
+   "id": "fm09",
+   "d": "fm",
+   "m": 21,
+   "t": "Apila unos cuatro bloques",
+   "ex": "Unos cuatro antes de que se caigan"
+  },
+  {
+   "id": "fm10",
+   "d": "fm",
+   "m": 24,
+   "t": "Pasa las páginas de una en una",
+   "ex": "Pasa las hojas de un libro de cartón"
+  },
+  {
+   "id": "fm11",
+   "d": "fm",
+   "m": 30,
+   "t": "Abre tapas de rosca",
+   "ex": "Desenrosca botellas o botes"
+  },
+  {
+   "id": "fm12",
+   "d": "fm",
+   "m": 36,
+   "t": "Copia un círculo",
+   "ex": "Un círculo más o menos cerrado vale"
+  },
+  {
+   "id": "fm13",
+   "d": "fm",
+   "m": 42,
+   "t": "Corta papel con tijeras",
+   "ex": "Corta el borde con tijeras infantiles"
+  },
+  {
+   "id": "fm14",
+   "d": "fm",
+   "m": 48,
+   "t": "Dibuja una persona con cabeza, cuerpo, brazos o piernas",
+   "ex": "Que se reconozca como persona aunque tenga pocas partes"
+  },
+  {
+   "id": "fm15",
+   "d": "fm",
+   "m": 54,
+   "t": "Copia un cuadrado",
+   "ex": "Una forma con esquinas"
+  },
+  {
+   "id": "fm16",
+   "d": "fm",
+   "m": 60,
+   "t": "Recorta siguiendo una línea",
+   "ex": "Sin salirse mucho de una línea gruesa"
+  },
+  {
+   "id": "fm17",
+   "d": "fm",
+   "m": 66,
+   "t": "Copia un triángulo",
+   "ex": "Con tres esquinas visibles"
+  },
+  {
+   "id": "fm18",
+   "d": "fm",
+   "m": 72,
+   "t": "Colorea casi sin salirse",
+   "ex": "Rellena los espacios de un dibujo"
+  },
+  {
+   "id": "fm19",
+   "d": "fm",
+   "m": 84,
+   "t": "Ata cordones o un lazo",
+   "ex": "Hace lazadas y el nudo"
+  },
+  {
+   "id": "cg01",
+   "d": "cg",
+   "m": 2,
+   "t": "Sigue con la mirada una cara u objeto en movimiento",
+   "ex": "Sigue un juguete que se mueve de lado a lado"
+  },
+  {
+   "id": "cg02",
+   "d": "cg",
+   "m": 4,
+   "t": "Gira la cabeza hacia un sonido",
+   "ex": "Mira hacia un sonajero que suena a su lado"
+  },
+  {
+   "id": "cg03",
+   "d": "cg",
+   "m": 6,
+   "t": "Busca con la mirada un juguete que se le cae",
+   "ex": "Mira hacia donde cayó"
+  },
+  {
+   "id": "cg04",
+   "d": "cg",
+   "m": 9,
+   "t": "Encuentra un juguete escondido bajo un paño",
+   "ex": "Quita la toalla si lo tapas delante de él"
+  },
+  {
+   "id": "cg05",
+   "d": "cg",
+   "m": 12,
+   "t": "Intenta usar las cosas para lo que sirven",
+   "ex": "El cepillo al pelo, el vaso a la boca"
+  },
+  {
+   "id": "cg06",
+   "d": "cg",
+   "m": 15,
+   "t": "Encaja la pieza redonda en un tablero de formas",
+   "ex": "Pone la pieza en el hueco correcto"
+  },
+  {
+   "id": "cg07",
+   "d": "cg",
+   "m": 18,
+   "t": "Hace como que da de comer o duerme a un muñeco",
+   "ex": "Acerca la cuchara a la boca del muñeco"
+  },
+  {
+   "id": "cg08",
+   "d": "cg",
+   "m": 24,
+   "t": "Empareja dibujos u objetos iguales",
+   "ex": "Encuentra dos tarjetas iguales"
+  },
+  {
+   "id": "cg09",
+   "d": "cg",
+   "m": 30,
+   "t": "Distingue grande y pequeño",
+   "ex": "Te da el grande si se lo pides"
+  },
+  {
+   "id": "cg10",
+   "d": "cg",
+   "m": 36,
+   "t": "Si le pides \"dame dos\", cuenta y te da dos",
+   "ex": "Galletas o bloques, en la cantidad justa"
+  },
+  {
+   "id": "cg11",
+   "d": "cg",
+   "m": 42,
+   "t": "Nombra bien más de tres colores",
+   "ex": "Rojo, azul, amarillo…"
+  },
+  {
+   "id": "cg12",
+   "d": "cg",
+   "m": 48,
+   "t": "Cuenta bien cinco objetos uno a uno",
+   "ex": "Señalando: \"uno, dos… cinco\""
+  },
+  {
+   "id": "cg13",
+   "d": "cg",
+   "m": 54,
+   "t": "Compara largo/corto y más/menos con palabras",
+   "ex": "\"Este es más largo\", \"aquí hay más\""
+  },
+  {
+   "id": "cg14",
+   "d": "cg",
+   "m": 60,
+   "t": "Cuenta hasta 10 y lee algunos números",
+   "ex": "En el calendario o el ascensor"
+  },
+  {
+   "id": "cg15",
+   "d": "cg",
+   "m": 66,
+   "t": "Distingue ayer, hoy y mañana",
+   "ex": "Los usa bien, como \"¿mañana hay cole?\""
+  },
+  {
+   "id": "cg16",
+   "d": "cg",
+   "m": 72,
+   "t": "Hace sumas pequeñas con los dedos u objetos",
+   "ex": "\"3 caramelos y 2 más, ¿cuántos?\""
+  },
+  {
+   "id": "cg17",
+   "d": "cg",
+   "m": 84,
+   "t": "Dice la hora en un reloj",
+   "ex": "Horas en punto, como las 3 o las 7"
+  },
+  {
+   "id": "ln01",
+   "d": "ln",
+   "m": 2,
+   "t": "Hace sonidos como \"aa\" y \"uu\"",
+   "ex": "Hace gorjeos cuando está contento"
+  },
+  {
+   "id": "ln02",
+   "d": "ln",
+   "m": 4,
+   "t": "Se ríe a carcajadas",
+   "ex": "Ríe con sonido"
+  },
+  {
+   "id": "ln03",
+   "d": "ln",
+   "m": 6,
+   "t": "Balbucea como respondiendo cuando le hablas",
+   "ex": "Hace sonidos cuando el adulto se calla"
+  },
+  {
+   "id": "ln04",
+   "d": "ln",
+   "m": 9,
+   "t": "Repite sílabas como \"baba\" o \"dada\"",
+   "ex": "Balbuceo con consonantes y vocales"
+  },
+  {
+   "id": "ln05",
+   "d": "ln",
+   "m": 12,
+   "t": "Dice \"mamá\" o \"papá\" sabiendo lo que significa",
+   "ex": "Lo dice mirando a esa persona"
+  },
+  {
+   "id": "ln06",
+   "d": "ln",
+   "m": 15,
+   "t": "Entiende peticiones sencillas sin gestos",
+   "ex": "Trae la pelota si se lo pides"
+  },
+  {
+   "id": "ln07",
+   "d": "ln",
+   "m": 18,
+   "t": "Dice más de tres palabras con significado",
+   "ex": "Como \"agua\", \"pan\", \"guau\""
+  },
+  {
+   "id": "ln08",
+   "d": "ln",
+   "m": 21,
+   "t": "Señala el dibujo cuando lo nombras",
+   "ex": "Señala si preguntas \"¿dónde está el perrito?\""
+  },
+  {
+   "id": "ln09",
+   "d": "ln",
+   "m": 24,
+   "t": "Junta dos palabras",
+   "ex": "Como \"más agua\", \"papá va\""
+  },
+  {
+   "id": "ln10",
+   "d": "ln",
+   "m": 30,
+   "t": "Usa más de 50 palabras",
+   "ex": "Nombres de cosas y personas, acciones"
+  },
+  {
+   "id": "ln11",
+   "d": "ln",
+   "m": 36,
+   "t": "Habla con frases de tres palabras o más",
+   "ex": "Como \"yo quiero esto\""
+  },
+  {
+   "id": "ln12",
+   "d": "ln",
+   "m": 42,
+   "t": "Pregunta \"¿por qué?\" y \"¿quién?\"",
+   "ex": "Pregunta a menudo lo que le intriga"
+  },
+  {
+   "id": "ln13",
+   "d": "ln",
+   "m": 48,
+   "t": "Cuenta en orden y brevemente lo que pasó",
+   "ex": "\"Fuimos al parque y vi a mi amigo\""
+  },
+  {
+   "id": "ln14",
+   "d": "ln",
+   "m": 54,
+   "t": "Un adulto que no lo conoce entiende casi todo lo que dice",
+   "ex": "Pronuncia casi siempre claro"
+  },
+  {
+   "id": "ln15",
+   "d": "ln",
+   "m": 60,
+   "t": "Dice contrarios",
+   "ex": "Lo contrario de \"grande\" es \"pequeño\""
+  },
+  {
+   "id": "ln16",
+   "d": "ln",
+   "m": 66,
+   "t": "Da razones cuando preguntas \"¿por qué lo hizo?\" sobre un cuento",
+   "ex": "Sentimientos o motivos de un personaje"
+  },
+  {
+   "id": "ln17",
+   "d": "ln",
+   "m": 72,
+   "t": "Juega a juegos de palabras, como encadenar palabras",
+   "ex": "Sigue unas cuantas rondas con la regla"
+  },
+  {
+   "id": "ln18",
+   "d": "ln",
+   "m": 84,
+   "t": "Lee en voz alta palabras sencillas",
+   "ex": "Palabras cortas de un cuento"
+  },
+  {
+   "id": "sc01",
+   "d": "sc",
+   "m": 2,
+   "t": "Sonríe cuando le miras",
+   "ex": "Sonríe si le sonríes"
+  },
+  {
+   "id": "sc02",
+   "d": "sc",
+   "m": 4,
+   "t": "Sonríe y hace más sonidos cuando juegas con él",
+   "ex": "Te mira como pidiendo más si paras"
+  },
+  {
+   "id": "sc03",
+   "d": "sc",
+   "m": 6,
+   "t": "Reconoce y se alegra con personas conocidas",
+   "ex": "Mueve brazos y piernas feliz al ver a quien lo cuida"
+  },
+  {
+   "id": "sc04",
+   "d": "sc",
+   "m": 9,
+   "t": "Distingue a desconocidos de conocidos",
+   "ex": "A veces le da vergüenza con extraños"
+  },
+  {
+   "id": "sc05",
+   "d": "sc",
+   "m": 11,
+   "t": "Dice adiós con la mano",
+   "ex": "Saluda con la mano al despedirse"
+  },
+  {
+   "id": "sc06",
+   "d": "sc",
+   "m": 14,
+   "t": "Señala para enseñarte algo",
+   "ex": "Señala un avión y te mira"
+  },
+  {
+   "id": "sc07",
+   "d": "sc",
+   "m": 16,
+   "t": "Imita lo que hacen los adultos",
+   "ex": "Hace como que limpia o habla por teléfono"
+  },
+  {
+   "id": "sc08",
+   "d": "sc",
+   "m": 18,
+   "t": "Juega al lado de otros niños",
+   "ex": "Juegan cerca, aunque no juntos"
+  },
+  {
+   "id": "sc09",
+   "d": "sc",
+   "m": 24,
+   "t": "Mira o pone cara de preocupación cuando alguien llora",
+   "ex": "A veces se acerca a acariciar"
+  },
+  {
+   "id": "sc10",
+   "d": "sc",
+   "m": 30,
+   "t": "Se intercambia juguetes con otro niño al jugar",
+   "ex": "Aunque sea un rato"
+  },
+  {
+   "id": "sc11",
+   "d": "sc",
+   "m": 36,
+   "t": "Espera su turno un momento al jugar",
+   "ex": "Espera para el tobogán"
+  },
+  {
+   "id": "sc12",
+   "d": "sc",
+   "m": 42,
+   "t": "Nombra a un amigo favorito y quiere jugar con él",
+   "ex": "\"Quiero jugar con Leo\""
+  },
+  {
+   "id": "sc13",
+   "d": "sc",
+   "m": 48,
+   "t": "Juega a imitar repartiendo papeles",
+   "ex": "\"Tú eres el cliente y yo el cocinero\""
+  },
+  {
+   "id": "sc14",
+   "d": "sc",
+   "m": 54,
+   "t": "Juega con amigos a juegos sencillos con reglas",
+   "ex": "Pillapilla, escondite"
+  },
+  {
+   "id": "sc15",
+   "d": "sc",
+   "m": 60,
+   "t": "Consuela o ayuda a un amigo triste",
+   "ex": "\"¿Estás bien?\" al que se cae"
+  },
+  {
+   "id": "sc16",
+   "d": "sc",
+   "m": 72,
+   "t": "Sigue jugando aunque pierda, sin derrumbarse",
+   "ex": "Se enfada pero pronto vuelve"
+  },
+  {
+   "id": "sc17",
+   "d": "sc",
+   "m": 84,
+   "t": "Tras una pelea, lo arregla hablando o pide ayuda a un adulto",
+   "ex": "Usa palabras en vez de pegar"
+  },
+  {
+   "id": "sh01",
+   "d": "sh",
+   "m": 4,
+   "t": "Avisa con sonidos o gestos si tiene hambre o está incómodo",
+   "ex": "Hace señales además de llorar"
+  },
+  {
+   "id": "sh02",
+   "d": "sh",
+   "m": 6,
+   "t": "Abre la boca para la papilla que le das con cuchara",
+   "ex": "Abre la boca cuando llega la cuchara"
+  },
+  {
+   "id": "sh03",
+   "d": "sh",
+   "m": 8,
+   "t": "Coge comida con la mano y come solo",
+   "ex": "La coge y se la lleva a la boca"
+  },
+  {
+   "id": "sh04",
+   "d": "sh",
+   "m": 12,
+   "t": "Bebe de un vaso sujetándolo con las dos manos",
+   "ex": "Derramar un poco está bien"
+  },
+  {
+   "id": "sh05",
+   "d": "sh",
+   "m": 15,
+   "t": "Ayuda al vestirlo sacando el brazo o la pierna",
+   "ex": "Intenta meter el brazo en la manga"
+  },
+  {
+   "id": "sh06",
+   "d": "sh",
+   "m": 18,
+   "t": "Come solo con cuchara",
+   "ex": "Aunque se le caiga algo"
+  },
+  {
+   "id": "sh07",
+   "d": "sh",
+   "m": 24,
+   "t": "Se quita solo los calcetines o los zapatos",
+   "ex": "Basta con quitárselos"
+  },
+  {
+   "id": "sh08",
+   "d": "sh",
+   "m": 30,
+   "t": "Se lava las manos y se seca con la toalla",
+   "ex": "Se le puede ayudar a abrir el grifo"
+  },
+  {
+   "id": "sh09",
+   "d": "sh",
+   "m": 36,
+   "t": "De día avisa antes de que necesita ir al baño",
+   "ex": "Algún escape de vez en cuando está bien"
+  },
+  {
+   "id": "sh10",
+   "d": "sh",
+   "m": 42,
+   "t": "Se pone solo el pantalón o la camiseta",
+   "ex": "Ropa sin botones ni cremallera"
+  },
+  {
+   "id": "sh11",
+   "d": "sh",
+   "m": 48,
+   "t": "Se abrocha solo botones grandes",
+   "ex": "Botones grandes de abrigo o camisa"
+  },
+  {
+   "id": "sh12",
+   "d": "sh",
+   "m": 54,
+   "t": "Se cepilla los dientes solo",
+   "ex": "Un adulto puede repasar al final"
+  },
+  {
+   "id": "sh13",
+   "d": "sh",
+   "m": 60,
+   "t": "Va al baño solo, limpiándose también",
+   "ex": "Hasta tirar de la cadena y lavarse las manos"
+  },
+  {
+   "id": "sh14",
+   "d": "sh",
+   "m": 66,
+   "t": "Se viste solo del todo y del derecho",
+   "ex": "Incluidos calcetines y abrigo"
+  },
+  {
+   "id": "sh15",
+   "d": "sh",
+   "m": 72,
+   "t": "Come con palillos (también de aprendizaje)",
+   "ex": "Coge la comida y se la lleva a la boca"
+  },
+  {
+   "id": "sh16",
+   "d": "sh",
+   "m": 84,
+   "t": "Prepara solo su mochila y sus cosas",
+   "ex": "Sabe qué llevar al día siguiente y lo guarda"
+  }
+ ]
+}

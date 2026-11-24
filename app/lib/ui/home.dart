@@ -6,6 +6,7 @@ import '../content.dart';
 import '../main.dart';
 import '../scoring.dart';
 import '../store.dart';
+import 'dev.dart';
 import 'flow.dart';
 import 'kit.dart';
 import 'share.dart' show enterCode, inviteCg, openShare;
@@ -118,7 +119,9 @@ class HomeView extends StatelessWidget {
                 SizedBox(width: double.infinity, child: mainBtn),
               ])),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
+        DevBar(kid),
+        const SizedBox(height: 6),
         Row(children: [
           Text(tr('답하는 사람'), style: smallMuted),
           const SizedBox(width: 10),

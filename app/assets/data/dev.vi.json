@@ -1,0 +1,923 @@
+{
+ "domains": [
+  {
+   "id": "gm",
+   "n": "Vận động thô",
+   "d": "Sức toàn thân: ngồi, đi, chạy, thăng bằng",
+   "tips": [
+    [
+     "Cho bé nằm sấp chơi ngắn và nhiều lần trong ngày.",
+     "Đặt đồ chơi ở chỗ gần với tới để bé lật và bò."
+    ],
+    [
+     "Mỗi ngày chơi trò vận động như leo núi gối, đuổi theo bóng.",
+     "Tập lên xuống cầu thang từng bậc, nắm tay bé như một trò chơi."
+    ],
+    [
+     "Biến đứng một chân, lò cò thành trò \"ai giữ lâu hơn\".",
+     "Cho bé chạy chơi hơn một giờ mỗi ngày ở sân chơi, xe ba bánh."
+    ],
+    [
+     "Trò cần nhịp điệu và thăng bằng rất tốt: chuyền bóng, nhảy dây, xe đạp.",
+     "Đi trên vạch kẻ, làm đường lò cò để luyện thăng bằng."
+    ]
+   ]
+  },
+  {
+   "id": "fm",
+   "n": "Vận động tinh",
+   "d": "Khéo léo bàn tay, ngón tay: nhặt, xếp, vẽ, cắt",
+   "tips": [
+    [
+     "Đưa bé lục lạc và đồ chơi vải dễ cầm.",
+     "Cho bé nhón đồ ăn nhỏ nhưng ngồi cạnh để tránh hóc."
+    ],
+    [
+     "Cùng xếp khối, bỏ vào lấy ra, bóc hình dán.",
+     "Cho bé vẽ nguệch ngoạc thoải mái với bút sáp to."
+    ],
+    [
+     "Nặn đất, xâu hạt, xé giấy giúp tay khỏe hơn.",
+     "Thử cắt dải giấy bằng kéo trẻ em."
+    ],
+    [
+     "Cắt theo đường kẻ, gấp giấy, tô màu giúp ngón tay khéo hơn.",
+     "Cài cúc, dùng đũa gắp đậu cũng là trò chơi tốt."
+    ]
+   ]
+  },
+  {
+   "id": "cg",
+   "n": "Nhận thức",
+   "d": "Quan sát và suy nghĩ: tìm, ghép cặp, đếm, so sánh",
+   "tips": [
+    [
+     "Chơi ú òa để bé thấy đồ vật biến mất rồi xuất hiện.",
+     "Lắc đồ chơi có tiếng ở nhiều chỗ để bé tìm."
+    ],
+    [
+     "Chơi \"ở đâu nhỉ?\" tìm đồ giấu và ghép cặp tranh giống nhau.",
+     "Cùng chơi giả vờ như cho búp bê ăn."
+    ],
+    [
+     "Khi chia đồ ăn vặt, cùng đếm \"một, hai, ba\".",
+     "Phân loại đồ chơi theo kích thước, màu, hình là trò dọn dẹp hay."
+    ],
+    [
+     "Xem lịch nói về hôm qua, hôm nay, ngày mai; đếm số bằng trò chơi bàn cờ.",
+     "Cùng đoán \"vì sao thế nhỉ?\" giúp phát triển tư duy."
+    ]
+   ]
+  },
+  {
+   "id": "ln",
+   "n": "Ngôn ngữ",
+   "d": "Hiểu và nói: bập bẹ, từ, câu, kể chuyện",
+   "tips": [
+    [
+     "Bắt chước tiếng của bé, chờ một chút rồi nói tiếp.",
+     "Kể việc trong ngày bằng câu ngắn như bình luận viên."
+    ],
+    [
+     "Thêm một từ vào từ của bé rồi nói lại (\"nước\" → \"con muốn nước\").",
+     "Xem sách tranh, hỏi tên và để bé chỉ."
+    ],
+    [
+     "Trả lời ngắn câu \"tại sao?\" rồi hỏi lại \"con nghĩ sao?\"",
+     "Dành thời gian kể lại theo thứ tự chuyện hôm nay."
+    ],
+    [
+     "Cùng chơi nối từ, đố vui.",
+     "Đọc sách xong, nói về cảm xúc và lý do của nhân vật."
+    ]
+   ]
+  },
+  {
+   "id": "sc",
+   "n": "Xã hội",
+   "d": "Hòa đồng với mọi người: nhìn mắt, bắt chước, chờ lượt, chơi cùng",
+   "tips": [
+    [
+     "Nhìn mắt, mỉm cười và trò chuyện là trò chơi tốt nhất.",
+     "Thử trò qua lại như ú òa, vỗ tay."
+    ],
+    [
+     "Cùng nhìn thứ bé chỉ và nói tên nó.",
+     "Thường xuyên tạo cơ hội chơi gần các bạn cùng tuổi."
+    ],
+    [
+     "Tập chờ đợi bằng trò chơi theo lượt (xúc xắc, cầu trượt).",
+     "Khi chơi đóng vai, hỏi \"khách sẽ cảm thấy thế nào?\""
+    ],
+    [
+     "Người lớn làm mẫu trước rằng thua trò chơi cũng không sao.",
+     "Sau khi cãi nhau với bạn, cùng tìm \"nên nói thế nào?\""
+    ]
+   ]
+  },
+  {
+   "id": "sh",
+   "n": "Tự phục vụ",
+   "d": "Tự làm: ăn, mặc đồ, rửa, đi vệ sinh",
+   "tips": [
+    [
+     "Khi ăn, để bé sờ và bốc đồ ăn.",
+     "Khi thay tã, mặc đồ, hỏi \"mình cho tay vào nhé?\""
+    ],
+    [
+     "Làm đổ cũng không sao, cho bé tự dùng thìa và cốc.",
+     "Bắt đầu tự làm từ tất, giày dễ cởi."
+    ],
+    [
+     "Dán thẻ tranh thứ tự chuẩn bị buổi sáng giúp bé tự làm dễ hơn.",
+     "Tập cài cúc với quần áo cúc to."
+    ],
+    [
+     "Tạo thói quen cùng chuẩn bị đồ cho ngày mai.",
+     "Khen thật nhiều khi bé dùng đũa và tự rửa."
+    ]
+   ]
+  }
+ ],
+ "opt": [
+  "Chưa làm được",
+  "Thỉnh thoảng hoặc cần giúp",
+  "Phần lớn làm được",
+  "Làm tốt"
+ ],
+ "lv": {
+  "fast": [
+   "Đi trước",
+   "Làm tốt những gì mong đợi ở độ tuổi này và đã thử bước tiếp theo.",
+   "Đi trước"
+  ],
+  "ok": [
+   "Đúng độ tuổi",
+   "Làm được phần lớn những gì mong đợi ở độ tuổi này.",
+   "Đúng tuổi"
+  ],
+  "watch": [
+   "Theo dõi thêm",
+   "Còn vài điều chưa thành thạo. Cho bé tập qua trò chơi và kiểm tra lại sau một hai tháng.",
+   "Theo dõi"
+  ],
+  "red": [
+   "Hỏi chuyên gia",
+   "Nhiều điều mong đợi ở độ tuổi này vẫn còn khó. Nên tư vấn phát triển khi khám sức khỏe định kỳ hoặc với bác sĩ nhi.",
+   "Hỏi chuyên gia"
+  ]
+ },
+ "rg": "Bé có từng không làm được điều mà trước đây đã làm được không?",
+ "rgEx": "VD: không nói những từ trước đây đã nói, đang đi lại chỉ bò",
+ "items": [
+  {
+   "id": "gm01",
+   "d": "gm",
+   "m": 2,
+   "t": "Khi nằm sấp, ngẩng đầu được một lúc",
+   "ex": "Nằm sấp, nhấc cằm khỏi sàn vài giây"
+  },
+  {
+   "id": "gm02",
+   "d": "gm",
+   "m": 4,
+   "t": "Nằm sấp, chống tay nâng ngực lên",
+   "ex": "Chống khuỷu tay hoặc bàn tay và nhìn về phía trước"
+  },
+  {
+   "id": "gm03",
+   "d": "gm",
+   "m": 6,
+   "t": "Tự lật người",
+   "ex": "Từ nằm ngửa sang nằm sấp hoặc ngược lại"
+  },
+  {
+   "id": "gm04",
+   "d": "gm",
+   "m": 8,
+   "t": "Tự ngồi không cần đỡ",
+   "ex": "Ngồi chơi một lúc mà không chống tay"
+  },
+  {
+   "id": "gm05",
+   "d": "gm",
+   "m": 10,
+   "t": "Vịn đồ đạc tự đứng dậy",
+   "ex": "Vịn sofa hoặc bàn để kéo người lên"
+  },
+  {
+   "id": "gm06",
+   "d": "gm",
+   "m": 12,
+   "t": "Vịn đồ đạc đi ngang",
+   "ex": "Vịn sofa bước ngang"
+  },
+  {
+   "id": "gm07",
+   "d": "gm",
+   "m": 15,
+   "t": "Tự đi vài bước",
+   "ex": "Buông tay vẫn đi được ba bốn bước không ngã"
+  },
+  {
+   "id": "gm08",
+   "d": "gm",
+   "m": 18,
+   "t": "Đi qua phòng không bị ngã",
+   "ex": "Có thể dừng lại hoặc đổi hướng khi đi"
+  },
+  {
+   "id": "gm09",
+   "d": "gm",
+   "m": 21,
+   "t": "Nắm tay hoặc vịn lan can leo cầu thang",
+   "ex": "Hai chân cùng đặt lên một bậc cũng được"
+  },
+  {
+   "id": "gm10",
+   "d": "gm",
+   "m": 24,
+   "t": "Chạy không bị ngã",
+   "ex": "Chạy nhanh hơn đi lẫm chẫm ở sân chơi"
+  },
+  {
+   "id": "gm11",
+   "d": "gm",
+   "m": 27,
+   "t": "Đá quả bóng về phía trước",
+   "ex": "Đá quả bóng đang đứng yên lăn đi"
+  },
+  {
+   "id": "gm12",
+   "d": "gm",
+   "m": 30,
+   "t": "Bật nhảy tại chỗ bằng hai chân",
+   "ex": "Hai chân cùng rời khỏi sàn"
+  },
+  {
+   "id": "gm13",
+   "d": "gm",
+   "m": 36,
+   "t": "Lên cầu thang bằng cách đổi chân",
+   "ex": "Mỗi bậc một chân, có thể vịn lan can"
+  },
+  {
+   "id": "gm14",
+   "d": "gm",
+   "m": 42,
+   "t": "Đạp xe ba bánh tiến về phía trước",
+   "ex": "Tự đạp đi không cần đẩy"
+  },
+  {
+   "id": "gm15",
+   "d": "gm",
+   "m": 48,
+   "t": "Đứng một chân 2–3 giây",
+   "ex": "Nhấc một chân và giữ thăng bằng một lúc"
+  },
+  {
+   "id": "gm16",
+   "d": "gm",
+   "m": 54,
+   "t": "Nhảy lò cò ba bốn lần",
+   "ex": "Lò cò tại chỗ hoặc tiến lên"
+  },
+  {
+   "id": "gm17",
+   "d": "gm",
+   "m": 60,
+   "t": "Bắt quả bóng lớn bằng hai tay",
+   "ex": "Bắt quả bóng ném gần như ôm vào lòng"
+  },
+  {
+   "id": "gm18",
+   "d": "gm",
+   "m": 66,
+   "t": "Nhảy chân sáo tiến về phía trước",
+   "ex": "Nhảy đổi chân luân phiên"
+  },
+  {
+   "id": "gm19",
+   "d": "gm",
+   "m": 72,
+   "t": "Đứng một chân gần 10 giây",
+   "ex": "Hai chân đều giữ được tương tự"
+  },
+  {
+   "id": "gm20",
+   "d": "gm",
+   "m": 84,
+   "t": "Nhảy dây liền hai ba lần",
+   "ex": "Quay dây và nhảy qua liên tục"
+  },
+  {
+   "id": "fm01",
+   "d": "fm",
+   "m": 3,
+   "t": "Chụm hai tay hoặc đưa tay lên miệng",
+   "ex": "Nằm nhìn hoặc mút tay"
+  },
+  {
+   "id": "fm02",
+   "d": "fm",
+   "m": 4,
+   "t": "Nắm và lắc đồ chơi được đặt vào tay",
+   "ex": "Cầm lục lạc một lúc và lắc"
+  },
+  {
+   "id": "fm03",
+   "d": "fm",
+   "m": 6,
+   "t": "Với tay cầm lấy đồ chơi",
+   "ex": "Tự cầm đồ chơi trước mặt và kéo lại"
+  },
+  {
+   "id": "fm04",
+   "d": "fm",
+   "m": 8,
+   "t": "Chuyển đồ vật từ tay này sang tay kia",
+   "ex": "Chuyển khối gỗ qua tay kia"
+  },
+  {
+   "id": "fm05",
+   "d": "fm",
+   "m": 10,
+   "t": "Nhặt đồ ăn nhỏ bằng ngón cái và ngón trỏ",
+   "ex": "Nhón miếng bánh nhỏ bằng đầu ngón tay"
+  },
+  {
+   "id": "fm06",
+   "d": "fm",
+   "m": 12,
+   "t": "Bỏ đồ vào hộp rồi lấy ra",
+   "ex": "Bỏ khối gỗ vào cốc hoặc hộp rồi lấy ra"
+  },
+  {
+   "id": "fm07",
+   "d": "fm",
+   "m": 15,
+   "t": "Xếp chồng hai khối gỗ",
+   "ex": "Đặt khối này lên khối kia và đứng vững"
+  },
+  {
+   "id": "fm08",
+   "d": "fm",
+   "m": 18,
+   "t": "Cầm bút sáp vẽ nguệch ngoạc",
+   "ex": "Để lại nét hoặc chấm trên giấy"
+  },
+  {
+   "id": "fm09",
+   "d": "fm",
+   "m": 21,
+   "t": "Xếp chồng khoảng bốn khối gỗ",
+   "ex": "Khoảng bốn khối trước khi đổ"
+  },
+  {
+   "id": "fm10",
+   "d": "fm",
+   "m": 24,
+   "t": "Lật từng trang sách",
+   "ex": "Lật từng trang sách bìa cứng"
+  },
+  {
+   "id": "fm11",
+   "d": "fm",
+   "m": 30,
+   "t": "Vặn mở nắp",
+   "ex": "Vặn mở nắp chai hoặc hộp"
+  },
+  {
+   "id": "fm12",
+   "d": "fm",
+   "m": 36,
+   "t": "Nhìn và vẽ theo hình tròn",
+   "ex": "Hình tròn khép gần kín là được"
+  },
+  {
+   "id": "fm13",
+   "d": "fm",
+   "m": 42,
+   "t": "Dùng kéo cắt giấy",
+   "ex": "Cắt mép giấy bằng kéo trẻ em"
+  },
+  {
+   "id": "fm14",
+   "d": "fm",
+   "m": 48,
+   "t": "Vẽ người có đầu, thân, tay chân",
+   "ex": "Chỉ vài phần cũng nhận ra là người"
+  },
+  {
+   "id": "fm15",
+   "d": "fm",
+   "m": 54,
+   "t": "Nhìn và vẽ theo hình vuông",
+   "ex": "Hình có góc cạnh"
+  },
+  {
+   "id": "fm16",
+   "d": "fm",
+   "m": 60,
+   "t": "Cắt theo đường kẻ",
+   "ex": "Không lệch nhiều khỏi đường kẻ đậm"
+  },
+  {
+   "id": "fm17",
+   "d": "fm",
+   "m": 66,
+   "t": "Nhìn và vẽ theo hình tam giác",
+   "ex": "Thấy rõ ba góc"
+  },
+  {
+   "id": "fm18",
+   "d": "fm",
+   "m": 72,
+   "t": "Tô màu ít lem ra ngoài",
+   "ex": "Tô kín các ô trong tranh tô màu"
+  },
+  {
+   "id": "fm19",
+   "d": "fm",
+   "m": 84,
+   "t": "Buộc dây giày hoặc nơ",
+   "ex": "Tạo vòng và thắt nút"
+  },
+  {
+   "id": "cg01",
+   "d": "cg",
+   "m": 2,
+   "t": "Mắt dõi theo khuôn mặt hoặc đồ vật di chuyển",
+   "ex": "Mắt đuổi theo đồ chơi di chuyển qua lại"
+  },
+  {
+   "id": "cg02",
+   "d": "cg",
+   "m": 4,
+   "t": "Quay đầu về phía có tiếng động",
+   "ex": "Lắc lục lạc bên cạnh thì nhìn sang"
+  },
+  {
+   "id": "cg03",
+   "d": "cg",
+   "m": 6,
+   "t": "Đưa mắt tìm đồ chơi bị rơi",
+   "ex": "Nhìn xuống chỗ đồ chơi rơi"
+  },
+  {
+   "id": "cg04",
+   "d": "cg",
+   "m": 9,
+   "t": "Tìm ra đồ chơi giấu dưới khăn",
+   "ex": "Che bằng khăn trước mặt thì bé kéo khăn ra"
+  },
+  {
+   "id": "cg05",
+   "d": "cg",
+   "m": 12,
+   "t": "Thử dùng đồ vật đúng công dụng",
+   "ex": "Đưa lược lên đầu, đưa cốc lên miệng"
+  },
+  {
+   "id": "cg06",
+   "d": "cg",
+   "m": 15,
+   "t": "Đặt miếng tròn vào bảng hình khối",
+   "ex": "Đặt miếng vào đúng lỗ"
+  },
+  {
+   "id": "cg07",
+   "d": "cg",
+   "m": 18,
+   "t": "Giả vờ cho búp bê ăn hoặc ru ngủ",
+   "ex": "Đưa thìa vào miệng búp bê"
+  },
+  {
+   "id": "cg08",
+   "d": "cg",
+   "m": 24,
+   "t": "Ghép cặp tranh hoặc đồ vật giống nhau",
+   "ex": "Tìm hai thẻ tranh giống nhau"
+  },
+  {
+   "id": "cg09",
+   "d": "cg",
+   "m": 30,
+   "t": "Phân biệt to và nhỏ",
+   "ex": "Bảo \"đưa cái to\" thì đưa cái to"
+  },
+  {
+   "id": "cg10",
+   "d": "cg",
+   "m": 36,
+   "t": "Bảo \"đưa hai cái\" thì đếm đưa hai cái",
+   "ex": "Bánh hoặc khối gỗ, đúng số lượng"
+  },
+  {
+   "id": "cg11",
+   "d": "cg",
+   "m": 42,
+   "t": "Nói đúng tên hơn ba màu",
+   "ex": "Đỏ, xanh dương, vàng…"
+  },
+  {
+   "id": "cg12",
+   "d": "cg",
+   "m": 48,
+   "t": "Đếm chính xác từng cái năm đồ vật",
+   "ex": "Vừa chỉ vừa đếm \"một, hai… năm\""
+  },
+  {
+   "id": "cg13",
+   "d": "cg",
+   "m": 54,
+   "t": "So sánh dài/ngắn, nhiều/ít bằng lời",
+   "ex": "\"Cái này dài hơn\", \"chỗ này nhiều hơn\""
+  },
+  {
+   "id": "cg14",
+   "d": "cg",
+   "m": 60,
+   "t": "Đếm đến 10 và đọc được vài con số",
+   "ex": "Số trên lịch hoặc thang máy"
+  },
+  {
+   "id": "cg15",
+   "d": "cg",
+   "m": 66,
+   "t": "Phân biệt hôm qua, hôm nay, ngày mai",
+   "ex": "Dùng đúng như \"Mai con đi học không?\""
+  },
+  {
+   "id": "cg16",
+   "d": "cg",
+   "m": 72,
+   "t": "Làm phép cộng nhỏ bằng ngón tay hoặc đồ vật",
+   "ex": "\"3 viên kẹo thêm 2 viên là mấy?\""
+  },
+  {
+   "id": "cg17",
+   "d": "cg",
+   "m": 84,
+   "t": "Nhìn đồng hồ nói được mấy giờ",
+   "ex": "Giờ chẵn như 3 giờ, 7 giờ"
+  },
+  {
+   "id": "ln01",
+   "d": "ln",
+   "m": 2,
+   "t": "Phát ra âm như \"a\", \"u\"",
+   "ex": "Ê a khi vui"
+  },
+  {
+   "id": "ln02",
+   "d": "ln",
+   "m": 4,
+   "t": "Cười thành tiếng",
+   "ex": "Cười khanh khách"
+  },
+  {
+   "id": "ln03",
+   "d": "ln",
+   "m": 6,
+   "t": "Khi được nói chuyện thì bập bẹ như đáp lại",
+   "ex": "Khi người lớn ngừng thì bé phát ra tiếng"
+  },
+  {
+   "id": "ln04",
+   "d": "ln",
+   "m": 9,
+   "t": "Lặp lại âm như \"ba ba\", \"đa đa\"",
+   "ex": "Bập bẹ có phụ âm và nguyên âm"
+  },
+  {
+   "id": "ln05",
+   "d": "ln",
+   "m": 12,
+   "t": "Gọi \"mẹ\", \"bố\" có hiểu nghĩa",
+   "ex": "Vừa nhìn người đó vừa gọi"
+  },
+  {
+   "id": "ln06",
+   "d": "ln",
+   "m": 15,
+   "t": "Hiểu lời nhờ đơn giản không cần cử chỉ",
+   "ex": "Bảo \"mang bóng lại đây\" thì mang lại"
+  },
+  {
+   "id": "ln07",
+   "d": "ln",
+   "m": 18,
+   "t": "Nói hơn ba từ có nghĩa",
+   "ex": "Như \"măm\", \"nước\", \"gâu gâu\""
+  },
+  {
+   "id": "ln08",
+   "d": "ln",
+   "m": 21,
+   "t": "Gọi tên thì chỉ đúng tranh trong sách",
+   "ex": "Hỏi \"con cún đâu?\" thì chỉ vào"
+  },
+  {
+   "id": "ln09",
+   "d": "ln",
+   "m": 24,
+   "t": "Ghép được hai từ",
+   "ex": "Như \"mẹ nước\", \"bố đi\""
+  },
+  {
+   "id": "ln10",
+   "d": "ln",
+   "m": 30,
+   "t": "Dùng hơn 50 từ",
+   "ex": "Tên đồ vật, tên người, từ chỉ hành động"
+  },
+  {
+   "id": "ln11",
+   "d": "ln",
+   "m": 36,
+   "t": "Nói câu từ ba từ trở lên",
+   "ex": "Như \"con muốn ăn cái này\""
+  },
+  {
+   "id": "ln12",
+   "d": "ln",
+   "m": 42,
+   "t": "Hỏi \"tại sao?\", \"ai thế?\"",
+   "ex": "Thường hỏi điều mình tò mò"
+  },
+  {
+   "id": "ln13",
+   "d": "ln",
+   "m": 48,
+   "t": "Kể ngắn gọn theo thứ tự chuyện đã xảy ra",
+   "ex": "\"Con ra sân chơi rồi gặp bạn\""
+  },
+  {
+   "id": "ln14",
+   "d": "ln",
+   "m": 54,
+   "t": "Người lớn mới gặp cũng hiểu gần hết lời bé",
+   "ex": "Phát âm phần lớn rõ ràng"
+  },
+  {
+   "id": "ln15",
+   "d": "ln",
+   "m": 60,
+   "t": "Nói được từ trái nghĩa",
+   "ex": "Trái nghĩa với \"to\" là \"nhỏ\""
+  },
+  {
+   "id": "ln16",
+   "d": "ln",
+   "m": 66,
+   "t": "Nghe chuyện xong trả lời được \"vì sao lại thế?\"",
+   "ex": "Cảm xúc hay lý do của nhân vật"
+  },
+  {
+   "id": "ln17",
+   "d": "ln",
+   "m": 72,
+   "t": "Chơi trò chơi chữ như nối từ",
+   "ex": "Chơi tiếp được vài lượt đúng luật"
+  },
+  {
+   "id": "ln18",
+   "d": "ln",
+   "m": 84,
+   "t": "Đọc to được những từ dễ",
+   "ex": "Từ ngắn trong sách tranh"
+  },
+  {
+   "id": "sc01",
+   "d": "sc",
+   "m": 2,
+   "t": "Mỉm cười khi nhìn mặt nhau",
+   "ex": "Người lớn cười thì cười theo"
+  },
+  {
+   "id": "sc02",
+   "d": "sc",
+   "m": 4,
+   "t": "Được chơi cùng thì cười và phát ra tiếng nhiều hơn",
+   "ex": "Ngừng chơi thì nhìn như muốn chơi tiếp"
+  },
+  {
+   "id": "sc03",
+   "d": "sc",
+   "m": 6,
+   "t": "Nhận ra người quen và mừng rỡ",
+   "ex": "Thấy người chăm sóc thì quẫy chân tay vui vẻ"
+  },
+  {
+   "id": "sc04",
+   "d": "sc",
+   "m": 9,
+   "t": "Phân biệt người lạ và người quen",
+   "ex": "Có lúc lạ người"
+  },
+  {
+   "id": "sc05",
+   "d": "sc",
+   "m": 11,
+   "t": "Vẫy tay \"bye bye\"",
+   "ex": "Vẫy tay theo khi chia tay"
+  },
+  {
+   "id": "sc06",
+   "d": "sc",
+   "m": 14,
+   "t": "Chỉ tay vào thứ muốn cho bạn xem",
+   "ex": "Chỉ máy bay rồi nhìn người lớn"
+  },
+  {
+   "id": "sc07",
+   "d": "sc",
+   "m": 16,
+   "t": "Bắt chước việc người lớn làm",
+   "ex": "Giả vờ lau dọn hay nghe điện thoại"
+  },
+  {
+   "id": "sc08",
+   "d": "sc",
+   "m": 18,
+   "t": "Chơi bên cạnh trẻ khác",
+   "ex": "Dù không chơi cùng vẫn chơi riêng bên cạnh"
+  },
+  {
+   "id": "sc09",
+   "d": "sc",
+   "m": 24,
+   "t": "Khi người khác khóc thì nhìn hoặc tỏ vẻ lo lắng",
+   "ex": "Có khi lại gần xoa"
+  },
+  {
+   "id": "sc10",
+   "d": "sc",
+   "m": 30,
+   "t": "Trao đổi đồ chơi qua lại với trẻ khác",
+   "ex": "Dù chỉ một lúc"
+  },
+  {
+   "id": "sc11",
+   "d": "sc",
+   "m": 36,
+   "t": "Chờ lượt một chút khi chơi",
+   "ex": "Chờ lượt cầu trượt"
+  },
+  {
+   "id": "sc12",
+   "d": "sc",
+   "m": 42,
+   "t": "Nói tên bạn thân và muốn chơi cùng",
+   "ex": "\"Con muốn chơi với ○○\""
+  },
+  {
+   "id": "sc13",
+   "d": "sc",
+   "m": 48,
+   "t": "Chơi đóng vai có chia vai",
+   "ex": "\"Cậu là khách, tớ là đầu bếp\""
+  },
+  {
+   "id": "sc14",
+   "d": "sc",
+   "m": 54,
+   "t": "Chơi trò có luật đơn giản với bạn",
+   "ex": "Đuổi bắt, trốn tìm"
+  },
+  {
+   "id": "sc15",
+   "d": "sc",
+   "m": 60,
+   "t": "An ủi hoặc giúp bạn đang buồn",
+   "ex": "Hỏi bạn bị ngã \"cậu có sao không?\""
+  },
+  {
+   "id": "sc16",
+   "d": "sc",
+   "m": 72,
+   "t": "Thua trò chơi vẫn không suy sụp và chơi tiếp",
+   "ex": "Buồn nhưng sớm tham gia lại"
+  },
+  {
+   "id": "sc17",
+   "d": "sc",
+   "m": 84,
+   "t": "Sau khi cãi nhau với bạn, giải quyết bằng lời hoặc nhờ người lớn",
+   "ex": "Dùng lời thay vì đánh"
+  },
+  {
+   "id": "sh01",
+   "d": "sh",
+   "m": 4,
+   "t": "Báo đói hoặc khó chịu bằng âm thanh hay cử chỉ",
+   "ex": "Có tín hiệu khác ngoài khóc"
+  },
+  {
+   "id": "sh02",
+   "d": "sh",
+   "m": 6,
+   "t": "Há miệng ăn đồ ăn dặm đút bằng thìa",
+   "ex": "Thìa đến thì há miệng"
+  },
+  {
+   "id": "sh03",
+   "d": "sh",
+   "m": 8,
+   "t": "Tự cầm bánh ăn",
+   "ex": "Bốc bằng tay đưa vào miệng"
+  },
+  {
+   "id": "sh04",
+   "d": "sh",
+   "m": 12,
+   "t": "Hai tay cầm cốc uống",
+   "ex": "Đổ một chút cũng được"
+  },
+  {
+   "id": "sh05",
+   "d": "sh",
+   "m": 15,
+   "t": "Đưa tay hoặc chân ra phụ khi mặc đồ",
+   "ex": "Cố cho tay vào ống tay áo"
+  },
+  {
+   "id": "sh06",
+   "d": "sh",
+   "m": 18,
+   "t": "Tự xúc thìa ăn",
+   "ex": "Dù có làm rơi vãi"
+  },
+  {
+   "id": "sh07",
+   "d": "sh",
+   "m": 24,
+   "t": "Tự cởi tất hoặc giày",
+   "ex": "Chỉ cởi ra là được"
+  },
+  {
+   "id": "sh08",
+   "d": "sh",
+   "m": 30,
+   "t": "Rửa tay và lau bằng khăn",
+   "ex": "Có thể giúp mở vòi nước"
+  },
+  {
+   "id": "sh09",
+   "d": "sh",
+   "m": 36,
+   "t": "Ban ngày nói trước khi muốn đi vệ sinh",
+   "ex": "Thỉnh thoảng lỡ cũng không sao"
+  },
+  {
+   "id": "sh10",
+   "d": "sh",
+   "m": 42,
+   "t": "Tự mặc quần hoặc áo phông",
+   "ex": "Đồ không có cúc hay khóa kéo"
+  },
+  {
+   "id": "sh11",
+   "d": "sh",
+   "m": 48,
+   "t": "Tự cài cúc to",
+   "ex": "Cúc to trên áo khoác hay sơ mi"
+  },
+  {
+   "id": "sh12",
+   "d": "sh",
+   "m": 54,
+   "t": "Tự đánh răng",
+   "ex": "Người lớn có thể chải lại cuối"
+  },
+  {
+   "id": "sh13",
+   "d": "sh",
+   "m": 60,
+   "t": "Tự đi vệ sinh và tự lau",
+   "ex": "Đến cả xả nước và rửa tay"
+  },
+  {
+   "id": "sh14",
+   "d": "sh",
+   "m": 66,
+   "t": "Tự mặc hết quần áo đúng trước sau",
+   "ex": "Cả tất và áo khoác"
+  },
+  {
+   "id": "sh15",
+   "d": "sh",
+   "m": 72,
+   "t": "Dùng đũa (kể cả đũa tập) gắp thức ăn",
+   "ex": "Gắp thức ăn đưa vào miệng"
+  },
+  {
+   "id": "sh16",
+   "d": "sh",
+   "m": 84,
+   "t": "Tự chuẩn bị cặp sách và đồ dùng",
+   "ex": "Biết ngày mai cần mang gì và cho vào"
+  }
+ ]
+}

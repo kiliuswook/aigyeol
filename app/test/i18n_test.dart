@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:childmbti/content.dart';
 import 'package:childmbti/daily.dart';
+import 'package:childmbti/dev.dart';
 import 'package:childmbti/i18n.dart';
 import 'package:childmbti/notify.dart';
 import 'package:childmbti/main.dart';
@@ -27,7 +28,7 @@ List<String> korean(WidgetTester t) => [
 Future<void> boot(WidgetTester t, String code) async {
   SharedPreferences.setMockInitialValues({});
   await t.runAsync(() async {
-    await setLang(code, () async => Future.wait([loadContent(), loadDaily()]));
+    await setLang(code, () async => Future.wait([loadContent(), loadDaily(), loadDev()]));
     await store.load();
     await daily.load();
   });
@@ -52,7 +53,7 @@ Future<void> check(WidgetTester t, String where) async {
 
 void main() {
   tearDown(() async {
-    await setLang('ko', () async => Future.wait([loadContent(), loadDaily()]));
+    await setLang('ko', () async => Future.wait([loadContent(), loadDaily(), loadDev()]));
   });
 
   for (final code in kLangs.keys.where((c) => c != 'ko' && _ready(c))) {
@@ -106,6 +107,48 @@ void main() {
     }
     tab.value = 2;
     await check(t, 'more');
+  });
+
+  testWidgets('$code: 성장 발달 체크 시작 · 문항 · 결과 · 상세 (360x640)', (t) async {
+    await boot(t, code);
+    devStats.clear();
+    devStats.client = MockClient((q) async => http.Response('{"fields":{"n":{"integerValue":"9"},"sgm":{"integerValue":"600"},"hn":{"integerValue":"9"},"hs":{"integerValue":"8400"}}}', 200));
+    final now = DateTime.now(), b = DateTime(now.year, now.month - 20);
+    store.setInfo(name: 'Kongi', birth: '${b.year}-${b.month.toString().padLeft(2, '0')}', sex: 'M');
+    await t.pumpWidget(const App());
+    await check(t, 'home dev tile');
+    await t.tap(find.byKey(const Key('home-dev')));
+    await check(t, 'dev intro');
+    await t.tap(find.text(tr('광고 보고 무료로 발달 체크 시작')));
+    await check(t, 'dev growth');
+    await t.enterText(find.byType(TextField).at(0), '84');
+    await t.tap(find.text(tr('다음')));
+    await check(t, 'dev item');
+    for (var k = 0; k < 24; k++) {
+      await t.tap(find.byKey(Key('dev-opt-${k % 4}')));
+      await t.pump(const Duration(milliseconds: 300));
+      await check(t, 'dev item $k');
+    }
+    await t.tap(find.byKey(const Key('dev-opt-1')));
+    await t.pump(const Duration(milliseconds: 300));
+    await check(t, 'dev result');
+    for (final k in ['dev-d0', 'dev-d3']) {
+      await t.ensureVisible(find.byKey(Key(k)));
+      await t.tap(find.byKey(Key(k)));
+      await check(t, 'dev $k');
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+    }
+    for (final x in [tr('키 · 몸무게'), tr('또래 평균'), tr('지난 기록')]) {
+      await t.ensureVisible(find.text(x).first);
+      await t.tap(find.text(x).first);
+      await check(t, 'dev $x');
+      await t.tap(find.byKey(const Key('back')));
+      await t.pumpAndSettle();
+    }
+    await t.ensureVisible(find.text(tr('읽는 법')));
+    await t.tap(find.text(tr('읽는 법')));
+    await check(t, 'dev info');
   });
   }
 }
