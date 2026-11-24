@@ -699,5 +699,18 @@
  "어린이집·유치원에서는 하는데 집에서는 안 한다면 '대체로 해요'를 골라 주세요.": "Si lo hace en la guardería o el cole pero no en casa, elige 'Casi siempre'.",
  "마지막 질문": "Última pregunta",
  "없어요": "No",
- "있어요": "Sí"
+ "있어요": "Sí",
+ "기질·성격": "Temperamento",
+ "성장 발달": "Desarrollo",
+ "아이 {0}명 · 오늘의 모습을 한눈에": "{0} niños · hoy de un vistazo",
+ "{0}의 오늘을 한눈에": "El día de {0} de un vistazo",
+ "검사 중 · {0}/{1}": "En curso · {0}/{1}",
+ "아직 검사 전 · 66문항 무료": "Sin test aún · 66 preguntas, gratis",
+ "기질 4축 · 자라는 힘 · 양육자 비교 · 또래 평균": "4 ejes de temperamento · fortalezas · comparación entre cuidadores · promedios",
+ "미션: {0}": "Misión: {0}",
+ "{0} {1} · {2}": "{0} {1} · {2}",
+ "오늘 미션 완료": "Misión de hoy hecha",
+ "{0}일 뒤": "En {0} días",
+ "아직 체크 전 · 6개 영역 + 키·몸무게": "Sin revisar · 6 áreas + talla y peso",
+ "6개 중 {0}개 또래만큼": "{0} de 6 al día"
 }

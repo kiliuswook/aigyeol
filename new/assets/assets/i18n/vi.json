@@ -699,5 +699,18 @@
  "어린이집·유치원에서는 하는데 집에서는 안 한다면 '대체로 해요'를 골라 주세요.": "Nếu ở nhà trẻ, mẫu giáo làm được mà ở nhà không làm, hãy chọn 'Phần lớn làm được'.",
  "마지막 질문": "Câu hỏi cuối",
  "없어요": "Không",
- "있어요": "Có"
+ "있어요": "Có",
+ "기질·성격": "Tính khí",
+ "성장 발달": "Phát triển",
+ "아이 {0}명 · 오늘의 모습을 한눈에": "{0} bé · hôm nay trong nháy mắt",
+ "{0}의 오늘을 한눈에": "Hôm nay của {0} trong nháy mắt",
+ "검사 중 · {0}/{1}": "Đang làm · {0}/{1}",
+ "아직 검사 전 · 66문항 무료": "Chưa làm · 66 câu, miễn phí",
+ "기질 4축 · 자라는 힘 · 양육자 비교 · 또래 평균": "4 trục tính khí · sức lớn · so sánh người nuôi · trung bình cùng tuổi",
+ "미션: {0}": "Nhiệm vụ: {0}",
+ "{0} {1} · {2}": "{0} {1} · {2}",
+ "오늘 미션 완료": "Đã xong nhiệm vụ hôm nay",
+ "{0}일 뒤": "{0} ngày nữa",
+ "아직 체크 전 · 6개 영역 + 키·몸무게": "Chưa kiểm tra · 6 lĩnh vực + chiều cao, cân nặng",
+ "6개 중 {0}개 또래만큼": "{0}/6 như các bạn cùng tuổi"
 }

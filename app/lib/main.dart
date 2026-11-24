@@ -19,6 +19,7 @@ import 'ui/intro.dart';
 import 'ui/report.dart';
 import 'ui/more.dart';
 import 'ui/today.dart';
+import 'ui/dev.dart' show DevScreen;
 import 'ui/sibling.dart' show sibOther;
 import 'ui/links.dart' show initKakao;
 import 'deeplink.dart';
@@ -80,8 +81,9 @@ Future<void> main() async {
   });
 }
 
-/// 아래 메뉴: 0 홈, 1 리포트, 2 더보기(가족 초대·공유, 계정, 안내), 3 오늘(미션·약속·상황 카드).
-/// 화면에 놓이는 순서는 홈 · 오늘 · 리포트 · 더보기(번호는 예전 그대로 두어 tab.value = 1 이 리포트).
+/// 아래 메뉴: 0 홈(모든 아이 요약·바로 가기), 1 기질·성격(검사·리포트), 2 더보기(가족 초대·공유, 계정, 안내),
+/// 3 오늘(미션·약속·상황 카드), 4 성장 발달(발달 체크·키 몸무게).
+/// 화면에 놓이는 순서는 홈 · 기질·성격 · 성장 발달 · 오늘 · 더보기(번호는 예전 그대로 두어 tab.value = 1 이 기질·성격).
 final tab = ValueNotifier<int>(0);
 
 class App extends StatelessWidget {
@@ -126,7 +128,7 @@ class Shell extends StatelessWidget {
               listenable: Listenable.merge([store, sibOther]),
               // 보고 있는 탭만 다시 그린다. 안 보이는 탭은 열 때 한 번 다시 그린다(검사 중 답할 때마다 세 탭을 모두 그리지 않게).
               builder: (ctx, _) => IndexedStack(index: i, children: [
-                for (var k = 0; k < 4; k++) _TabPage(active: i == k, build: () => switch (k) { 0 => HomeView(), 1 => ReportView(), 2 => MoreView(), _ => TodayView() }),
+                for (var k = 0; k < 5; k++) _TabPage(active: i == k, build: () => switch (k) { 0 => HomeView(), 1 => ReportView(), 2 => MoreView(), 3 => TodayView(), _ => DevScreen(inTab: true) }),
               ]),
             ),
           ),
@@ -137,7 +139,7 @@ class Shell extends StatelessWidget {
               child: SafeArea(
                 top: false,
                 child: Row(children: [
-                  for (final (k, label, icon) in [(0, tr('홈'), 'i_home'), (3, tr('오늘'), 'i_chat'), (1, tr('리포트'), 'i_doc'), (2, tr('더보기'), 'i_star')])
+                  for (final (k, label, icon) in [(0, tr('홈'), 'i_home'), (1, tr('기질·성격'), 'i_doc'), (4, tr('성장 발달'), 'i_check'), (3, tr('오늘'), 'i_chat'), (2, tr('더보기'), 'i_star')])
                     Expanded(
                       child: InkWell(
                         onTap: () => tab.value = k,
@@ -145,12 +147,12 @@ class Shell extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 6),
                           child: Column(mainAxisSize: MainAxisSize.min, children: [
                             Container(
-                              width: 56, height: 32,
+                              width: 52, height: 32,
                               decoration: BoxDecoration(color: i == k ? kAccent : null, borderRadius: BorderRadius.circular(99)),
                               child: Center(child: Opacity(opacity: i == k ? 1 : .55, child: Image.asset('assets/ui/$icon${i == k ? '' : '_off'}.webp', width: 28, height: 28))),
                             ),
                             const SizedBox(height: 2),
-                            Text(label, style: TextStyle(fontSize: 12, fontWeight: i == k ? FontWeight.w700 : FontWeight.w500, color: i == k ? kFg : kMuted)),
+                            FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1, style: TextStyle(fontSize: 12, fontWeight: i == k ? FontWeight.w700 : FontWeight.w500, color: i == k ? kFg : kMuted))),
                           ]),
                         ),
                       ),

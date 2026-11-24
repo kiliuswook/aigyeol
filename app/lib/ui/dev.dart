@@ -4,6 +4,7 @@ import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../ads.dart';
 import '../dev.dart';
+import '../main.dart' show tab;
 import '../store.dart';
 import 'kit.dart';
 import 'report.dart' show Drill;
@@ -14,30 +15,10 @@ String lvName(String lv) => DV.lv[lv]![0];
 String lvShort(String lv) => DV.lv[lv]!.length > 2 ? DV.lv[lv]![2] : DV.lv[lv]![0];
 String sexTx(String s) => s == 'M' ? tr('남자아이') : s == 'F' ? tr('여자아이') : '';
 
-/// 발달 체크 열기(홈에서)
-Future<void> openDev(BuildContext ctx) => Navigator.of(ctx).push(MaterialPageRoute(builder: (_) => const DevScreen()));
-
-/// 홈의 한 줄 입구: 그림 · 이름 · 지금 상태 (아이 카드 아래, 작은 폰에서도 높이를 적게 쓰게 한 줄)
-class DevBar extends StatelessWidget {
-  final Kid kid;
-  const DevBar(this.kid, {super.key});
-  @override
-  Widget build(BuildContext context) => GestureDetector(
-        key: const Key('home-dev'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => openDev(context),
-        child: NineBox(nSoft,
-            padding: const EdgeInsets.fromLTRB(12, 6, 10, 6),
-            child: Row(children: [
-              Image.asset('assets/ui/i_check.webp', width: 24, height: 24),
-              const SizedBox(width: 8),
-              Flexible(child: Text(tr('성장 발달 체크'), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: kFg))),
-              const SizedBox(width: 8),
-              Expanded(child: Text(devStatus(kid), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.right, style: const TextStyle(fontSize: 12.5, color: kMuted))),
-              const SizedBox(width: 6),
-              Image.asset('assets/ui/i_tri.webp', width: 12, height: 12),
-            ])),
-      );
+/// 발달 체크 열기: 아래 메뉴 '성장 발달' 탭으로
+void openDev(BuildContext ctx) {
+  Navigator.of(ctx).popUntil((r) => r.isFirst);
+  tab.value = 4;
 }
 
 /// 홈 줄에 쓰는 지금 상태 한 줄
@@ -52,7 +33,9 @@ String devStatus(Kid k) {
 }
 
 class DevScreen extends StatefulWidget {
-  const DevScreen({super.key});
+  /// 아래 메뉴 '성장 발달' 탭 안에 놓일 때(닫기 대신 탭 제목과 아이 고르기)
+  final bool inTab;
+  const DevScreen({super.key, this.inTab = false});
   @override
   State<DevScreen> createState() => _DevScreenState();
 }
@@ -61,6 +44,17 @@ class _DevScreenState extends State<DevScreen> {
   /// 결과가 있어도 시작 화면을 볼 때(다시 체크하기)
   bool fresh = false;
   bool busy = false;
+  String kidId = '';
+
+  /// 위 줄: 탭이면 제목 + (아이가 둘 이상이면) 아이 고르기, 따로 연 화면이면 닫기 줄
+  Widget bar() {
+    if (!widget.inTab) return TopBar(tr('성장 발달 체크'), close: true);
+    final ks = store.kids;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
+      tabTitle(tr('성장 발달'), right: ks.length > 1 ? null : Text(store.nm, style: smallMuted)),
+      if (ks.length > 1) chipRow([for (var i = 0; i < ks.length; i++) ChipBtn(ks[i].label(i), on: ks[i].id == store.kid.id, onTap: () => store.setKid(ks[i].id))]),
+    ]);
+  }
 
   Future<void> start() async {
     if (busy) return;
@@ -84,17 +78,21 @@ class _DevScreenState extends State<DevScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: SafeArea(
-          child: ListenableBuilder(
-            listenable: store,
-            builder: (c, _) {
-              final last = store.kid.devLast;
-              return last != null && !fresh ? result(last) : intro();
-            },
-          ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    final body = ListenableBuilder(
+      listenable: store,
+      builder: (c, _) {
+        // 아이를 바꾸면 그 아이의 결과부터
+        if (store.kid.id != kidId) {
+          kidId = store.kid.id;
+          fresh = false;
+        }
+        final last = store.kid.devLast;
+        return last != null && !fresh ? result(last) : intro();
+      },
+    );
+    return widget.inTab ? body : Scaffold(body: SafeArea(child: body));
+  }
 
   // ---------- 시작 ----------
   Widget intro() {
@@ -115,7 +113,7 @@ class _DevScreenState extends State<DevScreen> {
       msg = '';
     }
     return Frame(
-      top: TopBar(tr('성장 발달 체크'), close: true),
+      top: bar(),
       body: Fit(
           align: Alignment.center,
           col([
@@ -162,9 +160,10 @@ class _DevScreenState extends State<DevScreen> {
       head = tr('6개 영역 모두 또래만큼 자라요');
     }
     return Frame(
-      top: TopBar(tr('성장 발달 체크'), close: true),
+      top: bar(),
       body: Drill(
           key: ValueKey('dev-${r.id}-${r.t}'),
+          tabIndex: widget.inTab ? 4 : -1,
           (open) => {
                 'root': col([
                   eyebrow(tr('{0} · {1} 문항 · {2} 답함', [r.date, bandLabel(r.band), cg(r.who)])),

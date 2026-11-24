@@ -1,16 +1,16 @@
-// 홈: 한 화면. 인사 줄 · 아이 카드(지금 상태와 할 일 버튼) · 답하는 사람 · 바로 가기 세 칸.
-// 앱 소개(타이틀)는 intro.dart 가 맡고, 홈은 '지금 무엇을 할까'만 보여 준다.
+// 홈: 한 화면. 인사 줄 · 등록된 아이마다 카드(기본 정보 + 기질·성격 / 성장 발달 / 오늘 요약, 누르면 그 탭으로) · 바로 가기 세 칸.
+// 아이가 한 명이면 카드 한 장을 크게, 여럿이면 카드를 쌓는다(넘치면 카드 칸 안에서만 밀림).
 import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../content.dart';
+import '../daily.dart';
+import '../dev.dart';
 import '../main.dart';
 import '../scoring.dart';
 import '../store.dart';
-import 'dev.dart';
 import 'flow.dart';
 import 'kit.dart';
 import 'share.dart' show enterCode, inviteCg, openShare;
-import 'report.dart' show eun;
 import 'setup.dart';
 
 class HomeView extends StatelessWidget {
@@ -58,87 +58,123 @@ class HomeView extends StatelessWidget {
         ])),
       ]);
 
+  /// 아이 한 명의 바로 가기: 그 아이를 고르고 해당 탭으로
+  void go(String id, int t) {
+    store.setKid(id);
+    tab.value = t;
+  }
+
+  /// 아이 카드 안의 한 줄: 영역 이름 · 지금 상태 · 화살표 (누르면 그 탭으로)
+  Widget line(Key key, String icon, String label, String value, VoidCallback onTap, {Color? color}) => GestureDetector(
+        key: key,
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: NineBox(nSoft,
+            padding: const EdgeInsets.fromLTRB(10, 7, 10, 7),
+            child: Row(children: [
+              Image.asset('assets/ui/$icon.webp', width: 20, height: 20),
+              const SizedBox(width: 6),
+              SizedBox(width: isKo ? 66 : 92, child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kFg))),
+              Expanded(child: Text(value, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13.5, fontWeight: color == null ? FontWeight.w500 : FontWeight.w700, color: color ?? kMuted))),
+              const SizedBox(width: 4),
+              Image.asset('assets/ui/i_tri.webp', width: 11, height: 11),
+            ])),
+      );
+
+  /// 기질·성격 한 줄: 유형과 별명 / 검사 중 / 아직. big 이면 유형은 그림 아래에 크게 있으니 누가 언제 본 결과인지
+  (String, Color?) tempLine(Kid k, int i, {bool big = false}) {
+    if (fullDone(k.cur.ans) && k.cur.paid) {
+      final r = score(k.cur.ans);
+      if (big) return (tr('{0}가 본 {1} · {2}', [cg(k.who), k.label(i), k.cur.date]), null);
+      return ('${r.code} · ${C.nick[r.code]!}', kAccentInk);
+    }
+    final r = kidResult(k);
+    if (r != null) return ('${r.code} · ${C.nick[r.code]!}', kAccentInk);
+    if (k.cur.paid) return (tr('검사 중 · {0}/{1}', [answered(k.cur.ans), C.items.length]), null);
+    return (tr('아직 검사 전 · 66문항 무료'), null);
+  }
+
+  /// 성장 발달 한 줄(홈 카드용 짧은 글): 체크 중 / 판정 요약 + 키 / 아직
+  String devLine(Kid k) {
+    final last = k.devLast, open = k.devOpen;
+    if (open != null && open.band == devBand(monthsOf(k.birth) ?? -1)) return tr('체크 중 · {0}/{1}', [open.ans.length, open.items.length]);
+    if (last == null) return tr('아직 체크 전 · 6개 영역 + 키·몸무게');
+    final r = devScore(last), good = r.count('fast') + r.count('ok');
+    return [tr('6개 중 {0}개 또래만큼', [good]), if (last.h != null) '${last.h}cm'].join(' · ');
+  }
+
+  /// 오늘 한 줄: 다가오는 약속이 있으면 약속, 아니면 오늘의 미션
+  String todayLine(Kid k) {
+    final up = daily.plansOf(k).where((p) => !p.done && !p.date.isBefore(today0)).toList();
+    final rec = daily.peek(k, missionDay);
+    final mission = rec?.done == true ? tr('오늘 미션 완료') : tr('미션: {0}', [daily.mission(k, missionDay).$2.t]);
+    if (up.isEmpty) return mission;
+    final p = up.first, dd = p.date.difference(today0).inDays;
+    final when = dd == 0 ? tr('오늘') : dd == 1 ? tr('내일') : tr('{0}일 뒤', [dd]);
+    return tr('{0} {1} · {2}', [when, p.tm, p.t]).replaceAll('  ', ' ');
+  }
+
+  /// 아이 카드: 그림 · 이름 · 나이와 성별 + 기질·성격 / 성장 발달 / 오늘 세 줄. big 이면 그림을 크게(아이가 한 명일 때)
+  Widget kidCard(BuildContext context, Kid k, int i, {bool big = false}) {
+    final r = kidResult(k);
+    final img = Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', fit: BoxFit.contain);
+    final (tv, tc) = tempLine(k, i, big: big);
+    final info = [if (k.ageText.isNotEmpty) ageTx(k.ageText) else tr('나이 미입력'), if (k.sex == 'M') tr('남자아이'), if (k.sex == 'F') tr('여자아이')].join(' · ');
+    final head = Row(children: [
+      if (!big) ...[SizedBox(width: 50, height: 50, child: img), const SizedBox(width: 10)],
+      Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+        Text(k.label(i), maxLines: 1, overflow: TextOverflow.ellipsis, style: disp(22)),
+        Text(info, maxLines: 1, overflow: TextOverflow.ellipsis, style: smallMuted),
+      ])),
+      linkBtn(tr('바꾸기'), () {
+        store.setKid(k.id);
+        editKid(context);
+      }),
+    ]);
+    final lines = [
+      line(Key('home-temp-$i'), 'i_doc', tr('기질·성격'), tv, () => go(k.id, 1), color: tc),
+      line(Key('home-dev-$i'), 'i_check', tr('성장 발달'), devLine(k), () => go(k.id, 4)),
+      line(Key('home-today-$i'), 'i_chat', tr('오늘'), todayLine(k), () => go(k.id, 3)),
+    ];
+    return NineBox(nCard,
+        padding: const EdgeInsets.fromLTRB(16, 10, 12, 12),
+        child: Column(mainAxisSize: big ? MainAxisSize.max : MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          head,
+          if (big) ...[
+            Expanded(child: Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: img)),
+            if (r != null) Center(child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [codeText([for (final x in r.ax) (x.letter, x.a.color)], size: 34), const SizedBox(width: 10), Text(C.nick[r.code]!, style: disp(22))]))),
+            const SizedBox(height: 6),
+          ] else
+            const SizedBox(height: 8),
+          for (var j = 0; j < lines.length; j++) ...[if (j > 0) const SizedBox(height: 5), lines[j]],
+        ]));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final kid = store.kid, cur = store.cur, ks = store.kids;
-    final n = answered(cur.ans), full = fullDone(cur.ans);
-    final fresh = ks.length <= 1 && kid.name.isEmpty && !kid.cgs.any((e) => e.value.hasAny);
+    final ks = store.kids;
+    final fresh = ks.length <= 1 && store.kid.name.isEmpty && !store.kid.cgs.any((e) => e.value.hasAny);
     if (fresh) return welcome(context);
-
-    final done = full && cur.paid;
-    final r = done ? score(cur.ans) : null;
-    final mainBtn = done
-        ? Btn(tr('리포트 보기'), () => tab.value = 1, kind: BtnKind.dark)
-        : cur.paid
-            ? Btn(tr('검사 이어서 하기 ({0}/{1})', [n, C.items.length]), () => startFull(context), kind: BtnKind.dark)
-            : Btn(tr('광고 보고 무료로 검사 시작'), () => startFull(context), kind: BtnKind.dark);
-    final sub = done ? tr('{0}의 결과가 준비됐어요', [store.nm]) : cur.paid ? tr('검사를 이어서 해 볼까요?') : tr('{0}{1} 어떤 아이일까요?', [store.nm, eun(store.nm)]);
-
+    final any = ks.any((k) => fullDone(k.cur.ans) && k.cur.paid);
+    final sub = ks.length > 1 ? tr('아이 {0}명 · 오늘의 모습을 한눈에', [ks.length]) : tr('{0}의 오늘을 한눈에', [store.nm]);
     return Frame(
       top: header(sub),
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        chipRow([
-          for (var i = 0; i < ks.length; i++)
-            ChipBtn('${ks[i].label(i)}${fullDone(ks[i].cur.ans) ? ' · ${score(ks[i].cur.ans).code}' : ''}', on: ks[i].id == kid.id, onTap: () => store.setKid(ks[i].id)),
-          ChipBtn(tr('+ 아이 추가'), onTap: () => newKid(context)),
-        ]),
-        const SizedBox(height: 8),
-        // 아이 카드: 지금 상태와 할 일 버튼을 한 장에
         Expanded(
-          child: NineBox(nCard,
-              padding: const EdgeInsets.fromLTRB(18, 12, 18, 16),
-              child: Column(children: [
-                Row(children: [
-                  Expanded(
-                      child: Text.rich(
-                          TextSpan(style: body, children: [
-                            TextSpan(text: store.nm, style: const TextStyle(fontWeight: FontWeight.w700)),
-                            TextSpan(text: ' · ${[if (kid.ageText.isNotEmpty) ageTx(kid.ageText) else tr('나이 미입력'), if (kid.sex == 'M') tr('남자아이'), if (kid.sex == 'F') tr('여자아이')].join(' · ')}', style: const TextStyle(color: kMuted)),
-                          ]),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis)),
-                  linkBtn(tr('바꾸기'), () => editKid(context)),
-                ]),
-                Expanded(child: r != null ? Image.asset('assets/img/t_${r.code}.webp', fit: BoxFit.contain) : Padding(padding: const EdgeInsets.all(8), child: Image.asset('assets/img/mascot_child.webp', fit: BoxFit.contain))),
-                const SizedBox(height: 4),
-                if (r != null) ...[
-                  FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: [codeText([for (final x in r.ax) (x.letter, x.a.color)], size: 40), const SizedBox(width: 10), Text(C.nick[r.code]!, style: disp(24))])),
-                  Text(tr('{0}가 본 {1} · {2}', [cg(kid.who), store.nm, cur.date]), maxLines: 1, overflow: TextOverflow.ellipsis, style: smallMuted),
-                ] else if (cur.paid) ...[
-                  Text(tr('검사 중이에요'), style: disp(26)),
-                  const SizedBox(height: 6),
-                  ProgressBar(n / C.items.length),
-                  const SizedBox(height: 4),
-                  Text(tr('{0} / {1}문항 · 언제든 이어서 할 수 있어요', [n, C.items.length]), style: smallMuted),
-                ] else ...[
-                  FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: tr('{0}의 ', [store.nm])), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: tr('는?', [store.nm]))]), maxLines: 1, textAlign: TextAlign.center)),
-                  const SizedBox(height: 4),
-                  FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [Tag(tr('무료')), const SizedBox(width: 6), Tag(tr('66문항')), const SizedBox(width: 6), Tag(tr('약 10분'))])),
-                ],
-                const SizedBox(height: 10),
-                SizedBox(width: double.infinity, child: mainBtn),
-              ])),
-        ),
-        const SizedBox(height: 6),
-        DevBar(kid),
-        const SizedBox(height: 6),
-        Row(children: [
-          Text(tr('답하는 사람'), style: smallMuted),
-          const SizedBox(width: 10),
-          Expanded(
-              child: chipRow([
-            for (final e in kid.cgs)
-              ChipBtn('${cg(e.key)}${fullDone(e.value.ans) ? ' · ${score(e.value.ans).code}' : e.value.ans.isNotEmpty ? ' · ${answered(e.value.ans)}/${C.items.length}' : ''}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
-            ChipBtn(tr('+ 추가'), onTap: () => addWho(context, invite: () => inviteCg(context))),
-          ])),
-        ]),
+            child: ks.length == 1
+                ? kidCard(context, ks[0], 0, big: true)
+                : SingleChildScrollView(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                    for (var i = 0; i < ks.length; i++) ...[if (i > 0) const SizedBox(height: 8), kidCard(context, ks[i], i)],
+                  ]))),
         const SizedBox(height: 8),
         Row(children: [
+          quick('i_star', tr('+ 아이 추가'), () => newKid(context)),
+          const SizedBox(width: 6),
           quick('i_heart', tr('가족 초대'), () => inviteCg(context)),
           const SizedBox(width: 6),
-          if (done) quick('i_retry', tr('다시 검사'), () => startRetest(context)) else quick('i_doc', tr('샘플 리포트'), () => showSample(context)),
-          const SizedBox(width: 6),
-          quick('i_share', tr('결과 공유'), done ? () => openShare(context, tr('결과 공유')) : null),
+          if (any) quick('i_share', tr('결과 공유'), () => openShare(context, tr('결과 공유'))) else quick('i_doc', tr('샘플 리포트'), () => showSample(context)),
         ]),
       ]),
     );

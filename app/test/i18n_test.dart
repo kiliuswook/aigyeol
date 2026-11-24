@@ -117,7 +117,7 @@ void main() {
     store.setInfo(name: 'Kongi', birth: '${b.year}-${b.month.toString().padLeft(2, '0')}', sex: 'M');
     await t.pumpWidget(const App());
     await check(t, 'home dev tile');
-    await t.tap(find.byKey(const Key('home-dev')));
+    await t.tap(find.byKey(const Key('home-dev-0')));
     await check(t, 'dev intro');
     await t.tap(find.text(tr('광고 보고 무료로 발달 체크 시작')));
     await check(t, 'dev growth');

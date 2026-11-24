@@ -27,22 +27,30 @@ class _ReportViewState extends State<ReportView> {
   Widget build(BuildContext context) {
     final cur = store.cur;
     if (!fullDone(cur.ans)) {
+      final n = answered(cur.ans), nm = store.nm;
       return Frame(
-        top: tabTitle(tr('리포트')),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          switcher(),
-          Expanded(
-              child: Fit(
-                  align: Alignment.center,
-                  col([
-                    Center(child: Image.asset('assets/img/mascot_child.webp', width: 120, height: 120)),
-                    Center(child: h2(tr('아직 정밀검사 결과가 없습니다.'))),
-                    Center(child: Text(tr('검사를 마치면 이 화면에 결과가 나타납니다.'), style: smallMuted)),
-                  ]))),
-        ]),
+        top: col(gap: 8, [tabTitle(tr('기질·성격')), switcher()]),
+        body: NineBox(nCard,
+            padding: const EdgeInsets.fromLTRB(18, 14, 18, 16),
+            child: Column(children: [
+              Expanded(child: Padding(padding: const EdgeInsets.all(8), child: Image.asset('assets/img/mascot_child.webp', fit: BoxFit.contain))),
+              if (cur.paid) ...[
+                Text(tr('검사 중이에요'), style: disp(26)),
+                const SizedBox(height: 6),
+                ProgressBar(n / C.items.length),
+                const SizedBox(height: 4),
+                Text(tr('{0} / {1}문항 · 언제든 이어서 할 수 있어요', [n, C.items.length]), style: smallMuted),
+              ] else ...[
+                FittedBox(fit: BoxFit.scaleDown, child: Text.rich(TextSpan(style: disp(26), children: [TextSpan(text: tr('{0}의 ', [nm])), const TextSpan(text: 'MBTI', style: TextStyle(color: kAccentInk)), TextSpan(text: tr('는?', [nm]))]), maxLines: 1, textAlign: TextAlign.center)),
+                const SizedBox(height: 4),
+                Text(tr('기질 4축 · 자라는 힘 · 양육자 비교 · 또래 평균'), textAlign: TextAlign.center, style: smallMuted),
+                const SizedBox(height: 6),
+                FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [Tag(tr('무료')), const SizedBox(width: 6), Tag(tr('66문항')), const SizedBox(width: 6), Tag(tr('약 10분'))])),
+              ],
+            ])),
         foot: [
-          Btn(cur.paid ? tr('검사 이어서 하기') : tr('검사 시작하기'), () => startFull(context), kind: BtnKind.dark),
-          Btn(tr('샘플로 보기'), () => showSample(context), kind: BtnKind.ghost),
+          Btn(cur.paid ? tr('검사 이어서 하기 ({0}/{1})', [n, C.items.length]) : tr('광고 보고 무료로 검사 시작'), () => startFull(context), kind: BtnKind.dark),
+          Center(child: linkBtn(tr('샘플 리포트 먼저 보기'), () => showSample(context))),
         ],
       );
     }
@@ -763,7 +771,9 @@ class _ReportViewState extends State<ReportView> {
 /// 요약 화면('root')에서 '자세히 보기'로 들어가고 '이전'으로 돌아오는 묶음. 화면마다 카드 한 장.
 class Drill extends StatefulWidget {
   final Map<String, Widget> Function(void Function(String) open) build;
-  const Drill(this.build, {super.key});
+  /// 이 묶음이 놓인 아래 메뉴 번호. 다른 메뉴로 가면 요약으로 되돌린다.
+  final int tabIndex;
+  const Drill(this.build, {super.key, this.tabIndex = 1});
   @override
   State<Drill> createState() => _DrillState();
 }
@@ -774,7 +784,7 @@ class _DrillState extends State<Drill> {
   void back() => setState(() => path.removeLast());
   // 다른 메뉴로 가면 요약으로 되돌린다(뒤로 가기가 리포트에 붙잡히지 않게)
   void onTab() {
-    if (tab.value != 1 && path.isNotEmpty) setState(path.clear);
+    if (tab.value != widget.tabIndex && path.isNotEmpty) setState(path.clear);
   }
 
   @override

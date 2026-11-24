@@ -699,5 +699,18 @@
  "어린이집·유치원에서는 하는데 집에서는 안 한다면 '대체로 해요'를 골라 주세요.": "If they do it at daycare or preschool but not at home, choose 'Mostly'.",
  "마지막 질문": "Last question",
  "없어요": "No",
- "있어요": "Yes"
+ "있어요": "Yes",
+ "기질·성격": "Temperament",
+ "성장 발달": "Growth",
+ "아이 {0}명 · 오늘의 모습을 한눈에": "{0} children · today at a glance",
+ "{0}의 오늘을 한눈에": "{0}'s day at a glance",
+ "검사 중 · {0}/{1}": "In progress · {0}/{1}",
+ "아직 검사 전 · 66문항 무료": "Not tested yet · 66 questions, free",
+ "기질 4축 · 자라는 힘 · 양육자 비교 · 또래 평균": "4 temperament axes · growing strengths · caregiver comparison · peer averages",
+ "미션: {0}": "Mission: {0}",
+ "{0} {1} · {2}": "{0} {1} · {2}",
+ "오늘 미션 완료": "Today's mission done",
+ "{0}일 뒤": "In {0} days",
+ "아직 체크 전 · 6개 영역 + 키·몸무게": "Not checked yet · 6 areas + height & weight",
+ "6개 중 {0}개 또래만큼": "{0} of 6 on track"
 }

@@ -189,7 +189,11 @@ void main() {
         tab.value = k;
         await t.pumpAndSettle();
       }
-      expect(find.text('리포트 보기'), findsOneWidget);
+      // 홈 아이 카드의 기질·성격 줄은 기질·성격 탭으로
+      expect(find.byKey(const Key('home-temp-0')), findsOneWidget);
+      await t.tap(find.byKey(const Key('home-temp-0')));
+      await t.pumpAndSettle();
+      expect(tab.value, 1);
     });
   }
 
@@ -307,7 +311,7 @@ void main() {
       store.answer(it, 5);
     }
     await t.pumpAndSettle();
-    await t.tap(find.text('오늘'));
+    await t.tap(find.text('오늘').last);
     await t.pumpAndSettle();
     expect(tab.value, 3);
     expect(find.text('엄마·아빠 스티커판'), findsOneWidget);
@@ -407,7 +411,8 @@ void main() {
       final now = DateTime.now(), b = DateTime(now.year, now.month - 30);
       store.setInfo(name: '콩이', birth: '${b.year}-${b.month.toString().padLeft(2, '0')}');
       await t.pumpAndSettle();
-      await t.tap(find.byKey(const Key('home-dev')));
+      await t.tap(find.byKey(const Key('home-dev-0')));
+      expect(tab.value, 4);
       await t.pumpAndSettle();
       // 성별이 없으면 아이 정보부터
       expect(find.text('아이 정보 넣기'), findsOneWidget);
@@ -445,18 +450,21 @@ void main() {
       expect(find.textContaining('전문가와 함께 살펴보기'), findsOneWidget);
       // 영역 상세 → 성장 → 또래 평균 → 지난 기록
       for (final k in ['dev-d0', 'dev-d5']) {
+        await t.ensureVisible(find.byKey(Key(k)));
         await t.tap(find.byKey(Key(k)));
         await t.pumpAndSettle();
         expect(find.text('이렇게 놀아 주세요'), findsOneWidget);
         await t.tap(find.byKey(const Key('back')));
         await t.pumpAndSettle();
       }
+      await t.ensureVisible(find.text('키 · 몸무게'));
       await t.tap(find.text('키 · 몸무게'));
       await t.pumpAndSettle();
       expect(find.textContaining('백분위'), findsWidgets);
       await t.tap(find.byKey(const Key('back')));
       await t.pumpAndSettle();
       statN = 3;
+      await t.ensureVisible(find.text('또래 평균'));
       await t.tap(find.text('또래 평균'));
       await t.pumpAndSettle();
       expect(find.textContaining('평균 준비 중'), findsOneWidget);
@@ -464,18 +472,21 @@ void main() {
       await t.pumpAndSettle();
       devStats.clear();
       statN = 8;
+      await t.ensureVisible(find.text('또래 평균'));
       await t.tap(find.text('또래 평균'));
       await t.pumpAndSettle();
       expect(find.textContaining('또래 평균 (8명)'), findsOneWidget);
       expect(find.textContaining('키 또래 평균 95.0cm'), findsOneWidget);
       await t.tap(find.byKey(const Key('back')));
       await t.pumpAndSettle();
+      await t.ensureVisible(find.text('지난 기록'));
       await t.tap(find.text('지난 기록'));
       await t.pumpAndSettle();
       expect(find.textContaining('발달 체크 1번'), findsOneWidget);
       await t.tap(find.byKey(const Key('back')));
       await t.pumpAndSettle();
       // 다시 체크하기는 시작 화면으로, 저장·불러오기 뒤에도 기록이 남는다
+      await t.ensureVisible(find.text('다시 체크하기'));
       await t.tap(find.text('다시 체크하기'));
       await t.pumpAndSettle();
       expect(find.text('광고 보고 무료로 발달 체크 시작'), findsOneWidget);
@@ -483,6 +494,41 @@ void main() {
       store.fromJson(j);
       expect(store.kid.devs.length, 1);
       expect(store.kid.devs.first.ans.length, 24);
+    });
+  }
+
+  // 홈: 등록된 아이마다 카드(기본 정보 + 기질·성격 / 성장 발달 / 오늘), 누르면 그 아이로 해당 탭
+  for (final size in const [Size(360, 640), Size(390, 844)]) {
+    testWidgets('홈: 아이 둘 요약 카드와 바로 가기 (${size.width.round()}x${size.height.round()})', (t) async {
+      await boot(t, size);
+      store.setInfo(name: '콩이', birth: '2022-03', sex: 'F');
+      store.addKid();
+      store.setInfo(name: '보리', birth: '2024-01', sex: 'M');
+      final first = store.kids.first.id, second = store.kid.id;
+      store.setKid(first);
+      tab.value = 0;
+      await t.pumpAndSettle();
+      expect(find.text('콩이'), findsWidgets);
+      expect(find.text('보리'), findsWidgets);
+      expect(find.text('아직 검사 전 · 66문항 무료'), findsNWidgets(2));
+      await t.tap(find.byKey(const Key('home-dev-1')));
+      await t.pumpAndSettle();
+      expect(tab.value, 4);
+      expect(store.kid.id, second);
+      expect(find.text('성장 발달'), findsWidgets);
+      tab.value = 0;
+      await t.pumpAndSettle();
+      await t.ensureVisible(find.byKey(const Key('home-today-0')));
+      await t.tap(find.byKey(const Key('home-today-0')));
+      await t.pumpAndSettle();
+      expect(tab.value, 3);
+      expect(store.kid.id, first);
+      tab.value = 0;
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const Key('home-temp-1')));
+      await t.pumpAndSettle();
+      expect(tab.value, 1);
+      expect(find.text('광고 보고 무료로 검사 시작'), findsOneWidget);
     });
   }
 }
