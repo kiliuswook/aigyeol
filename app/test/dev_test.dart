@@ -119,7 +119,7 @@ void main() {
     expect(f['gm']!.avg, 90);
   });
 
-  test('또래 평균: 같은 나라 체크가 30건 이상이면 나라 평균, 아니면 전체 국가', () async {
+  test('또래 평균: 같은 나라 체크가 많아도 늘 전체 국가 평균', () async {
     var cn = 40;
     final st = DevStats()
       ..client = MockClient((q) async {
@@ -127,12 +127,8 @@ void main() {
         return http.Response(jsonEncode({'fields': {'n': {'integerValue': c ? '$cn' : '100'}, 'sgm': {'integerValue': c ? '${cn * 70}' : '5000'}}}), 200);
       });
     countryOf = () => 'KR';
-    final k = await st.loadFor(30, 'F');
-    expect(k.cc, 'KR');
-    expect(k.m!['gm']!.avg, 70);
-    cn = 10;
-    st.clear();
     final g = await st.loadFor(30, 'F');
+    expect(cn, 40);
     expect(g.cc, isNull);
     expect(g.m!['gm']!.avg, 50);
     final r = DevRec(id: 'a', date: '', who: '엄마', sex: 'F', mo: 30, band: 30, t: 1);

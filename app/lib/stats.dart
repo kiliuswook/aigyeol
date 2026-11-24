@@ -14,9 +14,6 @@ import 'store.dart';
 /// 평균을 보여 주는 최소 검사 건수
 const kStatMin = 5;
 
-/// 나라별 평균을 보여 주는 최소 건수. 그보다 적으면 전체 국가 평균을 보여 준다.
-const kCountryMin = 30;
-
 /// 기기에 설정된 나라(ISO 두 글자 대문자, 예: KR). 모르면 null.
 String? deviceCountry() {
   final c = PlatformDispatcher.instance.locale.countryCode?.toUpperCase();
@@ -32,23 +29,15 @@ String countryBucket(String cc, String b) => 'c${cc}_$b';
 /// 나라 코드 → 국기 그림 글자(🇰🇷)
 String flagOf(String cc) => String.fromCharCodes(cc.codeUnits.map((u) => 0x1F1E6 + u - 65));
 
-/// 평균 묶음 앞에 붙는 범위 이름: 나라 평균이면 국기, 전체면 '전체 국가'
-String scopeLabel(String? cc, String label) => cc == null ? tr('전체 국가 · {0}', [label]) : '${flagOf(cc)} $label';
-
 /// 평균과 그 범위(cc: 나라 평균이면 나라 코드, 전체 국가 평균이면 null)
 typedef Scoped = ({Map<String, Avg>? m, String? cc});
 
 /// 지표별 평균의 건수(모든 지표가 같다)
 int avgN(Map<String, Avg>? m) => m == null || m.isEmpty ? 0 : m.values.first.n;
 
-/// 나라 평균이 [kCountryMin]건 이상이면 나라 평균, 아니면 전체 국가 평균
-Future<Scoped> pickScoped(Future<Map<String, Avg>?> Function(String b) load, String b) async {
-  final cc = countryOf();
-  final g = await load(b);
-  if (cc == null) return (m: g, cc: null);
-  final c = await load(countryBucket(cc, b));
-  return avgN(c) >= kCountryMin ? (m: c, cc: cc) : (m: g, cc: null);
-}
+/// 보여 주는 평균은 늘 전체 국가 평균이다(2026-11-24 원더 요청 "평균은 무조건 전체 국가로").
+/// 나라 묶음은 서버에 계속 쌓기만 하고 화면에는 쓰지 않는다.
+Future<Scoped> pickScoped(Future<Map<String, Avg>?> Function(String b) load, String b) async => (m: await load(b), cc: null);
 const _docs = 'projects/childmbti-wonderwheel/databases/(default)/documents';
 const _base = 'https://firestore.googleapis.com/v1/$_docs';
 
@@ -103,7 +92,7 @@ class Stats {
   final _cache = <String, Map<String, Avg>>{};
   final _at = <String, DateTime>{};
 
-  /// 나라 평균(충분히 모였으면) 또는 전체 국가 평균
+  /// 전체 국가 평균
   Future<Scoped> loadScoped(String bucket) async {
     if (store.demo != null) return (m: _demo(), cc: null);
     return pickScoped(load, bucket);

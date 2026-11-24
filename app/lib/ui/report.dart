@@ -198,7 +198,6 @@ class _ReportViewState extends State<ReportView> {
 
   void avgPopup(String key, String name, int sc, String c, {String? lo, String? hi}) {
     final kid = store.kid, nm = store.nm, b = bucketOf(kid, store.cur.date);
-    var scope = ''; // '' 자동, '*' 전체 국가, 'KR' 등 그 나라
     popup(context, title: tr('또래 평균 · {0}', [name]), (ctx, set) {
       if (b == null) {
         return [
@@ -212,17 +211,14 @@ class _ReportViewState extends State<ReportView> {
       }
       return [
         FutureBuilder(
-            key: ValueKey(scope),
-            future: loadPeerScope(scope, () => stats.loadScoped(b), stats.load, b),
+            future: stats.loadScoped(b),
             builder: (_, snap) {
               if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
-              // 처음엔 같은 나라 검사가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균. 칩으로 나라를 고를 수 있다.
-              final all = snap.data?.m, a = all?[key], label = scopeLabel(snap.data?.cc, bucketLabel(b));
-              final pick = peerScopeChips(snap.data?.cc, (s) => set(() => scope = s));
-              if (all == null) return col([pick, Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small)]);
+              // 늘 전체 국가 평균(나라 고르기 없음)
+              final all = snap.data?.m, a = all?[key], label = bucketLabel(b);
+              if (all == null) return col([Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small)]);
               if (a == null || a.n < kStatMin) {
                 return col([
-                  pick,
                   peerCollecting(label),
                   Row(children: [SizedBox(width: 72, child: Text(nm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700))), Expanded(child: Track(sc, c, thin: true)), SizedBox(width: 36, child: Text('$sc', textAlign: TextAlign.right, style: disp(19)))]),
                 ]);
@@ -239,7 +235,6 @@ class _ReportViewState extends State<ReportView> {
                     SizedBox(width: 36, child: Text('$v', textAlign: TextAlign.right, style: disp(19))),
                   ]);
               return col([
-                pick,
                 Align(alignment: Alignment.centerLeft, child: Tag(label)),
                 if (lo != null) Row(children: [const SizedBox(width: 72), Expanded(child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [muted(lo), muted(hi!)])), const SizedBox(width: 36)]),
                 line(nm, sc),
