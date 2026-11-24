@@ -14,7 +14,10 @@ import '../scoring.dart';
 import '../store.dart';
 import 'kit.dart';
 
-Future<void> openPrivacy() => launchUrl(Uri.parse('${kSite}privacy.html'), mode: LaunchMode.externalApplication);
+/// 개인정보처리방침: 한국어는 privacy.html?hl=ko, 다른 언어는 privacy-<언어>.html (번체는 zh 판)
+String privacyUrl() => isKo ? '${kSite}privacy.html?hl=ko' : '${kSite}privacy-${langCode.split('-').first}.html';
+
+Future<void> openPrivacy() => launchUrl(Uri.parse(privacyUrl()), mode: LaunchMode.externalApplication);
 
 /// 공유 문구. kind: result 결과 카드, invite 공동 양육자 초대, back 초대한 사람에게 결과 보내기, app 앱 추천
 /// 주소는 모두 스토어로 이어지는 연결 페이지(Store.go). 초대는 가족 연결 코드([code], fam.dart)가 있으면 코드로, 없으면 예전 방식(아이 정보를 실은 링크).

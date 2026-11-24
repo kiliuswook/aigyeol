@@ -97,8 +97,8 @@ class App extends StatelessWidget {
         scaffoldMessengerKey: messengerKey,
         navigatorObservers: [AdRouteObserver()],
         // 날짜·시각 고르기 창도 앱 언어로
-        locale: Locale(l),
-        supportedLocales: [for (final c in kLangs.keys) Locale(c)],
+        locale: localeOf(l),
+        supportedLocales: [for (final c in kLangs.keys) localeOf(c)],
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: kAccent, surface: kBg),

@@ -1,0 +1,16 @@
+:root{--bg:#FBF5EA;--fg:#36405A;--sub:#6B7388;--line:#E6DCC8;--card:#FFFDF8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Noto Sans','Noto Sans KR','Noto Sans JP','Noto Sans SC',system-ui,sans-serif;line-height:1.7;font-size:15px}
+main{max-width:720px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:24px;margin:0 0 4px}
+h2{font-size:18px;margin:32px 0 8px;padding-top:8px;border-top:1px solid var(--line)}
+p,li{margin:6px 0}
+.meta{color:var(--sub);font-size:13px}
+table{width:100%;border-collapse:collapse;margin:8px 0;background:var(--card);font-size:14px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#F3EAD8}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+a{color:#2F5FA8}
+.tw{overflow-x:auto}
+.langs{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin:0 0 16px}
+.langs b{font-weight:700}
