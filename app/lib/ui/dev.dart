@@ -4,7 +4,6 @@ import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../ads.dart';
 import '../dev.dart';
-import '../stats.dart' show scopeLabel;
 import 'peer.dart';
 import '../main.dart' show tab;
 import '../store.dart';
@@ -45,8 +44,6 @@ class DevScreen extends StatefulWidget {
 class _DevScreenState extends State<DevScreen> {
   /// 결과가 있어도 시작 화면을 볼 때(다시 체크하기)
   bool fresh = false;
-  /// 또래 평균 범위: '' 자동, '*' 전체 국가, 'KR' 등 그 나라
-  String peerScope = '';
   bool busy = false;
   String kidId = '';
 
@@ -301,17 +298,15 @@ class _DevScreenState extends State<DevScreen> {
 
   Widget peerPage(DevRec r, DevResult res) => FutureBuilder(
       // 성별을 모르면 같은 개월 구간 남녀 전체 평균으로 바로 보여 준다
-      key: ValueKey(peerScope),
-      future: devStats.loadScope(r.band, r.sex, peerScope),
+      future: devStats.loadScope(r.band, r.sex, '*'),
       builder: (_, snap) {
         if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
-        // 같은 나라 체크가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균
-        final all = snap.data?.m, cc = snap.data?.cc;
-        final label = scopeLabel(cc, r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)])), n = all?['gm']?.n ?? 0;
+        // 평균은 언제나 모든 나라를 합친 값
+        final all = snap.data?.m;
+        final label = r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)]), n = all?['gm']?.n ?? 0;
         return col([
           eyebrow(tr('또래 평균')),
           h2(tr('{0} 평균과 비교', [label])),
-          peerScopeChips(cc, (s) => setState(() => peerScope = s)),
           if (all == null)
             Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small)
           else if (n < kDevStatMin)
