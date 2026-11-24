@@ -4,7 +4,8 @@ import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../ads.dart';
 import '../dev.dart';
-import '../stats.dart' show scopeLabel, countryOf, kCountryMin;
+import '../stats.dart' show scopeLabel;
+import 'peer.dart';
 import '../main.dart' show tab;
 import '../store.dart';
 import 'kit.dart';
@@ -44,6 +45,8 @@ class DevScreen extends StatefulWidget {
 class _DevScreenState extends State<DevScreen> {
   /// 결과가 있어도 시작 화면을 볼 때(다시 체크하기)
   bool fresh = false;
+  /// 또래 평균 범위: '' 자동, '*' 전체 국가, 'KR' 등 그 나라
+  String peerScope = '';
   bool busy = false;
   String kidId = '';
 
@@ -198,7 +201,7 @@ class _DevScreenState extends State<DevScreen> {
                   Row(children: [
                     Expanded(child: Btn(tr('키 · 몸무게'), () => open('growth'), kind: BtnKind.ghost, dense: true)),
                     const SizedBox(width: 8),
-                    Expanded(child: Btn(tr('또래 평균'), () => open('peer'), kind: BtnKind.ghost, dense: true)),
+                    Expanded(child: Btn(tr('또래 평균'), () => open('peer'), kind: BtnKind.ghost, dense: true, icon: peerIcon(20))),
                   ]),
                   Wrap(alignment: WrapAlignment.spaceBetween, spacing: 12, children: [
                     linkBtn(tr('지난 기록'), () => open('hist')),
@@ -298,7 +301,8 @@ class _DevScreenState extends State<DevScreen> {
 
   Widget peerPage(DevRec r, DevResult res) => FutureBuilder(
       // 성별을 모르면 같은 개월 구간 남녀 전체 평균으로 바로 보여 준다
-      future: devStats.loadFor(r.band, r.sex),
+      key: ValueKey(peerScope),
+      future: devStats.loadScope(r.band, r.sex, peerScope),
       builder: (_, snap) {
         if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
         // 같은 나라 체크가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균
@@ -307,14 +311,15 @@ class _DevScreenState extends State<DevScreen> {
         return col([
           eyebrow(tr('또래 평균')),
           h2(tr('{0} 평균과 비교', [label])),
+          peerScopeChips(cc, (s) => setState(() => peerScope = s)),
           if (all == null)
             Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small)
           else if (n < kDevStatMin)
-            rich(tr('**평균 준비 중.** 체크 결과가 {0}건 이상 모이면 평균이 표시됩니다. 지금 {1}건이 모였습니다.', [kDevStatMin, n]), style: small)
+            peerCollecting(label)
           else ...[
             Wrap(spacing: 12, runSpacing: 4, children: [
               legend('dot_g', store.nm),
-              legend('dot_ring', tr('또래 평균 ({0}명)', [n])),
+              legend('dot_ring', tr('또래 평균')),
             ]),
             for (final x in res.ds)
               Row(children: [
@@ -326,9 +331,8 @@ class _DevScreenState extends State<DevScreen> {
           if (all != null)
             for (final (k, v, unit) in [('h', r.h, 'cm'), ('w', r.w, 'kg')])
               if ((all[k]?.n ?? 0) >= kDevStatMin)
-                Text(tr('{0} 또래 평균 {1}{2} ({3}명){4}', [k == 'h' ? tr('키') : tr('몸무게'), all[k]!.avg.toStringAsFixed(1), unit, all[k]!.n, v == null ? '' : tr(' · 우리 아이 {0}{1}', [v, unit])]), style: small),
+                Text(tr('{0} 또래 평균 {1}{2}{3}', [k == 'h' ? tr('키') : tr('몸무게'), all[k]!.avg.toStringAsFixed(1), unit, v == null ? '' : tr(' · 우리 아이 {0}{1}', [v, unit])]), style: small),
           muted(tr('이 앱에서 같은 개월 구간·성별로 체크한 결과의 평균입니다. 아이마다 자라는 속도가 달라 평균보다 낮아도 자연스러운 경우가 많습니다.')),
-          if (cc == null && countryOf() != null) muted(tr('같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.', [kCountryMin])),
         ], gap: 10);
       });
 

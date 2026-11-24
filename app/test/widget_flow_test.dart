@@ -155,7 +155,7 @@ void main() {
       await t.tap(find.byKey(const Key('avg-A')));
       await t.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
       await t.pumpAndSettle();
-      expect(find.textContaining('평균 준비 중'), findsOneWidget);
+      expect(find.textContaining('수집 중'), findsOneWidget);
       await t.tap(find.byKey(const Key('popup-close')));
       await t.pumpAndSettle();
       statN = 6;
@@ -166,7 +166,12 @@ void main() {
       await t.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
       await t.pumpAndSettle();
       expect(find.text('또래 평균'), findsOneWidget);
-      expect(find.textContaining('6건'), findsOneWidget);
+      expect(find.textContaining('6건'), findsNothing);
+      // 나라 칩으로 다른 나라 평균을 고른다
+      await t.tap(find.byKey(const Key('scope-US')));
+      await t.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
+      await t.pumpAndSettle();
+      expect(find.textContaining('\u{1F1FA}\u{1F1F8}'), findsWidgets);
       await t.tap(find.byKey(const Key('popup-close')));
       await t.pumpAndSettle();
       // 리포트의 모든 탭, 모든 쪽을 넘겨 본다
@@ -469,7 +474,7 @@ void main() {
       await t.ensureVisible(find.text('또래 평균'));
       await t.tap(find.text('또래 평균'));
       await t.pumpAndSettle();
-      expect(find.textContaining('평균 준비 중'), findsOneWidget);
+      expect(find.textContaining('수집 중'), findsOneWidget);
       await t.tap(find.byKey(const Key('back')));
       await t.pumpAndSettle();
       devStats.clear();
@@ -477,7 +482,8 @@ void main() {
       await t.ensureVisible(find.text('또래 평균'));
       await t.tap(find.text('또래 평균'));
       await t.pumpAndSettle();
-      expect(find.textContaining('또래 평균 (8명)'), findsOneWidget);
+      expect(find.textContaining('(8명)'), findsNothing);
+      expect(find.byKey(const Key('scope-*')), findsOneWidget);
       expect(find.textContaining('키 또래 평균 95.0cm'), findsOneWidget);
       await t.tap(find.byKey(const Key('back')));
       await t.pumpAndSettle();

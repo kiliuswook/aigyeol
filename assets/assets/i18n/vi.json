@@ -722,5 +722,9 @@
  "광고 1번을 끝까지 보면 체크가 열려요 · 결제 없음": "Xem hết 1 quảng cáo để mở kiểm tra · không trả phí",
  "{0} 아이들": "Các bé {0}",
  "전체 국가 · {0}": "Tất cả quốc gia · {0}",
- "같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.": "Khi có từ {0} kết quả trở lên ở quốc gia của bạn, sẽ chuyển sang trung bình của quốc gia đó."
+ "같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.": "Khi có từ {0} kết quả trở lên ở quốc gia của bạn, sẽ chuyển sang trung bình của quốc gia đó.",
+ "평균": "Trung bình",
+ "전체 국가": "Tất cả quốc gia",
+ "**{0} 평균은 수집 중입니다.** 결과가 모이면 여기에 평균이 나타나요.": "**Đang thu thập số liệu trung bình {0}.** Kết quả sẽ hiện ở đây khi đủ dữ liệu.",
+ "{0} 또래 평균 {1}{2}{3}": "{0} trung bình cùng tuổi {1}{2}{3}"
 }
