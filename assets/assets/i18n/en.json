@@ -726,5 +726,7 @@
  "평균": "Average",
  "전체 국가": "All countries",
  "**{0} 평균은 수집 중입니다.** 결과가 모이면 여기에 평균이 나타나요.": "**{0} average is being collected.** It will appear here once enough results come in.",
- "{0} 또래 평균 {1}{2}{3}": "{0} peer average {1}{2}{3}"
+ "{0} 또래 평균 {1}{2}{3}": "{0} peer average {1}{2}{3}",
+ "아이 카드를 누르면 그 아이로 앱이 진행돼요": "Tap a child's card to use the app for them",
+ "검사 전": "Not tested"
 }
