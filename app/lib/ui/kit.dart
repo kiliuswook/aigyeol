@@ -433,6 +433,11 @@ class TopBar extends StatelessWidget {
 }
 
 /// 탭 화면의 위 줄: 큰 제목
+/// 탭 제목 오른쪽의 지금 아이 이름. 아이가 둘 이상이면 눌러서 홈(아이 고르기)으로
+Widget kidTag(String name, {bool many = false, VoidCallback? onTap}) => many
+    ? GestureDetector(onTap: onTap, child: NineBox(nChip, padding: const EdgeInsets.fromLTRB(12, 6, 12, 6), child: Text('$name ▸', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kFg))))
+    : Text(name, style: smallMuted);
+
 Widget tabTitle(String t, {Widget? right}) => SizedBox(height: 44, child: Row(children: [Expanded(child: Text(t, style: disp(26))), if (right != null) right]));
 
 /// 줄 메뉴 한 칸: 그림 · 제목 · 설명 · 화살표

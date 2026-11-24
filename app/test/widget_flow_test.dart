@@ -499,9 +499,9 @@ void main() {
     });
   }
 
-  // 홈: 등록된 아이마다 카드(기본 정보 + 기질·성격 / 성장 발달 / 오늘), 누르면 그 아이로 해당 탭
+  // 홈: 아이를 고르면(첫째·둘째) 그 아이로 앱이 진행된다. 다른 탭에는 아이 고르기가 없고 이름을 누르면 홈으로
   for (final size in const [Size(360, 640), Size(390, 844)]) {
-    testWidgets('홈: 아이 둘 요약 카드와 바로 가기 (${size.width.round()}x${size.height.round()})', (t) async {
+    testWidgets('홈: 아이 고르기와 바로 가기 (${size.width.round()}x${size.height.round()})', (t) async {
       await boot(t, size);
       store.setInfo(name: '콩이', birth: '2022-03', sex: 'F');
       store.addKid();
@@ -510,24 +510,32 @@ void main() {
       store.setKid(first);
       tab.value = 0;
       await t.pumpAndSettle();
-      expect(find.text('콩이'), findsWidgets);
-      expect(find.text('보리'), findsWidgets);
-      expect(find.text('아직 검사 전 · 66문항 무료'), findsNWidgets(2));
+      expect(find.byKey(const Key('home-kid-0')), findsOneWidget);
+      expect(find.byKey(const Key('home-kid-1')), findsOneWidget);
+      expect(find.text('아직 검사 전 · 66문항 무료'), findsOneWidget);
+      // 둘째를 고르면 카드가 둘째로 바뀌고, 성장 발달 줄은 둘째로 탭을 연다
+      await t.tap(find.byKey(const Key('home-kid-1')));
+      await t.pumpAndSettle();
+      expect(store.kid.id, second);
       await t.tap(find.byKey(const Key('home-dev-1')));
       await t.pumpAndSettle();
       expect(tab.value, 4);
       expect(store.kid.id, second);
-      expect(find.text('성장 발달'), findsWidgets);
-      tab.value = 0;
+      expect(find.text('보리 ▸'), findsOneWidget);
+      // 이름을 누르면 홈(아이 고르기)으로
+      await t.tap(find.text('보리 ▸'));
       await t.pumpAndSettle();
-      await t.ensureVisible(find.byKey(const Key('home-today-0')));
+      expect(tab.value, 0);
+      await t.tap(find.byKey(const Key('home-kid-0')));
+      await t.pumpAndSettle();
       await t.tap(find.byKey(const Key('home-today-0')));
       await t.pumpAndSettle();
       expect(tab.value, 3);
       expect(store.kid.id, first);
+      expect(find.text('콩이 ▸'), findsOneWidget);
       tab.value = 0;
       await t.pumpAndSettle();
-      await t.tap(find.byKey(const Key('home-temp-1')));
+      await t.tap(find.byKey(const Key('home-temp-0')));
       await t.pumpAndSettle();
       expect(tab.value, 1);
       expect(find.text('광고 보고 무료로 검사 시작'), findsOneWidget);

@@ -717,5 +717,7 @@
  "태어난 달이 없어 {0}개월쯤으로 어림했어요.": "No birth month, so we estimated about {0} months.",
  "성별이 없으면 키·몸무게 백분위와 또래 평균은 빠져요.": "Without sex, height/weight percentiles and peer averages are left out.",
  "넣으면 더 정확해져요 ›": "Add it for more accuracy ›",
- "또래 평균은 같은 개월 수·성별 아이들과 비교해요. 아이 정보에 성별을 넣으면 다음 체크부터 볼 수 있어요.": "Peer averages compare children of the same age in months and sex. Add sex to the child info to see them from the next check."
+ "또래 평균은 같은 개월 수·성별 아이들과 비교해요. 아이 정보에 성별을 넣으면 다음 체크부터 볼 수 있어요.": "Peer averages compare children of the same age in months and sex. Add sex to the child info to see them from the next check.",
+ "아이를 고르면 그 아이로 앱이 진행돼요": "Pick a child to use the app for them",
+ "광고 1번을 끝까지 보면 체크가 열려요 · 결제 없음": "Watch one ad to the end to open the check · no payment"
 }

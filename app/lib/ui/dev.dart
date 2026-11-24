@@ -46,14 +46,11 @@ class _DevScreenState extends State<DevScreen> {
   bool busy = false;
   String kidId = '';
 
-  /// 위 줄: 탭이면 제목 + (아이가 둘 이상이면) 아이 고르기, 따로 연 화면이면 닫기 줄
+  /// 위 줄: 탭이면 제목 + 지금 아이 이름, 따로 연 화면이면 닫기 줄
   Widget bar() {
     if (!widget.inTab) return TopBar(tr('성장 발달 체크'), close: true);
-    final ks = store.kids;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-      tabTitle(tr('성장 발달'), right: ks.length > 1 ? null : Text(store.nm, style: smallMuted)),
-      if (ks.length > 1) chipRow([for (var i = 0; i < ks.length; i++) ChipBtn(ks[i].label(i), on: ks[i].id == store.kid.id, onTap: () => store.setKid(ks[i].id))]),
-    ]);
+    // 아이는 홈에서 고른다
+    return tabTitle(tr('성장 발달'), right: kidTag(store.nm, many: store.kids.length > 1, onTap: () => tab.value = 0));
   }
 
   Future<void> start() async {
@@ -129,6 +126,7 @@ class _DevScreenState extends State<DevScreen> {
               Note(Text(msg))
             else
               PaperCard([
+                line(tr('무료'), tr('광고 1번을 끝까지 보면 체크가 열려요 · 결제 없음')),
                 line(tr('개월 수에 맞춘 문항'), tr('{0} 아이에게 맞춘 24문항', [bandLabel(b!)])),
                 line(tr('6개 영역'), DV.domains.map((d) => d.n).join(' · ')),
                 line(tr('성별 성장 기준'), tr('키·몸무게를 같은 성별·개월 수 아이들과 비교(WHO 기준)')),

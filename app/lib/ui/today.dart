@@ -57,11 +57,8 @@ class TodayView extends StatelessWidget {
         final ks = store.kids, k = store.kid, seg = todaySeg.value;
         return Frame(
           top: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-            tabTitle(tr('오늘'), right: ks.length > 1 ? null : Text(store.nm, style: smallMuted)),
-            if (ks.length > 1) ...[
-              chipRow([for (var i = 0; i < ks.length; i++) ChipBtn(ks[i].label(i), on: ks[i].id == k.id, onTap: () => store.setKid(ks[i].id))]),
-              const SizedBox(height: 6),
-            ],
+            // 아이는 홈에서 고른다
+            tabTitle(tr('오늘'), right: kidTag(store.nm, many: ks.length > 1, onTap: () => tab.value = 0)),
             chipRow([for (var i = 0; i < _segs.length; i++) ChipBtn(_segs[i], on: seg == i, onTap: () => todaySeg.value = i)]),
           ]),
           body: switch (seg) { 0 => _MissionPane(k), 1 => _PlanPane(k), _ => _CardPane(k) },

@@ -88,19 +88,12 @@ class _ReportViewState extends State<ReportView> {
         for (var i = 1; i < pages.length; i++) 'p$i': pages[i],
       };
 
-  /// 아이(둘 이상일 때는 눌러서 고르기)와 양육자 고르기: 한 줄, 옆으로 밀어 보기
+  /// 지금 아이(홈에서 고름)와 양육자 고르기: 한 줄, 옆으로 밀어 보기
   Widget switcher() {
     final kid = store.kid, ks = store.kids, all = kid.cgs;
     return chipRow([
-      if (ks.length > 1 && store.demo == null)
-        ChipBtn('${store.nm} ▾',
-            onTap: () => popup(context, title: tr('아이 고르기'), (c, set) => [
-                  for (var i = 0; i < ks.length; i++)
-                    Tile('${ks[i].label(i)}${fullDone(ks[i].cur.ans) ? ' · ${score(ks[i].cur.ans).code}' : ''}', sub: ks[i].ageText.isEmpty ? null : ageTx(ks[i].ageText), onTap: () {
-                      store.setKid(ks[i].id);
-                      Navigator.of(c).pop();
-                    }),
-                ])),
+      // 아이는 홈에서 고른다. 아이가 둘 이상이면 이름 칩을 누르면 홈으로
+      if (ks.length > 1 && store.demo == null) ChipBtn('${store.nm} ▸', onTap: () => tab.value = 0),
       for (final e in all)
         ChipBtn('${cg(e.key)} · ${fullDone(e.value.ans) ? score(e.value.ans).code : '${answered(e.value.ans)}/${C.items.length}'}', on: e.key == kid.who, onTap: () => store.setWho(e.key)),
       if (store.demo == null) ChipBtn(tr('+ 추가'), onTap: () => addWho(context, invite: () => inviteCg(context))),

@@ -1,5 +1,5 @@
-// 홈: 한 화면. 인사 줄 · 등록된 아이마다 카드(기본 정보 + 기질·성격 / 성장 발달 / 오늘 요약, 누르면 그 탭으로) · 바로 가기 세 칸.
-// 아이가 한 명이면 카드 한 장을 크게, 여럿이면 카드를 쌓는다(넘치면 카드 칸 안에서만 밀림).
+// 홈: 한 화면. 인사 줄 · 아이 고르기(첫째·둘째 … + 아이 추가) · 고른 아이 카드(기본 정보 + 기질·성격 / 성장 발달 / 오늘 요약, 누르면 그 탭으로) · 바로 가기.
+// 아이는 홈에서만 고른다. 다른 탭은 고른 아이로 진행되고 제목 옆 이름을 누르면 홈으로 온다.
 import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../content.dart';
@@ -151,30 +151,45 @@ class HomeView extends StatelessWidget {
         ]));
   }
 
+  /// 아이 고르기 한 칸: 작은 그림 + 이름. 고른 아이로 앱 전체(기질·성격 · 성장 발달 · 오늘)가 진행된다.
+  Widget kidPick(Kid k, int i, bool on) {
+    final r = kidResult(k);
+    return GestureDetector(
+      key: Key('home-kid-$i'),
+      onTap: () => store.setKid(k.id),
+      child: NineBox(on ? nChipOn : nChip,
+          padding: const EdgeInsets.fromLTRB(8, 5, 14, 5),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', width: 30, height: 30),
+            const SizedBox(width: 6),
+            Text(k.label(i), style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: on ? kOnAccent : kFg)),
+          ])),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ks = store.kids;
-    final fresh = ks.length <= 1 && store.kid.name.isEmpty && !store.kid.cgs.any((e) => e.value.hasAny);
+    final ks = store.kids, kid = store.kid;
+    final fresh = ks.length <= 1 && kid.name.isEmpty && !kid.cgs.any((e) => e.value.hasAny);
     if (fresh) return welcome(context);
-    final any = ks.any((k) => fullDone(k.cur.ans) && k.cur.paid);
-    final sub = ks.length > 1 ? tr('아이 {0}명 · 오늘의 모습을 한눈에', [ks.length]) : tr('{0}의 오늘을 한눈에', [store.nm]);
+    final idx = ks.indexWhere((k) => k.id == kid.id);
+    final done = fullDone(kid.cur.ans) && kid.cur.paid;
+    final sub = ks.length > 1 ? tr('아이를 고르면 그 아이로 앱이 진행돼요') : tr('{0}의 오늘을 한눈에', [store.nm]);
     return Frame(
       top: header(sub),
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-            child: ks.length == 1
-                ? kidCard(context, ks[0], 0, big: true)
-                : SingleChildScrollView(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    for (var i = 0; i < ks.length; i++) ...[if (i > 0) const SizedBox(height: 8), kidCard(context, ks[i], i)],
-                  ]))),
+        // 아이 고르기: 첫째 · 둘째 … + 아이 추가
+        chipRow([
+          for (var i = 0; i < ks.length; i++) kidPick(ks[i], i, ks[i].id == kid.id),
+          ChipBtn(tr('+ 아이 추가'), onTap: () => newKid(context)),
+        ]),
+        const SizedBox(height: 8),
+        Expanded(child: kidCard(context, kid, idx < 0 ? 0 : idx, big: true)),
         const SizedBox(height: 8),
         Row(children: [
-          quick('i_star', tr('+ 아이 추가'), () => newKid(context)),
-          const SizedBox(width: 6),
           quick('i_heart', tr('가족 초대'), () => inviteCg(context)),
           const SizedBox(width: 6),
-          if (any) quick('i_share', tr('결과 공유'), () => openShare(context, tr('결과 공유'))) else quick('i_doc', tr('샘플 리포트'), () => showSample(context)),
+          if (done) quick('i_share', tr('결과 공유'), () => openShare(context, tr('결과 공유'))) else quick('i_doc', tr('샘플 리포트'), () => showSample(context)),
         ]),
       ]),
     );
