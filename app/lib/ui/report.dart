@@ -215,10 +215,11 @@ class _ReportViewState extends State<ReportView> {
       }
       return [
         FutureBuilder(
-            future: stats.load(b),
+            future: stats.loadScoped(b),
             builder: (_, snap) {
               if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
-              final all = snap.data, a = all?[key], label = bucketLabel(b);
+              // 같은 나라 검사가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균
+              final all = snap.data?.m, a = all?[key], label = scopeLabel(snap.data?.cc, bucketLabel(b));
               if (all == null) return Text(tr('평균을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'), style: small);
               if (a == null || a.n < kStatMin) {
                 return col([
@@ -244,6 +245,7 @@ class _ReportViewState extends State<ReportView> {
                 line(tr('또래 평균'), av, ring: true),
                 Text(diff, style: body.copyWith(fontWeight: FontWeight.w700)),
                 muted(lo != null ? tr('기질에는 좋고 나쁨이 없습니다. 평균과의 차이는 {0}의 개성입니다.', [nm]) : tr('자라는 힘은 나이가 들수록 높아집니다. 평균은 이 앱으로 검사한 같은 나이 아이들의 값입니다.')),
+                if (snap.data?.cc == null && countryOf() != null) muted(tr('같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.', [kCountryMin])),
               ]);
             }),
       ];

@@ -7,7 +7,7 @@ import 'dart:math' as math;
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'i18n.dart';
-import 'stats.dart' show Avg, kStatMin;
+import 'stats.dart' show Avg, Scoped, kStatMin, countryOf, countryBucket, pickScoped;
 import 'store.dart';
 
 /// 문항 하나. m: 대부분의 아이가 해내는 무렵(개월)
@@ -269,10 +269,13 @@ class DevStats {
     }
   }
 
-  /// 구간·성별 평균. 성별을 모르면 남녀 묶음을 합친 평균(건수로 가중)을 돌려준다.
-  Future<Map<String, Avg>?> loadFor(int band, String sex) async {
-    if (sex == 'M' || sex == 'F') return load('d${band}_$sex');
-    final a = await load('d${band}_M'), b = await load('d${band}_F');
+  /// 구간·성별 평균: 나라 평균이 충분히 모였으면 나라 평균, 아니면 전체 국가 평균.
+  Future<Scoped> loadFor(int band, String sex) => pickScoped((b) => _loadSex(b, sex), 'd$band');
+
+  /// [pre]('d30' 또는 'cKR_d30') 묶음의 성별 평균. 성별을 모르면 남녀 묶음을 합친 평균(건수로 가중).
+  Future<Map<String, Avg>?> _loadSex(String pre, String sex) async {
+    if (sex == 'M' || sex == 'F') return load('${pre}_$sex');
+    final a = await load('${pre}_M'), b = await load('${pre}_F');
     if (a == null && b == null) return null;
     return {
       for (final k in {...?a?.keys, ...?b?.keys})
@@ -293,14 +296,15 @@ class DevStats {
     };
   }
 
-  /// 체크 한 건을 통계에 더하는 요청 본문: dstats 에 더하기 + dresults 에 한 건(이름·계정 없이)
-  static Map<String, dynamic> commitBody(DevRec r, String who, String id) {
+  /// 체크 한 건을 통계에 더하는 요청 본문: dstats 에 더하기(전체 국가 + [cc] 나라) + dresults 에 한 건(이름·계정 없이)
+  static Map<String, dynamic> commitBody(DevRec r, String who, String id, {String? cc}) {
     final res = devScore(r), b = devBucket(r);
     final hmm = r.h == null ? null : (r.h! * 10).round(), w100 = r.w == null ? null : (r.w! * 10).round();
     return {
       'writes': [
+        for (final sb in [b, if (cc != null) countryBucket(cc, b)])
         {
-          'update': {'name': '$_docs/dstats/$b', 'fields': {}},
+          'update': {'name': '$_docs/dstats/$sb', 'fields': {}},
           'updateMask': {'fieldPaths': []},
           'updateTransforms': [
             {'fieldPath': 'n', 'increment': {'integerValue': '1'}},
@@ -322,6 +326,7 @@ class DevStats {
               'b': {'stringValue': b},
               'mo': {'integerValue': '${r.mo}'},
               'who': {'stringValue': who},
+              if (cc != null) 'cc': {'stringValue': cc},
               'sc': {'mapValue': {'fields': {for (final x in res.ds) x.d.id: {'integerValue': '${x.sc}'}}}},
               'a': {'mapValue': {'fields': {for (final e in r.ans.entries) e.key: {'integerValue': '${e.value}'}}}},
               'rg': {'integerValue': '${r.rg}'},
@@ -355,11 +360,13 @@ class DevStats {
           if (r.st || !r.done || (r.sex != 'M' && r.sex != 'F')) continue;
           final who = kCgl.contains(r.who) ? r.who : '기타 양육자';
           final res = await client
-              .post(Uri.parse('$_base:commit'), headers: {'content-type': 'application/json'}, body: jsonEncode(commitBody(r, who, rid())))
+              .post(Uri.parse('$_base:commit'), headers: {'content-type': 'application/json'}, body: jsonEncode(commitBody(r, who, rid(), cc: countryOf())))
               .timeout(const Duration(seconds: 10));
           if (res.statusCode != 200) return;
           r.st = true;
           _at.remove(devBucket(r));
+          final cc = countryOf();
+          if (cc != null) _at.remove(countryBucket(cc, devBucket(r)));
           store.save();
         }
       }

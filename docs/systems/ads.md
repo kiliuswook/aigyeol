@@ -10,7 +10,7 @@
 
 - 광고 ID: `app/lib/ads.dart` 의 `AdIds` 한곳. 디버그 빌드(`flutter run`)는 구글 테스트 광고 ID, 릴리스 빌드만 실제 ID.
 - 앱 ID: 안드로이드 `android/app/src/main/AndroidManifest.xml`, iOS `ios/Runner/Info.plist`(`GADApplicationIdentifier`, `SKAdNetworkItems`).
-- 동의: 시작할 때 UMP 로 유럽·영국·스위스 동의 창(AdMob → 개인 정보 보호 및 메시지에서 자동 생성된 메시지). 더보기에 '광고 개인정보 설정'(필요한 지역에서만 보임).
+- 동의: 시작할 때 UMP 로 동의 창. AdMob → 개인 정보 보호 및 메시지에 2026-11-24 게시: 'WonderWheel apps GDPR consent'(유럽·영국·스위스, 영어+31개 언어, 모든 나라에 '동의하지 않음' 버튼), 'WonderWheel apps US states'(미국 주 규정, 판매·공유 거부). 둘 다 원더휠 앱 6개(내 아이의 MBTI·무한 장기·주파수 안드로이드·iOS). 그 전에는 메시지가 없어 유럽에서 광고가 제한됐다. 더보기에 '광고 개인정보 설정'(필요한 지역에서만 보임).
 - 광고 수위 PG 까지, 아동 대상 아님(부모용 앱).
 - iOS 추적 허용(ATT) 요청은 하지 않는다. 맞춤 광고 대신 일반 광고가 나간다.
 - 웹(첫 화면 = 플루터 앱 웹 빌드)은 광고 없음(AdMob 은 앱 전용). 검사·발달 체크는 웹에서 광고 없이 바로 열린다.

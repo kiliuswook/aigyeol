@@ -5,6 +5,7 @@
 // 로그인 없이도 되도록 Firestore REST 로 읽고 쓴다(앱·웹 같은 길).
 import 'i18n.dart';
 import 'dart:convert';
+import 'dart:ui' show PlatformDispatcher;
 import 'package:http/http.dart' as http;
 import 'content.dart';
 import 'scoring.dart';
@@ -12,6 +13,42 @@ import 'store.dart';
 
 /// 평균을 보여 주는 최소 검사 건수
 const kStatMin = 5;
+
+/// 나라별 평균을 보여 주는 최소 건수. 그보다 적으면 전체 국가 평균을 보여 준다.
+const kCountryMin = 30;
+
+/// 기기에 설정된 나라(ISO 두 글자 대문자, 예: KR). 모르면 null.
+String? deviceCountry() {
+  final c = PlatformDispatcher.instance.locale.countryCode?.toUpperCase();
+  return c != null && RegExp(r'^[A-Z]{2}$').hasMatch(c) ? c : null;
+}
+
+/// 지금 쓰는 나라(테스트에서 바꿔 끼운다)
+String? Function() countryOf = deviceCountry;
+
+/// 나라 묶음 이름: 'c<나라>_<묶음>' (예: cKR_y5_F, cUS_d30_M)
+String countryBucket(String cc, String b) => 'c${cc}_$b';
+
+/// 나라 코드 → 국기 그림 글자(🇰🇷)
+String flagOf(String cc) => String.fromCharCodes(cc.codeUnits.map((u) => 0x1F1E6 + u - 65));
+
+/// 평균 묶음 앞에 붙는 범위 이름: 나라 평균이면 국기, 전체면 '전체 국가'
+String scopeLabel(String? cc, String label) => cc == null ? tr('전체 국가 · {0}', [label]) : '${flagOf(cc)} $label';
+
+/// 평균과 그 범위(cc: 나라 평균이면 나라 코드, 전체 국가 평균이면 null)
+typedef Scoped = ({Map<String, Avg>? m, String? cc});
+
+/// 지표별 평균의 건수(모든 지표가 같다)
+int avgN(Map<String, Avg>? m) => m == null || m.isEmpty ? 0 : m.values.first.n;
+
+/// 나라 평균이 [kCountryMin]건 이상이면 나라 평균, 아니면 전체 국가 평균
+Future<Scoped> pickScoped(Future<Map<String, Avg>?> Function(String b) load, String b) async {
+  final cc = countryOf();
+  final g = await load(b);
+  if (cc == null) return (m: g, cc: null);
+  final c = await load(countryBucket(cc, b));
+  return avgN(c) >= kCountryMin ? (m: c, cc: cc) : (m: g, cc: null);
+}
 const _docs = 'projects/childmbti-wonderwheel/databases/(default)/documents';
 const _base = 'https://firestore.googleapis.com/v1/$_docs';
 
@@ -66,6 +103,12 @@ class Stats {
   final _cache = <String, Map<String, Avg>>{};
   final _at = <String, DateTime>{};
 
+  /// 나라 평균(충분히 모였으면) 또는 전체 국가 평균
+  Future<Scoped> loadScoped(String bucket) async {
+    if (store.demo != null) return (m: _demo(), cc: null);
+    return pickScoped(load, bucket);
+  }
+
   /// 묶음의 지표별 평균(건수 포함). 10분 동안은 받은 값을 다시 쓴다. 못 받으면 null.
   Future<Map<String, Avg>?> load(String bucket) async {
     if (store.demo != null) return _demo();
@@ -104,18 +147,19 @@ class Stats {
     return {for (final k in statKeys) k: (avg: 44.0 + (i++ * 7) % 19, n: 128)};
   }
 
-  /// 검사 한 건을 통계에 더하는 요청 본문
-  static Map<String, dynamic> commitBody(String bucket, Map<String, int> vals, int months, String who, String id) => {
+  /// 검사 한 건을 통계에 더하는 요청 본문. [cc]가 있으면 그 나라 묶음에도 더한다(전체 국가 묶음과 함께).
+  static Map<String, dynamic> commitBody(String bucket, Map<String, int> vals, int months, String who, String id, {String? cc}) => {
         'writes': [
           if (vals.length == statKeys.length)
-            {
-              'update': {'name': '$_docs/stats/$bucket', 'fields': {}},
-              'updateMask': {'fieldPaths': []},
-              'updateTransforms': [
-                {'fieldPath': 'n', 'increment': {'integerValue': '1'}},
-                for (final e in vals.entries) {'fieldPath': 's${e.key}', 'increment': {'integerValue': '${e.value}'}},
-              ],
-            },
+            for (final b in [bucket, if (cc != null) countryBucket(cc, bucket)])
+              {
+                'update': {'name': '$_docs/stats/$b', 'fields': {}},
+                'updateMask': {'fieldPaths': []},
+                'updateTransforms': [
+                  {'fieldPath': 'n', 'increment': {'integerValue': '1'}},
+                  for (final e in vals.entries) {'fieldPath': 's${e.key}', 'increment': {'integerValue': '${e.value}'}},
+                ],
+              },
           {
             'update': {
               'name': '$_docs/results/$id',
@@ -123,6 +167,7 @@ class Stats {
                 'b': {'stringValue': bucket},
                 'mo': {'integerValue': '$months'},
                 'who': {'stringValue': who},
+                if (cc != null) 'cc': {'stringValue': cc},
                 'sc': {'mapValue': {'fields': {for (final e in vals.entries) e.key: {'integerValue': '${e.value}'}}}},
               },
             },
@@ -156,11 +201,13 @@ class Stats {
           if (b == null || mo == null) continue;
           final who = kCgl.contains(e.key) ? e.key : '기타 양육자';
           final r = await client
-              .post(Uri.parse('$_base:commit'), headers: {'content-type': 'application/json'}, body: jsonEncode(commitBody(b, statVals(score(rec.ans)), mo, who, rid())))
+              .post(Uri.parse('$_base:commit'), headers: {'content-type': 'application/json'}, body: jsonEncode(commitBody(b, statVals(score(rec.ans)), mo, who, rid(), cc: countryOf())))
               .timeout(const Duration(seconds: 10));
           if (r.statusCode != 200) return;
           rec.st = true;
           _at.remove(b);
+          final cc = countryOf();
+          if (cc != null) _at.remove(countryBucket(cc, b));
           store.save();
         }
       }

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:childmbti/dev.dart';
+import 'package:childmbti/stats.dart' show countryOf;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -110,10 +111,35 @@ void main() {
         final m = q.url.path.endsWith('_M');
         return http.Response(jsonEncode({'fields': {'n': {'integerValue': m ? '2' : '6'}, 'sgm': {'integerValue': m ? '100' : '540'}}}), 200);
       });
-    final a = (await st.loadFor(30, ''))!;
+    countryOf = () => null;
+    final a = (await st.loadFor(30, '')).m!;
     expect(a['gm']!.n, 8);
     expect(a['gm']!.avg, 80); // (100 + 540) / 8
-    final f = (await st.loadFor(30, 'F'))!;
+    final f = (await st.loadFor(30, 'F')).m!;
     expect(f['gm']!.avg, 90);
+  });
+
+  test('또래 평균: 같은 나라 체크가 30건 이상이면 나라 평균, 아니면 전체 국가', () async {
+    var cn = 40;
+    final st = DevStats()
+      ..client = MockClient((q) async {
+        final c = q.url.path.contains('/cKR_d30_');
+        return http.Response(jsonEncode({'fields': {'n': {'integerValue': c ? '$cn' : '100'}, 'sgm': {'integerValue': c ? '${cn * 70}' : '5000'}}}), 200);
+      });
+    countryOf = () => 'KR';
+    final k = await st.loadFor(30, 'F');
+    expect(k.cc, 'KR');
+    expect(k.m!['gm']!.avg, 70);
+    cn = 10;
+    st.clear();
+    final g = await st.loadFor(30, 'F');
+    expect(g.cc, isNull);
+    expect(g.m!['gm']!.avg, 50);
+    final r = DevRec(id: 'a', date: '', who: '엄마', sex: 'F', mo: 30, band: 30, t: 1);
+    final w = DevStats.commitBody(r, '엄마', 'x', cc: 'KR')['writes'] as List;
+    expect(w.length, 3);
+    expect((w[1]['update'] as Map)['name'], endsWith('/dstats/cKR_d30_F'));
+    expect(((w[2]['update'] as Map)['fields'] as Map)['cc'], {'stringValue': 'KR'});
+    countryOf = () => null;
   });
 }

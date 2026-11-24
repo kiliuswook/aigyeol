@@ -11,6 +11,7 @@ service cloud.firestore {
         && request.resource.data.json is string
         && request.resource.data.json.size() < 900000;
     }
+    // 나라별 평균(2026-11-24): 같은 모양의 문서를 c<나라 두 글자>_ 를 붙인 이름(cKR_y5_F, cUS_d30_M)으로 함께 쌓는다.
     // 또래 평균 통계(로그인 없이): stats/y<만 나이>_<M|F> 문서에 전체 건수 n 과 지표마다 점수 합(s*).
     // 누구나 읽고, 쓰기는 '검사 한 건 더하기'만 된다: n 은 1 늘고, 지표마다 합이 0~100 늘어난다.
     // (규칙 한 번에 식 1000개까지라 지표별 건수는 두지 않는다. 지표 19개가 모두 있는 검사만 더한다.)
@@ -22,7 +23,7 @@ service cloud.firestore {
     }
     match /stats/{b} {
       allow read: if true;
-      allow create: if b.matches('^y([0-9]|1[0-2])_[MF]$')
+      allow create: if b.matches('^(c[A-Z][A-Z]_)?y([0-9]|1[0-2])_[MF]$')
         && request.resource.data.keys().hasOnly(['n', 'sA', 'sA0', 'sA1', 'sA2', 'sB', 'sB0', 'sB1', 'sB2', 'sC', 'sC0', 'sC1', 'sC2', 'sD', 'sD0', 'sD1', 'sD2', 'sG1', 'sG2', 'sG3'])
         && request.resource.data.n == 1
         && first(request.resource.data, 'sA') && first(request.resource.data, 'sA0') && first(request.resource.data, 'sA1') && first(request.resource.data, 'sA2') && first(request.resource.data, 'sB') && first(request.resource.data, 'sB0') && first(request.resource.data, 'sB1') && first(request.resource.data, 'sB2') && first(request.resource.data, 'sC') && first(request.resource.data, 'sC0') && first(request.resource.data, 'sC1') && first(request.resource.data, 'sC2') && first(request.resource.data, 'sD') && first(request.resource.data, 'sD0') && first(request.resource.data, 'sD1') && first(request.resource.data, 'sD2') && first(request.resource.data, 'sG1') && first(request.resource.data, 'sG2') && first(request.resource.data, 'sG3');
@@ -32,7 +33,8 @@ service cloud.firestore {
     }
     // 검사 한 건의 점수 기록(이름·계정 없음). 만들기만 되고 앱에서는 읽지 못한다.
     match /results/{id} {
-      allow create: if request.resource.data.keys().hasOnly(['b', 'mo', 'who', 'sc', 'at'])
+      allow create: if request.resource.data.keys().hasOnly(['b', 'mo', 'who', 'sc', 'cc', 'at'])
+        && (!('cc' in request.resource.data) || (request.resource.data.cc is string && request.resource.data.cc.matches('^[A-Z][A-Z]$')))
         && request.resource.data.b is string && request.resource.data.b.matches('^y([0-9]|1[0-2])_[MF]$')
         && request.resource.data.mo is int && request.resource.data.mo >= 0 && request.resource.data.mo < 160
         && request.resource.data.who is string && request.resource.data.who.size() < 20
@@ -61,13 +63,14 @@ service cloud.firestore {
     }
     match /dstats/{b} {
       allow read: if true;
-      allow create: if b.matches('^d([0-9]|[1-8][0-9])_[MF]$') && dok(request.resource.data, {});
+      allow create: if b.matches('^(c[A-Z][A-Z]_)?d([0-9]|[1-8][0-9])_[MF]$') && dok(request.resource.data, {});
       allow update: if dok(request.resource.data, resource.data);
     }
     // 발달 체크 한 건(이름·계정 없음): 구간, 개월 수, 답한 사람 역할, 영역 점수, 문항 답, 해내던 것을 못 하게 된 적, 키(mm)·몸무게(100g).
     // 만들기만 되고 앱에서는 읽지 못한다(나중에 문항별 규준 만들기용).
     match /dresults/{id} {
-      allow create: if request.resource.data.keys().hasOnly(['b', 'mo', 'who', 'sc', 'a', 'rg', 'h', 'w', 'at'])
+      allow create: if request.resource.data.keys().hasOnly(['b', 'mo', 'who', 'sc', 'a', 'rg', 'h', 'w', 'cc', 'at'])
+        && (!('cc' in request.resource.data) || (request.resource.data.cc is string && request.resource.data.cc.matches('^[A-Z][A-Z]$')))
         && request.resource.data.b is string && request.resource.data.b.matches('^d([0-9]|[1-8][0-9])_[MF]$')
         && request.resource.data.mo is int && request.resource.data.mo >= 4 && request.resource.data.mo < 96
         && request.resource.data.who is string && request.resource.data.who.size() < 20

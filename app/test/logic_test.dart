@@ -179,5 +179,11 @@ void main() {
     expect(Stats.parse({}), isEmpty);
     // 판단하지 않은 지표가 있는 검사는 평균에 더하지 않고 기록만 남긴다
     expect((Stats.commitBody('y5_F', Map.of(v)..remove('G1'), 68, '엄마', 'x2')['writes'] as List).length, 1);
+    // 나라가 있으면 전체 국가 묶음과 나라 묶음에 함께 더하고, 기록에 나라를 남긴다
+    final cw = Stats.commitBody('y5_F', v, 68, '엄마', 'x3', cc: 'US')['writes'] as List;
+    expect(cw.length, 3);
+    expect((cw[1]['update'] as Map)['name'], endsWith('/stats/cUS_y5_F'));
+    expect(((cw[2]['update'] as Map)['fields'] as Map)['cc'], {'stringValue': 'US'});
+    expect(flagOf('KR'), '🇰🇷');
   });
 }

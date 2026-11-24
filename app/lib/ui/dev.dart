@@ -4,6 +4,7 @@ import '../i18n.dart';
 import 'package:flutter/material.dart';
 import '../ads.dart';
 import '../dev.dart';
+import '../stats.dart' show scopeLabel, countryOf, kCountryMin;
 import '../main.dart' show tab;
 import '../store.dart';
 import 'kit.dart';
@@ -300,7 +301,9 @@ class _DevScreenState extends State<DevScreen> {
       future: devStats.loadFor(r.band, r.sex),
       builder: (_, snap) {
         if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
-        final all = snap.data, label = r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)]), n = all?['gm']?.n ?? 0;
+        // 같은 나라 체크가 충분히 모였으면 그 나라 평균, 아니면 전체 국가 평균
+        final all = snap.data?.m, cc = snap.data?.cc;
+        final label = scopeLabel(cc, r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)])), n = all?['gm']?.n ?? 0;
         return col([
           eyebrow(tr('또래 평균')),
           h2(tr('{0} 평균과 비교', [label])),
@@ -325,6 +328,7 @@ class _DevScreenState extends State<DevScreen> {
               if ((all[k]?.n ?? 0) >= kDevStatMin)
                 Text(tr('{0} 또래 평균 {1}{2} ({3}명){4}', [k == 'h' ? tr('키') : tr('몸무게'), all[k]!.avg.toStringAsFixed(1), unit, all[k]!.n, v == null ? '' : tr(' · 우리 아이 {0}{1}', [v, unit])]), style: small),
           muted(tr('이 앱에서 같은 개월 구간·성별로 체크한 결과의 평균입니다. 아이마다 자라는 속도가 달라 평균보다 낮아도 자연스러운 경우가 많습니다.')),
+          if (cc == null && countryOf() != null) muted(tr('같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.', [kCountryMin])),
         ], gap: 10);
       });
 
