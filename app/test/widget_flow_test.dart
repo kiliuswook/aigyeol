@@ -167,12 +167,7 @@ void main() {
       await t.pumpAndSettle();
       expect(find.text('또래 평균'), findsOneWidget);
       expect(find.textContaining('6건'), findsNothing);
-<<<<<<< HEAD
-      // 평균은 늘 전체 국가: 나라 고르기·'전체 국가' 표시가 없다
-      expect(find.byKey(const Key('scope-*')), findsNothing);
-=======
       expect(find.byKey(const Key('scope-US')), findsNothing);
->>>>>>> 8ea2963155658753feabef80b25c273a17addf95
       expect(find.textContaining('전체 국가'), findsNothing);
       await t.tap(find.byKey(const Key('popup-close')));
       await t.pumpAndSettle();
@@ -486,10 +481,6 @@ void main() {
       await t.pumpAndSettle();
       expect(find.textContaining('(8명)'), findsNothing);
       expect(find.byKey(const Key('scope-*')), findsNothing);
-<<<<<<< HEAD
-      expect(find.textContaining('전체 국가'), findsNothing);
-=======
->>>>>>> 8ea2963155658753feabef80b25c273a17addf95
       expect(find.textContaining('키 또래 평균 95.0cm'), findsOneWidget);
       await t.tap(find.byKey(const Key('back')));
       await t.pumpAndSettle();
