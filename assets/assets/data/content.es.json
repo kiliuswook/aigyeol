@@ -288,7 +288,7 @@
     ],
     [
      "Cuando sigue jugando sin decir que se hizo daño",
-     "Aquí está rojo. Si algo te duele, díselo siempre a Mamá, ¿vale?"
+     "Aquí está rojo. Si algo te duele, díselo siempre a Mamá, ¿sí?"
     ],
     [
      "Cuando no capta el ambiente a su alrededor",
@@ -302,28 +302,28 @@
     "Lo cuenta primero",
     "Las emociones le duran"
    ],
-   "sum": "Muestra la alegría y el enfado con intensidad y claridad. Quiere compartir lo que lleva dentro.",
+   "sum": "Muestra la alegría y el enojo con intensidad y claridad. Quiere compartir lo que lleva dentro.",
    "det": "Los niños con mucho de Expresivo tienen el volumen emocional alto. Los padres los leen con facilidad, pero razonar no funciona mientras la emoción está al máximo. Primero nombra la emoción y habla cuando se calme. Ayuda acordar de antemano formas seguras de sacar las emociones grandes, como patear el suelo o abrazar un cojín.",
    "st": "No esconde lo que siente, así que es fácil de leer y muy cariñoso.",
    "wa": "En momentos de mucha emoción, necesita tiempo y una forma de calmarse.",
-   "say": "Estás muy, muy disgustado. Cuando termines de llorar, hablamos juntos.",
+   "say": "Estás muy, muy triste. Cuando termines de llorar, hablamos juntos.",
    "no": "Deja de llorar. No es para tanto.",
    "ph": "muestra sus emociones con intensidad y claridad",
    "says": [
     [
-     "Al llorar fuerte o enfadarse",
-     "Estás muy, muy disgustado. Cuando termines de llorar, hablamos juntos."
+     "Al llorar fuerte o enojarse",
+     "Estás muy, muy triste. Cuando termines de llorar, hablamos juntos."
     ],
     [
      "Al ponerse ruidoso por la emoción",
      "¡Qué emocionado estás! Aquí habla bajito, por favor."
     ],
     [
-     "A punto de lanzar algo por enfado",
-     "Está bien enfadarse. En vez de lanzar, pisoteemos fuerte."
+     "A punto de lanzar algo por enojo",
+     "Está bien enojarse. En vez de lanzar, pisoteemos fuerte."
     ],
     [
-     "Cuando el disgusto dura mucho",
+     "Cuando el malestar dura mucho",
      "Todavía queda un poco de ese sentimiento. Mamá se queda a tu lado."
     ]
    ]
@@ -343,7 +343,7 @@
    "ph": "procesa sus emociones con calma por dentro",
    "says": [
     [
-     "Cuando parece disgustado pero no dice nada",
+     "Cuando parece molesto pero no dice nada",
      "No hace falta que lo digas. ¿Me lo enseñas con un dibujo?"
     ],
     [
@@ -383,7 +383,7 @@
      "Hoy cambió el orden. A cambio, te prometo que iremos mañana."
     ],
     [
-     "Disgustado porque no es como siempre",
+     "Molesto porque no es como siempre",
      "Querías hacerlo como siempre. Probemos así solo esta vez."
     ],
     [
@@ -501,7 +501,7 @@
    "ax": "B",
    "sub": 2,
    "gr": null,
-   "t": "Se disgusta o se preocupa con facilidad, incluso por cosas pequeñas.",
+   "t": "Se molesta o se preocupa con facilidad, incluso por cosas pequeñas.",
    "r": 0,
    "ex": "Llora cuando un dibujo no sale bien o se rompe una galleta"
   },
@@ -528,7 +528,7 @@
    "ax": "C",
    "sub": 2,
    "gr": null,
-   "t": "Le cuesta calmarse una vez que llora o se enfada.",
+   "t": "Le cuesta calmarse una vez que llora o se enoja.",
    "r": 0,
    "ex": "El llanto dura más de 10 minutos o cuesta mucho consolarlo"
   },
@@ -629,7 +629,7 @@
    "gr": null,
    "t": "Capta enseguida cuando cambia la cara o la voz de sus padres.",
    "r": 0,
-   "ex": "Pregunta \"Mamá, ¿estás enfadada?\" cuando sus padres están cansados o molestos"
+   "ex": "Pregunta \"Mamá, ¿estás enojada?\" cuando sus padres están cansados o molestos"
   },
   {
    "id": "B2-1",
@@ -645,7 +645,7 @@
    "ax": "C",
    "sub": 0,
    "gr": null,
-   "t": "Cuando se enfada o disgusta, lo muestra tanto que todos alrededor se enteran.",
+   "t": "Cuando se enoja o se molesta, lo muestra tanto que todos alrededor se enteran.",
    "r": 0,
    "ex": "Llora fuerte o se tira al suelo cuando no consigue lo que quiere en la tienda"
   },
@@ -654,7 +654,7 @@
    "ax": "C",
    "sub": 1,
    "gr": null,
-   "t": "No cuenta las cosas que le disgustan si no se le pregunta.",
+   "t": "No cuenta las cosas que le molestan si no se le pregunta.",
    "r": 1,
    "ex": "Te enteras de una pelea con un amigo solo por el profesor"
   },
@@ -663,7 +663,7 @@
    "ax": "C",
    "sub": 2,
    "gr": null,
-   "t": "Cambia rápido de atención a otra cosa aunque esté disgustado.",
+   "t": "Cambia rápido de atención a otra cosa aunque esté molesto.",
    "r": 1,
    "ex": "Deja de llorar pronto si le enseñas su juguete favorito"
   },
@@ -683,7 +683,7 @@
    "gr": null,
    "t": "Se adapta con facilidad aunque los planes cambien de repente.",
    "r": 1,
-   "ex": "Te acompaña sin protestar cuando vais a la tienda en lugar de al parque previsto"
+   "ex": "Te acompaña sin protestar cuando van a la tienda en lugar de al parque previsto"
   },
   {
    "id": "D2-1",
@@ -701,7 +701,7 @@
    "gr": "G1",
    "t": "Intenta terminar los juegos o manualidades que empieza.",
    "r": 0,
-   "ex": "Solo se levanta después de terminar el puzle o el dibujo"
+   "ex": "Solo se levanta después de terminar el rompecabezas o el dibujo"
   },
   {
    "id": "G2-1",
@@ -735,9 +735,9 @@
    "ax": "A",
    "sub": 1,
    "gr": null,
-   "t": "Disfruta mucho tiempo de juegos tranquilos como libros o puzles.",
+   "t": "Disfruta mucho tiempo de juegos tranquilos como libros o rompecabezas.",
    "r": 1,
-   "ex": "Se pasa más de 20 minutos dibujando o haciendo puzles"
+   "ex": "Se pasa más de 20 minutos dibujando o haciendo rompecabezas"
   },
   {
    "id": "A2-2",

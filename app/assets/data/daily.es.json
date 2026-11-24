@@ -13,7 +13,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Jugad 15 minutos a algo activo y movido antes de dormir.",
+    "t": "Jueguen 15 minutos a algo activo y movido antes de dormir.",
     "w": "Los días en que gasta su energía, las noches son mucho más tranquilas."
    },
    {
@@ -23,7 +23,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Antes de salir, acordad una sola regla. Por ejemplo: \"Al cruzar la calle, de la mano\".",
+    "t": "Antes de salir, acuerden una sola regla. Por ejemplo: \"Al cruzar la calle, de la mano\".",
     "w": "Una sola regla es algo que puede recordar y cumplir."
    },
    {
@@ -55,7 +55,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Hoy, dedicad 10 minutos a un juego tranquilo solo para los dos (dibujar, bloques).",
+    "t": "Hoy, dediquen 10 minutos a un juego tranquilo solo para los dos (dibujar, bloques).",
     "w": "Se abre más en un rato tranquilo a solas contigo."
    },
    {
@@ -70,7 +70,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Si mañana vais a algún sitio, enséñale fotos o un mapa con antelación.",
+    "t": "Si mañana van a algún lugar, muéstrale fotos o un mapa con anticipación.",
     "w": "Un lugar ya visto parece menos extraño, y el primer paso cuesta menos."
    },
    {
@@ -122,7 +122,7 @@
    },
    {
     "k": "Elogiar",
-    "t": "Si se calmó solo tras disgustarse, dile: \"Te tranquilizaste tú solo\".",
+    "t": "Si se calmó solo tras molestarse, dile: \"Te tranquilizaste tú solo\".",
     "w": "Reconocer que se calmó le ayuda a recuperarse antes la próxima vez."
    }
   ],
@@ -144,7 +144,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Hoy, probad juntos una comida o un juego nuevo que elija tu peque.",
+    "t": "Hoy, prueben juntos una comida o un juego nuevo que elija tu peque.",
     "w": "Le permite aprovechar su facilidad para abrazar experiencias nuevas."
    },
    {
@@ -154,24 +154,24 @@
    },
    {
     "k": "Hablar",
-    "t": "Hablad juntos de cómo se sentiría un amigo cuando está disgustado.",
+    "t": "Hablen juntos de cómo se sentiría un amigo cuando está triste o molesto.",
     "w": "Practicar leer los sentimientos de los demás para no volverse insensible a las emociones."
    },
    {
     "k": "Elogiar",
-    "t": "Si no se quedó disgustado por un pequeño error, dile: \"Me gustó cómo lo volviste a intentar\".",
+    "t": "Si no se quedó molesto por un pequeño error, dile: \"Me gustó cómo lo volviste a intentar\".",
     "w": "Estas palabras reconocen lo rápido que se recupera."
    },
    {
     "k": "Hacer",
-    "t": "A la hora de dormir, recordad juntos el día en tres escenas.",
+    "t": "A la hora de dormir, recuerden juntos el día en tres escenas.",
     "w": "Repasar el día es practicar a notar los sentimientos."
    }
   ],
   "F": [
    {
     "k": "Hablar",
-    "t": "Cuando esté muy feliz o disgustado, nómbralo: \"¡Estabas feliz!\", \"Estabas muy disgustado\".",
+    "t": "Cuando esté muy feliz o molesto, nómbralo: \"¡Estabas feliz!\", \"Estabas muy molesto\".",
     "w": "Los peques expresivos se calman solos cuando sus sentimientos tienen nombre."
    },
    {
@@ -201,7 +201,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Usad tarjetas de emociones o dibujad caras para elegir juntos el ánimo de hoy.",
+    "t": "Usen tarjetas de emociones o dibujen caras para elegir juntos el ánimo de hoy.",
     "w": "Cuantas más palabras de emociones conozca, con más precisión se expresará."
    },
    {
@@ -228,7 +228,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Sentaos uno al lado del otro haciendo lo mismo y charlad (bloques, puzles, dibujo).",
+    "t": "Siéntense uno al lado del otro haciendo lo mismo y platiquen (bloques, rompecabezas, dibujo).",
     "w": "Se abre más en actividades lado a lado que en charlas cara a cara."
    },
    {
@@ -243,7 +243,7 @@
    },
    {
     "k": "Elogiar",
-    "t": "Si manejó algo que le disgustó en silencio, reconócelo: \"Debió de ser difícil. Lo llevaste muy bien\".",
+    "t": "Si manejó algo que le molestó en silencio, reconócelo: \"Debió de ser difícil. Lo llevaste muy bien\".",
     "w": "Cuando incluso lo que no dice se nota, aprende que está bien compartir."
    },
    {
@@ -265,12 +265,12 @@
    },
    {
     "k": "Hacer",
-    "t": "Haced juntos un cuadro con dibujos de la rutina antes de dormir y colgadlo.",
+    "t": "Hagan juntos un cuadro con dibujos de la rutina antes de dormir y cuélguenlo.",
     "w": "Una rutina visible reduce las batallas de cada noche."
    },
    {
     "k": "Contenerse",
-    "t": "Si se disgusta por un cambio de planes, en lugar de \"¿Qué más da?\", dile: \"Te molesta que cambiara el plan\".",
+    "t": "Si se molesta por un cambio de planes, en lugar de \"¿Qué más da?\", dile: \"Te molesta que cambiara el plan\".",
     "w": "Para un peque rítmico, un cambio de plan de verdad es algo importante."
    },
    {
@@ -280,7 +280,7 @@
    },
    {
     "k": "Hablar",
-    "t": "Antes de dormir, repasad el plan de mañana en tres pasos.",
+    "t": "Antes de dormir, repasen el plan de mañana en tres pasos.",
     "w": "Imaginar el día que viene hace las mañanas más fáciles."
    },
    {
@@ -322,7 +322,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Hoy, deja que tu peque decida cómo jugáis durante 30 minutos.",
+    "t": "Hoy, deja que tu peque decida cómo juegan durante 30 minutos.",
     "w": "Con tiempo para decidir libremente, sigue mejor las rutinas fijas."
    },
    {
@@ -349,7 +349,7 @@
    },
    {
     "k": "Hacer",
-    "t": "Durante 10 minutos antes de dormir, deja el móvil y jugad a lo que elija tu peque.",
+    "t": "Durante 10 minutos antes de dormir, deja el teléfono y jueguen a lo que elija tu peque.",
     "w": "Incluso un rato corto con plena presencia le da la mayor sensación de seguridad."
    },
    {
@@ -379,7 +379,7 @@
    "by": {
     "J": {
      "say": "\"Hora de levantarse. Luego lavarse la cara y después desayunar\".",
-     "do": "Acordad el orden de la mañana la noche anterior y seguidlo paso a paso con un cuadro de dibujos.",
+     "do": "Acuerden el orden de la mañana la noche anterior y síganlo paso a paso con un cuadro de dibujos.",
      "no": "\"¿¡Todavía no te has levantado!?\""
     },
     "P": {
@@ -436,7 +436,7 @@
    "by": {
     "J": {
      "say": "\"Dijimos que paramos después de este capítulo, ¿verdad? ¿Lo apagamos juntos cuando acabe?\"",
-     "do": "Acordad cuántos capítulos antes de ver y recuérdaselo otra vez 5 minutos antes del final.",
+     "do": "Acuerden cuántos capítulos verán antes de empezar y recuérdaselo otra vez 5 minutos antes del final.",
      "no": "Apagarlo de golpe"
     },
     "P": {
@@ -455,12 +455,12 @@
    "by": {
     "J": {
      "say": "\"Los bloques en la caja azul, los muñecos en la cesta. ¿Los devuelves a su sitio?\"",
-     "do": "Dale a cada cosa su sitio y márcalo con pegatinas de dibujos.",
+     "do": "Dale a cada cosa su sitio y márcalo con calcomanías de dibujos.",
      "no": "\"Siempre lo dejas todo tirado\"."
     },
     "P": {
      "say": "\"¡Carrera! ¿Quién guarda más antes de que acabe la canción?\"",
-     "do": "Convierte recoger en una carrera o canción y terminad juntos aunque no lo haga todo.",
+     "do": "Convierte recoger en una carrera o canción y terminen juntos aunque no lo haga todo.",
      "no": "\"Si no recoges, lo tiro todo\"."
     }
    }
@@ -497,8 +497,8 @@
      "no": "\"Deja de llorar o te dejo aquí\"."
     },
     "T": {
-     "say": "\"¿Me dices por qué lo quieres? Hagámosle una foto y lo apuntamos en tu lista de cumpleaños\".",
-     "do": "Pregunta el motivo y acordad juntos una alternativa (como apuntarlo en una lista).",
+     "say": "\"¿Me dices por qué lo quieres? Tomémosle una foto y lo anotamos en tu lista de cumpleaños\".",
+     "do": "Pregunta el motivo y acuerden juntos una alternativa (como anotarlo en una lista).",
      "no": "\"Deja de ser tan cabezota\"."
     }
    }
@@ -506,17 +506,17 @@
   {
    "id": "s07",
    "cat": "Emociones",
-   "t": "Llora mucho o se enfada",
+   "t": "Llora mucho o se enoja",
    "p": "En lugar de detener la emoción, quédate cerca mientras pasa.",
    "ax": "C",
    "by": {
     "F": {
-     "say": "\"Estás muy enfadado. Cuando termines de llorar, te doy un abrazo fuerte\".",
-     "do": "Mantenlo seguro y habla poco. Hablad de lo que pasó cuando se calme.",
+     "say": "\"Estás muy enojado. Cuando termines de llorar, te doy un abrazo fuerte\".",
+     "do": "Mantenlo seguro y habla poco. Hablen de lo que pasó cuando se calme.",
      "no": "\"No me gustan los niños que lloran\"."
     },
     "T": {
-     "say": "\"Estás enfadado. Si quieres un rato a solas, está bien\".",
+     "say": "\"Estás enojado. Si quieres un rato a solas, está bien\".",
      "do": "Dale tiempo para ordenarse solo y, cuando esté tranquilo, pregúntale qué pensaba.",
      "no": "\"¡Si no me lo dices, no lo sé!\""
     }
@@ -525,18 +525,18 @@
   {
    "id": "s08",
    "cat": "Emociones",
-   "t": "Disgustado por perder",
+   "t": "Molesto por perder",
    "p": "Perder es una oportunidad para crecer en la fuerza de volver a intentarlo.",
    "ax": "C",
    "by": {
     "F": {
-     "say": "\"Querías ganar y perdiste, así que estás disgustado. Claro que sí\".",
-     "do": "Deja que hable todo lo que necesite de su disgusto y luego pregúntale si quiere otra partida.",
+     "say": "\"Querías ganar y perdiste, así que estás molesto. Claro que sí\".",
+     "do": "Deja que hable todo lo que necesite de lo que siente y luego pregúntale si quiere otra partida.",
      "no": "\"¿Lloras por eso?\""
     },
     "T": {
      "say": "\"¿Qué podríamos hacer para ganar la próxima vez?\"",
-     "do": "Averiguad juntos por qué perdió, haced un plan e intentadlo otra vez.",
+     "do": "Averigüen juntos por qué perdió, hagan un plan e inténtenlo otra vez.",
      "no": "\"Es que no se te da bien\"."
     }
    }
@@ -550,12 +550,12 @@
    "by": {
     "S": {
      "say": "\"Ese ruido te asustó. Mamá se queda a tu lado\".",
-     "do": "Elegid juntos objetos que le den seguridad, como una lucecita o su peluche favorito.",
+     "do": "Elijan juntos objetos que le den seguridad, como una lucecita o su peluche favorito.",
      "no": "\"¿De qué tienes miedo?\""
     },
     "N": {
      "say": "\"¿Vamos juntos a ver qué es eso que da miedo?\"",
-     "do": "Mirad juntos lo que le asusta y explícale qué es.",
+     "do": "Miren juntos lo que le asusta y explícale qué es.",
      "no": "\"Qué miedica eres\"."
     }
    }
@@ -568,13 +568,13 @@
    "ax": "C",
    "by": {
     "F": {
-     "say": "\"Tu amigo te disgustó mucho. ¿Me cuentas qué pasó?\"",
-     "do": "Tras escuchar todo lo que siente, intentad adivinar juntos cómo se sentía el amigo.",
+     "say": "\"Tu amigo te molestó mucho. ¿Me cuentas qué pasó?\"",
+     "do": "Después de escuchar todo lo que siente, intenten adivinar juntos cómo se sentía el amigo.",
      "no": "\"Empezaste tú, ¿no?\""
     },
     "T": {
      "say": "\"¿Me cuentas lo que pasó desde el principio?\"",
-     "do": "Que ordene lo que pasó y practicad juntos qué podría decir la próxima vez.",
+     "do": "Que ordene lo que pasó y practiquen juntos qué podría decir la próxima vez.",
      "no": "\"Juega bien y ya\"."
     }
    }
@@ -587,12 +587,12 @@
    "ax": "A",
    "by": {
     "E": {
-     "say": "\"Los dos lo queréis. Pongamos un temporizador y turnos de 5 minutos cada uno\".",
+     "say": "\"Los dos lo quieren. Pongamos un temporizador y turnos de 5 minutos cada uno\".",
      "do": "Separa un momento al que actúa primero con las manos, ayúdale a calmarse y fija los turnos.",
      "no": "\"Eres el mayor, así que déjaselo\"."
     },
     "I": {
-     "say": "\"Estabas disgustado pero no podías decirlo. Cuéntaselo ahora a Mamá\".",
+     "say": "\"Estabas molesto pero no podías decirlo. Cuéntaselo ahora a Mamá\".",
      "do": "Dale primero la palabra al más callado y transmite sus palabras al hermano.",
      "no": "\"Tú igual\"."
     }
@@ -620,7 +620,7 @@
   {
    "id": "s13",
    "cat": "Social",
-   "t": "Dice que no quiere ir a la guardería o al cole",
+   "t": "Dice que no quiere ir a la guardería o a la escuela",
    "p": "La clave es que las despedidas sean cortas y claras.",
    "ax": "A",
    "by": {
@@ -631,7 +631,7 @@
     },
     "I": {
      "say": "\"Mamá siempre viene a buscarte al final. Nos vemos después de la merienda\".",
-     "do": "Dile cuándo os volvéis a ver según su rutina y llévale un pequeño objeto de consuelo.",
+     "do": "Dile cuándo se vuelven a ver según su rutina y dale un pequeño objeto de consuelo.",
      "no": "Irse a escondidas sin despedirse"
     }
    }
@@ -645,7 +645,7 @@
    "by": {
     "J": {
      "say": "\"Se lo prestarás a tu amigo cuando termines, ¿verdad? ¿En cuántos minutos?\"",
-     "do": "Deja que decida cuándo compartir y cumplid la promesa con un temporizador.",
+     "do": "Deja que decida cuándo compartir y cumplan la promesa con un temporizador.",
      "no": "\"Los niños buenos comparten\"."
     },
     "P": {
@@ -663,13 +663,13 @@
    "ax": "C",
    "by": {
     "F": {
-     "say": "\"No se pega. Estás muy enfadado. Cuando estemos enfadados, pisoteamos fuerte\".",
-     "do": "Sepáralos primero y, cuando se calme, acordad otra forma de mostrar el enfado.",
+     "say": "\"No se pega. Estás muy enojado. Cuando estemos enojados, pisoteamos fuerte\".",
+     "do": "Sepáralos primero y, cuando se calme, acuerden otra forma de mostrar el enojo.",
      "no": "\"Tienes que recibir un golpe para entenderlo\"."
     },
     "T": {
      "say": "\"No se pega. ¿Me cuentas por qué lo hiciste?\"",
-     "do": "Escucha el motivo y practicad una frase corta para usar en la misma situación.",
+     "do": "Escucha el motivo y practiquen una frase corta para usar en la misma situación.",
      "no": "Solo repetir \"¡¿Por qué hiciste eso?!\""
     }
    }
@@ -683,12 +683,12 @@
    "by": {
     "S": {
      "say": "\"Mañana vamos al médico. El médico escuchará tu corazón con un estetoscopio\".",
-     "do": "Jugad a los médicos el día antes para ensayar los pasos y di de forma breve y sincera lo que puede doler.",
+     "do": "Jueguen al doctor el día antes para ensayar los pasos y di de forma breve y sincera lo que puede doler.",
      "no": "\"No te va a doler nada\". (mentira)"
     },
     "N": {
      "say": "\"¿Qué quieres hacer después del médico?\"",
-     "do": "Díselo brevemente el mismo día y decidid juntos qué hacer después.",
+     "do": "Díselo brevemente el mismo día y decidan juntos qué hacer después.",
      "no": "\"Si no te portas bien, te ponen una inyección\"."
     }
    }
@@ -696,7 +696,7 @@
   {
    "id": "s17",
    "cat": "Cambios",
-   "t": "Adaptarse a una clase o cole nuevo",
+   "t": "Adaptarse a una clase o escuela nueva",
    "p": "Cada peque se adapta a su ritmo. No compares.",
    "ax": "A",
    "by": {
@@ -707,7 +707,7 @@
     },
     "I": {
      "say": "\"Está bien si al principio se siente raro. Puedes hacer amigos poco a poco\".",
-     "do": "Enséñale antes fotos del edificio y de los profes, y recógele pronto la primera semana.",
+     "do": "Muéstrale antes fotos del edificio y de los profes, y recógele pronto la primera semana.",
      "no": "\"Los demás niños se adaptan sin problema\"."
     }
    }
@@ -716,7 +716,7 @@
    "id": "s18",
    "cat": "Cambios",
    "t": "Cambian los planes de un viaje o salida",
-   "p": "Explica brevemente por qué cambió y elegid juntos una alternativa.",
+   "p": "Explica brevemente por qué cambió y elijan juntos una alternativa.",
    "ax": "D",
    "by": {
     "J": {
@@ -764,7 +764,7 @@
     },
     "N": {
      "say": "\"¿Quieres pensar otra vez si de verdad pasó así?\"",
-     "do": "Comprueba los hechos con calma y acordad qué pasa cuando dice la verdad.",
+     "do": "Comprueba los hechos con calma y acuerden qué pasa cuando dice la verdad.",
      "no": "\"Otra mentira, ¿eh?\""
     }
    }
@@ -831,7 +831,7 @@
   "J": [
    {
     "when": "3 días antes",
-    "t": "Márcalo en el calendario y contad juntos: \"Quedan tres noches para ___\"."
+    "t": "Márcalo en el calendario y cuenten juntos: \"Faltan tres noches para ___\"."
    },
    {
     "when": "La noche anterior",
@@ -839,7 +839,7 @@
    },
    {
     "when": "Esa mañana",
-    "t": "Dile a qué hora salís y a qué hora volvéis."
+    "t": "Dile a qué hora salen y a qué hora regresan."
    }
   ],
   "P": [
@@ -855,23 +855,23 @@
   "S": [
    {
     "when": "3 días antes",
-    "t": "Enséñale fotos del lugar y hablad de cómo serán los sonidos, la gente y los olores."
+    "t": "Muéstrale fotos del lugar y hablen de cómo serán los sonidos, la gente y los olores."
    },
    {
     "when": "La noche anterior",
-    "t": "Preparad juntos ropa cómoda y un objeto de consuelo (peluche, pañuelo)."
+    "t": "Preparen juntos ropa cómoda y un objeto de consuelo (peluche, mantita)."
    }
   ],
   "N": [
    {
     "when": "La noche anterior",
-    "t": "Acordad con antelación una regla que cumplir allí."
+    "t": "Acuerden con anticipación una regla que cumplir allí."
    }
   ],
   "E": [
    {
     "when": "La noche anterior",
-    "t": "Decidid una cosa que probar allí y acordad juntos una regla de seguridad."
+    "t": "Decidan una cosa que probar allí y acuerden juntos una regla de seguridad."
    }
   ],
   "I": [
@@ -903,7 +903,7 @@
     "hh": {
      "good": "Los dos se lanzan primero a los juegos nuevos, así que juntos nunca se aburren.",
      "clash": "Los dos quieren ir primero, así que a menudo se pelean por turnos y sitios.",
-     "tip": "Fijad antes una regla de \"quién va primero\" (piedra, papel o tijera, turnos).",
+     "tip": "Fijen antes una regla de \"quién va primero\" (piedra, papel o tijera, turnos).",
      "play": [
       "Pilla-pilla y escondite",
       "Montar un circuito de obstáculos en el parque"
@@ -944,7 +944,7 @@
     },
     "ll": {
      "good": "Los dos son tranquilos, así que se llevan bien sin alterarse por casi nada.",
-     "clash": "Los dos dicen que están bien, así que es fácil no ver cuándo están disgustados.",
+     "clash": "Los dos dicen que están bien, así que es fácil no ver cuándo están molestos.",
      "tip": "Al dormir, pregunta a cada uno por separado: \"¿Qué es algo que no te gustó hoy?\"",
      "play": [
       "Juegos activos (voleibol con globo)",
@@ -967,7 +967,7 @@
     "hh": {
      "good": "Los dos comparten sus emociones a lo grande, así que la casa se ilumina cuando ríen juntos.",
      "clash": "Los dos tienen emociones grandes, así que cuando uno llora, el otro estalla fácilmente.",
-     "tip": "Calmadlos de uno en uno y hablad juntos cuando se calmen.",
+     "tip": "Cálmalos de uno en uno y hablen juntos cuando se calmen.",
      "play": [
       "Imitar caras de emociones",
       "Cantar y bailar"
@@ -976,7 +976,7 @@
     },
     "ll": {
      "good": "Los dos son serenos, así que las discusiones no crecen y juegan juntos en paz.",
-     "clash": "Casi no ponen sus sentimientos en palabras, así que los disgustos se pueden acumular.",
+     "clash": "Casi no ponen sus sentimientos en palabras, así que el malestar se puede acumular.",
      "tip": "Abre su corazón con preguntas sobre pensamientos, como \"¿Qué pensabas en ese momento?\"",
      "play": [
       "Puzles y juegos de mesa",
@@ -999,7 +999,7 @@
     "hh": {
      "good": "A los dos les encantan el orden y las reglas, así que la rutina diaria fluye.",
      "clash": "A los dos les cuestan los cambios de plan y pueden discutir por las reglas.",
-     "tip": "Anuncia antes los cambios de horario y fijad juntos las normas de casa en un cuadro de dibujos.",
+     "tip": "Anuncia antes los cambios de horario y fijen juntos las normas de casa en un cuadro de dibujos.",
      "play": [
       "Juegos por turnos (juegos de mesa)",
       "Carrera de recoger juntos"
