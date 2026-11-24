@@ -283,7 +283,15 @@ class Store extends ChangeNotifier {
   Kid? kidByKey(String key) => kids.where((k) => k.key == key).firstOrNull;
 
   void setInfo({String? name, String? age, String? birth, String? sex}) {
-    if (sex != null) kid.sex = sex;
+    if (sex != null) {
+      kid.sex = sex;
+      // 성별 없이 한 발달 체크는 이제 넣은 성별로 채운다(백분위·또래 평균에 들어가게)
+      if (sex == 'M' || sex == 'F') {
+        for (final r in kid.devs) {
+          if (r.sex != 'M' && r.sex != 'F') r.sex = sex;
+        }
+      }
+    }
     if (name != null) kid.name = name.trim();
     if (age != null) kid.age = age;
     if (birth != null) {

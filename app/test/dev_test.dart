@@ -1,6 +1,8 @@
 // 성장 발달 체크 계산: 개월 구간, 문항 고르기, 판정, 성장 백분위(WHO), 통계 요청, 기록 합치기
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:childmbti/dev.dart';
 
 void main() {
@@ -100,5 +102,18 @@ void main() {
     expect(m.length, 2);
     expect(m.firstWhere((x) => x.id == 'a').h, 90);
     expect(DevRec.fromJson(jsonDecode(jsonEncode(a2.toJson()))).h, 90);
+  });
+
+  test('또래 평균: 성별을 모르면 남녀 묶음을 건수로 가중해 합친다', () async {
+    final st = DevStats()
+      ..client = MockClient((q) async {
+        final m = q.url.path.endsWith('_M');
+        return http.Response(jsonEncode({'fields': {'n': {'integerValue': m ? '2' : '6'}, 'sgm': {'integerValue': m ? '100' : '540'}}}), 200);
+      });
+    final a = (await st.loadFor(30, ''))!;
+    expect(a['gm']!.n, 8);
+    expect(a['gm']!.avg, 80); // (100 + 540) / 8
+    final f = (await st.loadFor(30, 'F'))!;
+    expect(f['gm']!.avg, 90);
   });
 }

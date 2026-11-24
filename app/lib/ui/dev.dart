@@ -295,18 +295,12 @@ class _DevScreenState extends State<DevScreen> {
     ], gap: 10);
   }
 
-  Widget peerPage(DevRec r, DevResult res) => r.sex != 'M' && r.sex != 'F'
-      ? col([
-          eyebrow(tr('또래 평균')),
-          h2(tr('또래 평균')),
-          Text(tr('또래 평균은 같은 개월 수·성별 아이들과 비교해요. 아이 정보에 성별을 넣으면 다음 체크부터 볼 수 있어요.'), style: small),
-          Center(child: linkBtn(tr('아이 정보 넣기'), () => editKid(context))),
-        ], gap: 10)
-      : FutureBuilder(
-      future: devStats.load(devBucket(r)),
+  Widget peerPage(DevRec r, DevResult res) => FutureBuilder(
+      // 성별을 모르면 같은 개월 구간 남녀 전체 평균으로 바로 보여 준다
+      future: devStats.loadFor(r.band, r.sex),
       builder: (_, snap) {
         if (snap.connectionState != ConnectionState.done) return const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator()));
-        final all = snap.data, label = devBucketLabel(r), n = all?['gm']?.n ?? 0;
+        final all = snap.data, label = r.sex == 'M' || r.sex == 'F' ? devBucketLabel(r) : tr('{0} 아이들', [bandLabel(r.band)]), n = all?['gm']?.n ?? 0;
         return col([
           eyebrow(tr('또래 평균')),
           h2(tr('{0} 평균과 비교', [label])),

@@ -269,6 +269,18 @@ class DevStats {
     }
   }
 
+  /// 구간·성별 평균. 성별을 모르면 남녀 묶음을 합친 평균(건수로 가중)을 돌려준다.
+  Future<Map<String, Avg>?> loadFor(int band, String sex) async {
+    if (sex == 'M' || sex == 'F') return load('d${band}_$sex');
+    final a = await load('d${band}_M'), b = await load('d${band}_F');
+    if (a == null && b == null) return null;
+    return {
+      for (final k in {...?a?.keys, ...?b?.keys})
+        if ((a?[k]?.n ?? 0) + (b?[k]?.n ?? 0) > 0)
+          k: (avg: ((a?[k]?.avg ?? 0) * (a?[k]?.n ?? 0) + (b?[k]?.avg ?? 0) * (b?[k]?.n ?? 0)) / ((a?[k]?.n ?? 0) + (b?[k]?.n ?? 0)), n: (a?[k]?.n ?? 0) + (b?[k]?.n ?? 0)),
+    };
+  }
+
   static Map<String, Avg> parse(Map doc) {
     final f = (doc['fields'] ?? {}) as Map;
     num v(String k) => num.tryParse('${(f[k] as Map?)?['integerValue'] ?? (f[k] as Map?)?['doubleValue'] ?? ''}') ?? 0;
