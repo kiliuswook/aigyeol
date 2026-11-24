@@ -722,5 +722,7 @@
  "광고 1번을 끝까지 보면 체크가 열려요 · 결제 없음": "Watch one ad to the end to open the check · no payment",
  "{0} 아이들": "Children aged {0}",
  "전체 국가 · {0}": "All countries · {0}",
- "같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.": "Once {0} or more results from your country are in, this switches to your country's average."
+ "같은 나라 결과가 {0}건 이상 모이면 나라별 평균으로 바뀝니다.": "Once {0} or more results from your country are in, this switches to your country's average.",
+ "아이 카드를 누르면 그 아이로 앱이 진행돼요": "Tap a child's card to use the app for them",
+ "검사 전": "Not tested"
 }

@@ -116,12 +116,19 @@ class HomeView extends StatelessWidget {
 
   /// 아이 카드: 그림 · 이름 · 나이와 성별 + 기질·성격 / 성장 발달 / 오늘 세 줄. big 이면 그림을 크게(아이가 한 명일 때)
   Widget kidCard(BuildContext context, Kid k, int i, {bool big = false}) {
+    // 큰 카드인데 자리가 좁으면(작은 화면에 아이 카드 줄까지 있을 때) 그림을 이름 옆으로 옮기고 유형은 그 아래 한 줄로
+    if (big) return LayoutBuilder(builder: (_, c) => kidCardBody(context, k, i, big: true, roomy: c.maxHeight >= 330));
+    return kidCardBody(context, k, i);
+  }
+
+  Widget kidCardBody(BuildContext context, Kid k, int i, {bool big = false, bool roomy = true}) {
     final r = kidResult(k);
     final img = Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', fit: BoxFit.contain);
     final (tv, tc) = tempLine(k, i, big: big);
     final info = [if (k.ageText.isNotEmpty) ageTx(k.ageText) else tr('나이 미입력'), if (k.sex == 'M') tr('남자아이'), if (k.sex == 'F') tr('여자아이')].join(' · ');
+    final side = !big || !roomy;
     final head = Row(children: [
-      if (!big) ...[SizedBox(width: 50, height: 50, child: img), const SizedBox(width: 10)],
+      if (side) ...[SizedBox(width: big ? 64 : 50, height: big ? 64 : 50, child: img), const SizedBox(width: 10)],
       Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
         Text(k.label(i), maxLines: 1, overflow: TextOverflow.ellipsis, style: disp(22)),
@@ -142,9 +149,9 @@ class HomeView extends StatelessWidget {
         child: Column(mainAxisSize: big ? MainAxisSize.max : MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           head,
           if (big) ...[
-            Expanded(child: Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: img)),
-            if (r != null) Center(child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [codeText([for (final x in r.ax) (x.letter, x.a.color)], size: 34), const SizedBox(width: 10), Text(C.nick[r.code]!, style: disp(22))]))),
-            const SizedBox(height: 6),
+            if (roomy) Expanded(child: Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: img)) else const Spacer(),
+            if (r != null) Center(child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [codeText([for (final x in r.ax) (x.letter, x.a.color)], size: roomy ? 34 : 28), const SizedBox(width: 10), Text(C.nick[r.code]!, style: disp(roomy ? 22 : 19))]))),
+            if (roomy) const SizedBox(height: 6) else const Spacer(),
           ] else
             const SizedBox(height: 8),
           for (var j = 0; j < lines.length; j++) ...[if (j > 0) const SizedBox(height: 5), lines[j]],
@@ -167,24 +174,75 @@ class HomeView extends StatelessWidget {
     );
   }
 
+  /// 아이가 여럿일 때 고르지 않은 아이의 작은 카드: 그림 · 이름 · 유형(또는 검사 전). 누르면 그 아이가 큰 카드로
+  Widget miniCard(Kid k, int i, double w) {
+    final r = kidResult(k);
+    return GestureDetector(
+      key: Key('home-kid-$i'),
+      behavior: HitTestBehavior.opaque,
+      onTap: () => store.setKid(k.id),
+      child: SizedBox(
+          width: w,
+          child: NineBox(nCard,
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 9),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', width: 52, height: 52),
+                const SizedBox(height: 2),
+                Text(k.label(i), maxLines: 1, overflow: TextOverflow.ellipsis, style: disp(18)),
+                Text(r != null ? r.code : tr('검사 전'), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: r != null ? kAccentInk : kMuted)),
+              ]))),
+    );
+  }
+
+  /// 아이 추가 작은 카드(아이가 여럿일 때 작은 카드 줄 끝)
+  Widget addCard(BuildContext context, double w) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => newKid(context),
+        child: SizedBox(
+            width: w,
+            child: NineBox(nSoft,
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 9),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(height: 52, child: Center(child: Text('+', style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700, color: kMuted)))),
+                  const SizedBox(height: 2),
+                  FittedBox(fit: BoxFit.scaleDown, child: Text(tr('+ 아이 추가'), maxLines: 1, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: kFg))),
+                  const SizedBox(height: 16),
+                ]))),
+      );
+
   @override
   Widget build(BuildContext context) {
     final ks = store.kids, kid = store.kid;
     final fresh = ks.length <= 1 && kid.name.isEmpty && !kid.cgs.any((e) => e.value.hasAny);
     if (fresh) return welcome(context);
-    final idx = ks.indexWhere((k) => k.id == kid.id);
+    final idx = ks.indexWhere((k) => k.id == kid.id), cur = idx < 0 ? 0 : idx;
     final done = fullDone(kid.cur.ans) && kid.cur.paid;
-    final sub = ks.length > 1 ? tr('아이를 고르면 그 아이로 앱이 진행돼요') : tr('{0}의 오늘을 한눈에', [store.nm]);
+    final many = ks.length > 1;
+    final sub = many ? tr('아이 카드를 누르면 그 아이로 앱이 진행돼요') : tr('{0}의 오늘을 한눈에', [store.nm]);
     return Frame(
       top: header(sub),
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        // 아이 고르기: 첫째 · 둘째 … + 아이 추가
-        chipRow([
-          for (var i = 0; i < ks.length; i++) kidPick(ks[i], i, ks[i].id == kid.id),
-          ChipBtn(tr('+ 아이 추가'), onTap: () => newKid(context)),
-        ]),
-        const SizedBox(height: 8),
-        Expanded(child: kidCard(context, kid, idx < 0 ? 0 : idx, big: true)),
+        // 아이가 한 명: 위에 아이 고르기 칩 + 아이 추가
+        if (!many) ...[
+          chipRow([kidPick(kid, cur, true), ChipBtn(tr('+ 아이 추가'), onTap: () => newKid(context))]),
+          const SizedBox(height: 8),
+        ],
+        // 고른 아이는 큰 카드
+        Expanded(child: KeyedSubtree(key: many ? Key('home-kid-$cur') : null, child: kidCard(context, kid, cur, big: true))),
+        // 아이가 여럿: 나머지 아이도 모두 작은 카드로 한눈에(한 줄에 3칸, 넘치면 옆으로 밀어 보기)
+        if (many) ...[
+          const SizedBox(height: 8),
+          LayoutBuilder(builder: (context, c) {
+            final w = (c.maxWidth - 16) / 3;
+            return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  for (var i = 0; i < ks.length; i++)
+                    if (i != cur) ...[miniCard(ks[i], i, w), const SizedBox(width: 8)],
+                  addCard(context, w),
+                ]));
+          }),
+        ],
         const SizedBox(height: 8),
         Row(children: [
           quick('i_heart', tr('가족 초대'), () => inviteCg(context)),
