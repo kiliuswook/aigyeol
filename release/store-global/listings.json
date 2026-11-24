@@ -70,12 +70,12 @@
  },
  "_appstore_description": "App Store description = play.<같은 언어>.fullDescription (en-US←en-US, ja←ja-JP, zh-Hans←zh-CN, es-ES/es-MX←es-ES, vi←vi)",
  "releaseNotes": {
-  "ko-KR": "공유하기가 좋아졌어요. 가족을 초대하면 같은 아이의 결과가 두 휴대폰에 자동으로 합쳐지고, 결과 카드를 그림으로 공유할 수 있어요.",
-  "en-US": "Sharing is better. Invite family and results for the same child sync across both phones automatically, and you can now share your result card as an image.",
-  "ja-JP": "シェア機能が良くなりました。家族を招待すると同じ子の結果が2台のスマホに自動でまとまり、結果カードを画像でシェアできます。",
-  "zh-CN": "分享功能升级：邀请家人后，同一个孩子的结果会在两台手机间自动合并，还可以把结果卡片作为图片分享。",
-  "es-ES": "Compartir es más fácil: invita a tu familia y los resultados del mismo niño se sincronizan solos entre los dos móviles. También puedes compartir la tarjeta de resultados como imagen.",
-  "es-419": "Compartir es más fácil: invita a tu familia y los resultados del mismo niño se sincronizan solos entre los dos teléfonos. También puedes compartir la tarjeta de resultados como imagen.",
-  "vi": "Chia sẻ tốt hơn: mời gia đình và kết quả của cùng một bé sẽ tự động đồng bộ giữa hai điện thoại. Bạn cũng có thể chia sẻ thẻ kết quả dưới dạng hình ảnh."
+  "ko-KR": "성장 발달 체크가 생겼어요. 개월 수에 맞춘 6개 영역(대근육·소근육·인지·언어·사회성·자조) 체크와 키·몸무게 성장 백분위, 또래 평균 비교를 볼 수 있어요. 홈에서 아이를 고르면 기질·성격, 성장 발달, 오늘 탭이 그 아이로 이어져요.",
+  "en-US": "New growth & development check: 6 areas matched to your child's age in months (gross motor, fine motor, cognition, language, social, self-care), height and weight percentiles, and peer averages. Pick a child on Home and every tab follows that child.",
+  "ja-JP": "成長・発達チェックが加わりました。月齢に合わせた6領域(粗大運動・微細運動・認知・言語・社会性・身辺自立)のチェック、身長・体重の百分位、同年代平均との比較が見られます。ホームで子どもを選ぶと、すべてのタブがその子で進みます。",
+  "zh-CN": "新增成长发育检查：按月龄匹配的6个领域（大运动、精细运动、认知、语言、社交、自理），身高体重百分位以及同龄平均对比。在首页选择孩子后，所有标签页都会以该孩子进行。",
+  "es-ES": "Nueva revisión de crecimiento y desarrollo: 6 áreas según la edad en meses (motricidad gruesa y fina, cognición, lenguaje, social y autonomía), percentiles de talla y peso y promedios de otros niños. Elige un niño en Inicio y todas las pestañas lo siguen.",
+  "es-419": "Nueva revisión de crecimiento y desarrollo: 6 áreas según la edad en meses (motricidad gruesa y fina, cognición, lenguaje, social y autonomía), percentiles de talla y peso y promedios de otros niños. Elige un niño en Inicio y todas las pestañas lo siguen.",
+  "vi": "Mới: kiểm tra tăng trưởng và phát triển theo 6 lĩnh vực phù hợp tháng tuổi (vận động thô, vận động tinh, nhận thức, ngôn ngữ, xã hội, tự phục vụ), bách phân vị chiều cao cân nặng và trung bình cùng tuổi. Chọn bé ở Trang chủ, mọi tab sẽ theo bé đó."
  }
 }
