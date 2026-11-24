@@ -32,3 +32,9 @@ python3 tools/set_domain.py --github     # 원래 주소로 되돌리기
 - 예전 `kiliuswook.github.io/aigyeol/...` 링크는 GitHub 가 새 도메인으로 넘겨 준다. `#` 뒤 값은 브라우저가 그대로 들고 가므로 이미 보낸 초대·결과 링크도 열린다.
 - 브라우저 저장소는 주소마다 따로라, 예전 주소에서 한 검사 기록은 새 주소에서 보이지 않는다. 시제품 사용자는 예전 주소에서 '기록 파일 저장' 뒤 새 주소에서 불러오면 된다.
 - 안드로이드 앱 링크(App Links)도 이 도메인 기준으로 만든다(`/.well-known/assetlinks.json`).
+
+## 첫 화면(2026-11-24)
+- https://childmbti.wonderwheel.co.kr/ 첫 화면은 플루터 앱(app/)의 웹 빌드다. 예전 HTML 시제품(index.html)은 git 기록에만 남는다.
+- 다시 배포: `tools/build_web_app.sh`(flutter 필요) 후 바뀐 파일을 main 에 커밋·푸시. 스크립트는 플루터가 만드는 파일만 지우고 다시 넣는다.
+- 그대로 두는 것: privacy.html, delete-account.html, go/(스토어 연결), app-ads.txt, CNAME, assets/ 의 og.png·공유 그림·아이콘.
+- /new/ 는 첫 화면으로 넘겨 주는 페이지만 있다(주소 뒤 # 값은 그대로 넘김). 같은 도메인이라 /new/ 에서 쓰던 기록(브라우저 저장)은 첫 화면에서 그대로 보인다.
