@@ -544,4 +544,16 @@ void main() {
       expect(find.text('광고 보고 무료로 검사 시작'), findsOneWidget);
     });
   }
+
+  testWidgets('기기 글자 크기를 200%로 키워도 앱 글자는 그대로(배율 1.0)', (t) async {
+    t.platformDispatcher.textScaleFactorTestValue = 2.0;
+    t.platformDispatcher.accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(boldText: true);
+    addTearDown(t.platformDispatcher.clearAllTestValues);
+    await boot(t, const Size(360, 640));
+    await t.pumpAndSettle();
+    final ctx = t.element(find.byType(Shell));
+    expect(MediaQuery.textScalerOf(ctx), TextScaler.noScaling);
+    expect(MediaQuery.boldTextOf(ctx), isFalse);
+    expect(t.takeException(), isNull);
+  });
 }

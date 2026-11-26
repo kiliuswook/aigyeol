@@ -16,23 +16,71 @@ Widget birthPicker(VoidCallback changed) {
     changed();
   }
 
-  Widget drop(String hint, String value, List<(String, String)> items, ValueChanged<String> on) => NineBox(nInput,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: DropdownButton<String>(
-        value: value.isEmpty ? null : value,
-        hint: Text(hint),
-        isExpanded: true,
-        menuMaxHeight: 320,
-        underline: const SizedBox(),
-        items: [for (final (v, t) in items) DropdownMenuItem(value: v, child: Text(t))],
-        onChanged: (v) => on(v ?? ''),
-      ));
+  // 고르기 칸: 손그림 입력칸 + 손그림 ▼. 누르면 가운데 팝업에 손그림 선택지 격자가 뜬다(기본 드롭다운 메뉴는 톤이 안 맞아서 쓰지 않음)
+  Widget drop(String hint, String value, List<(String, String)> items, ValueChanged<String> on, {int cols = 2, bool scroll = false}) => Builder(builder: (ctx) {
+        final label = [for (final (v, t) in items) if (v == value) t].firstOrNull;
+        return Semantics(
+          button: true,
+          label: label ?? hint,
+          excludeSemantics: true,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () async {
+              final v = await popup<String>(
+                  ctx,
+                  (c, _) => [
+                        LayoutBuilder(builder: (c2, box) {
+                          // 칸 높이(가로 폭 ÷ 열 수 ÷ 비율)로 몇 줄이 보일지 정한다. 해는 4줄 반만 보이고 나머지는 스크롤
+                          final ratio = cols == 2 ? 2.6 : 1.9, rowH = (box.maxWidth - 8 * (cols - 1)) / cols / ratio + 8;
+                          final rows = (items.length / cols).ceil();
+                          final sel = items.indexWhere((e) => e.$1 == value);
+                          final ctl = scroll ? ScrollController(initialScrollOffset: sel < 0 ? 0 : ((sel ~/ cols) - 1).clamp(0, rows) * rowH) : null;
+                          final grid = GridView.count(
+                            crossAxisCount: cols,
+                            shrinkWrap: !scroll,
+                            controller: ctl,
+                            physics: scroll ? const ClampingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 8,
+                            childAspectRatio: ratio,
+                            children: [
+                              for (final (v, t) in items)
+                                GestureDetector(
+                                  onTap: () => Navigator.of(c).pop(v),
+                                  child: NineBox(v == value ? nOptSel : nOpt,
+                                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                                      child: Center(
+                                          child: FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(t, style: disp(20, color: v == value ? kOnAccent : kFg))))),
+                                ),
+                            ],
+                          );
+                          return scroll && rows > 4 ? SizedBox(height: rowH * 4.5, child: Scrollbar(controller: ctl, thumbVisibility: true, child: grid)) : grid;
+                        }),
+                      ],
+                  title: hint);
+              if (v != null) on(v);
+            },
+            child: NineBox(nInput,
+                padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+                child: Row(children: [
+                  Expanded(
+                      child: Text(label ?? hint,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: label == null ? body.copyWith(color: kMuted) : disp(20))),
+                  Image.asset('assets/ui/i_tri_down.webp', width: 18, height: 18),
+                ])),
+          ),
+        );
+      });
   final age = ageOf(kid.birth).$2, yrs = int.tryParse(RegExp(r'\d+').firstMatch(ageOf(kid.birth).$1)?.group(0) ?? '');
   return col([
     Row(children: [
-      Expanded(flex: 6, child: drop(tr('태어난 해'), y, [for (var k = now.year; k >= now.year - 9; k--) ('$k', tr('{0}년', [k]))], (v) => set(v, m))),
+      Expanded(flex: 6, child: drop(tr('태어난 해'), y, [for (var k = now.year; k >= now.year - 9; k--) ('$k', tr('{0}년', [k]))], (v) => set(v, m), scroll: true)),
       const SizedBox(width: 10),
-      Expanded(flex: 5, child: drop(tr('태어난 달'), m, [for (var k = 1; k <= 12; k++) ('$k', tr('{0}월', [k]))], (v) => set(y, v))),
+      Expanded(flex: 5, child: drop(tr('태어난 달'), m, [for (var k = 1; k <= 12; k++) ('$k', tr('{0}월', [k]))], (v) => set(y, v), cols: 3)),
     ]),
     if (age.isNotEmpty)
       Row(children: [

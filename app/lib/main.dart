@@ -112,6 +112,11 @@ class App extends StatelessWidget {
             TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
           }),
         ),
+        // 기기에서 글자 크기·굵은 글씨를 바꿔도 앱은 늘 같은 배율로 보이게(한 화면 흐름이 깨지지 않도록)
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling, boldText: false),
+          child: child!,
+        ),
         home: ValueListenableBuilder(valueListenable: introDone, builder: (_, done, _) => AnimatedSwitcher(duration: const Duration(milliseconds: 350), child: done ? const Shell() : const Intro())),
       ));
 }

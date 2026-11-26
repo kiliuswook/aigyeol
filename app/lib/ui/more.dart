@@ -15,6 +15,8 @@ import '../content.dart';
 import '../notify.dart';
 import 'pay.dart';
 import '../upgrade.dart';
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
+import 'package:url_launcher/url_launcher.dart';
 
 /// 언어 고르기. 처음에는 휴대폰 언어를 따른다.
 Future<void> langPopup(BuildContext context) => popup(context, title: langCode == 'en' ? 'Language' : '${tr('언어')} · Language', (c, set) => [
@@ -113,8 +115,9 @@ class MoreView extends StatelessWidget {
           child: Text(tr('양육 참고용이며 의학적 진단이 아닙니다. 검사는 광고를 보고 무료로 이용합니다.'), style: smallMuted),
         ),
       ], gap: 8)),
-      // 만든 사람
+      // 원더휠의 다른 앱(늘 보이게 아래에 고정) + 만든 사람
       foot: [
+        const NyamPromo(),
         Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 4),
           child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -128,4 +131,47 @@ class MoreView extends StatelessWidget {
       ],
     );
   }
+}
+
+/// 원더휠의 다른 앱 '냠냠 미로' 홍보 카드. 안드로이드는 구글 플레이, 아이폰·아이패드는 앱스토어로 연결.
+/// 웹은 브라우저가 아이폰·맥이면 앱스토어, 아니면 구글 플레이.
+const kNyamPlayId = 'com.wonderwheel.nyamnyammaze';
+const kNyamAppStoreId = '6836493972';
+
+String nyamStoreUrl() {
+  final apple = defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.macOS;
+  return apple
+      ? 'https://apps.apple.com/app/id$kNyamAppStoreId'
+      : 'https://play.google.com/store/apps/details?id=$kNyamPlayId';
+}
+
+class NyamPromo extends StatelessWidget {
+  const NyamPromo({super.key});
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        key: const Key('promo-nyam'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => launchUrl(Uri.parse(nyamStoreUrl()), mode: LaunchMode.externalApplication),
+        child: NineBox(nCard,
+            padding: const EdgeInsets.fromLTRB(12, 10, 12, 11),
+            child: Row(children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset('assets/img/promo_nyamnyam.webp', width: 50, height: 50)),
+              const SizedBox(width: 12),
+              Expanded(
+                  child: col([
+                Text(tr('원더휠의 다른 앱'), maxLines: 1, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: kAccentInk, height: 1.2)),
+                Text(tr('냠냠 미로'), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 15.5, fontWeight: FontWeight.w700, color: kFg, height: 1.3)),
+                Text(tr('한글·수학·영어를 배우는 미로 놀이'),
+                    maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12.5, color: kMuted, height: 1.35)),
+              ], gap: 1)),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(color: kAccent, borderRadius: BorderRadius.circular(20)),
+                child: Text(tr('받기'), style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: kOnAccent)),
+              ),
+            ])),
+      );
 }
