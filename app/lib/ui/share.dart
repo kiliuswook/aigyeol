@@ -206,7 +206,7 @@ class ResultCard extends StatelessWidget {
             ]),
             for (final x in r.ax) axisBar(x.a, x.sc, thin: true),
             Row(children: [
-              Image.asset('assets/img/mascot_child.webp', width: 22, height: 22),
+              mascot(null, size: 22),
               const SizedBox(width: 6),
               Expanded(child: Text(tr('내 아이의 MBTI · 만 2~7세 기질검사'), maxLines: 1, overflow: TextOverflow.ellipsis, style: smallMuted)),
             ]),

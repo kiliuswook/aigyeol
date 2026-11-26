@@ -31,7 +31,7 @@ List<String> _stickers(Kid k) {
   return out;
 }
 
-Widget _sticker(String code, {double size = 30}) => Image.asset('assets/img/t_$code.webp', width: size, height: size, fit: BoxFit.contain);
+Widget _sticker(String code, {double size = 30}) => mascot(code, size: size);
 
 /// 부모가 스티커를 고르는 칸(2026-11-20 원더: 아이가 아니라 부모가 고른다)
 List<Widget> _pickSticker(BuildContext c, Kid k, void Function(String) onPick) => [

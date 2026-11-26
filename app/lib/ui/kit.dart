@@ -49,7 +49,7 @@ Future<void> warmImages(BuildContext context) async {
     final all = (await AssetManifest.loadFromAssetBundle(rootBundle)).listAssets();
     final names = [
       for (final a in all)
-        if ((a.startsWith('assets/ui/') || a.startsWith('assets/img/mascot') || a.startsWith('assets/img/t_')) && a.endsWith('.webp')) a,
+        if ((a.startsWith('assets/ui/') || a.startsWith('assets/img/mascot') || a.startsWith('assets/img/t_') || a.startsWith('assets/img/f_') || a.startsWith('assets/img/h_')) && a.endsWith('.webp')) a,
     ];
     // 인트로가 먼저 닫혀도 이어서 풀 수 있게 설정을 미리 받아 둔다
     if (!context.mounted) return;
@@ -309,7 +309,16 @@ Widget codeText(List<(String, Color)> letters, {double size = 54}) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [for (final l in letters) Padding(padding: const EdgeInsets.symmetric(horizontal: 3), child: Text(l.$1, style: disp(size, color: l.$2)))]);
 
-Widget mascot(String code, {double size = 112}) => Image.asset('assets/img/t_$code.webp', width: size, height: size, fit: BoxFit.contain);
+/// 유형 아이 그림(머리 모양이 유형 상징, 2026-11-26 F 컨셉). code 가 null 이면 앱 마스코트(씨앗 머리 아이).
+/// 64px 미만은 머리만 크게 자른 얼굴 아이콘(f_), 그 이상은 전신(t_)을 쓴다. 작은 칸에서도 머리 모양으로 유형이 갈리게.
+Widget mascot(String? code, {double size = 112}) {
+  final n = code == null ? 'mascot_child' : 't_$code';
+  final f = code ?? 'mascot_child';
+  return Image.asset(size < 64 ? 'assets/img/f_$f.webp' : 'assets/img/$n.webp', width: size, height: size, fit: BoxFit.contain);
+}
+
+/// 아이가 자기 유형 네 글자를 끌어안은 그림(결과 머리). 글자 색은 축 색(c1~c4) 순서와 같다.
+Widget hugImg(String code, {double? size}) => Image.asset('assets/img/h_$code.webp', width: size, height: size, fit: BoxFit.contain, semanticLabel: code);
 
 /// 펼쳐 보기(웹 details)
 class Fold extends StatefulWidget {

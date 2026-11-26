@@ -49,7 +49,7 @@ class HomeView extends StatelessWidget {
       ])));
 
   Widget header(String sub) => Row(children: [
-        Image.asset('assets/img/mascot_child.webp', width: 40, height: 40),
+        mascot(null, size: 40),
         const SizedBox(width: 10),
         Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
@@ -123,12 +123,13 @@ class HomeView extends StatelessWidget {
 
   Widget kidCardBody(BuildContext context, Kid k, int i, {bool big = false, bool roomy = true}) {
     final r = kidResult(k);
-    final img = Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', fit: BoxFit.contain);
+    // 큰 카드(자리 넉넉)는 아이가 유형 글자를 끌어안은 그림, 옆에 붙는 작은 그림은 얼굴 아이콘(50px)·전신(64px)
+    final img = r != null && big && roomy ? hugImg(r.code) : mascot(r?.code, size: 160);
     final (tv, tc) = tempLine(k, i, big: big);
     final info = [if (k.ageText.isNotEmpty) ageTx(k.ageText) else tr('나이 미입력'), if (k.sex == 'M') tr('남자아이'), if (k.sex == 'F') tr('여자아이')].join(' · ');
     final side = !big || !roomy;
     final head = Row(children: [
-      if (side) ...[SizedBox(width: big ? 64 : 50, height: big ? 64 : 50, child: img), const SizedBox(width: 10)],
+      if (side) ...[mascot(r?.code, size: big ? 64 : 50), const SizedBox(width: 10)],
       Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
         Text(k.label(i), maxLines: 1, overflow: TextOverflow.ellipsis, style: disp(22)),
@@ -150,7 +151,8 @@ class HomeView extends StatelessWidget {
           head,
           if (big) ...[
             if (roomy) Expanded(child: Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: img)) else const Spacer(),
-            if (r != null) Center(child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [codeText([for (final x in r.ax) (x.letter, x.a.color)], size: roomy ? 34 : 28), const SizedBox(width: 10), Text(C.nick[r.code]!, style: disp(roomy ? 22 : 19))]))),
+            // 자리가 넉넉하면 그림 속 글자가 유형을 보여 주니 별명만, 좁으면 글자 + 별명
+            if (r != null) Center(child: FittedBox(fit: BoxFit.scaleDown, child: Row(mainAxisSize: MainAxisSize.min, children: [if (!roomy) ...[codeText([for (final x in r.ax) (x.letter, x.a.color)], size: 28), const SizedBox(width: 10)], Text(C.nick[r.code]!, style: disp(roomy ? 22 : 19))]))),
             if (roomy) const SizedBox(height: 6) else const Spacer(),
           ] else
             const SizedBox(height: 8),
@@ -167,7 +169,7 @@ class HomeView extends StatelessWidget {
       child: NineBox(on ? nChipOn : nChip,
           padding: const EdgeInsets.fromLTRB(8, 5, 14, 5),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', width: 30, height: 30),
+            mascot(r?.code, size: 30),
             const SizedBox(width: 6),
             Text(k.label(i), style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: on ? kOnAccent : kFg)),
           ])),
@@ -186,7 +188,7 @@ class HomeView extends StatelessWidget {
           child: NineBox(nCard,
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 9),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Image.asset(r != null ? 'assets/img/t_${r.code}.webp' : 'assets/img/mascot_child.webp', width: 52, height: 52),
+                mascot(r?.code, size: 52),
                 const SizedBox(height: 2),
                 Text(k.label(i), maxLines: 1, overflow: TextOverflow.ellipsis, style: disp(18)),
                 Text(r != null ? r.code : tr('검사 전'), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: r != null ? kAccentInk : kMuted)),

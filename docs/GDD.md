@@ -1,6 +1,6 @@
 # 내 아이의 MBTI · 전체 기획서
 
-- 최종 수정일: 2026-11-24
+- 최종 수정일: 2026-11-26
 - 버전: 웹 시제품(별도 버전 번호 없음, `main` 브랜치 = 배포본)
 - 구현 파일: `index.html` 한 파일(HTML, CSS, JS). 그림은 `assets/`, 손그림 UI 조각은 `assets/ui/`
 
@@ -35,7 +35,7 @@
 - **기질 결과**: 타고난 성향. 4축, 세부 기질 12가지, 네 글자 유형과 별명
 - **성격 결과(자라는 힘)**: 경험으로 자라는 힘. 끈기, 스스로 힘, 함께 힘
 
-화면 기준은 휴대폰 세로 화면 한 줄 배치(본문 최대 폭 480px)이다. 아트는 색연필·크레용 손그림 콘셉트(C4)다.
+화면 기준은 휴대폰 세로 화면 한 줄 배치(본문 최대 폭 480px)이다. 아트는 '기질 머리 모양' 콘셉트다(2026-11-26 확정: 머리 모양이 유형 상징인 아이, 크레용 종이 오리기). [그림 세부 기획서](content/art.md)
 
 ## 2. 검사 구성
 
@@ -127,7 +127,7 @@
 - 2026-11-17 반영: ko-KR 앱 이름·간단한 설명·자세한 설명, 연락처 이메일 contact@wonderwheel.co.kr, 웹사이트 https://childmbti.wonderwheel.co.kr/, 기본 언어 ko-KR. 검토 제출·출시는 하지 않았다.
 - 2026-11-17 그래픽 반영: 아이콘 512(힉스필드 원본 `higgsfield/c4_ui/raw/matte/mascot_child.png` 를 잘라 줄임), 그래픽 이미지 1024x500(`.../matte/banner_result.png` 아래쪽을 잘라 줄임), 휴대폰 스크린샷 6장(웹 https://childmbti.wonderwheel.co.kr/ 의 샘플 리포트·공유 화면을 360x640 x3 = 1080x1920 으로 찍음. 시제품 가격 $1 이 보이는 화면은 뺌). 파일은 `release/play-store/graphics/`.
 - API 로 안 되는 콘솔 입력(앱 콘텐츠·콘텐츠 등급·타겟층·데이터 보안·카테고리)은 `release/play-store/CONSOLE_GUIDE.md` 에 넣을 값을 정리했다. 데이터 보안은 콘솔에서 직접 입력하기로 해 data-safety.csv 는 만들지 않았다.
-- 실행 아이콘: 2026-11-18 플러터 기본 로고를 물방울 캐릭터로 바꿈. 원본은 `higgsfield/c4_ui/raw/matte/mascot_child.png`. 예전 방식 `mipmap-*/ic_launcher.png`(48~192px)과 적응형 아이콘(`mipmap-anydpi-v26/ic_launcher.xml`, 전경 `ic_launcher_foreground.png` 108dp 안에 70% 크기, 배경색 `values/ic_launcher_background.xml` #FDFDFE).
+- 실행 아이콘: 2026-11-26 씨앗 머리 마스코트 얼굴 + 크림 바탕으로 바꿈(전에는 2026-11-18 물방울 캐릭터). 원본 `higgsfield/characters_f/web/icon_1024.png`. 예전 방식 `mipmap-*/ic_launcher.png`(48~192px)과 적응형 아이콘(`mipmap-anydpi-v26/ic_launcher.xml`, 전경 `ic_launcher_foreground.png` 108dp 안에 66% 크기, 배경색 `values/ic_launcher_background.xml` #FBF5EA). 스토어 등록 아이콘은 아직 예전 그림.
 - 업로드 키: `%USERPROFILE%\keystores\childmbti\`(upload-keystore.jks, key.properties, 별칭 upload). 2026-11-18 만듦. `app/android/key.properties` 가 있으면 release 를 이 키로 서명한다(`app/android/app/build.gradle.kts`). 키·비밀번호는 저장소에 넣지 않는다.
 - AAB: `cd app; flutter build appbundle --release` → `app/build/app/outputs/bundle/release/app-release.aab`, 이름 붙인 사본 `childmbti-<버전>+<빌드>.aab`. "failed to strip debug symbols" 는 SDK 경로 공백 때문에 나는 알림이라 AAB 는 정상.
 - 콘솔 앱 콘텐츠 선언(2026-11-18 완료): 정부 앱·금융·건강 해당 없음, 광고 없음, 콘텐츠 등급 IARC 3+(브라질 14, 디지털 구매 때문), 타겟층 만 18세 이상, 데이터 보안(로그인한 사람만 이름·이메일·사용자 ID·구매 내역·검사 기록 수집, 공유 안 함, 계정 삭제 URL delete-account.html), 카테고리 출산/육아, 앱 액세스는 로그인 선택 안내문. 값은 `release/play-store/CONSOLE_GUIDE.md`.
@@ -138,6 +138,7 @@
 ## 7. 그림
 
 - 캐릭터·배너·손그림 UI 조각은 힉스필드로 만들었다. 원본과 생성 기록은 저장소 밖 PC 의 `E:\WonderWheel\Apps\MyChildTemperament\higgsfield` 에 있다.
+- 2026-11-26 캐릭터를 '기질 머리 모양'(characters_f)으로 모두 바꿨다: 16유형 전신·얼굴 아이콘·글자 안기 그림, 마스코트·부모, 첫 화면 그림, 실행 아이콘. 손그림 UI 조각은 그대로. 유형별 머리 상징·파일·쓰는 곳은 [그림 세부 기획서](content/art.md).
 
 ## 8. 보류
 
@@ -148,6 +149,7 @@
 
 ## 세부 기획서
 
+- [그림(아트)](content/art.md): 기질 머리 모양 캐릭터, 16유형 머리 상징, 그림 파일과 쓰는 곳, 실행 아이콘
 - [결과 화면(정밀 리포트)](content/report.md): 공통 머리, 기질 탭, 성격(자라는 힘) 탭과 이전 검사 비교, 공통 아래 영역
 - [저장](systems/save.md): 저장 항목, 이전 기록, 다시 검사하기, 전부 지우기, 비교 판정 기준 값
 - [양육자별 검사 · 다시 검사하기](systems/caregivers.md): 양육자 프로필, 양육자 비교 탭, 달라진 점 탭, 재검사 화면의 이전 답 표시, 검사별 결제
