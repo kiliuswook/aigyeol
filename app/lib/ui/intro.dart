@@ -182,7 +182,8 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                 borderRadius: BorderRadius.circular(22),
                 child: Stack(fit: StackFit.expand, children: [
                   Image.asset('assets/img/key_home.webp', fit: BoxFit.cover, alignment: const Alignment(0, .38)),
-                  Positioned(left: 14, top: 14, child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), child: Text(tr('오늘도 말랑하게, 우리 아이 이야기'), style: disp(17)))),
+                  // 언어마다 길이가 달라 넘치면 글자를 줄여 띠 안에 맞춘다
+                  Positioned(left: 14, top: 14, right: 14, child: Align(alignment: Alignment.centerLeft, child: NineBox(nChip, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), child: FittedBox(fit: BoxFit.scaleDown, child: Text(tr('아이마다 다른 기질, MBTI로 한눈에'), style: disp(17)))))),
                 ]),
               ),
             ),

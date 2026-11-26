@@ -45,6 +45,8 @@
 | `mascot_parent.webp` | 320 | 아이 추가 설정(양육자) |
 | `key_home.webp` | 750×1340 | 첫 화면 큰 그림(언덕 위 부모·마스코트·아이 넷) |
 
+- 첫 화면 그림 위 띠 문구: "아이마다 다른 기질, MBTI로 한눈에"(2026-11-26, 예전 '오늘도 말랑하게, 우리 아이 이야기' 대체). 7개 언어 번역은 `app/assets/i18n/*.json`. 언어마다 길이가 달라 띠가 화면보다 길면 글자를 줄여 맞춘다(`intro.dart`).
+
 - 크기에 따라 전신/얼굴을 고르는 것은 `app/lib/ui/kit.dart` 의 `mascot(code, size)` 한 곳(64 미만이면 얼굴). 글자 안기 그림은 `hugImg(code)`.
 - `banner_result.webp` 는 앱에서 쓰지 않아 지웠다. `paper_tile.webp`, `wonderwheel.png`(회사 로고)는 그대로.
 - 손그림 UI 조각(`assets/ui/`, 카드·버튼·아이콘 9-slice)은 크레용 손그림이라 새 캐릭터와 어울려 그대로 둔다.
