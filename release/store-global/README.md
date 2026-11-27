@@ -32,4 +32,5 @@
   - 만든 법: 웹 빌드를 로컬에서 띄우고 432x768 x2.5 로 캡처(`tools_store/cap.py`, 언어별 예시 아이 3명 상태를 localStorage 에 넣음) → `tools_store/compose.py` 로 문구 합성. 작업 폴더·원본은 PC `higgsfield/characters_f/store/`.
 - `play-graphics/icon_512.png`(앱 실행 아이콘과 같은 마스코트 얼굴), `play-graphics/feature_1024x500.png`(글자 없는 16유형 아이 8명).
 - 올리기: `python tools_store/store_images.py show|push [--validate]`. 아이콘·피처 그래픽은 기본 언어(ko-KR)에만 있어 거기만 바꾸고, 휴대전화 스크린샷은 언어마다 지우고 다시 올린다. 등록정보 글자는 바꾸지 않는다.
-- 2026-11-27 `--validate` 통과(9개 언어 6장씩, 아이콘·피처 그래픽). 반영(commit)과 프로덕션 출시(Actions Play deploy, track=production)는 원더 확인을 받고 실행한다.
+- 2026-11-27 `--validate` 통과. 2026-11-28 원더 확인("프로덕션 출시랑 스토어 그림 반영 진행해") 뒤 반영(commit): 9개 등록정보 휴대전화 스크린샷 6장씩, ko-KR 아이콘·피처 그래픽. API 로 sha256 이 올린 파일과 같은지 확인.
+- 같은 날 프로덕션 출시: Actions Play deploy(run 46082539316, mode=upload, track=production) 성공 → production 1.3.1 (11) completed, 출시 노트 8개 언어, 국가 177개 + 기타 국가 그대로. 관리형 게시가 꺼져 있어 Google 검토가 끝나면 바로 공개된다.
