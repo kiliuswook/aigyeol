@@ -100,7 +100,7 @@ Future<void> doKakao(BuildContext ctx, String kind, {String role = '', String? c
   final (title, text, url) = shareMsg(kind, role: role, code: code);
   final u = Uri.parse(url);
   // 결과 화면 캡처가 있으면 카카오 서버에 올려 카드 그림으로 쓴다(못 올리면 기본 그림)
-  var img = Uri.parse('${kSite}assets/og.png');
+  var img = Uri.parse('${kSite}assets/og_v2.png');
   int? iw, ih;
   if (image != null) {
     try {

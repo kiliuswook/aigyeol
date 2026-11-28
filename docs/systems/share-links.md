@@ -42,7 +42,7 @@
 
 결과 공유 창(`shareResult`, app/lib/ui/share.dart)에 공유용 결과 카드(`ResultCard`: 유형 캐릭터·네 글자·별명·네 축 막대·앱 이름)가 보이고, 보이는 그대로 PNG 로 찍어(`capture`, 3배 해상도) 링크와 함께 보낸다.
 - 아이 이름은 기본으로 빼고, '아이 이름 넣기'를 누르면 카드 제목에 넣는다. 답한 내용은 보내지 않는다.
-- 카카오톡: 그림을 카카오 서버에 올려(`ShareClient.uploadImage`) 카드 그림으로 쓴다. 실패하면 기본 그림(assets/og.png).
+- 카카오톡: 그림을 카카오 서버에 올려(`ShareClient.uploadImage`) 카드 그림으로 쓴다. 실패하면 기본 그림(assets/og_v2.png, 1.3.1 이전 앱 빌드는 assets/og.png — 두 파일 모두 새 캐릭터 그림).
 - 다른 앱: 휴대폰 공유 창에 그림 파일 + 문구·링크.
 
 ## 원더 확인·할 일

@@ -9803,7 +9803,7 @@ bmo(a2,a3,a4,a5,a6){var s=0,r=A.v(t.H),q,p=2,o=[],n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0
 var $async$r_=A.w(function(a7,a8){if(a7===1){o.push(a8)
 s=p}for(;;)switch(s){case 0:f=A.aWY(a3,a4,a6)
 e=A.dl(f.c,0,null)
-d=A.dl("https://childmbti.wonderwheel.co.kr/assets/og.png",0,null)
+d=A.dl("https://childmbti.wonderwheel.co.kr/assets/og_v2.png",0,null)
 c=null
 b=null
 s=a5!=null?3:4

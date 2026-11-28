@@ -15,6 +15,6 @@
 `SHARE.kakaoKey` = JavaScript 키 → 카카오톡 버튼이 `Kakao.Share.sendDefault` 카드 공유. 실패하면 휴대폰 공유 창 → 링크 복사.
 
 ## 앱 (app/lib/ui/links.dart `doKakao`)
-1. `kakao_flutter_sdk_share` 카드 공유(그림 assets/og.png, 제목·설명, 버튼). `main()`에서 `initKakao()`.
+1. `kakao_flutter_sdk_share` 카드 공유(그림 assets/og_v2.png — 2026-11-28 새 캐릭터 그림 1200x630, 예전 앱 빌드는 같은 그림의 800x400 assets/og.png, 제목·설명, 버튼). `main()`에서 `initKakao()`.
 2. 실패하면 카카오톡에 글+링크로 바로 보내기: 안드로이드 `ACTION_SEND` + `setPackage("com.kakao.talk")` (MainActivity.kt, 채널 `childmbti/share`, 앱 키 불필요).
 3. 카카오톡이 없으면 휴대폰 공유 창.
